@@ -5,7 +5,7 @@
     <id>UMLClass</id>
     <coordinates>
       <x>10</x>
-      <y>20</y>
+      <y>0</y>
       <w>270</w>
       <h>170</h>
     </coordinates>
@@ -26,9 +26,9 @@ Human
     <id>UMLClass</id>
     <coordinates>
       <x>10</x>
-      <y>240</y>
+      <y>220</y>
       <w>270</w>
-      <h>170</h>
+      <h>110</h>
     </coordinates>
     <panel_attributes>Student
 --
@@ -43,7 +43,7 @@ Human
     <id>Relation</id>
     <coordinates>
       <x>90</x>
-      <y>180</y>
+      <y>160</y>
       <w>30</w>
       <h>80</h>
     </coordinates>
@@ -55,14 +55,15 @@ Human
     <id>UMLClass</id>
     <coordinates>
       <x>290</x>
-      <y>240</y>
+      <y>220</y>
       <w>270</w>
-      <h>170</h>
+      <h>120</h>
     </coordinates>
     <panel_attributes>Teacher
 --
 -id:integer
 -scienceDegree:ScienceDegree
+-faculty:Faculty
 --
 
 --</panel_attributes>
@@ -72,7 +73,7 @@ Human
     <id>Relation</id>
     <coordinates>
       <x>150</x>
-      <y>180</y>
+      <y>160</y>
       <w>270</w>
       <h>80</h>
     </coordinates>
@@ -84,14 +85,14 @@ Human
     <id>UMLClass</id>
     <coordinates>
       <x>290</x>
-      <y>460</y>
+      <y>400</y>
       <w>270</w>
       <h>140</h>
     </coordinates>
     <panel_attributes>&lt;&lt;Enum&gt;&gt;
 ScienceDegree
 --
-BACHELOR,MASTER,
+BACHELOR, MASTER,
 DOCTOR_OF_SCIENCE,
 DOCTOR_OF_PHILOSOPHY
 --
@@ -103,15 +104,18 @@ DOCTOR_OF_PHILOSOPHY
     <id>UMLClass</id>
     <coordinates>
       <x>10</x>
-      <y>460</y>
+      <y>400</y>
       <w>270</w>
-      <h>170</h>
+      <h>150</h>
     </coordinates>
     <panel_attributes>Group
 --
 -id:integer
 -name:GroupName
--
+-specialty:Specialty
+-faculty:Faculty
+-scienceDegree:ScienceDegree
+-yearEntry:Date
 --
 
 --</panel_attributes>
@@ -121,29 +125,29 @@ DOCTOR_OF_PHILOSOPHY
     <id>Relation</id>
     <coordinates>
       <x>420</x>
-      <y>400</y>
+      <y>330</y>
       <w>30</w>
-      <h>80</h>
+      <h>90</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;60.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;70.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
       <x>130</x>
-      <y>400</y>
+      <y>320</y>
       <w>30</w>
-      <h>80</h>
+      <h>100</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;60.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;80.0</additional_attributes>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
       <x>10</x>
-      <y>670</y>
+      <y>610</y>
       <w>270</w>
       <h>110</h>
     </coordinates>
@@ -160,11 +164,209 @@ G001, G002, G003, G004
     <id>Relation</id>
     <coordinates>
       <x>120</x>
-      <y>620</y>
+      <y>540</y>
       <w>30</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;70.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>290</x>
+      <y>790</y>
+      <w>270</w>
+      <h>110</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;Enum&gt;&gt;
+DepartmentName
+--
+ISC, AI, SYS_ENG, MST, ITS, PD, 
+CITAM, DOED, INF, AM, INE, MTE, 
+BME, MTS, RTICS, MEIRES, LT
+--
+
+--</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>410</x>
+      <y>710</y>
+      <w>30</w>
+      <h>100</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;80.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>10</x>
+      <y>790</y>
+      <w>270</w>
+      <h>110</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;Enum&gt;&gt;
+Specialty
+--
+121, 122, 123, 124, 125, 126,
+151, 152, 153, 163, 171, 172
+--
+
+--</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>140</x>
+      <y>540</y>
+      <w>30</w>
+      <h>270</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;250.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>590</x>
+      <y>780</y>
+      <w>270</w>
+      <h>110</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;Enum&gt;&gt;
+FacultyName
+--
+FCS, FCEC, FACT, FIATM, FI,
+FEBE, FIRTTIS, FFCT
+--
+
+--</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>290</x>
+      <y>600</y>
+      <w>270</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>Faculty
+--
+id:integer
+name:FacultyName
+department:DepartmentName
+--
+
+--</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>440</x>
+      <y>710</y>
+      <w>300</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;280.0;70.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>440</x>
+      <y>330</y>
+      <w>30</w>
+      <h>290</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;270.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>160</x>
+      <y>540</y>
+      <w>150</w>
+      <h>110</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;130.0;90.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>160</x>
+      <y>360</y>
+      <w>260</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;40.0;10.0;10.0;240.0;10.0;240.0;40.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>620</x>
+      <y>40</y>
+      <w>270</w>
+      <h>140</h>
+    </coordinates>
+    <panel_attributes>TimetableItem
+--
+-id:integer
+-discipline:DisciplineName
+-teacher:Teacher
+--
+
+--</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>620</x>
+      <y>240</y>
+      <w>270</w>
+      <h>140</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;Enum&gt;&gt;
+DisciplineName
+--
+VM, PHISICS, FL, ATSD, PROGR, BD,
+BZD, UFM, PHVX, SDR, GHT, PNB, 
+ZCIE, BMM, IERT, GAD, HOT, LLE
+--
+
+--</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>740</x>
+      <y>170</y>
+      <w>30</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;70.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>430</x>
+      <y>170</y>
+      <w>310</w>
       <h>70</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;50.0</additional_attributes>
+    <additional_attributes>290.0;10.0;10.0;50.0</additional_attributes>
   </element>
 </diagram>
