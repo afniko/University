@@ -1,0 +1,11 @@
+output/
+output\
+/bin/
+/.apt_generated/
+.classpath
+.project
+.settings/
+.factorypath
+build/
+/target/
+/.apt_generated_tests/
