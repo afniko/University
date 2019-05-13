@@ -4,8 +4,8 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>63</x>
-      <y>0</y>
+      <x>27</x>
+      <y>18</y>
       <w>243</w>
       <h>153</h>
     </coordinates>
@@ -25,8 +25,8 @@ Human
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>63</x>
-      <y>198</y>
+      <x>27</x>
+      <y>216</y>
       <w>243</w>
       <h>99</h>
     </coordinates>
@@ -42,8 +42,8 @@ Human
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>171</x>
-      <y>144</y>
+      <x>135</x>
+      <y>162</y>
       <w>27</w>
       <h>72</h>
     </coordinates>
@@ -54,8 +54,8 @@ Human
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>360</x>
-      <y>0</y>
+      <x>324</x>
+      <y>18</y>
       <w>243</w>
       <h>126</h>
     </coordinates>
@@ -73,8 +73,8 @@ Human
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>297</x>
-      <y>27</y>
+      <x>261</x>
+      <y>45</y>
       <w>81</w>
       <h>36</h>
     </coordinates>
@@ -85,8 +85,8 @@ Human
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>360</x>
-      <y>171</y>
+      <x>324</x>
+      <y>189</y>
       <w>243</w>
       <h>126</h>
     </coordinates>
@@ -104,8 +104,8 @@ DOCTOR_OF_PHILOSOPHY
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>63</x>
-      <y>360</y>
+      <x>27</x>
+      <y>378</y>
       <w>243</w>
       <h>153</h>
     </coordinates>
@@ -125,8 +125,8 @@ DOCTOR_OF_PHILOSOPHY
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>477</x>
-      <y>117</y>
+      <x>441</x>
+      <y>135</y>
       <w>27</w>
       <h>72</h>
     </coordinates>
@@ -136,8 +136,8 @@ DOCTOR_OF_PHILOSOPHY
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>171</x>
-      <y>288</y>
+      <x>135</x>
+      <y>306</y>
       <w>27</w>
       <h>90</h>
     </coordinates>
@@ -147,8 +147,8 @@ DOCTOR_OF_PHILOSOPHY
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>63</x>
-      <y>549</y>
+      <x>27</x>
+      <y>567</y>
       <w>243</w>
       <h>99</h>
     </coordinates>
@@ -164,8 +164,8 @@ G001, G002, G003, G004
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>162</x>
-      <y>504</y>
+      <x>126</x>
+      <y>522</y>
       <w>27</w>
       <h>63</h>
     </coordinates>
@@ -175,8 +175,8 @@ G001, G002, G003, G004
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>360</x>
-      <y>522</y>
+      <x>324</x>
+      <y>540</y>
       <w>243</w>
       <h>126</h>
     </coordinates>
@@ -193,8 +193,8 @@ G001, G002, G003, G004
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>468</x>
-      <y>450</y>
+      <x>432</x>
+      <y>468</y>
       <w>27</w>
       <h>90</h>
     </coordinates>
@@ -204,8 +204,8 @@ G001, G002, G003, G004
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>63</x>
-      <y>711</y>
+      <x>27</x>
+      <y>729</y>
       <w>243</w>
       <h>108</h>
     </coordinates>
@@ -222,8 +222,8 @@ Specialty
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>180</x>
-      <y>504</y>
+      <x>144</x>
+      <y>522</y>
       <w>153</w>
       <h>225</h>
     </coordinates>
@@ -233,8 +233,8 @@ Specialty
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>657</x>
-      <y>711</y>
+      <x>621</x>
+      <y>729</y>
       <w>243</w>
       <h>108</h>
     </coordinates>
@@ -251,8 +251,8 @@ FEBE, FIRTTIS, FFCT
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>360</x>
-      <y>351</y>
+      <x>324</x>
+      <y>369</y>
       <w>243</w>
       <h>108</h>
     </coordinates>
@@ -269,8 +269,8 @@ department:Department
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>495</x>
-      <y>450</y>
+      <x>459</x>
+      <y>468</y>
       <w>297</w>
       <h>279</h>
     </coordinates>
@@ -280,8 +280,8 @@ department:Department
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>495</x>
-      <y>117</y>
+      <x>459</x>
+      <y>135</y>
       <w>135</w>
       <h>252</h>
     </coordinates>
@@ -291,8 +291,8 @@ department:Department
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>297</x>
-      <y>387</y>
+      <x>261</x>
+      <y>405</y>
       <w>81</w>
       <h>27</h>
     </coordinates>
@@ -302,8 +302,8 @@ department:Department
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>216</x>
-      <y>288</y>
+      <x>180</x>
+      <y>306</y>
       <w>189</w>
       <h>90</h>
     </coordinates>
@@ -313,8 +313,8 @@ department:Department
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>765</x>
-      <y>0</y>
+      <x>729</x>
+      <y>18</y>
       <w>243</w>
       <h>171</h>
     </coordinates>
@@ -323,7 +323,7 @@ department:Department
 -id:integer
 -discipline:DisciplineName
 -auditory:Auditory
--group:Group
+-groups:List&lt;Group&gt;
 -trainingPair:TrainingPair
 -date:Date
 -teacher:Teacher
@@ -335,8 +335,8 @@ department:Department
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>675</x>
-      <y>225</y>
+      <x>639</x>
+      <y>243</y>
       <w>243</w>
       <h>126</h>
     </coordinates>
@@ -354,8 +354,8 @@ ZCIE, BMM, IERT, GAD, HOT, LLE
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>846</x>
-      <y>162</y>
+      <x>810</x>
+      <y>180</y>
       <w>27</w>
       <h>81</h>
     </coordinates>
@@ -365,8 +365,8 @@ ZCIE, BMM, IERT, GAD, HOT, LLE
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>594</x>
-      <y>27</y>
+      <x>558</x>
+      <y>45</y>
       <w>189</w>
       <h>27</h>
     </coordinates>
@@ -376,8 +376,8 @@ ZCIE, BMM, IERT, GAD, HOT, LLE
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>594</x>
-      <y>45</y>
+      <x>558</x>
+      <y>63</y>
       <w>153</w>
       <h>198</h>
     </coordinates>
@@ -387,8 +387,8 @@ ZCIE, BMM, IERT, GAD, HOT, LLE
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>765</x>
-      <y>369</y>
+      <x>729</x>
+      <y>387</y>
       <w>243</w>
       <h>144</h>
     </coordinates>
@@ -407,8 +407,8 @@ description:String
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>657</x>
-      <y>549</y>
+      <x>621</x>
+      <y>567</y>
       <w>243</w>
       <h>108</h>
     </coordinates>
@@ -425,8 +425,8 @@ AuditoryNumber
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>828</x>
-      <y>504</y>
+      <x>792</x>
+      <y>522</y>
       <w>27</w>
       <h>63</h>
     </coordinates>
@@ -436,8 +436,8 @@ AuditoryNumber
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>936</x>
-      <y>549</y>
+      <x>900</x>
+      <y>567</y>
       <w>243</w>
       <h>108</h>
     </coordinates>
@@ -454,8 +454,8 @@ PRACTICK
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>963</x>
-      <y>504</y>
+      <x>927</x>
+      <y>522</y>
       <w>27</w>
       <h>63</h>
     </coordinates>
@@ -465,8 +465,8 @@ PRACTICK
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>918</x>
-      <y>162</y>
+      <x>882</x>
+      <y>180</y>
       <w>27</w>
       <h>225</h>
     </coordinates>
@@ -476,8 +476,8 @@ PRACTICK
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>270</x>
-      <y>162</y>
+      <x>234</x>
+      <y>180</y>
       <w>576</w>
       <h>216</h>
     </coordinates>
@@ -487,8 +487,8 @@ PRACTICK
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>936</x>
-      <y>225</y>
+      <x>900</x>
+      <y>243</y>
       <w>243</w>
       <h>126</h>
     </coordinates>
@@ -506,8 +506,8 @@ TrainingPair
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>963</x>
-      <y>162</y>
+      <x>927</x>
+      <y>180</y>
       <w>27</w>
       <h>81</h>
     </coordinates>
@@ -517,8 +517,8 @@ TrainingPair
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>360</x>
-      <y>693</y>
+      <x>324</x>
+      <y>711</y>
       <w>243</w>
       <h>126</h>
     </coordinates>
@@ -536,8 +536,8 @@ BME, MTS, RTICS, MEIRES, LT
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>468</x>
-      <y>639</y>
+      <x>432</x>
+      <y>657</y>
       <w>27</w>
       <h>72</h>
     </coordinates>
@@ -547,8 +547,8 @@ BME, MTS, RTICS, MEIRES, LT
   <element>
     <id>UMLNote</id>
     <coordinates>
-      <x>180</x>
-      <y>828</y>
+      <x>144</x>
+      <y>846</y>
       <w>702</w>
       <h>63</h>
     </coordinates>
