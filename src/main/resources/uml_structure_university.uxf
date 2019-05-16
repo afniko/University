@@ -116,8 +116,8 @@ Person
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>16</x>
-      <y>488</y>
+      <x>280</x>
+      <y>368</y>
       <w>216</w>
       <h>120</h>
     </coordinates>
@@ -136,19 +136,19 @@ Person
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>224</x>
-      <y>464</y>
-      <w>96</w>
+      <x>112</x>
+      <y>472</y>
+      <w>184</w>
       <h>48</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
-    <additional_attributes>100.0;10.0;100.0;40.0;10.0;40.0</additional_attributes>
+    <additional_attributes>10.0;40.0;10.0;10.0;210.0;10.0</additional_attributes>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>280</x>
-      <y>376</y>
+      <x>8</x>
+      <y>504</y>
       <w>216</w>
       <h>96</h>
     </coordinates>
@@ -165,24 +165,24 @@ Person
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>224</x>
+      <x>256</x>
       <y>192</y>
-      <w>120</w>
-      <h>368</h>
+      <w>88</w>
+      <h>224</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
-    <additional_attributes>130.0;10.0;130.0;60.0;50.0;60.0;50.0;440.0;10.0;440.0</additional_attributes>
+    <additional_attributes>90.0;10.0;90.0;60.0;10.0;60.0;10.0;260.0;30.0;260.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>112</x>
-      <y>456</y>
-      <w>24</w>
-      <h>48</h>
+      <x>224</x>
+      <y>416</y>
+      <w>72</w>
+      <h>24</h>
     </coordinates>
     <panel_attributes>lt=-&gt;&gt;&gt;&gt;</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;40.0</additional_attributes>
+    <additional_attributes>10.0;10.0;70.0;10.0</additional_attributes>
   </element>
   <element>
     <id>UMLClass</id>
@@ -380,13 +380,13 @@ University
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>376</x>
-      <y>464</y>
-      <w>24</w>
-      <h>56</h>
+      <x>216</x>
+      <y>544</y>
+      <w>80</w>
+      <h>24</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
-    <additional_attributes>10.0;50.0;10.0;10.0</additional_attributes>
+    <additional_attributes>80.0;10.0;10.0;10.0</additional_attributes>
   </element>
   <element>
     <id>UMLClass</id>
@@ -394,7 +394,7 @@ University
       <x>280</x>
       <y>264</y>
       <w>216</w>
-      <h>88</h>
+      <h>80</h>
     </coordinates>
     <panel_attributes>ScienceDegree
 --
