@@ -420,8 +420,8 @@ University
 --
 -timetabelItems:List&lt;TimeTableItem&gt;
 --
--findPeriod(student:Student, startPeriod:Date, endPeriod:Date):TimeTableItem
--findPeriod(teacher:Teacher, startPeriod:Date, endPeriod:Date):TimeTableItem
+-findPeriod(student:Student, startPeriod:Date, endPeriod:Date):TimeTable
+-findPeriod(teacher:Teacher, startPeriod:Date, endPeriod:Date):TimeTable
 --</panel_attributes>
     <additional_attributes/>
   </element>
