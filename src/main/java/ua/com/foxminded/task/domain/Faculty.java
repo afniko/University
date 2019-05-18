@@ -4,14 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 import lombok.ToString;
 
-@NoArgsConstructor
-@Getter
-@Setter
 @EqualsAndHashCode(of = { "title" })
 @ToString(of = { "id", "title" })
 public class Faculty {
@@ -23,4 +17,41 @@ public class Faculty {
     public void addDepartment(Department department) {
         departments.add(department);
     }
+
+    public void retrieveDepartment(int id) {
+        departments.get(id);
+    }
+
+    public void updateDepartment(int id, Department department) {
+        departments.set(id, department);
+    }
+
+    public void removeDepartment(Department department) {
+        departments.remove(department);
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public List<Department> getDepartments() {
+        return departments;
+    }
+
+    public void setDepartments(List<Department> departments) {
+        this.departments = departments;
+    }
+
 }

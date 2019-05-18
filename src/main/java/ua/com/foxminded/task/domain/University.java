@@ -4,14 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 import lombok.ToString;
 
-@NoArgsConstructor
-@Getter
-@Setter
 @EqualsAndHashCode(of = { "title" })
 @ToString(of = { "title" })
 public class University {
@@ -25,11 +19,64 @@ public class University {
         faculties.add(faculty);
     }
 
+    public void retrieveFaculty(int id) {
+        faculties.get(id);
+    }
+
+    public void updateFaculty(int id, Faculty faculty) {
+        faculties.set(id, faculty);
+    }
+
+    public void removeFaculty(Faculty faculty) {
+        faculties.remove(faculty);
+    }
+
     public void addAuditory(Auditory auditory) {
         auditories.add(auditory);
     }
 
-    
-    
-    
+    public void retrieveAuditory(int id) {
+        auditories.get(id);
+    }
+
+    public void updateAuditory(int id, Auditory auditory) {
+        auditories.set(id, auditory);
+    }
+
+    public void removeAuditory(Auditory auditory) {
+        auditories.remove(auditory);
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public List<Faculty> getFaculties() {
+        return faculties;
+    }
+
+    public void setFaculties(List<Faculty> faculties) {
+        this.faculties = faculties;
+    }
+
+    public List<Auditory> getAuditories() {
+        return auditories;
+    }
+
+    public void setAuditories(List<Auditory> auditories) {
+        this.auditories = auditories;
+    }
+
+    public Timetable getTimetable() {
+        return timetable;
+    }
+
+    public void setTimetable(Timetable timetable) {
+        this.timetable = timetable;
+    }
+
 }
