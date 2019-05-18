@@ -1,11 +1,17 @@
 package ua.com.foxminded.task.domain;
 
 
-import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 @NoArgsConstructor
-@Data
+@Getter
+@Setter
+@EqualsAndHashCode
+@ToString
 public class AuditoryType {
 
     private int id;

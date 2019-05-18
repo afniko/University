@@ -1,19 +1,25 @@
 package ua.com.foxminded.task.domain;
 
-import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 
-import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 @NoArgsConstructor
-@Data
+@Getter
+@Setter
+@EqualsAndHashCode(of = { "id", "title" })
+@ToString(of = { "id", "title" })
 public class Department {
 
     private int id;
     private String title;
     private String description;
-    private List<Group> groups;
-    private List<Teacher> teachers;
-    
+    private List<Group> groups = new ArrayList<>();
+    private List<Teacher> teachers = new ArrayList<>();
+
 }

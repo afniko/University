@@ -11,8 +11,8 @@ import lombok.ToString;
 @NoArgsConstructor
 @Getter
 @Setter
-@EqualsAndHashCode
-@ToString
+@EqualsAndHashCode(of = { "firstName", "lastName", "idFees" })
+@ToString(of = { "id", "firstName", "idFees" })
 public abstract class Person {
 
     private int id;

@@ -1,17 +1,24 @@
 package ua.com.foxminded.task.domain;
 
+import java.util.ArrayList;
 import java.util.List;
 
-import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 @NoArgsConstructor
-@Data
+@Getter
+@Setter
+@EqualsAndHashCode(of = { "title" })
+@ToString(of = { "title" })
 public class University {
 
     private String title;
-    private List<Faculty> faculties;
-    private List<Auditory> auditories;
+    private List<Faculty> faculties = new ArrayList<>();
+    private List<Auditory> auditories = new ArrayList<>();
     private Timetable timetable;
 
 }

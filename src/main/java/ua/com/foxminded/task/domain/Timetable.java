@@ -1,16 +1,23 @@
 package ua.com.foxminded.task.domain;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 
-import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 @NoArgsConstructor
-@Data
+@Getter
+@Setter
+@EqualsAndHashCode
+@ToString
 public class Timetable {
 
-    private List<TimetableItem> timetableItems;
+    private List<TimetableItem> timetableItems = new ArrayList<>();
 
     public Timetable findPeriod(Student student, Date startPeriod, Date endPeriod) {
         return null;
