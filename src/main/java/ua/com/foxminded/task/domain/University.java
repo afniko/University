@@ -21,4 +21,12 @@ public class University {
     private List<Auditory> auditories = new ArrayList<>();
     private Timetable timetable;
 
+    public void addFaculty(Faculty faculty) {
+        faculties.add(faculty);
+    }
+
+    public void addAuditory(Auditory auditory) {
+        auditories.add(auditory);
+    }
+
 }

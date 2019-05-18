@@ -12,7 +12,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @Getter
 @Setter
-@EqualsAndHashCode(of = { "id", "title" })
+@EqualsAndHashCode(of = { "title" })
 @ToString(of = { "id", "title" })
 public class Faculty {
 
@@ -20,4 +20,7 @@ public class Faculty {
     private String title;
     private List<Department> departments = new ArrayList<>();
 
+    public void addDepartment(Department department) {
+        departments.add(department);
+    }
 }

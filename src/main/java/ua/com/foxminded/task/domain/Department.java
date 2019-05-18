@@ -22,4 +22,12 @@ public class Department {
     private List<Group> groups = new ArrayList<>();
     private List<Teacher> teachers = new ArrayList<>();
 
+    public void addGroup(Group group) {
+        groups.add(group);
+    }
+    
+    public void addTeacher(Teacher teacher) {
+        teachers.add(teacher);
+    }
+    
 }

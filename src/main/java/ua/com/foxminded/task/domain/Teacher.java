@@ -12,11 +12,15 @@ import lombok.ToString;
 @NoArgsConstructor
 @Getter
 @Setter
-@EqualsAndHashCode(of = { "department" })
-@ToString(of = { "department" })
+@EqualsAndHashCode(callSuper = true, of = { "department" })
+@ToString(callSuper = true, of = { "id", "firstName", "idFees", "department" })
 public class Teacher extends Person {
 
     private List<Subject> subjects = new ArrayList<>();
     private Department department;
+
+    public void addSubject(Subject subject) {
+        subjects.add(subject);
+    }
 
 }

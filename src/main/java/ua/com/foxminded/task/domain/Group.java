@@ -23,4 +23,7 @@ public class Group {
     private Date yearEntry;
     private List<Student> students = new ArrayList<>();
 
+    public void addStudent(Student student) {
+        students.add(student);
+    }
 }

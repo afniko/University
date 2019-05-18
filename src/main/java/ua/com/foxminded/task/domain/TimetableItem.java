@@ -25,4 +25,7 @@ public class TimetableItem {
     private Date date;
     private Teacher teacher;
 
+    public void addGroup(Group group) {
+        groups.add(group);
+    }
 }
