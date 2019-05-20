@@ -33,10 +33,47 @@ public class SubjectModelRepository {
         }
         return subject;
     }
-    
-    public static List<Subject> getList(TestModel testModel){
+
+    public static List<Subject> getList(TestModel testModel) {
         subjects = new ArrayList<>();
-      
+        switch (testModel) {
+        case MODEL_1:
+            createModel1();
+            subjects.add(subject);
+            createModel2();
+            subjects.add(subject);
+            break;
+        case MODEL_2:
+            createModel2();
+            subjects.add(subject);
+            createModel3();
+            subjects.add(subject);
+            break;
+        case MODEL_3:
+            createModel1();
+            subjects.add(subject);
+            createModel6();
+            subjects.add(subject);
+            break;
+        case MODEL_4:
+            createModel4();
+            subjects.add(subject);
+            createModel5();
+            subjects.add(subject);
+            break;
+        case MODEL_5:
+            createModel3();
+            subjects.add(subject);
+            createModel6();
+            subjects.add(subject);
+            break;
+        case MODEL_6:
+            createModel3();
+            subjects.add(subject);
+            createModel5();
+            subjects.add(subject);
+            break;
+        }
         return subjects;
     }
 
