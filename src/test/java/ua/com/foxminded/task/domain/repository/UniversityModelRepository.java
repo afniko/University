@@ -4,7 +4,7 @@ import ua.com.foxminded.task.domain.University;
 
 public class UniversityModelRepository {
 
-    private static University university;
+    private static University university = new University();
 
     public static University getModel(TestModel testModel) {
         switch (testModel) {
@@ -35,28 +35,47 @@ public class UniversityModelRepository {
         university.setTitle("university1");
         university.setFaculties(FacultyModelRepository.getList(testModel));
         university.setAuditories(AuditoryModelRepository.getList(testModel));
-        university.setTimetable(null);
-        // TODO
+        university.setTimetable(TimetableModelRepository.getModel(testModel));
     }
 
     private static void createModel2(TestModel testModel) {
-
+        university = new University();
+        university.setTitle("university2");
+        university.setFaculties(FacultyModelRepository.getList(testModel));
+        university.setAuditories(AuditoryModelRepository.getList(testModel));
+        university.setTimetable(TimetableModelRepository.getModel(testModel));
     }
 
     private static void createModel3(TestModel testModel) {
-
+        university = new University();
+        university.setTitle("university3");
+        university.setFaculties(FacultyModelRepository.getList(testModel));
+        university.setAuditories(AuditoryModelRepository.getList(testModel));
+        university.setTimetable(TimetableModelRepository.getModel(testModel));
     }
 
     private static void createModel4(TestModel testModel) {
-
+        university = new University();
+        university.setTitle("university4");
+        university.setFaculties(FacultyModelRepository.getList(testModel));
+        university.setAuditories(AuditoryModelRepository.getList(testModel));
+        university.setTimetable(TimetableModelRepository.getModel(testModel));
     }
 
     private static void createModel5(TestModel testModel) {
-
+        university = new University();
+        university.setTitle("university5");
+        university.setFaculties(FacultyModelRepository.getList(testModel));
+        university.setAuditories(AuditoryModelRepository.getList(testModel));
+        university.setTimetable(TimetableModelRepository.getModel(testModel));
     }
 
     private static void createModel6(TestModel testModel) {
-
+        university = new University();
+        university.setTitle("university6");
+        university.setFaculties(FacultyModelRepository.getList(testModel));
+        university.setAuditories(AuditoryModelRepository.getList(testModel));
+        university.setTimetable(TimetableModelRepository.getModel(testModel));
     }
 
 }
