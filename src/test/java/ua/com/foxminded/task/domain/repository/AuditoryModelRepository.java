@@ -1,10 +1,14 @@
 package ua.com.foxminded.task.domain.repository;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import ua.com.foxminded.task.domain.Auditory;
 
 public class AuditoryModelRepository {
 
     private static Auditory auditory;
+    private static List<Auditory> auditories;
 
     public static Auditory getModel(TestModel testModel) {
         switch (testModel) {
@@ -28,6 +32,49 @@ public class AuditoryModelRepository {
             break;
         }
         return auditory;
+    }
+
+    public static List<Auditory> getList(TestModel testModel) {
+        auditories = new ArrayList<>();
+        switch (testModel) {
+        case MODEL_1:
+            createModel1(testModel);
+            auditories.add(auditory);
+            createModel2(testModel);
+            auditories.add(auditory);
+            break;
+        case MODEL_2:
+            createModel2(testModel);
+            auditories.add(auditory);
+            createModel3(testModel);
+            auditories.add(auditory);
+            break;
+        case MODEL_3:
+            createModel1(testModel);
+            auditories.add(auditory);
+            createModel6(testModel);
+            auditories.add(auditory);
+            break;
+        case MODEL_4:
+            createModel4(testModel);
+            auditories.add(auditory);
+            createModel5(testModel);
+            auditories.add(auditory);
+            break;
+        case MODEL_5:
+            createModel3(testModel);
+            auditories.add(auditory);
+            createModel6(testModel);
+            auditories.add(auditory);
+            break;
+        case MODEL_6:
+            createModel3(testModel);
+            auditories.add(auditory);
+            createModel5(testModel);
+            auditories.add(auditory);
+            break;
+        }
+        return auditories;
     }
 
     private static void createModel1(TestModel testModel) {
