@@ -16,10 +16,9 @@ public class Timetable {
     }
 
     public Timetable findPeriod(Student student, Date startPeriod, Date endPeriod) {
-        Group group = student.getGroup();
         List<TimetableItem> timetableItemsFiltered = timetableItems.stream()
-                .filter(g -> g.getGroups().contains(group))
-                .filter(d -> (d.getDate().compareTo(startPeriod) > 0 && d.getDate().compareTo(endPeriod) < 0))
+                .filter(timetableItems -> timetableItems.getGroups().stream().anyMatch(group->group.getStudents().contains(student)))
+                .filter(date -> (date.getDate().compareTo(startPeriod) > 0 && date.getDate().compareTo(endPeriod) < 0))
                 .collect(Collectors.toList());
         return new Timetable(timetableItemsFiltered);
     }
