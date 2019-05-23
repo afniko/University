@@ -86,7 +86,7 @@ public class StudentModelRepository {
         student.setLastName("lastName1");
         student.setBirthday(Date.valueOf("1999-06-25"));
         student.setIdFees(1111111111);
-        student.setGroup(GroupModelRepository.getModel(testModel));
+//        student.setGroup(GroupModelRepository.getModel(testModel));
     }
 
     private static void createModel2(TestModel testModel) {
@@ -97,7 +97,7 @@ public class StudentModelRepository {
         student.setLastName("lastName2");
         student.setBirthday(Date.valueOf("1998-06-25"));
         student.setIdFees(1222211111);
-        student.setGroup(GroupModelRepository.getModel(testModel));
+//        student.setGroup(GroupModelRepository.getModel(testModel));
     }
 
     private static void createModel3(TestModel testModel) {
@@ -108,7 +108,7 @@ public class StudentModelRepository {
         student.setLastName("lastName3");
         student.setBirthday(Date.valueOf("2001-07-25"));
         student.setIdFees(1111133331);
-        student.setGroup(GroupModelRepository.getModel(testModel));
+//        student.setGroup(GroupModelRepository.getModel(testModel));
     }
 
     private static void createModel4(TestModel testModel) {
@@ -119,7 +119,7 @@ public class StudentModelRepository {
         student.setLastName("lastName4");
         student.setBirthday(Date.valueOf("1999-06-25"));
         student.setIdFees(1411111141);
-        student.setGroup(GroupModelRepository.getModel(testModel));
+//        student.setGroup(GroupModelRepository.getModel(testModel));
     }
 
     private static void createModel5(TestModel testModel) {
@@ -130,7 +130,7 @@ public class StudentModelRepository {
         student.setLastName("lastName5");
         student.setBirthday(Date.valueOf("1998-01-20"));
         student.setIdFees(1111111551);
-        student.setGroup(GroupModelRepository.getModel(testModel));
+//        student.setGroup(GroupModelRepository.getModel(testModel));
     }
 
     private static void createModel6(TestModel testModel) {
@@ -141,7 +141,7 @@ public class StudentModelRepository {
         student.setLastName("lastName6");
         student.setBirthday(Date.valueOf("1997-02-15"));
         student.setIdFees(1111111661);
-        student.setGroup(GroupModelRepository.getModel(testModel));
+//        student.setGroup(GroupModelRepository.getModel(testModel));
     }
 
 }

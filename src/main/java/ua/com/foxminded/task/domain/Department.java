@@ -20,14 +20,6 @@ public class Department {
         groups.add(group);
     }
 
-    public void retrieveGroup(int id) {
-        groups.get(id);
-    }
-
-    public void updateGroup(int id, Group group) {
-        groups.set(id, group);
-    }
-
     public void removeGroup(Group group) {
         groups.remove(group);
     }
