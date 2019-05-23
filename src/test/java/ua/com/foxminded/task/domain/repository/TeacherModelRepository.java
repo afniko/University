@@ -87,7 +87,6 @@ public class TeacherModelRepository {
         teacher.setBirthday(Date.valueOf("1966-06-25"));
         teacher.setIdFees(1111111111);
         teacher.setSubjects(SubjectModelRepository.getList(testModel));
-//        teacher.setDepartment(DepartmentModelRepository.getModel(testModel));
     }
 
     private static void createModel2(TestModel testModel) {
@@ -99,7 +98,6 @@ public class TeacherModelRepository {
         teacher.setBirthday(Date.valueOf("1950-06-25"));
         teacher.setIdFees(1331111111);
         teacher.setSubjects(SubjectModelRepository.getList(testModel));
-//        teacher.setDepartment(DepartmentModelRepository.getModel(testModel));
     }
 
     private static void createModel3(TestModel testModel) {
@@ -111,7 +109,6 @@ public class TeacherModelRepository {
         teacher.setBirthday(Date.valueOf("1971-06-25"));
         teacher.setIdFees(1111111331);
         teacher.setSubjects(SubjectModelRepository.getList(testModel));
-//        teacher.setDepartment(DepartmentModelRepository.getModel(testModel));
     }
 
     private static void createModel4(TestModel testModel) {
@@ -123,7 +120,6 @@ public class TeacherModelRepository {
         teacher.setBirthday(Date.valueOf("1979-06-25"));
         teacher.setIdFees(1111111441);
         teacher.setSubjects(SubjectModelRepository.getList(testModel));
-//        teacher.setDepartment(DepartmentModelRepository.getModel(testModel));
     }
 
     private static void createModel5(TestModel testModel) {
@@ -135,7 +131,6 @@ public class TeacherModelRepository {
         teacher.setBirthday(Date.valueOf("1963-06-25"));
         teacher.setIdFees(1111111551);
         teacher.setSubjects(SubjectModelRepository.getList(testModel));
-//        teacher.setDepartment(DepartmentModelRepository.getModel(testModel));
     }
 
     private static void createModel6(TestModel testModel) {
@@ -147,7 +142,6 @@ public class TeacherModelRepository {
         teacher.setBirthday(Date.valueOf("1980-06-25"));
         teacher.setIdFees(1111111161);
         teacher.setSubjects(SubjectModelRepository.getList(testModel));
-//        teacher.setDepartment(DepartmentModelRepository.getModel(testModel));
     }
 
 }

@@ -15,6 +15,6 @@ public class UniversityTest {
         University university = UniversityModelRepository.getModel(TestModel.MODEL_1);
         System.out.println(university.getFaculties());
         System.out.println(university.getTimetable().getTimetableItems());
-        System.out.println("\n test university");
+        System.out.println("\n test university \n");
     }
 }

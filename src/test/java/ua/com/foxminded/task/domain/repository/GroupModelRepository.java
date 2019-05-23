@@ -82,7 +82,6 @@ public class GroupModelRepository {
         group = new Group();
         group.setId(1);
         group.setTitle("group1");
-//        group.setDepartment(DepartmentModelRepository.getModel(testModel));
         group.setYearEntry(Date.valueOf("2018-01-01"));
         group.setStudents(StudentModelRepository.getList(testModel));
     }
@@ -91,7 +90,6 @@ public class GroupModelRepository {
         group = new Group();
         group.setId(2);
         group.setTitle("group2");
-//        group.setDepartment(DepartmentModelRepository.getModel(testModel));
         group.setYearEntry(Date.valueOf("2017-01-01"));
         group.setStudents(StudentModelRepository.getList(testModel));
     }
@@ -100,7 +98,6 @@ public class GroupModelRepository {
         group = new Group();
         group.setId(3);
         group.setTitle("group3");
-//        group.setDepartment(DepartmentModelRepository.getModel(testModel));
         group.setYearEntry(Date.valueOf("2016-01-01"));
         group.setStudents(StudentModelRepository.getList(testModel));
     }
@@ -109,7 +106,6 @@ public class GroupModelRepository {
         group = new Group();
         group.setId(4);
         group.setTitle("group4");
-//        group.setDepartment(DepartmentModelRepository.getModel(testModel));
         group.setYearEntry(Date.valueOf("2018-01-01"));
         group.setStudents(StudentModelRepository.getList(testModel));
     }
@@ -118,7 +114,6 @@ public class GroupModelRepository {
         group = new Group();
         group.setId(5);
         group.setTitle("group5");
-//        group.setDepartment(DepartmentModelRepository.getModel(testModel));
         group.setYearEntry(Date.valueOf("2017-01-01"));
         group.setStudents(StudentModelRepository.getList(testModel));
     }
@@ -127,7 +122,6 @@ public class GroupModelRepository {
         group = new Group();
         group.setId(6);
         group.setTitle("group6");
-//        group.setDepartment(DepartmentModelRepository.getModel(testModel));
         group.setYearEntry(Date.valueOf("2016-01-01"));
         group.setStudents(StudentModelRepository.getList(testModel));
     }

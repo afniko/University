@@ -15,7 +15,7 @@ class DepartmentTest {
         Department departmentTest = DepartmentModelRepository.getModel(TestModel.MODEL_1);
         System.out.println(departmentTest.getGroups());
         System.out.println(departmentTest.getTeachers());
-        System.out.println("\n test department");
+        System.out.println("\n test department \n");
     }
 
 }
