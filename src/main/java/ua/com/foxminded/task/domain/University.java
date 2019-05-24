@@ -19,28 +19,12 @@ public class University {
         faculties.add(faculty);
     }
 
-    public void retrieveFaculty(int id) {
-        faculties.get(id);
-    }
-
-    public void updateFaculty(int id, Faculty faculty) {
-        faculties.set(id, faculty);
-    }
-
     public void removeFaculty(Faculty faculty) {
         faculties.remove(faculty);
     }
 
     public void addAuditory(Auditory auditory) {
         auditories.add(auditory);
-    }
-
-    public void retrieveAuditory(int id) {
-        auditories.get(id);
-    }
-
-    public void updateAuditory(int id, Auditory auditory) {
-        auditories.set(id, auditory);
     }
 
     public void removeAuditory(Auditory auditory) {

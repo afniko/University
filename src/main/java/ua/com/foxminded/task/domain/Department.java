@@ -28,14 +28,6 @@ public class Department {
         teachers.add(teacher);
     }
 
-    public void retrieveTeacher(int id) {
-        teachers.get(id);
-    }
-
-    public void updateTeacher(int id, Teacher teacher) {
-        teachers.set(id, teacher);
-    }
-
     public void removeTeacher(Teacher teacher) {
         teachers.remove(teacher);
     }

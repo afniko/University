@@ -16,9 +16,6 @@ public abstract class Person {
     protected Date birthday;
     protected int idFees;
 
-    public Person() {
-    }
-
     public int getId() {
         return id;
     }

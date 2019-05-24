@@ -21,14 +21,6 @@ public class Group {
         students.add(student);
     }
 
-    public void retrieveStudent(int id) {
-        students.get(id);
-    }
-
-    public void updateStudent(int id, Student student) {
-        students.set(id, student);
-    }
-
     public void removeStudent(Student student) {
         students.remove(student);
     }

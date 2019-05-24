@@ -18,14 +18,6 @@ public class Faculty {
         departments.add(department);
     }
 
-    public void retrieveDepartment(int id) {
-        departments.get(id);
-    }
-
-    public void updateDepartment(int id, Department department) {
-        departments.set(id, department);
-    }
-
     public void removeDepartment(Department department) {
         departments.remove(department);
     }

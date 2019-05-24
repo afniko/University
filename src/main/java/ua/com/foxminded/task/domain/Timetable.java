@@ -35,14 +35,6 @@ public class Timetable {
         timetableItems.add(timetableItem);
     }
 
-    public void retrieveTimetableItem(int id) {
-        timetableItems.get(id);
-    }
-
-    public void updateTimetableItem(int id, TimetableItem timetableItem) {
-        timetableItems.set(id, timetableItem);
-    }
-
     public void removeTimetableItem(TimetableItem timetableItem) {
         timetableItems.remove(timetableItem);
     }

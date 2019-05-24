@@ -21,14 +21,6 @@ public class Teacher extends Person {
         subjects.add(subject);
     }
 
-    public void retrieveSubject(int id) {
-        subjects.get(id);
-    }
-
-    public void updateSubject(int id, Subject subject) {
-        subjects.set(id, subject);
-    }
-
     public void removeSubject(Subject subject) {
         subjects.remove(subject);
     }
