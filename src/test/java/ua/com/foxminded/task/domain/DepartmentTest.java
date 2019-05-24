@@ -5,6 +5,7 @@ import org.junit.platform.runner.JUnitPlatform;
 import org.junit.runner.RunWith;
 
 import ua.com.foxminded.task.domain.repository.DepartmentModelRepository;
+import ua.com.foxminded.task.domain.repository.GroupModelRepository;
 import ua.com.foxminded.task.domain.repository.TestModel;
 
 @RunWith(JUnitPlatform.class)
@@ -14,6 +15,9 @@ class DepartmentTest {
     void test() {
         Department departmentTest = DepartmentModelRepository.getModel(TestModel.MODEL_1);
         System.out.println(departmentTest.getGroups());
+        departmentTest.addGroup(GroupModelRepository.getModel(TestModel.MODEL_2));
+        System.out.println(departmentTest.getGroups());
+        
         System.out.println(departmentTest.getTeachers());
         System.out.println("\n test department \n");
     }
