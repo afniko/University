@@ -27,7 +27,7 @@ public class DepartmentModelRepository {
         case MODEL_5:
             createModel5(testModel);
             break;
-        case MODEL_6:
+        case MODEL_EMPTY:
             createModel6(testModel);
             break;
         }
@@ -67,7 +67,7 @@ public class DepartmentModelRepository {
             createModel6(testModel);
             departments.add(department);
             break;
-        case MODEL_6:
+        case MODEL_EMPTY:
             createModel3(testModel);
             departments.add(department);
             createModel5(testModel);
@@ -125,10 +125,13 @@ public class DepartmentModelRepository {
     private static void createModel6(TestModel testModel) {
         department = new Department();
         department.setId(6);
-        department.setTitle("department6");
-        department.setDescription("bla bla bla 6");
-        department.setGroups(GroupModelRepository.getList(testModel));
-        department.setTeachers(TeacherModelRepository.getList(testModel));
+        department.setTitle("test");
     }
 
+    public static Department getEmptyModel() {
+        Department department = new Department();
+        department.setId(6);
+        department.setTitle("test");
+        return department;
+    }
 }

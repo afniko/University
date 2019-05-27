@@ -28,7 +28,7 @@ public class GroupModelRepository {
         case MODEL_5:
             createModel5(testModel);
             break;
-        case MODEL_6:
+        case MODEL_EMPTY:
             createModel6(testModel);
             break;
         }
@@ -68,7 +68,7 @@ public class GroupModelRepository {
             createModel6(testModel);
             groups.add(group);
             break;
-        case MODEL_6:
+        case MODEL_EMPTY:
             createModel3(testModel);
             groups.add(group);
             createModel5(testModel);
@@ -123,7 +123,23 @@ public class GroupModelRepository {
         group.setId(6);
         group.setTitle("group6");
         group.setYearEntry(Date.valueOf("2016-01-01"));
-        group.setStudents(StudentModelRepository.getList(testModel));
+        group.setStudents(StudentModelRepository.getList(TestModel.MODEL_1));
     }
 
+    public static Group getModel() {
+        Group group = new Group();
+        group.setId(6);
+        group.setTitle("group6");
+        group.setYearEntry(Date.valueOf("2016-01-01"));
+        group.setStudents(StudentModelRepository.getList(TestModel.MODEL_1));
+        return group;
+    }
+
+    public static Group getEmptyModel() {
+        Group group = new Group();
+        group.setId(7);
+        group.setTitle("group empty");
+        group.setYearEntry(Date.valueOf("2016-01-01"));
+        return group;
+    }
 }

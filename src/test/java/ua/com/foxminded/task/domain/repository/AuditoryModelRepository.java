@@ -27,7 +27,7 @@ public class AuditoryModelRepository {
         case MODEL_5:
             createModel5(testModel);
             break;
-        case MODEL_6:
+        case MODEL_EMPTY:
             createModel6(testModel);
             break;
         }
@@ -67,7 +67,7 @@ public class AuditoryModelRepository {
             createModel6(testModel);
             auditories.add(auditory);
             break;
-        case MODEL_6:
+        case MODEL_EMPTY:
             createModel3(testModel);
             auditories.add(auditory);
             createModel5(testModel);

@@ -25,7 +25,7 @@ public class LectureModelRepository {
         case MODEL_5:
             createModel5();
             break;
-        case MODEL_6:
+        case MODEL_EMPTY:
             createModel6();
             break;
         }

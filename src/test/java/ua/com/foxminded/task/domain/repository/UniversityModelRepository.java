@@ -23,7 +23,7 @@ public class UniversityModelRepository {
         case MODEL_5:
             createModel5(testModel);
             break;
-        case MODEL_6:
+        case MODEL_EMPTY:
             createModel6(testModel);
             break;
         }

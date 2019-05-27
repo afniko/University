@@ -27,7 +27,7 @@ public class FacultyModelRepository {
         case MODEL_5:
             createModel5(testModel);
             break;
-        case MODEL_6:
+        case MODEL_EMPTY:
             createModel6(testModel);
             break;
         }
@@ -67,7 +67,7 @@ public class FacultyModelRepository {
             createModel6(testModel);
             faculties.add(faculty);
             break;
-        case MODEL_6:
+        case MODEL_EMPTY:
             createModel3(testModel);
             faculties.add(faculty);
             createModel5(testModel);

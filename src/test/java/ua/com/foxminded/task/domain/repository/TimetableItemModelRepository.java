@@ -28,7 +28,7 @@ public class TimetableItemModelRepository {
         case MODEL_5:
             createModel5(testModel);
             break;
-        case MODEL_6:
+        case MODEL_EMPTY:
             createModel6(testModel);
             break;
         }
@@ -76,7 +76,7 @@ public class TimetableItemModelRepository {
             createModel6(testModel);
             timetableItems.add(timetableItem);
             break;
-        case MODEL_6:
+        case MODEL_EMPTY:
             createModel3(testModel);
             timetableItems.add(timetableItem);
             createModel5(testModel);

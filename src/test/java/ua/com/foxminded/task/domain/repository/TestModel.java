@@ -6,5 +6,5 @@ public enum TestModel {
     MODEL_3,
     MODEL_4,
     MODEL_5,
-    MODEL_6
+    MODEL_EMPTY
 }

@@ -18,6 +18,7 @@ public class Department {
 
     public void addGroup(Group group) {
         groups.add(group);
+        group.setDepartment(this);
     }
 
     public void removeGroup(Group group) {
