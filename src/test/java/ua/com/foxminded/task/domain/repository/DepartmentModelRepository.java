@@ -1,5 +1,6 @@
 package ua.com.foxminded.task.domain.repository;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -15,7 +16,8 @@ public class DepartmentModelRepository {
     }
 
     public static List<Department> getModels() {
-        return Arrays.asList(getModel1(), getModel2(), getModel3());
+        List<Department> departments = Arrays.asList(getModel1(), getModel2(), getModel3());
+        return new ArrayList<>(departments);
     }
 
     public static Department getModel1() {
@@ -28,7 +30,7 @@ public class DepartmentModelRepository {
         return department;
     }
 
-    public static Department getModel2() {
+    private static Department getModel2() {
         Department department = new Department();
         department.setId(2);
         department.setTitle("department2");
@@ -38,7 +40,7 @@ public class DepartmentModelRepository {
         return department;
     }
 
-    public static Department getModel3() {
+    private static Department getModel3() {
         Department department = new Department();
         department.setId(3);
         department.setTitle("department3");

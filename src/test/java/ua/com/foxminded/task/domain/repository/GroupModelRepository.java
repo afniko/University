@@ -1,6 +1,7 @@
 package ua.com.foxminded.task.domain.repository;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -9,7 +10,8 @@ import ua.com.foxminded.task.domain.Group;
 public class GroupModelRepository {
 
     public static List<Group> getModels() {
-        return Arrays.asList(getModel1(), getModel2(), getModel3(), getModel4());
+        List<Group> groups = Arrays.asList(getModel1(), getModel2(), getModel3(), getModel4());
+        return new ArrayList<>(groups);
     }
 
     public static Group getEmptyModel() {
