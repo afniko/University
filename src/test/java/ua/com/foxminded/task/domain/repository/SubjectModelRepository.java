@@ -1,5 +1,6 @@
 package ua.com.foxminded.task.domain.repository;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -14,7 +15,8 @@ public class SubjectModelRepository {
     }
 
     public static List<Subject> getModels() {
-        return Arrays.asList(createModel1(), createModel2(), createModel3());
+        List<Subject> subjects = Arrays.asList(createModel1(), createModel2(), createModel3());
+        return new ArrayList<>(subjects);
     }
 
     private static Subject createModel1() {

@@ -19,6 +19,17 @@ public class TeacherModelRepository {
         teacher.setSubjects(SubjectModelRepository.getModels());
         return teacher;
     }
+    
+    public static Teacher getEmptyModel() {
+        Teacher teacher = new Teacher();
+        teacher.setId(6);
+        teacher.setFirstName("firstName6");
+        teacher.setMiddleName("middleName6");
+        teacher.setLastName("lastName6");
+        teacher.setBirthday(Date.valueOf("1980-06-25"));
+        teacher.setIdFees(1111111161);
+        return teacher;
+    }
 
     public static List<Teacher> getModels() {
         return Arrays.asList(createModel1(), createModel2(), createModel3());
