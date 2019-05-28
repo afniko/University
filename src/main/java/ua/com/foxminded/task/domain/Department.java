@@ -17,20 +17,23 @@ public class Department {
     private List<Teacher> teachers = new ArrayList<>();
 
     public void addGroup(Group group) {
-        groups.add(group);
         group.setDepartment(this);
+        groups.add(group);
     }
 
     public void removeGroup(Group group) {
         groups.remove(group);
+        group.setDepartment(null);
     }
 
     public void addTeacher(Teacher teacher) {
         teachers.add(teacher);
+        teacher.setDepartment(this);
     }
 
     public void removeTeacher(Teacher teacher) {
         teachers.remove(teacher);
+        teacher.setDepartment(null);
     }
 
     public int getId() {

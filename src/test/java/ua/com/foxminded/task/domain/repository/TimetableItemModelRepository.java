@@ -1,155 +1,87 @@
 package ua.com.foxminded.task.domain.repository;
 
 import java.sql.Date;
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import ua.com.foxminded.task.domain.TimetableItem;
 
 public class TimetableItemModelRepository {
 
-    private static TimetableItem timetableItem;
-    private static List<TimetableItem> timetableItems;
+    public static List<TimetableItem> getModels() {
+        return Arrays.asList(getModel1(), getModel2(), getModel3(), getModel4(), getModel5(), getModel6());
+    }
 
-    public static TimetableItem getModel(TestModel testModel) {
-        switch (testModel) {
-        case MODEL_1:
-            createModel1(testModel);
-            break;
-        case MODEL_2:
-            createModel2(testModel);
-            break;
-        case MODEL_3:
-            createModel3(testModel);
-            break;
-        case MODEL_4:
-            createModel4(testModel);
-            break;
-        case MODEL_5:
-            createModel5(testModel);
-            break;
-        case MODEL_EMPTY:
-            createModel6(testModel);
-            break;
-        }
+    private static TimetableItem getModel1() {
+        TimetableItem timetableItem = new TimetableItem();
+        timetableItem.setId(1);
+        timetableItem.setSubject(SubjectModelRepository.getModel());
+        timetableItem.setAuditory(AuditoryModelRepository.getModel1());
+        timetableItem.setGroups(GroupModelRepository.getModels());
+        timetableItem.setLecture(LectureModelRepository.getModel1());
+        timetableItem.setDate(Date.valueOf("2019-01-21"));
+        timetableItem.setTeacher(TeacherModelRepository.getModel());
         return timetableItem;
     }
 
-    public static List<TimetableItem> getList(TestModel testModel) {
-        timetableItems = new ArrayList<>();
-        switch (testModel) {
-        case MODEL_1:
-            createModel1(testModel);
-            timetableItems.add(timetableItem);
-            createModel2(testModel);
-            timetableItems.add(timetableItem);
-            createModel3(testModel);
-            timetableItems.add(timetableItem);
-            createModel4(testModel);
-            timetableItems.add(timetableItem);
-            createModel5(testModel);
-            timetableItems.add(timetableItem);
-            createModel6(testModel);
-            timetableItems.add(timetableItem);
-            break;
-        case MODEL_2:
-            createModel2(testModel);
-            timetableItems.add(timetableItem);
-            createModel3(testModel);
-            timetableItems.add(timetableItem);
-            break;
-        case MODEL_3:
-            createModel1(testModel);
-            timetableItems.add(timetableItem);
-            createModel6(testModel);
-            timetableItems.add(timetableItem);
-            break;
-        case MODEL_4:
-            createModel4(testModel);
-            timetableItems.add(timetableItem);
-            createModel5(testModel);
-            timetableItems.add(timetableItem);
-            break;
-        case MODEL_5:
-            createModel3(testModel);
-            timetableItems.add(timetableItem);
-            createModel6(testModel);
-            timetableItems.add(timetableItem);
-            break;
-        case MODEL_EMPTY:
-            createModel3(testModel);
-            timetableItems.add(timetableItem);
-            createModel5(testModel);
-            timetableItems.add(timetableItem);
-            break;
-        }
-        return timetableItems;
-    }
-
-    private static void createModel1(TestModel testModel) {
-        timetableItem = new TimetableItem();
-        timetableItem.setId(1);
-        timetableItem.setSubject(SubjectModelRepository.getModel(testModel));
-        timetableItem.setAuditory(AuditoryModelRepository.getModel(testModel));
-        timetableItem.setGroups(GroupModelRepository.getList(testModel));
-        timetableItem.setLecture(LectureModelRepository.getModel(testModel));
-        timetableItem.setDate(Date.valueOf("2019-01-21"));
-        timetableItem.setTeacher(TeacherModelRepository.getModel(testModel));
-    }
-
-    private static void createModel2(TestModel testModel) {
-        timetableItem = new TimetableItem();
+    private static TimetableItem getModel2() {
+        TimetableItem timetableItem = new TimetableItem();
         timetableItem.setId(2);
-        timetableItem.setSubject(SubjectModelRepository.getModel(testModel));
-        timetableItem.setAuditory(AuditoryModelRepository.getModel(testModel));
-        timetableItem.setGroups(GroupModelRepository.getList(testModel));
-        timetableItem.setLecture(LectureModelRepository.getModel(testModel));
+        timetableItem.setSubject(SubjectModelRepository.getModel());
+        timetableItem.setAuditory(AuditoryModelRepository.getModel2());
+        timetableItem.setGroups(GroupModelRepository.getModels());
+        timetableItem.setLecture(LectureModelRepository.getModel2());
         timetableItem.setDate(Date.valueOf("2019-01-21"));
-        timetableItem.setTeacher(TeacherModelRepository.getModel(testModel));
+        timetableItem.setTeacher(TeacherModelRepository.getModel());
+        return timetableItem;
     }
 
-    private static void createModel3(TestModel testModel) {
-        timetableItem = new TimetableItem();
+    private static TimetableItem getModel3() {
+        TimetableItem timetableItem = new TimetableItem();
         timetableItem.setId(3);
-        timetableItem.setSubject(SubjectModelRepository.getModel(testModel));
-        timetableItem.setAuditory(AuditoryModelRepository.getModel(testModel));
-        timetableItem.setGroups(GroupModelRepository.getList(testModel));
-        timetableItem.setLecture(LectureModelRepository.getModel(testModel));
+        timetableItem.setSubject(SubjectModelRepository.getModel());
+        timetableItem.setAuditory(AuditoryModelRepository.getModel3());
+        timetableItem.setGroups(GroupModelRepository.getModels());
+        timetableItem.setLecture(LectureModelRepository.getModel3());
         timetableItem.setDate(Date.valueOf("2019-01-21"));
-        timetableItem.setTeacher(TeacherModelRepository.getModel(testModel));
+        timetableItem.setTeacher(TeacherModelRepository.getModel());
+        return timetableItem;
     }
 
-    private static void createModel4(TestModel testModel) {
-        timetableItem = new TimetableItem();
+    private static TimetableItem getModel4() {
+        TimetableItem timetableItem = new TimetableItem();
         timetableItem.setId(4);
-        timetableItem.setSubject(SubjectModelRepository.getModel(testModel));
-        timetableItem.setAuditory(AuditoryModelRepository.getModel(testModel));
-        timetableItem.setGroups(GroupModelRepository.getList(testModel));
-        timetableItem.setLecture(LectureModelRepository.getModel(testModel));
-        timetableItem.setDate(Date.valueOf("2019-01-22"));
-        timetableItem.setTeacher(TeacherModelRepository.getModel(testModel));
+        timetableItem.setSubject(SubjectModelRepository.getModel());
+        timetableItem.setAuditory(AuditoryModelRepository.getModel4());
+        timetableItem.setGroups(GroupModelRepository.getModels());
+        timetableItem.setLecture(LectureModelRepository.getModel4());
+        timetableItem.setDate(Date.valueOf("2019-01-21"));
+        timetableItem.setTeacher(TeacherModelRepository.getModel());
+        return timetableItem;
     }
 
-    private static void createModel5(TestModel testModel) {
-        timetableItem = new TimetableItem();
+    private static TimetableItem getModel5() {
+        TimetableItem timetableItem = new TimetableItem();
         timetableItem.setId(5);
-        timetableItem.setSubject(SubjectModelRepository.getModel(testModel));
-        timetableItem.setAuditory(AuditoryModelRepository.getModel(testModel));
-        timetableItem.setGroups(GroupModelRepository.getList(testModel));
-        timetableItem.setLecture(LectureModelRepository.getModel(testModel));
-        timetableItem.setDate(Date.valueOf("2019-02-23"));
-        timetableItem.setTeacher(TeacherModelRepository.getModel(testModel));
+        timetableItem.setSubject(SubjectModelRepository.getModel());
+        timetableItem.setAuditory(AuditoryModelRepository.getModel5());
+        timetableItem.setGroups(GroupModelRepository.getModels());
+        timetableItem.setLecture(LectureModelRepository.getModel5());
+        timetableItem.setDate(Date.valueOf("2019-01-21"));
+        timetableItem.setTeacher(TeacherModelRepository.getModel());
+        return timetableItem;
     }
 
-    private static void createModel6(TestModel testModel) {
-        timetableItem = new TimetableItem();
+    private static TimetableItem getModel6() {
+        TimetableItem timetableItem = new TimetableItem();
         timetableItem.setId(6);
-        timetableItem.setSubject(SubjectModelRepository.getModel(testModel));
-        timetableItem.setAuditory(AuditoryModelRepository.getModel(testModel));
-        timetableItem.setGroups(GroupModelRepository.getList(testModel));
-        timetableItem.setLecture(LectureModelRepository.getModel(testModel));
-        timetableItem.setDate(Date.valueOf("2019-01-01"));
-        timetableItem.setTeacher(TeacherModelRepository.getModel(testModel));
+        timetableItem.setSubject(SubjectModelRepository.getModel());
+        timetableItem.setAuditory(AuditoryModelRepository.getModel6());
+        timetableItem.setGroups(GroupModelRepository.getModels());
+        timetableItem.setLecture(LectureModelRepository.getModel6());
+        timetableItem.setDate(Date.valueOf("2019-01-21"));
+        timetableItem.setTeacher(TeacherModelRepository.getModel());
+        return timetableItem;
     }
 
 }

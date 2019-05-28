@@ -4,66 +4,46 @@ import ua.com.foxminded.task.domain.AuditoryType;
 
 public class AuditoryTypeModelRepository {
 
-    private static AuditoryType auditoryType;
-
-    public static AuditoryType getModel(TestModel testModel) {
-        switch (testModel) {
-        case MODEL_1:
-            createModel1();
-            break;
-        case MODEL_2:
-            createModel2();
-            break;
-        case MODEL_3:
-            createModel3();
-            break;
-        case MODEL_4:
-            createModel4();
-            break;
-        case MODEL_5:
-            createModel5();
-            break;
-        case MODEL_EMPTY:
-            createModel6();
-            break;
-        }
+    public static AuditoryType getModel1() {
+        AuditoryType auditoryType = new AuditoryType();
+        auditoryType.setId(1);
+        auditoryType.setType("Lecture");
         return auditoryType;
     }
 
-    private static void createModel1() {
-        auditoryType = new AuditoryType();
-        auditoryType.setId(1);
-        auditoryType.setType("Lecture");
-    }
-
-    private static void createModel2() {
-        auditoryType = new AuditoryType();
+    public static AuditoryType getModel2() {
+        AuditoryType auditoryType = new AuditoryType();
         auditoryType.setId(2);
         auditoryType.setType("Practic");
+        return auditoryType;
     }
 
-    private static void createModel3() {
-        auditoryType = new AuditoryType();
+    public static AuditoryType getModel3() {
+        AuditoryType auditoryType = new AuditoryType();
         auditoryType.setId(3);
         auditoryType.setType("Laboratory");
+        return auditoryType;
     }
 
-    private static void createModel4() {
-        auditoryType = new AuditoryType();
+    public static AuditoryType getModel4() {
+        AuditoryType auditoryType = new AuditoryType();
         auditoryType.setId(4);
         auditoryType.setType("Lecture small");
+        return auditoryType;
     }
 
-    private static void createModel5() {
-        auditoryType = new AuditoryType();
+    public static AuditoryType getModel5() {
+        AuditoryType auditoryType = new AuditoryType();
         auditoryType.setId(5);
         auditoryType.setType("Holl");
+        return auditoryType;
     }
 
-    private static void createModel6() {
-        auditoryType = new AuditoryType();
+    public static AuditoryType getModel6() {
+        AuditoryType auditoryType = new AuditoryType();
         auditoryType.setId(6);
         auditoryType.setType("Recriation");
+        return auditoryType;
     }
 
 }
