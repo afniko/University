@@ -19,6 +19,14 @@ public class TimetableItem {
     private Date date;
     private Teacher teacher;
 
+    public void addGroup(Group group) {
+        groups.add(group);
+    }
+
+    public void removeGroup(Group group) {
+        groups.remove(group);
+    }
+
     public int getId() {
         return id;
     }

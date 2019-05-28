@@ -1,6 +1,7 @@
 package ua.com.foxminded.task.domain.repository;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -9,10 +10,18 @@ import ua.com.foxminded.task.domain.TimetableItem;
 public class TimetableItemModelRepository {
 
     public static List<TimetableItem> getModels() {
-        return Arrays.asList(getModel1(), getModel2(), getModel3(), getModel4(), getModel5(), getModel6());
+        List<TimetableItem> timetableItems = Arrays.asList(getModel1(), getModel2(), getModel3(), getModel4(), getModel5(), getModel6());
+        return new ArrayList<>(timetableItems);
     }
 
-    private static TimetableItem getModel1() {
+    public static TimetableItem getEmptyModel() {
+        TimetableItem timetableItem = new TimetableItem();
+        timetableItem.setId(1);
+        timetableItem.setDate(Date.valueOf("2019-01-21"));
+        return timetableItem;
+    }
+
+    public static TimetableItem getModel1() {
         TimetableItem timetableItem = new TimetableItem();
         timetableItem.setId(1);
         timetableItem.setSubject(SubjectModelRepository.getModel());
