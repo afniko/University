@@ -1,6 +1,7 @@
 package ua.com.foxminded.task.domain.repository;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -9,10 +10,11 @@ import ua.com.foxminded.task.domain.Student;
 public class StudentModelRepository {
 
     public static List<Student> getModels() {
-        return Arrays.asList(createModel1(), createModel2(), createModel3(), createModel4(), createModel5(), createModel6());
+        List<Student> students = Arrays.asList(getModel1(), getModel2(), getModel3(), getModel4(), getModel5(), getModel6());
+        return new ArrayList<>(students);
     }
 
-    private static Student createModel1() {
+    public static Student getModel1() {
         Student student = new Student();
         student.setId(1);
         student.setFirstName("firstName1");
@@ -23,7 +25,7 @@ public class StudentModelRepository {
         return student;
     }
 
-    private static Student createModel2() {
+    private static Student getModel2() {
         Student student = new Student();
         student.setId(2);
         student.setFirstName("firstName2");
@@ -34,7 +36,7 @@ public class StudentModelRepository {
         return student;
     }
 
-    private static Student createModel3() {
+    private static Student getModel3() {
         Student student = new Student();
         student.setId(3);
         student.setFirstName("firstName3");
@@ -45,7 +47,7 @@ public class StudentModelRepository {
         return student;
     }
 
-    private static Student createModel4() {
+    private static Student getModel4() {
         Student student = new Student();
         student.setId(4);
         student.setFirstName("firstName4");
@@ -56,7 +58,7 @@ public class StudentModelRepository {
         return student;
     }
 
-    private static Student createModel5() {
+    private static Student getModel5() {
         Student student = new Student();
         student.setId(5);
         student.setFirstName("firstName5");
@@ -67,7 +69,7 @@ public class StudentModelRepository {
         return student;
     }
 
-    private static Student createModel6() {
+    private static Student getModel6() {
         Student student = new Student();
         student.setId(6);
         student.setFirstName("firstName6");

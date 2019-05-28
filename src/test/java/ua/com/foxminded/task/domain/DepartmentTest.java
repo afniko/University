@@ -24,7 +24,7 @@ class DepartmentTest {
     }
 
     @Test
-    void whenRemoveGroupToDepartment_thenDepartmentNonContainsGroup() {
+    void whenRemoveGroupFromDepartment_thenDepartmentNonContainsGroup() {
         Department department = DepartmentModelRepository.getModel1();
         Group group = GroupModelRepository.getModel1();
         department.removeGroup(group);
@@ -40,7 +40,7 @@ class DepartmentTest {
     }
 
     @Test
-    void whenRemoveGroupToDepartment_thenGroupNonContainsDepartment() {
+    void whenRemoveGroupFromDepartment_thenGroupNonContainsDepartment() {
         Department department = DepartmentModelRepository.getModel1();
         Group group = GroupModelRepository.getModel1();
         group.setDepartment(department);
@@ -57,7 +57,7 @@ class DepartmentTest {
     }
 
     @Test
-    void whenRemoveTeacherToDepartment_thenDepartmentNonContainsTeacher() {
+    void whenRemoveTeacherFromDepartment_thenDepartmentNonContainsTeacher() {
         Department department = DepartmentModelRepository.getModel1();
         Teacher teacher = TeacherModelRepository.getModel();
         department.removeTeacher(teacher);
@@ -73,7 +73,7 @@ class DepartmentTest {
     }
 
     @Test
-    void whenRemoveTeacherToDepartment_thenTeacherNonContainsDepartment() {
+    void whenRemoveTeacherFromDepartment_thenTeacherNonContainsDepartment() {
         Department department = DepartmentModelRepository.getEmptyModel();
         Teacher teacher = TeacherModelRepository.getModel();
         teacher.setDepartment(department);
