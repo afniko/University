@@ -1,5 +1,6 @@
 package ua.com.foxminded.task.domain.repository;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -8,7 +9,8 @@ import ua.com.foxminded.task.domain.Auditory;
 public class AuditoryModelRepository {
 
     public static List<Auditory> getModels() {
-        return Arrays.asList(getModel1(), getModel2(), getModel3(), getModel4(), getModel5(), getModel6());
+        List<Auditory> auditories = Arrays.asList(getModel1(), getModel2(), getModel3(), getModel4(), getModel5(), getModel6());
+        return new ArrayList<>(auditories);
     }
 
     public static Auditory getModel1() {

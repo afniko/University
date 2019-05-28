@@ -1,12 +1,13 @@
 package ua.com.foxminded.task.domain;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class Timetable {
 
-    private List<TimetableItem> timetableItems;
+    private List<TimetableItem> timetableItems = new ArrayList<>();
 
     public Timetable() {
     }
@@ -15,7 +16,7 @@ public class Timetable {
         this.timetableItems = timetableItems;
     }
 
-    public Timetable findPeriod(Student student, Date startPeriod, Date endPeriod) {
+    public Timetable findSchedule(Student student, Date startPeriod, Date endPeriod) {
         List<TimetableItem> timetableItemsFiltered = timetableItems.stream()
                 .filter(timetableItems -> timetableItems.getGroups().stream().anyMatch(group->group.getStudents().contains(student)))
                 .filter(date -> (date.getDate().compareTo(startPeriod) > 0 && date.getDate().compareTo(endPeriod) < 0))
@@ -23,7 +24,7 @@ public class Timetable {
         return new Timetable(timetableItemsFiltered);
     }
 
-    public Timetable findPeriod(Teacher teacher, Date startPeriod, Date endPeriod) {
+    public Timetable findSchedule(Teacher teacher, Date startPeriod, Date endPeriod) {
         List<TimetableItem> timetableItemsFiltered = timetableItems.stream()
                 .filter(t -> t.getTeacher().equals(teacher))
                 .filter(d -> (d.getDate().compareTo(startPeriod) > 0 && d.getDate().compareTo(endPeriod) < 0))

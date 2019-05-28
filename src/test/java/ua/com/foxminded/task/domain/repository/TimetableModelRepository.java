@@ -12,4 +12,9 @@ public class TimetableModelRepository {
         return timetable;
     }
 
+    public static Timetable getEmptyModel() {
+        timetable = new Timetable();
+        return timetable;
+    }
+
 }

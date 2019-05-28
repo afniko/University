@@ -13,4 +13,9 @@ public class UniversityModelRepository {
         return university;
     }
 
+    public static University getEmptyModel() {
+        University university = new University();
+        university.setTitle("university");
+        return university;
+    }
 }

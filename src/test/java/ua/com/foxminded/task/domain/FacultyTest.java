@@ -22,7 +22,7 @@ public class FacultyTest {
     }
 
     @Test
-    public void whenRemoveStudentFromGroup_thenGroupNonContainsStudent() {
+    public void whenRemoveDepartmentFromFaculty_thenFacultyNonContainsDepartment() {
         Faculty faculty = FacultyModelRepository.getModel1();
         Department department = DepartmentModelRepository.getModel1();
         faculty.removeDepartment(department);
