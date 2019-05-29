@@ -15,18 +15,18 @@ public class TeacherTest {
 
     @Test
     public void whenAddSubjectToTeacher_thenTeacherContainsSubject() {
-        Teacher teacher  = TeacherModelRepository.getEmptyModel();
+        Teacher teacher = TeacherModelRepository.getEmptyModel();
         Subject subject = SubjectModelRepository.getModel();
         teacher.addSubject(subject);
         assertTrue(teacher.getSubjects().contains(subject));
     }
-    
+
     @Test
-    public void whenRemoveSubjectToTeacher_thenTeacherNonContainsSubject() {
-        Teacher teacher  = TeacherModelRepository.getModel1();
+    public void whenRemoveSubjectFromTeacher_thenTeacherNonContainsSubject() {
+        Teacher teacher = TeacherModelRepository.getModel1();
         Subject subject = SubjectModelRepository.getModel();
         teacher.removeSubject(subject);
         assertFalse(teacher.getSubjects().contains(subject));
     }
-    
+
 }

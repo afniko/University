@@ -21,6 +21,15 @@ public class GroupTest {
         group.addStudent(student);
         assertTrue(group.getStudents().contains(student));
     }
+
+    @Test
+    public void whenAddStudentToGroup_thenStudentContainsGroup() {
+        Group group = GroupModelRepository.getEmptyModel();
+        Student student = StudentModelRepository.getModel1();
+        group.addStudent(student);
+        assertTrue(student.getGroup().equals(group));
+    }
+
     @Test
     public void whenRemoveStudentFromGroup_thenGroupNonContainsStudent() {
         Group group = GroupModelRepository.getModel1();
@@ -30,13 +39,6 @@ public class GroupTest {
     }
 
     @Test
-    public void whenAddStudentToGroup_thenStudentContainsGroup() {
-        Group group = GroupModelRepository.getEmptyModel();
-        Student student = StudentModelRepository.getModel1();
-        group.addStudent(student);
-        assertTrue(student.getGroup().equals(group));
-    }
-    @Test
     public void whenRemoveStudentFromGroup_thenStudentNonContainsGroup() {
         Group group = GroupModelRepository.getModel1();
         Student student = StudentModelRepository.getModel1();
@@ -44,6 +46,5 @@ public class GroupTest {
         group.removeStudent(student);
         assertNull(student.getGroup());
     }
-    
-    
+
 }
