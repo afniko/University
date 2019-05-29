@@ -3,11 +3,6 @@ package ua.com.foxminded.task.domain;
 import java.util.ArrayList;
 import java.util.List;
 
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
-
-@EqualsAndHashCode(callSuper = true, of = { "department" })
-@ToString(callSuper = true, of = { "department" })
 public class Teacher extends Person {
 
     private List<Subject> subjects = new ArrayList<>();
@@ -39,6 +34,36 @@ public class Teacher extends Person {
 
     public void setDepartment(Department department) {
         this.department = department;
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = super.hashCode();
+        result = prime * result + ((department == null) ? 0 : department.hashCode());
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (!super.equals(obj))
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Teacher other = (Teacher) obj;
+        if (department == null) {
+            if (other.department != null)
+                return false;
+        } else if (!department.equals(other.department))
+            return false;
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "Teacher [department=" + department + "]";
     }
 
 }

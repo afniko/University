@@ -4,11 +4,6 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
-
-@EqualsAndHashCode(of = { "id", "title", "yearEntry" })
-@ToString(of = { "id", "title", "department" })
 public class Group {
 
     private int id;
@@ -65,6 +60,45 @@ public class Group {
 
     public void setYearEntry(Date yearEntry) {
         this.yearEntry = yearEntry;
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + id;
+        result = prime * result + ((title == null) ? 0 : title.hashCode());
+        result = prime * result + ((yearEntry == null) ? 0 : yearEntry.hashCode());
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Group other = (Group) obj;
+        if (id != other.id)
+            return false;
+        if (title == null) {
+            if (other.title != null)
+                return false;
+        } else if (!title.equals(other.title))
+            return false;
+        if (yearEntry == null) {
+            if (other.yearEntry != null)
+                return false;
+        } else if (!yearEntry.equals(other.yearEntry))
+            return false;
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "Group [id=" + id + ", title=" + title + ", department=" + department + ", yearEntry=" + yearEntry + "]";
     }
 
 }

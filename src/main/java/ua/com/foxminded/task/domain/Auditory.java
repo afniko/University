@@ -1,10 +1,5 @@
 package ua.com.foxminded.task.domain;
 
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
-
-@EqualsAndHashCode(of = { "auditoryNumber" })
-@ToString(of = { "auditoryNumber" })
 public class Auditory {
 
     private int id;
@@ -51,6 +46,36 @@ public class Auditory {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((auditoryNumber == null) ? 0 : auditoryNumber.hashCode());
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Auditory other = (Auditory) obj;
+        if (auditoryNumber == null) {
+            if (other.auditoryNumber != null)
+                return false;
+        } else if (!auditoryNumber.equals(other.auditoryNumber))
+            return false;
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "Auditory [id=" + id + ", auditoryNumber=" + auditoryNumber + ", type=" + type + "]";
     }
 
 }

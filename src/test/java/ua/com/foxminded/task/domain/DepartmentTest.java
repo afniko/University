@@ -29,7 +29,6 @@ class DepartmentTest {
         Department department = DepartmentModelRepository.getModel1();
         Group group = GroupModelRepository.getModel1();
         group.setDepartment(department);
-        System.out.println(group.getDepartment());
         department.removeGroup(group);
         assertFalse(department.getGroups().contains(group));
         assertNull(group.getDepartment());
