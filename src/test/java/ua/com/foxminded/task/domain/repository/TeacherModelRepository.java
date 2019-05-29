@@ -8,17 +8,6 @@ import ua.com.foxminded.task.domain.Teacher;
 
 public class TeacherModelRepository {
 
-    public static Teacher getModel() {
-        Teacher teacher = new Teacher();
-        teacher.setId(6);
-        teacher.setFirstName("firstName6");
-        teacher.setMiddleName("middleName6");
-        teacher.setLastName("lastName6");
-        teacher.setBirthday(Date.valueOf("1980-06-25"));
-        teacher.setIdFees(1111111161);
-        teacher.setSubjects(SubjectModelRepository.getModels());
-        return teacher;
-    }
     
     public static Teacher getEmptyModel() {
         Teacher teacher = new Teacher();
@@ -32,10 +21,22 @@ public class TeacherModelRepository {
     }
 
     public static List<Teacher> getModels() {
-        return Arrays.asList(createModel1(), createModel2(), createModel3());
+        return Arrays.asList(getModel2(), getModel3(), createModel3());
     }
 
-    private static Teacher createModel1() {
+    public static Teacher getModel1() {
+        Teacher teacher = new Teacher();
+        teacher.setId(6);
+        teacher.setFirstName("firstName6");
+        teacher.setMiddleName("middleName6");
+        teacher.setLastName("lastName6");
+        teacher.setBirthday(Date.valueOf("1980-06-25"));
+        teacher.setIdFees(1111111161);
+        teacher.setSubjects(SubjectModelRepository.getModels());
+        return teacher;
+    }
+    
+    public static Teacher getModel2() {
         Teacher teacher = new Teacher();
         teacher.setId(1);
         teacher.setFirstName("firstName1");
@@ -47,7 +48,7 @@ public class TeacherModelRepository {
         return teacher;
     }
 
-    private static Teacher createModel2() {
+    public static Teacher getModel3() {
         Teacher teacher = new Teacher();
         teacher.setId(2);
         teacher.setFirstName("firstName2");

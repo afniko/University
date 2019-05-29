@@ -51,7 +51,7 @@ class DepartmentTest {
     @Test
     void whenAddTeacherToDepartment_thenDepartmentContainsTeacher() {
         Department department = DepartmentModelRepository.getEmptyModel();
-        Teacher teacher = TeacherModelRepository.getModel();
+        Teacher teacher = TeacherModelRepository.getModel1();
         department.addTeacher(teacher);
         assertTrue(department.getTeachers().contains(teacher));
     }
@@ -59,7 +59,7 @@ class DepartmentTest {
     @Test
     void whenRemoveTeacherFromDepartment_thenDepartmentNonContainsTeacher() {
         Department department = DepartmentModelRepository.getModel1();
-        Teacher teacher = TeacherModelRepository.getModel();
+        Teacher teacher = TeacherModelRepository.getModel1();
         department.removeTeacher(teacher);
         assertFalse(department.getTeachers().contains(teacher));
     }
@@ -67,7 +67,7 @@ class DepartmentTest {
     @Test
     void whenAddTeacherToDepartment_thenTeacherContainsDepartment() {
         Department department = DepartmentModelRepository.getEmptyModel();
-        Teacher teacher = TeacherModelRepository.getModel();
+        Teacher teacher = TeacherModelRepository.getModel1();
         department.addTeacher(teacher);
         assertTrue(teacher.getDepartment().equals(department));
     }
@@ -75,7 +75,7 @@ class DepartmentTest {
     @Test
     void whenRemoveTeacherFromDepartment_thenTeacherNonContainsDepartment() {
         Department department = DepartmentModelRepository.getEmptyModel();
-        Teacher teacher = TeacherModelRepository.getModel();
+        Teacher teacher = TeacherModelRepository.getModel1();
         teacher.setDepartment(department);
         department.removeTeacher(teacher);
         assertNull(teacher.getDepartment());

@@ -23,7 +23,7 @@ public class TeacherTest {
     
     @Test
     public void whenRemoveSubjectToTeacher_thenTeacherNonContainsSubject() {
-        Teacher teacher  = TeacherModelRepository.getModel();
+        Teacher teacher  = TeacherModelRepository.getModel1();
         Subject subject = SubjectModelRepository.getModel();
         teacher.removeSubject(subject);
         assertFalse(teacher.getSubjects().contains(subject));

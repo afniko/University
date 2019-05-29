@@ -29,67 +29,67 @@ public class TimetableItemModelRepository {
         timetableItem.setGroups(GroupModelRepository.getModels());
         timetableItem.setLecture(LectureModelRepository.getModel1());
         timetableItem.setDate(Date.valueOf("2019-01-21"));
-        timetableItem.setTeacher(TeacherModelRepository.getModel());
+        timetableItem.setTeacher(TeacherModelRepository.getModel1());
         return timetableItem;
     }
 
-    private static TimetableItem getModel2() {
+    public static TimetableItem getModel2() {
         TimetableItem timetableItem = new TimetableItem();
         timetableItem.setId(2);
         timetableItem.setSubject(SubjectModelRepository.getModel());
         timetableItem.setAuditory(AuditoryModelRepository.getModel2());
         timetableItem.setGroups(GroupModelRepository.getModels());
         timetableItem.setLecture(LectureModelRepository.getModel2());
-        timetableItem.setDate(Date.valueOf("2019-01-21"));
-        timetableItem.setTeacher(TeacherModelRepository.getModel());
+        timetableItem.setDate(Date.valueOf("2019-01-22"));
+        timetableItem.setTeacher(TeacherModelRepository.getModel1());
         return timetableItem;
     }
 
-    private static TimetableItem getModel3() {
+    public static TimetableItem getModel3() {
         TimetableItem timetableItem = new TimetableItem();
         timetableItem.setId(3);
         timetableItem.setSubject(SubjectModelRepository.getModel());
         timetableItem.setAuditory(AuditoryModelRepository.getModel3());
         timetableItem.setGroups(GroupModelRepository.getModels());
         timetableItem.setLecture(LectureModelRepository.getModel3());
-        timetableItem.setDate(Date.valueOf("2019-01-21"));
-        timetableItem.setTeacher(TeacherModelRepository.getModel());
+        timetableItem.setDate(Date.valueOf("2019-02-01"));
+        timetableItem.setTeacher(TeacherModelRepository.getModel2());
         return timetableItem;
     }
 
-    private static TimetableItem getModel4() {
+    public static TimetableItem getModel4() {
         TimetableItem timetableItem = new TimetableItem();
         timetableItem.setId(4);
         timetableItem.setSubject(SubjectModelRepository.getModel());
         timetableItem.setAuditory(AuditoryModelRepository.getModel4());
         timetableItem.setGroups(GroupModelRepository.getModels());
         timetableItem.setLecture(LectureModelRepository.getModel4());
-        timetableItem.setDate(Date.valueOf("2019-01-21"));
-        timetableItem.setTeacher(TeacherModelRepository.getModel());
+        timetableItem.setDate(Date.valueOf("2019-02-15"));
+        timetableItem.setTeacher(TeacherModelRepository.getModel1());
         return timetableItem;
     }
 
-    private static TimetableItem getModel5() {
+    public static TimetableItem getModel5() {
         TimetableItem timetableItem = new TimetableItem();
         timetableItem.setId(5);
         timetableItem.setSubject(SubjectModelRepository.getModel());
         timetableItem.setAuditory(AuditoryModelRepository.getModel5());
         timetableItem.setGroups(GroupModelRepository.getModels());
         timetableItem.setLecture(LectureModelRepository.getModel5());
-        timetableItem.setDate(Date.valueOf("2019-01-21"));
-        timetableItem.setTeacher(TeacherModelRepository.getModel());
+        timetableItem.setDate(Date.valueOf("2019-03-05"));
+        timetableItem.setTeacher(TeacherModelRepository.getModel3());
         return timetableItem;
     }
 
-    private static TimetableItem getModel6() {
+    public static TimetableItem getModel6() {
         TimetableItem timetableItem = new TimetableItem();
         timetableItem.setId(6);
         timetableItem.setSubject(SubjectModelRepository.getModel());
         timetableItem.setAuditory(AuditoryModelRepository.getModel6());
         timetableItem.setGroups(GroupModelRepository.getModels());
         timetableItem.setLecture(LectureModelRepository.getModel6());
-        timetableItem.setDate(Date.valueOf("2019-01-21"));
-        timetableItem.setTeacher(TeacherModelRepository.getModel());
+        timetableItem.setDate(Date.valueOf("2019-04-24"));
+        timetableItem.setTeacher(TeacherModelRepository.getModel1());
         return timetableItem;
     }
 
