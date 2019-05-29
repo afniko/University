@@ -16,68 +16,42 @@ import ua.com.foxminded.task.domain.repository.TeacherModelRepository;
 class DepartmentTest {
 
     @Test
-    void whenAddGroupToDepartment_thenDepartmentContainsGroup() {
+    void whenAddGroupToDepartment_thenDepartmentContainsGroupAndGroupContainsDepartment() {
         Department department = DepartmentModelRepository.getEmptyModel();
         Group group = GroupModelRepository.getModel1();
         department.addGroup(group);
         assertTrue(department.getGroups().contains(group));
-    }
-
-    @Test
-    void whenAddGroupToDepartment_thenGroupContainsDepartment() {
-        Department department = DepartmentModelRepository.getEmptyModel();
-        Group group = GroupModelRepository.getModel1();
-        department.addGroup(group);
         assertTrue(group.getDepartment().equals(department));
     }
 
     @Test
-    void whenRemoveGroupFromDepartment_thenDepartmentNonContainsGroup() {
-        Department department = DepartmentModelRepository.getModel1();
-        Group group = GroupModelRepository.getModel1();
-        department.removeGroup(group);
-        assertFalse(department.getGroups().contains(group));
-    }
-
-    @Test
-    void whenRemoveGroupFromDepartment_thenGroupNonContainsDepartment() {
+    void whenRemoveGroupFromDepartment_thenDepartmentNonContainsGroupAndGroupNonContainsDepartment() {
         Department department = DepartmentModelRepository.getModel1();
         Group group = GroupModelRepository.getModel1();
         group.setDepartment(department);
+        System.out.println(group.getDepartment());
         department.removeGroup(group);
+        assertFalse(department.getGroups().contains(group));
         assertNull(group.getDepartment());
     }
 
     @Test
-    void whenAddTeacherToDepartment_thenDepartmentContainsTeacher() {
+    void whenAddTeacherToDepartment_thenDepartmentContainsTeacherAndTeacherContainsDepartment() {
         Department department = DepartmentModelRepository.getEmptyModel();
         Teacher teacher = TeacherModelRepository.getModel1();
         department.addTeacher(teacher);
         assertTrue(department.getTeachers().contains(teacher));
-    }
-
-    @Test
-    void whenAddTeacherToDepartment_thenTeacherContainsDepartment() {
-        Department department = DepartmentModelRepository.getEmptyModel();
-        Teacher teacher = TeacherModelRepository.getModel1();
-        department.addTeacher(teacher);
         assertTrue(teacher.getDepartment().equals(department));
     }
 
     @Test
-    void whenRemoveTeacherFromDepartment_thenDepartmentNonContainsTeacher() {
+    void whenRemoveTeacherFromDepartment_thenDepartmentNonContainsTeacherAndTeacherNonContainsDepartment() {
         Department department = DepartmentModelRepository.getModel1();
-        Teacher teacher = TeacherModelRepository.getModel1();
-        department.removeTeacher(teacher);
-        assertFalse(department.getTeachers().contains(teacher));
-    }
-
-    @Test
-    void whenRemoveTeacherFromDepartment_thenTeacherNonContainsDepartment() {
-        Department department = DepartmentModelRepository.getEmptyModel();
         Teacher teacher = TeacherModelRepository.getModel1();
         teacher.setDepartment(department);
         department.removeTeacher(teacher);
+        assertFalse(department.getTeachers().contains(teacher));
         assertNull(teacher.getDepartment());
     }
+
 }

@@ -7,7 +7,7 @@ import java.util.List;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
-@EqualsAndHashCode(of = { "id", "title", "department" })
+@EqualsAndHashCode(of = { "id", "title", "yearEntry" })
 @ToString(of = { "id", "title", "department" })
 public class Group {
 

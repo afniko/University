@@ -15,18 +15,11 @@ import ua.com.foxminded.task.domain.repository.StudentModelRepository;
 public class GroupTest {
 
     @Test
-    public void whenAddStudentToGroup_thenGroupContainsStudent() {
+    public void whenAddStudentToGroup_thenGroupContainsStudentAndStudentContainsGroup() {
         Group group = GroupModelRepository.getEmptyModel();
         Student student = StudentModelRepository.getModel1();
         group.addStudent(student);
         assertTrue(group.getStudents().contains(student));
-    }
-
-    @Test
-    public void whenAddStudentToGroup_thenStudentContainsGroup() {
-        Group group = GroupModelRepository.getEmptyModel();
-        Student student = StudentModelRepository.getModel1();
-        group.addStudent(student);
         assertTrue(student.getGroup().equals(group));
     }
 
@@ -34,16 +27,9 @@ public class GroupTest {
     public void whenRemoveStudentFromGroup_thenGroupNonContainsStudent() {
         Group group = GroupModelRepository.getModel1();
         Student student = StudentModelRepository.getModel1();
-        group.removeStudent(student);
-        assertFalse(group.getStudents().contains(student));
-    }
-
-    @Test
-    public void whenRemoveStudentFromGroup_thenStudentNonContainsGroup() {
-        Group group = GroupModelRepository.getModel1();
-        Student student = StudentModelRepository.getModel1();
         student.setGroup(group);
         group.removeStudent(student);
+        assertFalse(group.getStudents().contains(student));
         assertNull(student.getGroup());
     }
 
