@@ -1,0 +1,31 @@
+package ua.com.foxminded.task.domain;
+
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
+import org.junit.jupiter.api.Test;
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.runner.RunWith;
+
+import ua.com.foxminded.task.domain.repository.GroupModelRepository;
+import ua.com.foxminded.task.domain.repository.TimetableItemModelRepository;
+
+@RunWith(JUnitPlatform.class)
+public class TimetableItemTest {
+
+    @Test
+    public void whenAddGroupToTimetableItem_thenTimetableItemContainsGroup() {
+        TimetableItem timetableItem = TimetableItemModelRepository.getEmptyModel();
+        Group group = GroupModelRepository.getModel1();
+        timetableItem.addGroup(group);
+        assertTrue(timetableItem.getGroups().contains(group));
+    }
+
+    @Test
+    public void whenRemoveGroupFromTimetableItem_thenTimetableItemNonContainsGroup() {
+        TimetableItem timetableItem = TimetableItemModelRepository.getModel1();
+        Group group = GroupModelRepository.getModel1();
+        timetableItem.removeGroup(group);
+        assertFalse(timetableItem.getGroups().contains(group));
+    }
+}
