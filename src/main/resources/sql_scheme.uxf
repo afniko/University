@@ -1,0 +1,452 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="14.3.0">
+  <zoom_level>9</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>27</x>
+      <y>207</y>
+      <w>243</w>
+      <h>63</h>
+    </coordinates>
+    <panel_attributes>students_groups
+--
+*pk-student_id:integer*
+*pk-group_id:integer*</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>333</x>
+      <y>9</y>
+      <w>243</w>
+      <h>117</h>
+    </coordinates>
+    <panel_attributes>teachers
+--
+*pk-teacher_id:integer*
+-teacher_first_name:varchar(20)
+-teacher_last_name:varchar(20)
+-teacher_middle_name:varchar(20)
+-teacher_birthday:Date
+-teacher_idfees:integer</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>27</x>
+      <y>351</y>
+      <w>243</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>groups
+--
+*pk-group_id:integer*
+-group_title:varchar(20)
+-department_id:integer
+-group_yearEntry:Date</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>135</x>
+      <y>261</y>
+      <w>45</w>
+      <h>108</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;-
+m1=n:1</panel_attributes>
+    <additional_attributes>10.0;100.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>333</x>
+      <y>261</y>
+      <w>243</w>
+      <h>72</h>
+    </coordinates>
+    <panel_attributes>departments
+--
+*pk-department_id:integer*
+-department_title:varchar(20)
+-department_description:varchar(200)</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>27</x>
+      <y>540</y>
+      <w>243</w>
+      <h>63</h>
+    </coordinates>
+    <panel_attributes>faculties
+--
+*pk-faculty_id:integer*
+-faculty_title:varchar(20)</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>945</x>
+      <y>216</y>
+      <w>243</w>
+      <h>117</h>
+    </coordinates>
+    <panel_attributes>timetable_items
+--
+*pk-timetable_item_id:integer*
+-subject_id:integer
+-auditory_id:integer
+-lecture_id:integer
+-timetable_item_date:Date
+-teacher_id:integer</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>945</x>
+      <y>9</y>
+      <w>243</w>
+      <h>63</h>
+    </coordinates>
+    <panel_attributes>subjects
+--
+*pk-subject_id:integer*
+-subject_title:varchar(45)</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1053</x>
+      <y>63</y>
+      <w>45</w>
+      <h>171</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;&gt;&gt;
+m2=n:1</panel_attributes>
+    <additional_attributes>10.0;170.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>567</x>
+      <y>81</y>
+      <w>396</w>
+      <h>171</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;&gt;&gt;
+m1=1:n</panel_attributes>
+    <additional_attributes>420.0;170.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>873</x>
+      <y>36</y>
+      <w>90</w>
+      <h>36</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;&gt;&gt;
+m1=n:1</panel_attributes>
+    <additional_attributes>10.0;10.0;80.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>648</x>
+      <y>495</y>
+      <w>243</w>
+      <h>108</h>
+    </coordinates>
+    <panel_attributes>auditories
+--
+*pk-auditory_id:integer*
+-auditory_number:varchar(20)
+-auditory_type_id:integer
+-auditory_capacity:integer
+-auditory_description:varchar(200)</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>945</x>
+      <y>540</y>
+      <w>243</w>
+      <h>63</h>
+    </coordinates>
+    <panel_attributes>auditory_types
+--
+*pk-auditory_type_id:integer*
+-auditory_type_type:varchar(45)</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>882</x>
+      <y>567</y>
+      <w>81</w>
+      <h>36</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;&gt;&gt;
+m1=n:1</panel_attributes>
+    <additional_attributes>10.0;10.0;70.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>792</x>
+      <y>324</y>
+      <w>288</w>
+      <h>189</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;&gt;&gt;
+m1=n:1</panel_attributes>
+    <additional_attributes>300.0;10.0;10.0;190.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>261</x>
+      <y>378</y>
+      <w>405</w>
+      <h>36</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;&gt;&gt;
+m1=1:n</panel_attributes>
+    <additional_attributes>430.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>945</x>
+      <y>432</y>
+      <w>243</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>lecturies
+--
+*pk-lecture_id:integer*
+-lecture_number:varchar(5)
+-lecture_start_time:Time
+-lecture_end_time:Time</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1143</x>
+      <y>324</y>
+      <w>45</w>
+      <h>126</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;&gt;&gt;
+m1=n:1</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;120.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>639</x>
+      <y>9</y>
+      <w>243</w>
+      <h>63</h>
+    </coordinates>
+    <panel_attributes>teachers_subjects
+--
+*pk-subject_id:integer*
+*pk-teacher_id:integer*</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>567</x>
+      <y>36</y>
+      <w>90</w>
+      <h>36</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;-
+m1=1:n</panel_attributes>
+    <additional_attributes>10.0;10.0;80.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>333</x>
+      <y>540</y>
+      <w>243</w>
+      <h>63</h>
+    </coordinates>
+    <panel_attributes>faculties_departments
+--
+*pk-faculty_id:integer*
+*pk-department_id:integer*</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>261</x>
+      <y>567</y>
+      <w>90</w>
+      <h>36</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;&gt;&gt;
+m1=1:n</panel_attributes>
+    <additional_attributes>80.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>441</x>
+      <y>324</y>
+      <w>45</w>
+      <h>117</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;-
+m1=1:n</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;110.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>27</x>
+      <y>9</y>
+      <w>243</w>
+      <h>126</h>
+    </coordinates>
+    <panel_attributes>students
+--
+*pk-student_id:integer*
+-student_first_name:varchar(20)
+-student_last_name:varchar(20)
+-student_middle_name:varchar(20)
+-student_birthday:Date
+-student_idfees:integer</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>135</x>
+      <y>126</y>
+      <w>45</w>
+      <h>99</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;&gt;&gt;
+m1=1:n</panel_attributes>
+    <additional_attributes>10.0;90.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>648</x>
+      <y>360</y>
+      <w>243</w>
+      <h>63</h>
+    </coordinates>
+    <panel_attributes>groups_timetable_items
+--
+*pk-group_id:integer*
+*pk-timetable_item_id:integer*</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>756</x>
+      <y>297</y>
+      <w>207</w>
+      <h>81</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;-
+m1=n:1</panel_attributes>
+    <additional_attributes>210.0;10.0;10.0;10.0;10.0;70.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>333</x>
+      <y>423</y>
+      <w>243</w>
+      <h>72</h>
+    </coordinates>
+    <panel_attributes>groups_departments
+--
+*pk-group_id:integer*
+*pk-department_id:integer*</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>207</x>
+      <y>432</y>
+      <w>144</w>
+      <h>63</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;&gt;&gt;
+m1=1:n</panel_attributes>
+    <additional_attributes>140.0;40.0;10.0;40.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>333</x>
+      <y>162</y>
+      <w>243</w>
+      <h>63</h>
+    </coordinates>
+    <panel_attributes>teachers_departments
+--
+*pk-teacher_id:integer*
+*pk-department_id:integer*</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>288</x>
+      <y>81</y>
+      <w>63</w>
+      <h>126</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;-
+m1=1:n</panel_attributes>
+    <additional_attributes>50.0;10.0;20.0;10.0;20.0;120.0;50.0;120.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>288</x>
+      <y>198</y>
+      <w>63</w>
+      <h>108</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;&gt;&gt;
+m1=n:1</panel_attributes>
+    <additional_attributes>50.0;10.0;20.0;10.0;20.0;100.0;50.0;100.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>567</x>
+      <y>288</y>
+      <w>63</w>
+      <h>297</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;-
+m1=1:n</panel_attributes>
+    <additional_attributes>10.0;10.0;30.0;10.0;30.0;310.0;10.0;310.0</additional_attributes>
+  </element>
+</diagram>
