@@ -4,24 +4,10 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>27</x>
-      <y>207</y>
-      <w>243</w>
-      <h>63</h>
-    </coordinates>
-    <panel_attributes>students_groups
---
-*pk-student_id:integer*
-*pk-group_id:integer*</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>333</x>
+      <x>315</x>
       <y>9</y>
       <w>243</w>
-      <h>117</h>
+      <h>135</h>
     </coordinates>
     <panel_attributes>teachers
 --
@@ -30,16 +16,17 @@
 -teacher_last_name:varchar(20)
 -teacher_middle_name:varchar(20)
 -teacher_birthday:Date
--teacher_idfees:integer</panel_attributes>
+-teacher_idfees:integer
+-department_id:integer</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>27</x>
+      <x>9</x>
       <y>351</y>
       <w>243</w>
-      <h>90</h>
+      <h>99</h>
     </coordinates>
     <panel_attributes>groups
 --
@@ -52,37 +39,38 @@
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>135</x>
-      <y>261</y>
+      <x>117</x>
+      <y>135</y>
       <w>45</w>
-      <h>108</h>
+      <h>234</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;-
 m1=n:1</panel_attributes>
-    <additional_attributes>10.0;100.0;10.0;10.0</additional_attributes>
+    <additional_attributes>10.0;240.0;10.0;10.0</additional_attributes>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>333</x>
+      <x>315</x>
       <y>261</y>
       <w>243</w>
-      <h>72</h>
+      <h>90</h>
     </coordinates>
     <panel_attributes>departments
 --
 *pk-department_id:integer*
 -department_title:varchar(20)
--department_description:varchar(200)</panel_attributes>
+-department_description:varchar(200)
+-faculty_id:integer</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>27</x>
-      <y>540</y>
+      <x>315</x>
+      <y>495</y>
       <w>243</w>
-      <h>63</h>
+      <h>72</h>
     </coordinates>
     <panel_attributes>faculties
 --
@@ -93,7 +81,7 @@ m1=n:1</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>945</x>
+      <x>927</x>
       <y>216</y>
       <w>243</w>
       <h>117</h>
@@ -111,7 +99,7 @@ m1=n:1</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>945</x>
+      <x>927</x>
       <y>9</y>
       <w>243</w>
       <h>63</h>
@@ -125,7 +113,7 @@ m1=n:1</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1053</x>
+      <x>1035</x>
       <y>63</y>
       <w>45</w>
       <h>171</h>
@@ -137,19 +125,19 @@ m2=n:1</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>567</x>
-      <y>81</y>
+      <x>549</x>
+      <y>90</y>
       <w>396</w>
-      <h>171</h>
+      <h>162</h>
     </coordinates>
     <panel_attributes>lt=-&gt;&gt;&gt;
 m1=1:n</panel_attributes>
-    <additional_attributes>420.0;170.0;10.0;10.0</additional_attributes>
+    <additional_attributes>420.0;160.0;10.0;10.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>873</x>
+      <x>855</x>
       <y>36</y>
       <w>90</w>
       <h>36</h>
@@ -161,7 +149,7 @@ m1=n:1</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>648</x>
+      <x>630</x>
       <y>495</y>
       <w>243</w>
       <h>108</h>
@@ -178,7 +166,7 @@ m1=n:1</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>945</x>
+      <x>927</x>
       <y>540</y>
       <w>243</w>
       <h>63</h>
@@ -192,7 +180,7 @@ m1=n:1</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>882</x>
+      <x>864</x>
       <y>567</y>
       <w>81</w>
       <h>36</h>
@@ -204,7 +192,7 @@ m1=n:1</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>792</x>
+      <x>774</x>
       <y>324</y>
       <w>288</w>
       <h>189</h>
@@ -216,7 +204,7 @@ m1=n:1</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>261</x>
+      <x>243</x>
       <y>378</y>
       <w>405</w>
       <h>36</h>
@@ -228,7 +216,7 @@ m1=1:n</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>945</x>
+      <x>927</x>
       <y>432</y>
       <w>243</w>
       <h>90</h>
@@ -244,7 +232,7 @@ m1=1:n</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1143</x>
+      <x>1125</x>
       <y>324</y>
       <w>45</w>
       <h>126</h>
@@ -256,7 +244,7 @@ m1=n:1</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>639</x>
+      <x>621</x>
       <y>9</y>
       <w>243</w>
       <h>63</h>
@@ -270,7 +258,7 @@ m1=n:1</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>567</x>
+      <x>549</x>
       <y>36</y>
       <w>90</w>
       <h>36</h>
@@ -280,50 +268,36 @@ m1=1:n</panel_attributes>
     <additional_attributes>10.0;10.0;80.0;10.0</additional_attributes>
   </element>
   <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>333</x>
-      <y>540</y>
-      <w>243</w>
-      <h>63</h>
-    </coordinates>
-    <panel_attributes>faculties_departments
---
-*pk-faculty_id:integer*
-*pk-department_id:integer*</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
     <id>Relation</id>
     <coordinates>
-      <x>261</x>
-      <y>567</y>
-      <w>90</w>
-      <h>36</h>
+      <x>423</x>
+      <y>342</y>
+      <w>45</w>
+      <h>171</h>
     </coordinates>
     <panel_attributes>lt=-&gt;&gt;&gt;
 m1=1:n</panel_attributes>
-    <additional_attributes>80.0;10.0;10.0;10.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;170.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>441</x>
-      <y>324</y>
-      <w>45</w>
-      <h>117</h>
+      <x>180</x>
+      <y>297</y>
+      <w>153</w>
+      <h>72</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;-
 m1=1:n</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;110.0</additional_attributes>
+    <additional_attributes>150.0;10.0;10.0;10.0;10.0;60.0</additional_attributes>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>27</x>
+      <x>9</x>
       <y>9</y>
       <w>243</w>
-      <h>126</h>
+      <h>135</h>
     </coordinates>
     <panel_attributes>students
 --
@@ -332,25 +306,14 @@ m1=1:n</panel_attributes>
 -student_last_name:varchar(20)
 -student_middle_name:varchar(20)
 -student_birthday:Date
--student_idfees:integer</panel_attributes>
+-student_idfees:integer
+-group_id:integer</panel_attributes>
     <additional_attributes/>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>135</x>
-      <y>126</y>
-      <w>45</w>
-      <h>99</h>
-    </coordinates>
-    <panel_attributes>lt=-&gt;&gt;&gt;
-m1=1:n</panel_attributes>
-    <additional_attributes>10.0;90.0;10.0;10.0</additional_attributes>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>648</x>
+      <x>630</x>
       <y>360</y>
       <w>243</w>
       <h>63</h>
@@ -364,7 +327,7 @@ m1=1:n</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>756</x>
+      <x>738</x>
       <y>297</y>
       <w>207</w>
       <h>81</h>
@@ -374,79 +337,15 @@ m1=n:1</panel_attributes>
     <additional_attributes>210.0;10.0;10.0;10.0;10.0;70.0</additional_attributes>
   </element>
   <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>333</x>
-      <y>423</y>
-      <w>243</w>
-      <h>72</h>
-    </coordinates>
-    <panel_attributes>groups_departments
---
-*pk-group_id:integer*
-*pk-department_id:integer*</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
     <id>Relation</id>
     <coordinates>
-      <x>207</x>
-      <y>432</y>
-      <w>144</w>
-      <h>63</h>
-    </coordinates>
-    <panel_attributes>lt=-&gt;&gt;&gt;
-m1=1:n</panel_attributes>
-    <additional_attributes>140.0;40.0;10.0;40.0;10.0;10.0</additional_attributes>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>333</x>
-      <y>162</y>
-      <w>243</w>
-      <h>63</h>
-    </coordinates>
-    <panel_attributes>teachers_departments
---
-*pk-teacher_id:integer*
-*pk-department_id:integer*</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>288</x>
-      <y>81</y>
-      <w>63</w>
-      <h>126</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;&lt;&lt;-
-m1=1:n</panel_attributes>
-    <additional_attributes>50.0;10.0;20.0;10.0;20.0;120.0;50.0;120.0</additional_attributes>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>288</x>
-      <y>198</y>
-      <w>63</w>
-      <h>108</h>
+      <x>423</x>
+      <y>135</y>
+      <w>45</w>
+      <h>144</h>
     </coordinates>
     <panel_attributes>lt=-&gt;&gt;&gt;
 m1=n:1</panel_attributes>
-    <additional_attributes>50.0;10.0;20.0;10.0;20.0;100.0;50.0;100.0</additional_attributes>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>567</x>
-      <y>288</y>
-      <w>63</w>
-      <h>297</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;&lt;&lt;-
-m1=1:n</panel_attributes>
-    <additional_attributes>10.0;10.0;30.0;10.0;30.0;310.0;10.0;310.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;140.0</additional_attributes>
   </element>
 </diagram>
