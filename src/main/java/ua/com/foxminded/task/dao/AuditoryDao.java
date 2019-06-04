@@ -6,7 +6,7 @@ import ua.com.foxminded.task.domain.Auditory;
 
 public interface AuditoryDao {
 
-    public Auditory create();
+    public Auditory create(Auditory auditory);
 
     public Auditory findById(long id);
 
