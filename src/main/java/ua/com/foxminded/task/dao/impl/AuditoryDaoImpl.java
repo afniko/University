@@ -7,17 +7,19 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import ua.com.foxminded.task.dao.AuditoryDao;
 import ua.com.foxminded.task.dao.AuditoryTypeDao;
 import ua.com.foxminded.task.dao.DaoFactory;
+import ua.com.foxminded.task.domain.Auditory;
 import ua.com.foxminded.task.domain.AuditoryType;
 
-public class AuditoryTypeDaoImpl implements AuditoryTypeDao {
+public class AuditoryDaoImpl implements AuditoryDao {
 
     private DaoFactory daoFactory = DaoFactory.getInstance();
 
     @Override
-    public boolean create(AuditoryType auditoryType) {
-        String sql = "insert into auditory_types (type) values (?)";
+    public boolean create(Auditory auditory) {
+        String sql = "insert into auditories (number, auditory_type_id, capacity, description) values (?, ?, ?, ?)";
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         boolean isCreate = false;
@@ -26,7 +28,10 @@ public class AuditoryTypeDaoImpl implements AuditoryTypeDao {
             connection = daoFactory.getConnection();
 
             preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setString(1, auditoryType.getType());
+            preparedStatement.setString(1, auditory.getAuditoryNumber());
+            preparedStatement.setInt(2, auditory.getType().getId());
+            preparedStatement.setInt(3, auditory.getMaxCapacity());
+            preparedStatement.setString(4, auditory.getDescription());
             isCreate = preparedStatement.execute();
 
         } catch (SQLException e) {
@@ -39,12 +44,14 @@ public class AuditoryTypeDaoImpl implements AuditoryTypeDao {
     }
 
     @Override
-    public AuditoryType findById(int id) {
-        String sql = "select * from auditory_types where id=?";
-        AuditoryType auditoryType = null;
+    public Auditory findById(int id) {
+        String sql = "select * from auditories where id=?";
+        Auditory auditory = null;
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
+        AuditoryType auditoryType = null;
+        int auditoryTypeId = 0;
 
         try {
             connection = daoFactory.getConnection();
@@ -53,9 +60,12 @@ public class AuditoryTypeDaoImpl implements AuditoryTypeDao {
             preparedStatement.setInt(1, id);
             resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
-                auditoryType = new AuditoryType();
-                auditoryType.setId(resultSet.getInt("id"));
-                auditoryType.setType(resultSet.getString("type"));
+                auditory = new Auditory();
+                auditory.setId(resultSet.getInt("id"));
+                auditory.setAuditoryNumber(resultSet.getString("number"));
+                auditory.setMaxCapacity(resultSet.getInt("capacity"));
+                auditory.setDescription(resultSet.getString("description"));
+                auditoryTypeId = resultSet.getInt("auditory_type_id");
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -64,16 +74,21 @@ public class AuditoryTypeDaoImpl implements AuditoryTypeDao {
             daoFactory.closePreparedStatement(preparedStatement);
             daoFactory.closeConnection(connection);
         }
-        return auditoryType;
+        AuditoryTypeDao auditoryTypeDao = new AuditoryTypeDaoImpl();
+        auditoryType = auditoryTypeDao.findById(auditoryTypeId);
+        auditory.setType(auditoryType);
+
+        return auditory;
     }
 
     @Override
-    public List<AuditoryType> findAll() {
-        String sql = "select * from auditory_types";
-        List<AuditoryType> auditoryTypes = new ArrayList<>();
+    public List<Auditory> findAll() {
+        String sql = "select * from auditories";
+        List<Auditory> auditories = new ArrayList<>();
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
+        int auditoryTypeId = 0;
 
         try {
             connection = daoFactory.getConnection();
@@ -81,10 +96,14 @@ public class AuditoryTypeDaoImpl implements AuditoryTypeDao {
             preparedStatement = connection.prepareStatement(sql);
             resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                AuditoryType auditoryType = new AuditoryType();
-                auditoryType.setId(resultSet.getInt("id"));
-                auditoryType.setType(resultSet.getString("type"));
-                auditoryTypes.add(auditoryType);
+                Auditory auditory = new Auditory();
+                auditory.setId(resultSet.getInt("id"));
+                auditory.setAuditoryNumber(resultSet.getString("number"));
+                auditory.setMaxCapacity(resultSet.getInt("capacity"));
+                auditory.setDescription(resultSet.getString("description"));
+                auditoryTypeId = resultSet.getInt("auditory_type_id");
+                auditories.add(auditory);
+                //TODO 
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -93,28 +112,33 @@ public class AuditoryTypeDaoImpl implements AuditoryTypeDao {
             daoFactory.closePreparedStatement(preparedStatement);
             daoFactory.closeConnection(connection);
         }
-        return auditoryTypes;
+        return auditories;
     }
 
     @Override
-    public AuditoryType findByType(String type) {
-        String sql = "select * from auditory_types where type=?";
+    public Auditory findByNumber(String number) {
+        String sql = "select * from auditories where number=?";
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
+        Auditory auditory = null;
         AuditoryType auditoryType = null;
+        int auditoryTypeId = 0;
 
         try {
             connection = daoFactory.getConnection();
 
             preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setString(1, type);
+            preparedStatement.setString(1, number);
             resultSet = preparedStatement.executeQuery();
 
             if (resultSet.next()) {
-                auditoryType = new AuditoryType();
-                auditoryType.setId(resultSet.getInt("id"));
-                auditoryType.setType(resultSet.getString("type"));
+                auditory = new Auditory();
+                auditory.setId(resultSet.getInt("id"));
+                auditory.setAuditoryNumber(resultSet.getString("number"));
+                auditory.setMaxCapacity(resultSet.getInt("capacity"));
+                auditory.setDescription(resultSet.getString("description"));
+                auditoryTypeId = resultSet.getInt("auditory_type_id");
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -123,7 +147,11 @@ public class AuditoryTypeDaoImpl implements AuditoryTypeDao {
             daoFactory.closePreparedStatement(preparedStatement);
             daoFactory.closeConnection(connection);
         }
-        return auditoryType;
+        AuditoryTypeDao auditoryTypeDao = new AuditoryTypeDaoImpl();
+        auditoryType = auditoryTypeDao.findById(auditoryTypeId);
+        auditory.setType(auditoryType);
+
+        return auditory;
     }
 
 }

@@ -6,10 +6,12 @@ import ua.com.foxminded.task.domain.Auditory;
 
 public interface AuditoryDao {
 
-    public Auditory create(Auditory auditory);
+    public boolean create(Auditory auditory);
 
-    public Auditory findById(long id);
+    public Auditory findById(int id);
 
     public List<Auditory> findAll();
+
+    public Auditory findByNumber(String number);
 
 }
