@@ -6,6 +6,14 @@
     <artifactId>task-university-java8-api</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <dependencies>
+
+        <dependency>
+            <groupId>postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>9.1-901-1.jdbc4</version>
+            <scope>provide</scope>
+        </dependency>
+        
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-api</artifactId>
