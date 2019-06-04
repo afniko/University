@@ -11,6 +11,6 @@ public interface AuditoryTypeDao {
     public AuditoryType findById(long id);
 
     public List<AuditoryType> findAll();
-    
-    public List<AuditoryType> findByType(String type);
+
+    public AuditoryType findByType(String type);
 }

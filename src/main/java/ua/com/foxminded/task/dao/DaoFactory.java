@@ -23,6 +23,7 @@ public class DaoFactory {
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
+        createTables();
     }
 
     public Connection getConnection() throws SQLException {
@@ -78,5 +79,22 @@ public class DaoFactory {
             instance = new DaoFactory();
         }
         return instance;
+    }
+
+    private void createTables() {
+        String sql = "CREATE TABLE IF NOT EXISTS auditory_types (id SERIAL PRIMARY KEY, type VARCHAR(45) NOT NULL UNIQUE);";
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        try {
+            connection = getConnection();
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            closePreparedStatement(preparedStatement);
+            closeConnection(connection);
+        }
+
     }
 }
