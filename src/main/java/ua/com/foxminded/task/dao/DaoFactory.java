@@ -6,16 +6,18 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Properties;
 
 public class DaoFactory {
-    private static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
-    private static final String DB_URL = "jdbc:mysql://localhost:3306/itcloud?verifyServerCertificate=false&useSSL=true";
-    private static final String PSW = "root";
-    private static final String USER = "root";
+    private static final String JDBC_DRIVER = "org.postgresql.Driver";
+    private static final String DB_URL = "jdbc:postgresql://localhost/university";
+    private static final String PSW = "078990";
+    private static final String USER = "afniko";
     private static DaoFactory instance;
 //TODO check code
 
     private DaoFactory() {
+
         try {
             Class.forName(JDBC_DRIVER);
         } catch (ClassNotFoundException e) {
@@ -24,7 +26,11 @@ public class DaoFactory {
     }
 
     public Connection getConnection() throws SQLException {
-        return DriverManager.getConnection(DB_URL, USER, PSW);
+        Properties properties = new Properties();
+        properties.setProperty("user", USER);
+        properties.setProperty("password", PSW);
+        properties.setProperty("ssl", "false");
+        return DriverManager.getConnection(DB_URL, properties);
     }
 
     public void closeConnection(Connection connection) {
