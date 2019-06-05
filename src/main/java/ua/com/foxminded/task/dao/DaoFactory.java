@@ -102,7 +102,7 @@ public class DaoFactory {
         String sqlFilePath = rootResoursePath + "create_tables.sql";
         String sqlQuery = "";
         try {
-            sqlQuery = new String(Files.readAllBytes(Paths.get(sqlFilePath.substring(3))));
+            sqlQuery = new String(Files.readAllBytes(Paths.get(sqlFilePath.substring(0))));
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -1,5 +1,10 @@
 package ua.com.foxminded.task.dao;
 
+import static org.junit.Assert.assertTrue;
+
+import java.util.Arrays;
+
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.platform.runner.JUnitPlatform;
 import org.junit.runner.RunWith;
@@ -12,13 +17,18 @@ import ua.com.foxminded.task.domain.AuditoryType;
 @RunWith(JUnitPlatform.class)
 public class AuditoryDaoTest {
 
-    @Test
-    public void whenPutAtInputAuditory_thengetAudory() {
+    private static final String testAuditoryType1 = "test auditory 1";
+    private static final String testAuditoryType2 = "test auditory 2";
+    private static final String testAuditoryNumber1 = "101a";
+    private static final String testAuditoryNumber2 = "301b";
+
+    private static Auditory auditory1 = null;
+    private static Auditory auditory2 = null;
+
+    @BeforeAll
+    public static void createRecords() {
         AuditoryTypeDao auditoryTypeDao = new AuditoryTypeDaoImpl();
         AuditoryDao auditoryDao = new AuditoryDaoImpl();
-        
-    String testAuditoryType1 = "test auditory 1";
-    String testAuditoryType2 = "test auditory 2";
 
         AuditoryType auditoryType1 = new AuditoryType();
         auditoryType1.setType(testAuditoryType1);
@@ -29,25 +39,37 @@ public class AuditoryDaoTest {
         auditoryType2.setType(testAuditoryType2);
         auditoryTypeDao.create(auditoryType2);
         AuditoryType actuallyAuditoryType2 = auditoryTypeDao.findByType(testAuditoryType2);
-        
-        
-        String testAuditoryNumber1 = "101a";
-        String testAuditoryNumber2 = "301b";
-        
-        Auditory auditory1 = new Auditory();
+
+        auditory1 = new Auditory();
         auditory1.setAuditoryNumber(testAuditoryNumber1);
         auditory1.setType(actuallyAuditoryType1);
         auditory1.setMaxCapacity(100);
         auditory1.setDescription("description 1");
         auditoryDao.create(auditory1);
-        
-        Auditory auditory2 = new Auditory();
+
+        auditory2 = new Auditory();
         auditory2.setAuditoryNumber(testAuditoryNumber2);
         auditory2.setType(actuallyAuditoryType2);
         auditory2.setMaxCapacity(25);
         auditory2.setDescription("description 1");
         auditoryDao.create(auditory2);
-        
-        System.out.println(auditoryDao.findAll());
+    }
+
+    @Test
+    public void whenPutAtInputAuditory_thenGetAuditoryByFindAll() {
+        AuditoryDao auditoryDao = new AuditoryDaoImpl();
+        assertTrue(auditoryDao.findAll().containsAll(Arrays.asList(auditory1, auditory2)));
+    }
+
+    @Test
+    public void whenPutAtInputAuditory_thenGetAuditoryByFindById() {
+        AuditoryDao auditoryDao = new AuditoryDaoImpl();
+        assertTrue(auditoryDao.findById(1).equals(auditory1));
+    }
+
+    @Test
+    public void whenPutAtInputAuditory_thenGetAuditoryByFindByNumber() {
+        AuditoryDao auditoryDao = new AuditoryDaoImpl();
+        assertTrue(auditoryDao.findByNumber(testAuditoryNumber2).equals(auditory2));
     }
 }
