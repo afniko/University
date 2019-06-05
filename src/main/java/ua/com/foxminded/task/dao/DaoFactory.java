@@ -1,5 +1,10 @@
 package ua.com.foxminded.task.dao;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -10,11 +15,8 @@ import java.util.Properties;
 
 public class DaoFactory {
     private static final String JDBC_DRIVER = "org.postgresql.Driver";
-    private static final String DB_URL = "jdbc:postgresql://localhost/university";
-    private static final String PSW = "078990";
-    private static final String USER = "afniko";
+    private static final String CONFIG_PROPERTIES_FILE = "config.properties";
     private static DaoFactory instance;
-//TODO check code
 
     private DaoFactory() {
 
@@ -27,11 +29,8 @@ public class DaoFactory {
     }
 
     public Connection getConnection() throws SQLException {
-        Properties properties = new Properties();
-        properties.setProperty("user", USER);
-        properties.setProperty("password", PSW);
-        properties.setProperty("ssl", "false");
-        return DriverManager.getConnection(DB_URL, properties);
+        Properties properties = getProperties(CONFIG_PROPERTIES_FILE);
+        return DriverManager.getConnection(properties.getProperty("db.url"), properties);
     }
 
     public void closeConnection(Connection connection) {
@@ -82,12 +81,13 @@ public class DaoFactory {
     }
 
     private void createTables() {
-        String sql = "CREATE TABLE IF NOT EXISTS auditory_types (id SERIAL PRIMARY KEY, type VARCHAR(45) NOT NULL UNIQUE);";
+        String sqlQuery = getSqlQueryFromFile();
+
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         try {
             connection = getConnection();
-            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement = connection.prepareStatement(sqlQuery);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -95,6 +95,34 @@ public class DaoFactory {
             closePreparedStatement(preparedStatement);
             closeConnection(connection);
         }
-
     }
+
+    private String getSqlQueryFromFile() {
+        String rootResoursePath = Thread.currentThread().getContextClassLoader().getResource("").getPath();
+        String sqlFilePath = rootResoursePath + "create_tables.sql";
+        String sqlQuery = "";
+        try {
+            sqlQuery = new String(Files.readAllBytes(Paths.get(sqlFilePath.substring(3))));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return sqlQuery;
+    }
+
+    private Properties getProperties(String namePropertiesFile) {
+        String rootResoursePath = Thread.currentThread().getContextClassLoader().getResource("").getPath();
+        String propertiesFilePath = rootResoursePath + namePropertiesFile;
+        Properties properties = new Properties();
+        try {
+            properties.load(new FileInputStream(propertiesFilePath));
+        } catch (FileNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return properties;
+    }
+
 }
