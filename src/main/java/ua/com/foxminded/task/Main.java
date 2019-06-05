@@ -8,17 +8,7 @@ public class Main {
 
     public static void main(String[] args) {
 
-        AuditoryTypeDao auditoryTypeDao = new AuditoryTypeDaoImpl();
-        AuditoryType auditoryType = new AuditoryType();
-        String testAuditoryType = "test auditory type";
-        auditoryType.setType(testAuditoryType + 1);
-        auditoryTypeDao.create(auditoryType);
-        auditoryType.setType(testAuditoryType + 2);
-        auditoryTypeDao.create(auditoryType);
-        System.out.println(auditoryTypeDao.findAll());
-
-        System.out.println(auditoryTypeDao.findByType(testAuditoryType + 1));
-
+      
     }
 
 }
