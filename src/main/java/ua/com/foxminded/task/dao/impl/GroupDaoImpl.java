@@ -42,7 +42,7 @@ public class GroupDaoImpl implements GroupDao {
 
     @Override
     public List<Group> findGroupsByDepartmentId(int id) {
-        
+//        TODO need to create
         String sqlGroups = "select * from groups where department_id=?";
         List<Group> groups = new ArrayList<>();
         Group group = null;
