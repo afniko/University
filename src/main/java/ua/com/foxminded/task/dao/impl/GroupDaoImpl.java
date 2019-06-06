@@ -43,7 +43,7 @@ public class GroupDaoImpl implements GroupDao {
     @Override
     public List<Group> findGroupsByDepartmentId(int id) {
 //        TODO need to create
-        String sqlGroups = "select * from groups where department_id=?";
+        String sql = "select * from groups where department_id=?";
         List<Group> groups = new ArrayList<>();
         Group group = null;
         
@@ -58,7 +58,7 @@ public class GroupDaoImpl implements GroupDao {
         try {
             connection = daoFactory.getConnection();
 
-            preparedStatement = connection.prepareStatement(sqlGroups);
+            preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setInt(1, id);
             resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {

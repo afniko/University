@@ -28,7 +28,7 @@ public class FacultyDaoImpl implements FacultyDao {
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1, faculty.getTitle());
             isCreate = preparedStatement.execute();
-
+// TODO  add list departments
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {

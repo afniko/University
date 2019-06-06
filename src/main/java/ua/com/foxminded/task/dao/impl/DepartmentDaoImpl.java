@@ -11,11 +11,14 @@ import ua.com.foxminded.task.dao.DaoFactory;
 import ua.com.foxminded.task.dao.DepartmentDao;
 import ua.com.foxminded.task.dao.GroupDao;
 import ua.com.foxminded.task.dao.TeacherDao;
+import ua.com.foxminded.task.domain.Auditory;
+import ua.com.foxminded.task.domain.AuditoryType;
 import ua.com.foxminded.task.domain.Department;
 import ua.com.foxminded.task.domain.Group;
 import ua.com.foxminded.task.domain.Teacher;
 
 public class DepartmentDaoImpl implements DepartmentDao {
+
 
     private DaoFactory daoFactory = DaoFactory.getInstance();
     GroupDao groupDao = new GroupDaoImpl();
@@ -155,4 +158,34 @@ public class DepartmentDaoImpl implements DepartmentDao {
         return department;
     }
 
+    @Override
+    public List<Department> findByFacultyId(int id) {
+        String sql = "select id from departments where faculty_id=?";
+        List<Integer> departmentsId = new ArrayList<>();
+        List<Department> departments = new ArrayList<>();
+
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+        try {
+            connection = daoFactory.getConnection();
+
+            preparedStatement = connection.prepareStatement(sql);
+            resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                departmentsId.add(resultSet.getInt("id"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            daoFactory.closeResultSet(resultSet);
+            daoFactory.closePreparedStatement(preparedStatement);
+            daoFactory.closeConnection(connection);
+        }
+
+        departmentsId.forEach(i -> departments.add(findById(i)));
+
+        return departments;
+    }
 }

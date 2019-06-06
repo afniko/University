@@ -13,4 +13,6 @@ public interface DepartmentDao {
     public List<Department> findAll();
 
     public Department findByTitle(String title);
+
+    public List<Department> findByFacultyId(int id);
 }
