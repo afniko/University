@@ -13,4 +13,6 @@ public interface GroupDao {
     public List<Group> findAll();
 
     public Group findByTitle(String title);
+    
+    public List<Group> findGroupsByDepartmentId(int id);
 }
