@@ -8,12 +8,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ua.com.foxminded.task.dao.DaoFactory;
+import ua.com.foxminded.task.dao.DepartmentDao;
 import ua.com.foxminded.task.dao.FacultyDao;
+import ua.com.foxminded.task.domain.Department;
 import ua.com.foxminded.task.domain.Faculty;
 
 public class FacultyDaoImpl implements FacultyDao {
 
     private DaoFactory daoFactory = DaoFactory.getInstance();
+    private DepartmentDao departmentDao = new DepartmentDaoImpl(); 
 
     @Override
     public boolean create(Faculty faculty) {
@@ -28,7 +31,7 @@ public class FacultyDaoImpl implements FacultyDao {
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1, faculty.getTitle());
             isCreate = preparedStatement.execute();
-// TODO  add list departments
+// TODO  add list departments to tables
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
@@ -64,6 +67,9 @@ public class FacultyDaoImpl implements FacultyDao {
             daoFactory.closePreparedStatement(preparedStatement);
             daoFactory.closeConnection(connection);
         }
+        List<Department> departments = faculty.getDepartments();
+        departments.addAll(departmentDao.findByFacultyId(faculty.getId()));
+        
         return faculty;
     }
 
