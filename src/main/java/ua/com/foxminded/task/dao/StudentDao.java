@@ -13,4 +13,6 @@ public interface StudentDao {
     public List<Student> findAll();
 
     public Student findByIdFees(int idFees);
+    
+    public List<Student> findByGroupId(int id);
 }

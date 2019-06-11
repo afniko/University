@@ -5,7 +5,7 @@ import java.util.List;
 import ua.com.foxminded.task.dao.StudentDao;
 import ua.com.foxminded.task.domain.Student;
 
-public class StudentDaoImpl implements StudentDao{
+public class StudentDaoImpl implements StudentDao {
 
     @Override
     public boolean create(Student student) {
@@ -27,6 +27,12 @@ public class StudentDaoImpl implements StudentDao{
 
     @Override
     public Student findByIdFees(int idFees) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public List<Student> findByGroupId(int id) {
         // TODO Auto-generated method stub
         return null;
     }

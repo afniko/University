@@ -46,7 +46,6 @@ public class AuditoryDaoImpl implements AuditoryDao {
     public Auditory findById(int id) {
         String sql = "select a.id, number, capacity, description, at.id as at_id, type from auditories a inner join auditory_types at on a.auditory_type_id = at.id where a.id=?";
         Auditory auditory = null;
-        AuditoryType auditoryType = null;
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
@@ -63,7 +62,7 @@ public class AuditoryDaoImpl implements AuditoryDao {
                 auditory.setAuditoryNumber(resultSet.getString("number"));
                 auditory.setMaxCapacity(resultSet.getInt("capacity"));
                 auditory.setDescription(resultSet.getString("description"));
-                auditoryType = new AuditoryType();
+                AuditoryType auditoryType = new AuditoryType();
                 auditoryType.setId(resultSet.getInt("at_id"));
                 auditoryType.setType(resultSet.getString("type"));
                 auditory.setType(auditoryType);
@@ -82,7 +81,6 @@ public class AuditoryDaoImpl implements AuditoryDao {
     public List<Auditory> findAll() {
         String sql = "select a.id, number, capacity, description, at.id as at_id, type from auditories a inner join auditory_types at on a.auditory_type_id = at.id";
         Auditory auditory = null;
-        AuditoryType auditoryType = null;
         List<Auditory> auditories = new ArrayList<>();
         Connection connection = null;
         PreparedStatement preparedStatement = null;
@@ -99,7 +97,7 @@ public class AuditoryDaoImpl implements AuditoryDao {
                 auditory.setAuditoryNumber(resultSet.getString("number"));
                 auditory.setMaxCapacity(resultSet.getInt("capacity"));
                 auditory.setDescription(resultSet.getString("description"));
-                auditoryType = new AuditoryType();
+                AuditoryType auditoryType = new AuditoryType();
                 auditoryType.setId(resultSet.getInt("at_id"));
                 auditoryType.setType(resultSet.getString("type"));
                 auditory.setType(auditoryType);
@@ -122,7 +120,6 @@ public class AuditoryDaoImpl implements AuditoryDao {
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
         Auditory auditory = null;
-        AuditoryType auditoryType = null;
 
         try {
             connection = daoFactory.getConnection();
@@ -137,7 +134,7 @@ public class AuditoryDaoImpl implements AuditoryDao {
                 auditory.setAuditoryNumber(resultSet.getString("number"));
                 auditory.setMaxCapacity(resultSet.getInt("capacity"));
                 auditory.setDescription(resultSet.getString("description"));
-                auditoryType = new AuditoryType();
+                AuditoryType auditoryType = new AuditoryType();
                 auditoryType.setId(resultSet.getInt("at_id"));
                 auditoryType.setType(resultSet.getString("type"));
                 auditory.setType(auditoryType);

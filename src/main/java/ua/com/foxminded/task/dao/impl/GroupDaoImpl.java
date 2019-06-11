@@ -8,14 +8,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ua.com.foxminded.task.dao.DaoFactory;
+import ua.com.foxminded.task.dao.DepartmentDao;
 import ua.com.foxminded.task.dao.GroupDao;
-import ua.com.foxminded.task.domain.Auditory;
-import ua.com.foxminded.task.domain.AuditoryType;
-import ua.com.foxminded.task.domain.Department;
+import ua.com.foxminded.task.dao.StudentDao;
 import ua.com.foxminded.task.domain.Group;
+import ua.com.foxminded.task.domain.Student;
 
 public class GroupDaoImpl implements GroupDao {
     private DaoFactory daoFactory = DaoFactory.getInstance();
+    private DepartmentDao departmentDao = new DepartmentDaoImpl();
+    private StudentDao studentDao = new StudentDaoImpl();
+
     @Override
     public boolean create(Group group) {
         // TODO Auto-generated method stub
@@ -24,33 +27,111 @@ public class GroupDaoImpl implements GroupDao {
 
     @Override
     public Group findById(int id) {
-        // TODO Auto-generated method stub
-        return null;
+        String sql = "select * from groups where id=?";
+        Group group = null;
+        int departmentId = 0;
+
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+        try {
+            connection = daoFactory.getConnection();
+
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, id);
+            resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                group = new Group();
+                group.setId(resultSet.getInt("id"));
+                group.setTitle(resultSet.getString("title"));
+                departmentId = resultSet.getInt("department_id");
+                group.setYearEntry(resultSet.getDate("yearsEntry"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            daoFactory.closeResultSet(resultSet);
+            daoFactory.closePreparedStatement(preparedStatement);
+            daoFactory.closeConnection(connection);
+        }
+
+        group.setDepartment(departmentDao.findById(departmentId));
+//       TODO attention! can be bidirectional stack overflow
+        List<Student> students = group.getStudents();
+        students.addAll(studentDao.findByGroupId(group.getId()));
+
+        return group;
     }
 
     @Override
     public List<Group> findAll() {
-        // TODO Auto-generated method stub
-        return null;
+        String sql = "select id from groups";
+        List<Integer> groupsId = new ArrayList<>();
+        List<Group> groups = new ArrayList<>();
+
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+        try {
+            connection = daoFactory.getConnection();
+
+            preparedStatement = connection.prepareStatement(sql);
+            resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                groupsId.add(resultSet.getInt("id"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            daoFactory.closeResultSet(resultSet);
+            daoFactory.closePreparedStatement(preparedStatement);
+            daoFactory.closeConnection(connection);
+        }
+
+        groupsId.forEach(id -> groups.add(findById(id)));
+
+        return groups;
     }
 
     @Override
     public Group findByTitle(String title) {
-        // TODO Auto-generated method stub
-        return null;
+        String sql = "select id from groups where title=?";
+        int groupId = 0;
+
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+        try {
+            connection = daoFactory.getConnection();
+
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, title);
+            resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                groupId = resultSet.getInt("id");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            daoFactory.closeResultSet(resultSet);
+            daoFactory.closePreparedStatement(preparedStatement);
+            daoFactory.closeConnection(connection);
+        }
+
+        Group group = findById(groupId);
+
+        return group;
     }
 
     @Override
-    public List<Group> findGroupsByDepartmentId(int id) {
-//        TODO need to create
-        String sql = "select * from groups where department_id=?";
+    public List<Group> findByDepartmentId(int id) {
+        String sql = "select id from groups where department_id=?";
+        List<Integer> groupsId = new ArrayList<>();
         List<Group> groups = new ArrayList<>();
-        Group group = null;
-        
-        Department department = null;
-        Auditory auditory = null;
-        AuditoryType auditoryType = null;
-        
+
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
@@ -62,13 +143,7 @@ public class GroupDaoImpl implements GroupDao {
             preparedStatement.setInt(1, id);
             resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                group = new Group();
-                group.setId(resultSet.getInt("id"));
-                group.setTitle(resultSet.getString("title"));
-//                group.setDepartment(department);
-//                TODO set department
-                group.setYearEntry(resultSet.getDate("yearEntry"));
-//               TODO 
+                groupsId.add(resultSet.getInt("id"));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -77,8 +152,10 @@ public class GroupDaoImpl implements GroupDao {
             daoFactory.closePreparedStatement(preparedStatement);
             daoFactory.closeConnection(connection);
         }
-      
-        return null;
+
+        groupsId.forEach(i -> groups.add(findById(i)));
+
+        return groups;
     }
 
 }

@@ -32,7 +32,7 @@ public class TeacherDaoImpl implements TeacherDao{
     }
 
     @Override
-    public List<Teacher> findTeachersByDepartmentId(int id) {
+    public List<Teacher> findByDepartmentId(int id) {
         // TODO Auto-generated method stub
         return null;
     }

@@ -81,9 +81,9 @@ public class DepartmentDaoImpl implements DepartmentDao {
 
         int departmentId = department.getId();
         List<Group> groups = department.getGroups();
-        groups.addAll(groupDao.findGroupsByDepartmentId(departmentId));
+        groups.addAll(groupDao.findByDepartmentId(departmentId));
         List<Teacher> teachers = department.getTeachers();
-        teachers.addAll(teacherDao.findTeachersByDepartmentId(departmentId));
+        teachers.addAll(teacherDao.findByDepartmentId(departmentId));
 
         return department;
     }
@@ -151,9 +151,9 @@ public class DepartmentDaoImpl implements DepartmentDao {
 
         int departmentId = department.getId();
         List<Group> groups = department.getGroups();
-        groups.addAll(groupDao.findGroupsByDepartmentId(departmentId));
+        groups.addAll(groupDao.findByDepartmentId(departmentId));
         List<Teacher> teachers = department.getTeachers();
-        teachers.addAll(teacherDao.findTeachersByDepartmentId(departmentId));
+        teachers.addAll(teacherDao.findByDepartmentId(departmentId));
 
         return department;
     }

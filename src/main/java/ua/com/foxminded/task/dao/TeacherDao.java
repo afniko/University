@@ -14,5 +14,5 @@ public interface TeacherDao {
 
     public Teacher findByIdFees(int idFees);
 
-    public List<Teacher> findTeachersByDepartmentId(int id);
+    public List<Teacher> findByDepartmentId(int id);
 }
