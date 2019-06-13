@@ -23,7 +23,7 @@ public class TeacherDaoImpl implements TeacherDao {
         String sqlInsertPerson = "insert into persons (first_name, last_name, middle_name, birthday, idfees) values (?, ?, ?, ?, ?)";
         String sqlRequestId = "select id persons where idfees=?";
         String sqlInsertTeacher = "insert into teachers (person_id, department_id) values (?, ?)";
-        String sqlInsertSubject = "insert into teachers_subjects (subject_id, teacher_id) values (?, ?)";
+        String sqlInsertSubjects = "insert into teachers_subjects (subject_id, teacher_id) values (?, ?)";
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
@@ -53,20 +53,22 @@ public class TeacherDaoImpl implements TeacherDao {
                 daoFactory.closeResultSet(resultSet);
                 daoFactory.closePreparedStatement(preparedStatement);
 
-                preparedStatement = connection.prepareStatement(sqlInsertTeacher);
-                preparedStatement.setInt(1, teacherId);
-                preparedStatement.setInt(2, teacher.getDepartment().getId());
-                isCreate = preparedStatement.execute();
+                if (teacherId != 0) {
+                    preparedStatement = connection.prepareStatement(sqlInsertTeacher);
+                    preparedStatement.setInt(1, teacherId);
+                    preparedStatement.setInt(2, teacher.getDepartment().getId());
+                    isCreate = preparedStatement.execute();
 
-                daoFactory.closeResultSet(resultSet);
-                daoFactory.closePreparedStatement(preparedStatement);
+                    daoFactory.closeResultSet(resultSet);
+                    daoFactory.closePreparedStatement(preparedStatement);
+                }
 
                 if (!teacher.getSubjects().isEmpty()) {
                     List<Subject> subjects = teacher.getSubjects();
                     Iterator<Subject> iteratorSubject = subjects.iterator();
                     while (iteratorSubject.hasNext()) {
                         int subjectId = iteratorSubject.next().getId();
-                        preparedStatement = connection.prepareStatement(sqlInsertSubject);
+                        preparedStatement = connection.prepareStatement(sqlInsertSubjects);
                         preparedStatement.setInt(1, subjectId);
                         preparedStatement.setInt(2, teacherId);
                         isCreate = preparedStatement.execute();

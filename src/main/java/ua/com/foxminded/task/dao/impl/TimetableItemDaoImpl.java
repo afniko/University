@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import ua.com.foxminded.task.dao.AuditoryDao;
@@ -13,6 +14,7 @@ import ua.com.foxminded.task.dao.LectureDao;
 import ua.com.foxminded.task.dao.SubjectDao;
 import ua.com.foxminded.task.dao.TeacherDao;
 import ua.com.foxminded.task.dao.TimetableItemDao;
+import ua.com.foxminded.task.domain.Group;
 import ua.com.foxminded.task.domain.TimetableItem;
 
 public class TimetableItemDaoImpl implements TimetableItemDao {
@@ -24,22 +26,55 @@ public class TimetableItemDaoImpl implements TimetableItemDao {
 
     @Override
     public boolean create(TimetableItem timetableItem) {
-        String sql = "insert into timetable_items (subject_id, auditory_id, lecture_id, date, teacher_id) values (?, ?, ?, ?, ?)";
+        String sqlInsertTimetablesItem = "insert into timetable_items (subject_id, auditory_id, lecture_id, date, teacher_id) values (?, ?, ?, ?, ?)";
+        String sqlRequestId = "select id timetable_items where subject_id=? and auditory_id=? and lecture_id=? and date=? and teacher_id=?";
+        String sqlInsertGroups = "insert into groups_timetable_items (group_id, timetable_item_id) values (?, ?)";
         Connection connection = null;
         PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
         boolean isCreate = false;
+        int timetableItemId = 0;
 
         try {
             connection = daoFactory.getConnection();
 
-            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement = connection.prepareStatement(sqlInsertTimetablesItem);
             preparedStatement.setInt(1, timetableItem.getSubject().getId());
             preparedStatement.setInt(2, timetableItem.getAuditory().getId());
             preparedStatement.setInt(3, timetableItem.getLecture().getId());
             preparedStatement.setDate(4, timetableItem.getDate());
             preparedStatement.setInt(5, timetableItem.getTeacher().getId());
             isCreate = preparedStatement.execute();
-// TODO need to add other parameters
+
+            daoFactory.closePreparedStatement(preparedStatement);
+
+            if (isCreate) {
+                preparedStatement = connection.prepareStatement(sqlRequestId);
+                preparedStatement.setInt(1, timetableItem.getSubject().getId());
+                preparedStatement.setInt(2, timetableItem.getAuditory().getId());
+                preparedStatement.setInt(3, timetableItem.getLecture().getId());
+                preparedStatement.setDate(4, timetableItem.getDate());
+                preparedStatement.setInt(5, timetableItem.getTeacher().getId());
+                resultSet = preparedStatement.executeQuery();
+                if (resultSet.next()) {
+                    timetableItemId = resultSet.getInt("id");
+                }
+                daoFactory.closeResultSet(resultSet);
+                daoFactory.closePreparedStatement(preparedStatement);
+
+                if (!timetableItem.getGroups().isEmpty()) {
+                    List<Group> groups = timetableItem.getGroups();
+                    Iterator<Group> iteratorGroup = groups.iterator();
+                    while (iteratorGroup.hasNext()) {
+                        int groupId = iteratorGroup.next().getId();
+                        preparedStatement = connection.prepareStatement(sqlInsertGroups);
+                        preparedStatement.setInt(1, groupId);
+                        preparedStatement.setInt(2, timetableItemId);
+                        isCreate = preparedStatement.execute();
+                    }
+                }
+            }
+
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
