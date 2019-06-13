@@ -5,20 +5,18 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import ua.com.foxminded.task.dao.DaoFactory;
 import ua.com.foxminded.task.dao.DepartmentDao;
 import ua.com.foxminded.task.dao.GroupDao;
 import ua.com.foxminded.task.dao.TeacherDao;
-import ua.com.foxminded.task.domain.Auditory;
-import ua.com.foxminded.task.domain.AuditoryType;
 import ua.com.foxminded.task.domain.Department;
 import ua.com.foxminded.task.domain.Group;
 import ua.com.foxminded.task.domain.Teacher;
 
 public class DepartmentDaoImpl implements DepartmentDao {
-
 
     private DaoFactory daoFactory = DaoFactory.getInstance();
     GroupDao groupDao = new GroupDaoImpl();
@@ -26,19 +24,62 @@ public class DepartmentDaoImpl implements DepartmentDao {
 
     @Override
     public boolean create(Department department) {
-        String sql = "insert into departments (title, description) values (?, ?)";
+        String sqlInsertDepartment = "insert into departments (title, description, faculty_id) values (?, ?, ?)";
+        String sqlRequestId = "select id from departments where title=?";
+        String sqlUpdateGroup = "update groups set department_id=? where id=?";
+        String sqlUpdateTeacher = "update teachers set department_id=? where id=?";
         Connection connection = null;
         PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
         boolean isCreate = false;
+        int departmentId = 0;
 
         try {
             connection = daoFactory.getConnection();
 
-            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement = connection.prepareStatement(sqlInsertDepartment);
             preparedStatement.setString(1, department.getTitle());
             preparedStatement.setString(2, department.getDescription());
-            // TODO add list Groups to table groups, add list teachers to table teachers
+            preparedStatement.setInt(3, 0);
             isCreate = preparedStatement.execute();
+
+            daoFactory.closePreparedStatement(preparedStatement);
+
+            preparedStatement = connection.prepareStatement(sqlRequestId);
+            preparedStatement.setString(1, department.getTitle());
+            resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                departmentId = resultSet.getInt("id");
+            }
+
+            daoFactory.closeResultSet(resultSet);
+            daoFactory.closePreparedStatement(preparedStatement);
+
+            if (!department.getGroups().isEmpty()) {
+                List<Group> groups = department.getGroups();
+                Iterator<Group> iteratorGroup = groups.iterator();
+                while (iteratorGroup.hasNext()) {
+                    int groupId = iteratorGroup.next().getId();
+                    preparedStatement = connection.prepareStatement(sqlUpdateGroup);
+                    preparedStatement.setInt(1, departmentId);
+                    preparedStatement.setInt(2, groupId);
+                    isCreate = preparedStatement.execute();
+                    daoFactory.closePreparedStatement(preparedStatement);
+                }
+            }
+
+            if (!department.getTeachers().isEmpty()) {
+                List<Teacher> teachers = department.getTeachers();
+                Iterator<Teacher> iteratorTeacher = teachers.iterator();
+                while (iteratorTeacher.hasNext()) {
+                    int teacherId = iteratorTeacher.next().getId();
+                    preparedStatement = connection.prepareStatement(sqlUpdateTeacher);
+                    preparedStatement.setInt(1, departmentId);
+                    preparedStatement.setInt(2, teacherId);
+                    isCreate = preparedStatement.execute();
+                    daoFactory.closePreparedStatement(preparedStatement);
+                }
+            }
 
         } catch (SQLException e) {
             e.printStackTrace();

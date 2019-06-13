@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import ua.com.foxminded.task.dao.DaoFactory;
@@ -20,21 +21,50 @@ public class FacultyDaoImpl implements FacultyDao {
 
     @Override
     public boolean create(Faculty faculty) {
-        String sql = "insert into faculties (title) values (?)";
+        String sqlInsertFaculty = "insert into faculties (title) values (?)";
+        String sqlRequestId = "select id from faculties where title=?";
+        String sqlUpdateDepartment = "update departments set faculty_id=? where id=?";
         Connection connection = null;
         PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
         boolean isCreate = false;
+        int facultyId = 0;
 
         try {
             connection = daoFactory.getConnection();
 
-            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement = connection.prepareStatement(sqlInsertFaculty);
             preparedStatement.setString(1, faculty.getTitle());
             isCreate = preparedStatement.execute();
-// TODO  add list departments to tables
+
+            daoFactory.closePreparedStatement(preparedStatement);
+
+            preparedStatement = connection.prepareStatement(sqlRequestId);
+            preparedStatement.setString(1, faculty.getTitle());
+            resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                facultyId = resultSet.getInt("id");
+            }
+
+            daoFactory.closeResultSet(resultSet);
+            daoFactory.closePreparedStatement(preparedStatement);
+
+            if (!faculty.getDepartments().isEmpty()) {
+                List<Department> departments = faculty.getDepartments();
+                Iterator<Department> iteratorDepartment = departments.iterator();
+                while (iteratorDepartment.hasNext()) {
+                    int departmentId = iteratorDepartment.next().getId();
+                    preparedStatement = connection.prepareStatement(sqlUpdateDepartment);
+                    preparedStatement.setInt(1, facultyId);
+                    preparedStatement.setInt(2, departmentId);
+                    isCreate = preparedStatement.execute();
+                }
+            }
+
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
+            daoFactory.closeResultSet(resultSet);
             daoFactory.closePreparedStatement(preparedStatement);
             daoFactory.closeConnection(connection);
         }
