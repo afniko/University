@@ -16,6 +16,7 @@ public class AuditoryDaoImpl implements AuditoryDao {
 
     private DaoFactory daoFactory = DaoFactory.getInstance();
 
+
     @Override
     public boolean create(Auditory auditory) {
         String sql = "insert into auditories (number, auditory_type_id, capacity, description) values (?, ?, ?, ?)";

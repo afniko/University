@@ -7,12 +7,20 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import ua.com.foxminded.task.dao.AuditoryDao;
 import ua.com.foxminded.task.dao.DaoFactory;
+import ua.com.foxminded.task.dao.LectureDao;
+import ua.com.foxminded.task.dao.SubjectDao;
+import ua.com.foxminded.task.dao.TeacherDao;
 import ua.com.foxminded.task.dao.TimetableItemDao;
 import ua.com.foxminded.task.domain.TimetableItem;
 
 public class TimetableItemDaoImpl implements TimetableItemDao {
     private DaoFactory daoFactory = DaoFactory.getInstance();
+    private SubjectDao subjectDao = new SubjectDaoImpl();
+    private AuditoryDao auditoryDao = new AuditoryDaoImpl();
+    private LectureDao lectureDao = new LectureDaoImpl();
+    private TeacherDao teacherDao = new TeacherDaoImpl();
 
     @Override
     public boolean create(TimetableItem timetableItem) {
@@ -43,8 +51,54 @@ public class TimetableItemDaoImpl implements TimetableItemDao {
 
     @Override
     public TimetableItem findById(int id) {
-        // TODO Auto-generated method stub
-        return null;
+        String sql = "select * from timetable_items where p.id=?";
+        TimetableItem timetableItem = null;
+
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        int subjectId = 0;
+        int auditoryId = 0;
+        int lectureId = 0;
+        int teacherId = 0;
+
+        try {
+            connection = daoFactory.getConnection();
+
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, id);
+            resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                timetableItem = new TimetableItem();
+                timetableItem.setId(resultSet.getInt("id"));
+                subjectId = resultSet.getInt("subject_id");
+                auditoryId = resultSet.getInt("auditory_id");
+                lectureId = resultSet.getInt("lecture_id");
+                timetableItem.setDate(resultSet.getDate("date"));
+                teacherId = resultSet.getInt("teacher_id");
+                // TODO many to many to groups table
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            daoFactory.closeResultSet(resultSet);
+            daoFactory.closePreparedStatement(preparedStatement);
+            daoFactory.closeConnection(connection);
+        }
+        if (subjectId != 0) {
+            timetableItem.setSubject(subjectDao.findById(subjectId));
+        }
+        if (auditoryId != 0) {
+            timetableItem.setAuditory(auditoryDao.findById(auditoryId));
+        }
+        if (lectureId != 0) {
+            timetableItem.setLecture(lectureDao.findById(lectureId));
+        }
+        if (teacherId != 0) {
+            timetableItem.setTeacher(teacherDao.findById(teacherId));
+        }
+
+        return timetableItem;
     }
 
     @Override
