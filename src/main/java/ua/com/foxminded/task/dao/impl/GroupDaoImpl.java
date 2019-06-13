@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import ua.com.foxminded.task.dao.DaoFactory;
@@ -21,8 +22,60 @@ public class GroupDaoImpl implements GroupDao {
 
     @Override
     public boolean create(Group group) {
-        // TODO Auto-generated method stub
-        return false;
+        String sqlInsertGroup = "insert into groups (title, department_id, yearEntry) values (?, ?, ?)";
+        String sqlRequestId = "select id from groups where title=?";
+        String sqlUpdateDepartment = "update students set group_id=? where person_id=?";
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        boolean isCreate = false;
+        int groupId = 0;
+
+        try {
+            connection = daoFactory.getConnection();
+
+            preparedStatement = connection.prepareStatement(sqlInsertGroup);
+            preparedStatement.setString(1, group.getTitle());
+            if (group.getDepartment() != null) {
+                preparedStatement.setInt(2, group.getDepartment().getId());
+            } else {
+                preparedStatement.setInt(2, 0);
+            }
+            preparedStatement.setDate(3, group.getYearEntry());
+            isCreate = preparedStatement.execute();
+
+            daoFactory.closePreparedStatement(preparedStatement);
+
+            preparedStatement = connection.prepareStatement(sqlRequestId);
+            preparedStatement.setString(1, group.getTitle());
+            resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                groupId = resultSet.getInt("id");
+            }
+
+            daoFactory.closeResultSet(resultSet);
+            daoFactory.closePreparedStatement(preparedStatement);
+
+            if (!group.getStudents().isEmpty()) {
+                List<Student> students = group.getStudents();
+                Iterator<Student> iteratorStudent = students.iterator();
+                while (iteratorStudent.hasNext()) {
+                    int studentId = iteratorStudent.next().getId();
+                    preparedStatement = connection.prepareStatement(sqlUpdateDepartment);
+                    preparedStatement.setInt(1, groupId);
+                    preparedStatement.setInt(2, studentId);
+                    isCreate = preparedStatement.execute();
+                }
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            daoFactory.closeResultSet(resultSet);
+            daoFactory.closePreparedStatement(preparedStatement);
+            daoFactory.closeConnection(connection);
+        }
+        return isCreate;
     }
 
     @Override
