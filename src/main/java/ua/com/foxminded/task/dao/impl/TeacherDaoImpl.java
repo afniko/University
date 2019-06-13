@@ -23,7 +23,7 @@ public class TeacherDaoImpl implements TeacherDao {
         String sqlInsertPerson = "insert into persons (first_name, last_name, middle_name, birthday, idfees) values (?, ?, ?, ?, ?)";
         String sqlRequestId = "select id persons where idfees=?";
         String sqlInsertTeacher = "insert into teachers (person_id, department_id) values (?, ?)";
-        String sqlInsertSubjects = "insert into teachers_subjects (subject_id, teacher_id) values (?, ?)";
+        String sqlInsertSubject = "insert into teachers_subjects (subject_id, teacher_id) values (?, ?)";
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
@@ -68,7 +68,7 @@ public class TeacherDaoImpl implements TeacherDao {
                     Iterator<Subject> iteratorSubject = subjects.iterator();
                     while (iteratorSubject.hasNext()) {
                         int subjectId = iteratorSubject.next().getId();
-                        preparedStatement = connection.prepareStatement(sqlInsertSubjects);
+                        preparedStatement = connection.prepareStatement(sqlInsertSubject);
                         preparedStatement.setInt(1, subjectId);
                         preparedStatement.setInt(2, teacherId);
                         isCreate = preparedStatement.execute();

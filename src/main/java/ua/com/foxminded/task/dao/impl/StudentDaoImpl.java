@@ -52,7 +52,11 @@ public class StudentDaoImpl implements StudentDao {
 
                 preparedStatement = connection.prepareStatement(sqlInsertStudent);
                 preparedStatement.setInt(1, idStudent);
-                preparedStatement.setInt(2, student.getGroup().getId());
+                if (student.getGroup() != null) {
+                    preparedStatement.setInt(2, student.getGroup().getId());
+                } else {
+                    preparedStatement.setInt(2, 0);
+                }
                 isCreate = preparedStatement.execute();
             }
 
