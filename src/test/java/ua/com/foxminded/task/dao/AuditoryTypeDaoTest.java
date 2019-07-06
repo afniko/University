@@ -28,7 +28,7 @@ public class AuditoryTypeDaoTest {
         auditoryTypeDao.create(auditoryType2);
 
         assertTrue(auditoryTypeDao.findAll().containsAll(Arrays.asList(auditoryType1, auditoryType2)));
-
         assertTrue(auditoryTypeDao.findByType(testAuditoryType2).equals(auditoryType2));
+        
     }
 }

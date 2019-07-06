@@ -81,7 +81,15 @@ public class DaoFactory {
     }
 
     private void createTables() {
-        String sqlQuery = getSqlQueryFromFile();
+        executeOueryFromFile("create_tables.sql");
+    }
+    
+    public void removeTables() {
+        executeOueryFromFile("remove_tables.sql");
+    }
+
+    private void executeOueryFromFile(String fileName) {
+        String sqlQuery = getSqlQueryFromFile(fileName);
 
         Connection connection = null;
         PreparedStatement preparedStatement = null;
@@ -96,13 +104,15 @@ public class DaoFactory {
             closeConnection(connection);
         }
     }
+    
+    
 
-    private String getSqlQueryFromFile() {
+    private String getSqlQueryFromFile(String fileName) {
         String rootResoursePath = Thread.currentThread().getContextClassLoader().getResource("").getPath();
-        String sqlFilePath = rootResoursePath + "create_tables.sql";
+        String sqlFilePath = rootResoursePath + fileName;
         String sqlQuery = "";
         try {
-            sqlQuery = new String(Files.readAllBytes(Paths.get(sqlFilePath.substring(3))));
+            sqlQuery = new String(Files.readAllBytes(Paths.get(sqlFilePath.substring(0))));
         } catch (IOException e) {
             e.printStackTrace();
         }
