@@ -12,6 +12,7 @@ import org.junit.runner.RunWith;
 
 import ua.com.foxminded.task.dao.impl.AuditoryDaoImpl;
 import ua.com.foxminded.task.domain.Auditory;
+import ua.com.foxminded.task.domain.AuditoryType;
 import ua.com.foxminded.task.domain.repository.AuditoryModelRepository;
 
 @RunWith(JUnitPlatform.class)
@@ -48,9 +49,22 @@ public class AuditoryDaoTest {
     }
 
     @Test
+    public void whenPutAtInputAuditory_thenGetAuditoryTypeByFindById() {
+        AuditoryType auditoryType = auditory1.getType();
+        assertTrue(auditoryDao.findById(1).getType().equals(auditoryType));
+    }
+
+    @Test
     public void whenPutAtInputAuditory_thenGetAuditoryByFindByNumber() {
         String testAuditoryNumber2 = auditory2.getAuditoryNumber();
         assertTrue(auditoryDao.findByNumber(testAuditoryNumber2).equals(auditory2));
+    }
+
+    @Test
+    public void whenPutAtInputAuditory_thenGetAuditoryTypeByFindByNumber() {
+        String testAuditoryNumber2 = auditory2.getAuditoryNumber();
+        AuditoryType auditoryType = auditory2.getType();
+        assertTrue(auditoryDao.findByNumber(testAuditoryNumber2).getType().equals(auditoryType));
     }
 
     @AfterAll
