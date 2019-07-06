@@ -57,7 +57,7 @@ public class AuditoryModelRepository {
         Auditory auditory = new Auditory();
         auditory.setId(5);
         auditory.setAuditoryNumber("405a");
-        auditory.setType(AuditoryTypeModelRepository.getModel5());
+        auditory.setType(AuditoryTypeModelRepository.getModel1());
         auditory.setMaxCapacity(14);
         auditory.setDescription("bla bla bla 5");
         return auditory;
@@ -67,7 +67,7 @@ public class AuditoryModelRepository {
         Auditory auditory = new Auditory();
         auditory.setId(6);
         auditory.setAuditoryNumber("161a");
-        auditory.setType(AuditoryTypeModelRepository.getModel6());
+        auditory.setType(AuditoryTypeModelRepository.getModel2());
         auditory.setMaxCapacity(20);
         auditory.setDescription("bla bla bla 6");
         return auditory;

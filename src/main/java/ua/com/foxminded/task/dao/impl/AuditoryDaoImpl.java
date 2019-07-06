@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ua.com.foxminded.task.dao.AuditoryDao;
+import ua.com.foxminded.task.dao.AuditoryTypeDao;
 import ua.com.foxminded.task.dao.DaoFactory;
 import ua.com.foxminded.task.domain.Auditory;
 import ua.com.foxminded.task.domain.AuditoryType;
@@ -16,20 +17,27 @@ public class AuditoryDaoImpl implements AuditoryDao {
 
     private DaoFactory daoFactory = DaoFactory.getInstance();
 
-
     @Override
     public boolean create(Auditory auditory) {
         String sql = "insert into auditories (number, auditory_type_id, capacity, description) values (?, ?, ?, ?)";
         Connection connection = null;
         PreparedStatement preparedStatement = null;
+        AuditoryTypeDao auditoryTypeDao = new AuditoryTypeDaoImpl();
         boolean isCreate = false;
+
+        AuditoryType auditoryType;
+        auditoryType = auditoryTypeDao.findByType(auditory.getType().getType());
+        if (auditoryType == null) {
+            auditoryTypeDao.create(auditory.getType());
+            auditoryType = auditoryTypeDao.findByType(auditory.getType().getType());
+        }
 
         try {
             connection = daoFactory.getConnection();
 
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1, auditory.getAuditoryNumber());
-            preparedStatement.setInt(2, auditory.getType().getId());
+            preparedStatement.setInt(2, auditoryType.getId());
             preparedStatement.setInt(3, auditory.getMaxCapacity());
             preparedStatement.setString(4, auditory.getDescription());
             isCreate = preparedStatement.execute();
@@ -89,7 +97,6 @@ public class AuditoryDaoImpl implements AuditoryDao {
 
         try {
             connection = daoFactory.getConnection();
-
             preparedStatement = connection.prepareStatement(sql);
             resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
