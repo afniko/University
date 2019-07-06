@@ -80,7 +80,7 @@ public class DaoFactory {
         return instance;
     }
 
-    private void createTables() {
+    public void createTables() {
         executeOueryFromFile("create_tables.sql");
     }
     

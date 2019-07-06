@@ -4,6 +4,7 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.Arrays;
 
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.platform.runner.JUnitPlatform;
@@ -27,6 +28,7 @@ public class AuditoryDaoTest {
 
     @BeforeAll
     public static void createRecords() {
+        DaoFactory.getInstance().createTables();
         AuditoryTypeDao auditoryTypeDao = new AuditoryTypeDaoImpl();
         AuditoryDao auditoryDao = new AuditoryDaoImpl();
 
@@ -71,5 +73,10 @@ public class AuditoryDaoTest {
     public void whenPutAtInputAuditory_thenGetAuditoryByFindByNumber() {
         AuditoryDao auditoryDao = new AuditoryDaoImpl();
         assertTrue(auditoryDao.findByNumber(testAuditoryNumber2).equals(auditory2));
+    }
+
+    @AfterAll
+    public static void removeCreatedTables() {
+        DaoFactory.getInstance().removeTables();
     }
 }
