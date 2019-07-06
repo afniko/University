@@ -14,22 +14,24 @@ import java.sql.Statement;
 import java.util.Properties;
 
 public class DaoFactory {
-    private static final String JDBC_DRIVER = "org.postgresql.Driver";
     private static final String CONFIG_PROPERTIES_FILE = "config.properties";
     private static DaoFactory instance;
+    Properties properties = getProperties(CONFIG_PROPERTIES_FILE);
 
     private DaoFactory() {
-
-        try {
-            Class.forName(JDBC_DRIVER);
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
+        registrationJdbcDriver();
         createTables();
     }
 
+    private void registrationJdbcDriver() {
+        try {
+            Class.forName(properties.getProperty("db.jdbc_driver"));
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
     public Connection getConnection() throws SQLException {
-        Properties properties = getProperties(CONFIG_PROPERTIES_FILE);
         return DriverManager.getConnection(properties.getProperty("db.url"), properties);
     }
 
@@ -83,7 +85,7 @@ public class DaoFactory {
     public void createTables() {
         executeOueryFromFile("create_tables.sql");
     }
-    
+
     public void removeTables() {
         executeOueryFromFile("remove_tables.sql");
     }
@@ -104,8 +106,6 @@ public class DaoFactory {
             closeConnection(connection);
         }
     }
-    
-    
 
     private String getSqlQueryFromFile(String fileName) {
         String rootResoursePath = Thread.currentThread().getContextClassLoader().getResource("").getPath();
