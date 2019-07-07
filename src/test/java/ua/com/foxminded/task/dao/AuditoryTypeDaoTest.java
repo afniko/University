@@ -18,34 +18,34 @@ import ua.com.foxminded.task.domain.repository.AuditoryTypeModelRepository;
 public class AuditoryTypeDaoTest {
 
     private static AuditoryTypeDao auditoryTypeDao;
-    private static final AuditoryType auditoryType1 = AuditoryTypeModelRepository.getModel1();
-    private static final AuditoryType auditoryType2 = AuditoryTypeModelRepository.getModel2();
-    private static final AuditoryType auditoryType3 = AuditoryTypeModelRepository.getModel3();
-    private static final AuditoryType auditoryType4 = AuditoryTypeModelRepository.getModel4();
-    private static final AuditoryType auditoryType5 = AuditoryTypeModelRepository.getModel5();
-    private static final AuditoryType auditoryType6 = AuditoryTypeModelRepository.getModel6();
+    private static final AuditoryType AUDITORY_TYPE1 = AuditoryTypeModelRepository.getModel1();
+    private static final AuditoryType AUDITORY_TYPE2 = AuditoryTypeModelRepository.getModel2();
+    private static final AuditoryType AUDITORY_TYPE3 = AuditoryTypeModelRepository.getModel3();
+    private static final AuditoryType AUDITORY_TYPE4 = AuditoryTypeModelRepository.getModel4();
+    private static final AuditoryType AUDITORY_TYPE5 = AuditoryTypeModelRepository.getModel5();
+    private static final AuditoryType AUDITORY_TYPE6 = AuditoryTypeModelRepository.getModel6();
 
     @BeforeAll
     public static void createRecords() {
         DaoFactory.getInstance().createTables();
         auditoryTypeDao = new AuditoryTypeDaoImpl();
-        auditoryTypeDao.create(auditoryType1);
-        auditoryTypeDao.create(auditoryType2);
-        auditoryTypeDao.create(auditoryType3);
-        auditoryTypeDao.create(auditoryType4);
-        auditoryTypeDao.create(auditoryType5);
-        auditoryTypeDao.create(auditoryType6);
+        auditoryTypeDao.create(AUDITORY_TYPE1);
+        auditoryTypeDao.create(AUDITORY_TYPE2);
+        auditoryTypeDao.create(AUDITORY_TYPE3);
+        auditoryTypeDao.create(AUDITORY_TYPE4);
+        auditoryTypeDao.create(AUDITORY_TYPE5);
+        auditoryTypeDao.create(AUDITORY_TYPE6);
     }
 
     @Test
     public void WhenPutAtTableDbAuditoryTypeObjects_thenGetThisObjects() {
-        assertTrue(auditoryTypeDao.findAll().containsAll(Arrays.asList(auditoryType1, auditoryType2)));
+        assertTrue(auditoryTypeDao.findAll().containsAll(Arrays.asList(AUDITORY_TYPE1, AUDITORY_TYPE2)));
     }
 
     @Test
     public void WhenPutAtTableDbAuditoryTypeObjects_thenGetThisObjectsFindByAuditoryType() {
-        String testAuditoryType2 = auditoryType2.getType();
-        assertTrue(auditoryTypeDao.findByType(testAuditoryType2).equals(auditoryType2));
+        String testAuditoryType2 = AUDITORY_TYPE2.getType();
+        assertTrue(auditoryTypeDao.findByType(testAuditoryType2).equals(AUDITORY_TYPE2));
     }
 
     @AfterAll
