@@ -35,7 +35,9 @@ public class DaoFactory {
     }
 
     public Connection getConnection() throws SQLException {
-        return DriverManager.getConnection(propertiesFlyWay.getProperty("flyway.url"), propertiesFlyWay.getProperty("flyway.user"), propertiesFlyWay.getProperty("flyway.password"));
+        return DriverManager.getConnection(propertiesFlyWay.getProperty("flyway.url"), 
+                propertiesFlyWay.getProperty("flyway.user"), 
+                propertiesFlyWay.getProperty("flyway.password"));
     }
 
     public void closeConnection(Connection connection) {
