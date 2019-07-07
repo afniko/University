@@ -1,7 +1,7 @@
-  CREATE TABLE IF NOT EXISTS lecturies
+  CREATE TABLE IF NOT EXISTS faculties
   (
   id SERIAL PRIMARY KEY,
-  number VARCHAR(5) NOT NULL UNIQUE,
-  start_time TIME,
-  end_time TIME
+  title VARCHAR(20) NOT NULL UNIQUE
   );
+  
+  

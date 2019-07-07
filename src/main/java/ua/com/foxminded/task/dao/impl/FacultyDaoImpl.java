@@ -17,13 +17,14 @@ import ua.com.foxminded.task.domain.Faculty;
 public class FacultyDaoImpl implements FacultyDao {
 
     private DaoFactory daoFactory = DaoFactory.getInstance();
-    private DepartmentDao departmentDao = new DepartmentDaoImpl();
+    private DepartmentDao departmentDao;
 
     @Override
     public boolean create(Faculty faculty) {
         String sqlInsertFaculty = "insert into faculties (title) values (?)";
         String sqlRequestId = "select id from faculties where title=?";
         String sqlUpdateDepartment = "update departments set faculty_id=? where id=?";
+
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
@@ -97,9 +98,9 @@ public class FacultyDaoImpl implements FacultyDao {
             daoFactory.closePreparedStatement(preparedStatement);
             daoFactory.closeConnection(connection);
         }
-        List<Department> departments = faculty.getDepartments();
-        departments.addAll(departmentDao.findByFacultyId(faculty.getId()));
-
+//        departmentDao = new DepartmentDaoImpl();
+//        List<Department> departments = faculty.getDepartments();
+//        departments.addAll(departmentDao.findByFacultyId(faculty.getId()));
         return faculty;
     }
 
