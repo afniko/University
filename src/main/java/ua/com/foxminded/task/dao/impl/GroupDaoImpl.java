@@ -99,7 +99,7 @@ public class GroupDaoImpl implements GroupDao {
                 group.setId(resultSet.getInt("id"));
                 group.setTitle(resultSet.getString("title"));
                 departmentId = resultSet.getInt("department_id");
-                group.setYearEntry(resultSet.getDate("yearsEntry"));
+                group.setYearEntry(resultSet.getDate("yearEntry"));
             }
         } catch (SQLException e) {
             e.printStackTrace();
