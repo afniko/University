@@ -6,10 +6,9 @@
     capacity INT,
     description VARCHAR(200)
   );
-
+  
   CREATE TABLE IF NOT EXISTS auditory_types 
   (
     id SERIAL PRIMARY KEY,
     type VARCHAR(45) NOT NULL UNIQUE
   );
-

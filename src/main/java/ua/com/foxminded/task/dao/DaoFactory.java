@@ -3,8 +3,6 @@ package ua.com.foxminded.task.dao;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -13,26 +11,31 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Properties;
 
+import org.flywaydb.core.Flyway;
+
 public class DaoFactory {
-    private static final String CONFIG_PROPERTIES_FILE = "config.properties";
+    private static final String CONFIG_FLYWAY_PROPERTIES_FILE = "flyway.properties";
     private static DaoFactory instance;
-    Properties properties = getProperties(CONFIG_PROPERTIES_FILE);
+    private Properties propertiesFlyWay;
+    private Flyway flyway;
 
     private DaoFactory() {
-        registrationJdbcDriver();
+        propertiesFlyWay = getProperties(CONFIG_FLYWAY_PROPERTIES_FILE);
+        flyway = Flyway.configure().configuration(propertiesFlyWay).load();
         createTables();
     }
 
-    private void registrationJdbcDriver() {
-        try {
-            Class.forName(properties.getProperty("db.jdbc_driver"));
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
+    public void createTables() {
+        flyway.migrate();
+    }
+
+    public void removeTables() {
+        flyway.clean();
+//        executeOueryFromFile("remove_tables.sql");
     }
 
     public Connection getConnection() throws SQLException {
-        return DriverManager.getConnection(properties.getProperty("db.url"), properties);
+        return DriverManager.getConnection(propertiesFlyWay.getProperty("flyway.url"), propertiesFlyWay.getProperty("flyway.user"), propertiesFlyWay.getProperty("flyway.password"));
     }
 
     public void closeConnection(Connection connection) {
@@ -82,43 +85,6 @@ public class DaoFactory {
         return instance;
     }
 
-    public void createTables() {
-        executeOueryFromFile("create_tables.sql");
-    }
-
-    public void removeTables() {
-        executeOueryFromFile("remove_tables.sql");
-    }
-
-    private void executeOueryFromFile(String fileName) {
-        String sqlQuery = getSqlQueryFromFile(fileName);
-
-        Connection connection = null;
-        PreparedStatement preparedStatement = null;
-        try {
-            connection = getConnection();
-            preparedStatement = connection.prepareStatement(sqlQuery);
-            preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            closePreparedStatement(preparedStatement);
-            closeConnection(connection);
-        }
-    }
-
-    private String getSqlQueryFromFile(String fileName) {
-        String rootResoursePath = Thread.currentThread().getContextClassLoader().getResource("").getPath();
-        String sqlFilePath = rootResoursePath + fileName;
-        String sqlQuery = "";
-        try {
-            sqlQuery = new String(Files.readAllBytes(Paths.get(sqlFilePath.substring(0))));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return sqlQuery;
-    }
-
     private Properties getProperties(String namePropertiesFile) {
         String rootResoursePath = Thread.currentThread().getContextClassLoader().getResource("").getPath();
         String propertiesFilePath = rootResoursePath + namePropertiesFile;
@@ -134,5 +100,33 @@ public class DaoFactory {
         }
         return properties;
     }
+//
+//    private void executeOueryFromFile(String fileName) {
+//        String sqlQuery = getSqlQueryFromFile(fileName);
+//
+//        Connection connection = null;
+//        PreparedStatement preparedStatement = null;
+//        try {
+//            connection = getConnection();
+//            preparedStatement = connection.prepareStatement(sqlQuery);
+//            preparedStatement.executeUpdate();
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        } finally {
+//            closePreparedStatement(preparedStatement);
+//            closeConnection(connection);
+//        }
+//    }
 
+//    private String getSqlQueryFromFile(String fileName) {
+//        String rootResoursePath = Thread.currentThread().getContextClassLoader().getResource("").getPath();
+//        String sqlFilePath = rootResoursePath + fileName;
+//        String sqlQuery = "";
+//        try {
+//            sqlQuery = new String(Files.readAllBytes(Paths.get(sqlFilePath.substring(0))));
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        return sqlQuery;
+//    }
 }

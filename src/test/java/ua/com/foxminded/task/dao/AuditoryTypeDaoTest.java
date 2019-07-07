@@ -14,7 +14,7 @@ import ua.com.foxminded.task.dao.impl.AuditoryTypeDaoImpl;
 import ua.com.foxminded.task.domain.AuditoryType;
 import ua.com.foxminded.task.domain.repository.AuditoryTypeModelRepository;
 
-//@RunWith(JUnitPlatform.class)
+@RunWith(JUnitPlatform.class)
 public class AuditoryTypeDaoTest {
 
     private static AuditoryTypeDao auditoryTypeDao;
@@ -39,7 +39,6 @@ public class AuditoryTypeDaoTest {
 
     @Test
     public void WhenPutAtTableDbAuditoryTypeObjects_thenGetThisObjects() {
-        System.out.println("find all type " + auditoryTypeDao.findAll());
         assertTrue(auditoryTypeDao.findAll().containsAll(Arrays.asList(auditoryType1, auditoryType2)));
     }
 
