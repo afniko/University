@@ -1,9 +1,39 @@
-  CREATE TABLE IF NOT EXISTS departments
+  CREATE TABLE IF NOT EXISTS auditories 
+  (
+    id SERIAL PRIMARY KEY,
+    number VARCHAR(20) NOT NULL UNIQUE,
+    auditory_type_id INT,
+    capacity INT,
+    description VARCHAR(200)
+  );
+  
+  CREATE TABLE IF NOT EXISTS auditory_types 
+  (
+    id SERIAL PRIMARY KEY,
+    type VARCHAR(45) NOT NULL UNIQUE
+  );
+
+    CREATE TABLE IF NOT EXISTS lecturies
+  (
+  id SERIAL PRIMARY KEY,
+  number VARCHAR(5) NOT NULL UNIQUE,
+  start_time TIME,
+  end_time TIME
+  );
+  
+  CREATE TABLE IF NOT EXISTS faculties
+  (
+  id SERIAL PRIMARY KEY,
+  title VARCHAR(20) NOT NULL UNIQUE
+  );
+  
+   CREATE TABLE IF NOT EXISTS departments
   (
   id SERIAL PRIMARY KEY,
   title VARCHAR(20) NOT NULL UNIQUE,
   description VARCHAR(200),
-  faculty_id INT
+  faculty_id INT,
+  FOREIGN KEY (faculty_id) REFERENCES faculties (id)
   );
   
   CREATE TABLE IF NOT EXISTS groups
@@ -21,7 +51,7 @@
   last_name VARCHAR(20),
   middle_name VARCHAR(20),
   birthday DATE,
-  idfees INT
+  idfees INT NOT NULL UNIQUE
   );
   
   CREATE TABLE IF NOT EXISTS students
@@ -71,5 +101,3 @@
   FOREIGN KEY (subject_id) REFERENCES subjects (id),
   FOREIGN KEY (teacher_id) REFERENCES teachers (person_id)
   );
-  
-  

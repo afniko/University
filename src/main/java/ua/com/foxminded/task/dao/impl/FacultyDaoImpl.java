@@ -21,47 +21,48 @@ public class FacultyDaoImpl implements FacultyDao {
 
     @Override
     public boolean create(Faculty faculty) {
-        String sqlInsertFaculty = "insert into faculties (title) values (?)";
-        String sqlRequestId = "select id from faculties where title=?";
-        String sqlUpdateDepartment = "update departments set faculty_id=? where id=?";
+        int facultyId = faculty.getId();
+        if (facultyId == 0 && findByTitle(faculty.getTitle()) == null) {
+            insertFacultyRecord(faculty);
+            faculty = setFacultyIdFromLastRecordInTable(faculty);
+        }
+        if (!faculty.getDepartments().isEmpty()) {
+            createDepartmentRecords(faculty);
+        }
+        return true;
+    }
 
+    private void insertFacultyRecord(Faculty faculty) {
+        String sql = "insert into faculties (title) values (?)";
         Connection connection = null;
         PreparedStatement preparedStatement = null;
-        ResultSet resultSet = null;
-        boolean isCreate = false;
-        int facultyId = 0;
 
         try {
             connection = daoFactory.getConnection();
-
-            preparedStatement = connection.prepareStatement(sqlInsertFaculty);
+            preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1, faculty.getTitle());
-            isCreate = preparedStatement.execute();
-
+            preparedStatement.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
             daoFactory.closePreparedStatement(preparedStatement);
+            daoFactory.closeConnection(connection);
+        }
+    }
 
-            preparedStatement = connection.prepareStatement(sqlRequestId);
-            preparedStatement.setString(1, faculty.getTitle());
+    private Faculty setFacultyIdFromLastRecordInTable(Faculty faculty) {
+        String sql = "select id from faculties where id = (select max(id) from faculties)";
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        try {
+            connection = daoFactory.getConnection();
+            preparedStatement = connection.prepareStatement(sql);
             resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
-                facultyId = resultSet.getInt("id");
+                int facultyId = resultSet.getInt("id");
+                faculty.setId(facultyId);
             }
-
-            daoFactory.closeResultSet(resultSet);
-            daoFactory.closePreparedStatement(preparedStatement);
-
-            if (!faculty.getDepartments().isEmpty()) {
-                List<Department> departments = faculty.getDepartments();
-                Iterator<Department> iteratorDepartment = departments.iterator();
-                while (iteratorDepartment.hasNext()) {
-                    int departmentId = iteratorDepartment.next().getId();
-                    preparedStatement = connection.prepareStatement(sqlUpdateDepartment);
-                    preparedStatement.setInt(1, facultyId);
-                    preparedStatement.setInt(2, departmentId);
-                    isCreate = preparedStatement.execute();
-                }
-            }
-
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
@@ -69,7 +70,39 @@ public class FacultyDaoImpl implements FacultyDao {
             daoFactory.closePreparedStatement(preparedStatement);
             daoFactory.closeConnection(connection);
         }
-        return isCreate;
+        return faculty;
+    }
+
+    private void createDepartmentRecords(Faculty faculty) {
+        departmentDao = new DepartmentDaoImpl();
+        List<Department> departments = faculty.getDepartments();
+        Iterator<Department> iteratorDepartment = departments.iterator();
+        while (iteratorDepartment.hasNext()) {
+            Department department = iteratorDepartment.next();
+            if (departmentDao.findByTitle(department.getTitle()) == null) {
+                departmentDao.create(department);
+                department = departmentDao.findByTitle(department.getTitle());
+                updateDepartmentRecordSetFacultyId(faculty, department);
+            }
+        }
+    }
+
+    private void updateDepartmentRecordSetFacultyId(Faculty faculty, Department department) {
+        String sql = "update departments set faculty_id=? where id=?";
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        try {
+            connection = daoFactory.getConnection();
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, faculty.getId());
+            preparedStatement.setInt(2, department.getId());
+            preparedStatement.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            daoFactory.closePreparedStatement(preparedStatement);
+            daoFactory.closeConnection(connection);
+        }
     }
 
     @Override
@@ -79,7 +112,6 @@ public class FacultyDaoImpl implements FacultyDao {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
-
         try {
             connection = daoFactory.getConnection();
 
@@ -98,9 +130,9 @@ public class FacultyDaoImpl implements FacultyDao {
             daoFactory.closePreparedStatement(preparedStatement);
             daoFactory.closeConnection(connection);
         }
-//        departmentDao = new DepartmentDaoImpl();
-//        List<Department> departments = faculty.getDepartments();
-//        departments.addAll(departmentDao.findByFacultyId(faculty.getId()));
+        departmentDao = new DepartmentDaoImpl();
+        List<Department> departments = faculty.getDepartments();
+        departments.addAll(departmentDao.findByFacultyId(faculty.getId()));
         return faculty;
     }
 
@@ -137,6 +169,7 @@ public class FacultyDaoImpl implements FacultyDao {
     public Faculty findByTitle(String title) {
         String sql = "select id from faculties where title=?";
         int id = 0;
+        Faculty faculty = null;
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
@@ -159,7 +192,9 @@ public class FacultyDaoImpl implements FacultyDao {
             daoFactory.closeConnection(connection);
         }
 
-        Faculty faculty = findById(id);
+        if (id != 0) {
+            faculty = findById(id);
+        }
         return faculty;
     }
 

@@ -1,7 +1,0 @@
-  CREATE TABLE IF NOT EXISTS faculties
-  (
-  id SERIAL PRIMARY KEY,
-  title VARCHAR(20) NOT NULL UNIQUE
-  );
-  
-  
