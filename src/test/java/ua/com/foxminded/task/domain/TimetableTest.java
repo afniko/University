@@ -49,6 +49,7 @@ public class TimetableTest {
                 TimetableItemModelRepository.getModel2(), 
                 TimetableItemModelRepository.getModel6());
         Timetable timetableActual = timetable.findSchedule(student, startPeriod, endPeriod);
+        System.out.println(timetableActual.getTimetableItems());
         assertTrue(timetableActual.getTimetableItems().containsAll(timetableItemsExpected));
         assertFalse(timetableActual.getTimetableItems().containsAll(timetableItemsUnexpected));
     }

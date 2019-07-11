@@ -19,8 +19,8 @@ import ua.com.foxminded.task.domain.Teacher;
 public class DepartmentDaoImpl implements DepartmentDao {
 
     private DaoFactory daoFactory = DaoFactory.getInstance();
-    GroupDao groupDao;
-    TeacherDao teacherDao;
+    private static GroupDao groupDao = new GroupDaoImpl();
+    private static TeacherDao teacherDao = new TeacherDaoImpl();
 
     @Override
     public boolean create(Department department) {
@@ -48,7 +48,6 @@ public class DepartmentDaoImpl implements DepartmentDao {
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1, department.getTitle());
             preparedStatement.setString(2, department.getDescription());
-//            preparedStatement.setInt(3, 0);
             preparedStatement.execute();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -82,7 +81,7 @@ public class DepartmentDaoImpl implements DepartmentDao {
     }
 
     private void createGroupRecords(Department department) {
-        groupDao = new GroupDaoImpl();
+//        groupDao = new GroupDaoImpl();
         List<Group> groups = department.getGroups();
         Iterator<Group> iteratorGroup = groups.iterator();
         while (iteratorGroup.hasNext()) {
@@ -114,7 +113,7 @@ public class DepartmentDaoImpl implements DepartmentDao {
     }
 
     private void createTeacherRecords(Department department) {
-        teacherDao = new TeacherDaoImpl();
+//        teacherDao = new TeacherDaoImpl();
         List<Teacher> teachers = department.getTeachers();
         Iterator<Teacher> iteratorTeacher = teachers.iterator();
         while (iteratorTeacher.hasNext()) {
@@ -156,7 +155,6 @@ public class DepartmentDaoImpl implements DepartmentDao {
 
         try {
             connection = daoFactory.getConnection();
-
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setInt(1, id);
             resultSet = preparedStatement.executeQuery();
@@ -165,7 +163,6 @@ public class DepartmentDaoImpl implements DepartmentDao {
                 department.setId(resultSet.getInt("id"));
                 department.setTitle(resultSet.getString("title"));
                 department.setDescription(resultSet.getString("description"));
-
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -176,11 +173,9 @@ public class DepartmentDaoImpl implements DepartmentDao {
         }
 
         int departmentId = department.getId();
-//        List<Group> groups = department.getGroups();
-//        groupDao = new GroupDaoImpl();
-//        groups.addAll(groupDao.findByDepartmentId(departmentId));
+        List<Group> groups = department.getGroups();
+        groups.addAll(groupDao.findByDepartmentId(departmentId));
 //        List<Teacher> teachers = department.getTeachers();
-//        teacherDao = new TeacherDaoImpl();
 //        teachers.addAll(teacherDao.findByDepartmentId(departmentId));
 
         return department;
@@ -251,7 +246,7 @@ public class DepartmentDaoImpl implements DepartmentDao {
     @Override
     public List<Department> findByFacultyId(int facultyId) {
         String sql = "select id from departments where faculty_id=?";
-        List<Integer> departmentsId = new ArrayList<>();
+        List<Integer> departmentIds = new ArrayList<>();
         List<Department> departments = new ArrayList<>();
 
         Connection connection = null;
@@ -265,7 +260,7 @@ public class DepartmentDaoImpl implements DepartmentDao {
             preparedStatement.setInt(1, facultyId);
             resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                departmentsId.add(resultSet.getInt("id"));
+                departmentIds.add(resultSet.getInt("id"));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -275,7 +270,7 @@ public class DepartmentDaoImpl implements DepartmentDao {
             daoFactory.closeConnection(connection);
         }
 
-        departmentsId.forEach(i -> departments.add(findById(i)));
+        departmentIds.forEach(i -> departments.add(findById(i)));
 
         return departments;
     }

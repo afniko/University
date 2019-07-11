@@ -37,6 +37,7 @@ public class FacultiesDaoTest {
         Faculty faculty = facultyDao.findById(1);
         System.out.println("faculty : " + faculty);
         System.out.println("departments : " + faculty.getDepartments());
+        System.out.println("groups of first department : "+ faculty.getDepartments().get(1).getGroups());
     }
 
 //    @Test
@@ -50,7 +51,7 @@ public class FacultiesDaoTest {
         assertTrue(facultyDao.findByTitle(title).equals(FACULTY2));
     }
 
-    @AfterAll
+//    @AfterAll
     public static void removeCreatedTables() {
         DaoFactory.getInstance().removeTables();
     }

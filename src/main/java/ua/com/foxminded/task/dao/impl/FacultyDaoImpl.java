@@ -17,7 +17,7 @@ import ua.com.foxminded.task.domain.Faculty;
 public class FacultyDaoImpl implements FacultyDao {
 
     private DaoFactory daoFactory = DaoFactory.getInstance();
-    private DepartmentDao departmentDao;
+    private static DepartmentDao departmentDao = new DepartmentDaoImpl();
 
     @Override
     public boolean create(Faculty faculty) {
@@ -74,7 +74,7 @@ public class FacultyDaoImpl implements FacultyDao {
     }
 
     private void createDepartmentRecords(Faculty faculty) {
-        departmentDao = new DepartmentDaoImpl();
+//        departmentDao = new DepartmentDaoImpl();
         List<Department> departments = faculty.getDepartments();
         Iterator<Department> iteratorDepartment = departments.iterator();
         while (iteratorDepartment.hasNext()) {
@@ -130,7 +130,7 @@ public class FacultyDaoImpl implements FacultyDao {
             daoFactory.closePreparedStatement(preparedStatement);
             daoFactory.closeConnection(connection);
         }
-        departmentDao = new DepartmentDaoImpl();
+//        departmentDao = new DepartmentDaoImpl();
         List<Department> departments = faculty.getDepartments();
         departments.addAll(departmentDao.findByFacultyId(faculty.getId()));
         return faculty;

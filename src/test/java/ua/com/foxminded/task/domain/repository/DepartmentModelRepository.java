@@ -14,6 +14,11 @@ public class DepartmentModelRepository {
         return department;
     }
 
+    public static List<Department> getModels() {
+        List<Department> departments = Arrays.asList(getModel1(), getModel2(), getModel3());
+        return new ArrayList<>(departments);
+    }
+
     public static List<Department> getModels1() {
         List<Department> departments = Arrays.asList(getModel1(), getModel2());
         return new ArrayList<>(departments);
@@ -33,7 +38,7 @@ public class DepartmentModelRepository {
         Department department = new Department();
         department.setTitle("department1");
         department.setDescription("bla bla bla 1");
-//        department.setGroups(GroupModelRepository.getModels());
+        department.setGroups(GroupModelRepository.getModels1());
 //        department.setTeachers(TeacherModelRepository.getModels());
         return department;
     }
@@ -42,7 +47,7 @@ public class DepartmentModelRepository {
         Department department = new Department();
         department.setTitle("department2");
         department.setDescription("bla bla bla 2");
-//        department.setGroups(GroupModelRepository.getModels());
+        department.setGroups(GroupModelRepository.getModels2());
 //        department.setTeachers(TeacherModelRepository.getModels());
         return department;
     }
@@ -51,7 +56,7 @@ public class DepartmentModelRepository {
         Department department = new Department();
         department.setTitle("department3");
         department.setDescription("bla bla bla 3");
-//        department.setGroups(GroupModelRepository.getModels());
+        department.setGroups(GroupModelRepository.getModels3());
 //        department.setTeachers(TeacherModelRepository.getModels());
         return department;
     }
@@ -60,7 +65,7 @@ public class DepartmentModelRepository {
         Department department = new Department();
         department.setTitle("department4");
         department.setDescription("bla bla bla 4");
-//        department.setGroups(GroupModelRepository.getModels());
+        department.setGroups(GroupModelRepository.getModels4());
 //        department.setTeachers(TeacherModelRepository.getModels());
         return department;
     }
@@ -69,7 +74,7 @@ public class DepartmentModelRepository {
         Department department = new Department();
         department.setTitle("department5");
         department.setDescription("bla bla bla 5");
-//        department.setGroups(GroupModelRepository.getModels());
+        department.setGroups(GroupModelRepository.getModels5());
 //        department.setTeachers(TeacherModelRepository.getModels());
         return department;
     }
