@@ -50,7 +50,7 @@ public class GroupModelRepository {
         Group group = new Group();
         group.setTitle("group1");
         group.setYearEntry(Date.valueOf("2016-01-01"));
-//        group.setStudents(StudentModelRepository.getModels());
+        group.setStudents(StudentModelRepository.getModels1());
         return group;
     }
 
@@ -58,7 +58,7 @@ public class GroupModelRepository {
         Group group = new Group();
         group.setTitle("group2");
         group.setYearEntry(Date.valueOf("2018-01-01"));
-//        group.setStudents(StudentModelRepository.getModels());
+        group.setStudents(StudentModelRepository.getModels2());
         return group;
     }
 
@@ -66,7 +66,7 @@ public class GroupModelRepository {
         Group group = new Group();
         group.setTitle("group3");
         group.setYearEntry(Date.valueOf("2017-01-01"));
-//        group.setStudents(StudentModelRepository.getModels());
+        group.setStudents(StudentModelRepository.getModels3());
         return group;
     }
 

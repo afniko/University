@@ -8,11 +8,11 @@ public interface DepartmentDao {
 
     public boolean create(Department department);
 
-    public Department findById(int id);
+    public Department findById(Department department);
 
     public List<Department> findAll();
 
-    public Department findByTitle(String title);
+    public Department findByTitle(Department department);
 
     public List<Department> findByFacultyId(int id);
 }

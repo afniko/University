@@ -8,9 +8,9 @@ public interface FacultyDao {
 
     public boolean create(Faculty faculty);
 
-    public Faculty findById(int id);
+    public Faculty findById(Faculty faculty);
 
     public List<Faculty> findAll();
 
-    public Faculty findByTitle(String title);
+    public Faculty findByTitle(Faculty faculty);
 }

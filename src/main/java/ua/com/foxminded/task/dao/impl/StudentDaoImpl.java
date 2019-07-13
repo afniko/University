@@ -10,56 +10,59 @@ import java.util.List;
 import ua.com.foxminded.task.dao.DaoFactory;
 import ua.com.foxminded.task.dao.GroupDao;
 import ua.com.foxminded.task.dao.StudentDao;
+import ua.com.foxminded.task.domain.Group;
 import ua.com.foxminded.task.domain.Student;
 
 public class StudentDaoImpl implements StudentDao {
     private DaoFactory daoFactory = DaoFactory.getInstance();
-    private GroupDao groupDao = new GroupDaoImpl();
+    private static GroupDao groupDao = new GroupDaoImpl();
 
     @Override
     public boolean create(Student student) {
-        String sqlInsertPerson = "insert into persons (first_name, last_name, middle_name, birthday, idfees) values (?, ?, ?, ?, ?)";
-        String sqlRequestId = "select id persons where idfees=?";
-        String sqlInsertStudent = "insert into students (person_id, group_id) values (?, ?)";
+        int studentId = student.getId();
+        if (studentId == 0 && findByIdFees(student).equals(student)) {
+            insertPersonRecord(student);
+            student = setPersonIdFromLastRecordInTable(student);
+            insertStudentRecord(student);
+        }
+        return true;
+    }
+
+    private void insertPersonRecord(Student student) {
+        String sql = "insert into persons (first_name, last_name, middle_name, birthday, idfees) values (?, ?, ?, ?, ?)";
         Connection connection = null;
         PreparedStatement preparedStatement = null;
-        ResultSet resultSet = null;
-        boolean isCreate = false;
-        int idStudent = 0;
 
         try {
             connection = daoFactory.getConnection();
-
-            preparedStatement = connection.prepareStatement(sqlInsertPerson);
+            preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1, student.getFirstName());
             preparedStatement.setString(2, student.getLastName());
             preparedStatement.setString(3, student.getMiddleName());
             preparedStatement.setDate(4, student.getBirthday());
             preparedStatement.setInt(5, student.getIdFees());
-            isCreate = preparedStatement.execute();
-
+            preparedStatement.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
             daoFactory.closePreparedStatement(preparedStatement);
+            daoFactory.closeConnection(connection);
+        }
+    }
 
-            if (isCreate) {
-                preparedStatement = connection.prepareStatement(sqlRequestId);
-                preparedStatement.setInt(1, student.getIdFees());
-                resultSet = preparedStatement.executeQuery();
-                if (resultSet.next()) {
-                    idStudent = resultSet.getInt("id");
-                }
-                daoFactory.closeResultSet(resultSet);
-                daoFactory.closePreparedStatement(preparedStatement);
-
-                preparedStatement = connection.prepareStatement(sqlInsertStudent);
-                preparedStatement.setInt(1, idStudent);
-                if (student.getGroup() != null) {
-                    preparedStatement.setInt(2, student.getGroup().getId());
-                } else {
-                    preparedStatement.setInt(2, 0);
-                }
-                isCreate = preparedStatement.execute();
+    private Student setPersonIdFromLastRecordInTable(Student student) {
+        String sql = "select id from persons where id = (select max(id) from persons)";
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        try {
+            connection = daoFactory.getConnection();
+            preparedStatement = connection.prepareStatement(sql);
+            resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                int personId = resultSet.getInt("id");
+                student.setId(personId);
             }
-
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
@@ -67,14 +70,37 @@ public class StudentDaoImpl implements StudentDao {
             daoFactory.closePreparedStatement(preparedStatement);
             daoFactory.closeConnection(connection);
         }
+        return student;
+    }
 
-        return isCreate;
+    private void insertStudentRecord(Student student) {
+        String sqlWithGroup = "insert into students (person_id, group_id) values (?, ?)";
+        String sqlWithoutGroup = "insert into students (person_id) values (?)";
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+
+        try {
+            connection = daoFactory.getConnection();
+            if (student.getGroup() != null) {
+                preparedStatement = connection.prepareStatement(sqlWithGroup);
+                preparedStatement.setInt(1, student.getId());
+                preparedStatement.setInt(2, student.getGroup().getId());
+            } else {
+                preparedStatement = connection.prepareStatement(sqlWithoutGroup);
+                preparedStatement.setInt(1, student.getId());
+            }
+            preparedStatement.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            daoFactory.closePreparedStatement(preparedStatement);
+            daoFactory.closeConnection(connection);
+        }
     }
 
     @Override
-    public Student findById(int id) {
+    public Student findById(Student student) {
         String sql = "select * from persons p inner join students s on p.id = s.person_id where p.id=?";
-        Student student = null;
 
         Connection connection = null;
         PreparedStatement preparedStatement = null;
@@ -85,10 +111,9 @@ public class StudentDaoImpl implements StudentDao {
             connection = daoFactory.getConnection();
 
             preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setInt(1, id);
+            preparedStatement.setInt(1, student.getId());
             resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
-                student = new Student();
                 student.setId(resultSet.getInt("id"));
                 student.setFirstName(resultSet.getString("first_name"));
                 student.setLastName(resultSet.getString("last_name"));
@@ -104,9 +129,11 @@ public class StudentDaoImpl implements StudentDao {
             daoFactory.closePreparedStatement(preparedStatement);
             daoFactory.closeConnection(connection);
         }
-        if (groupId != 0) {
-            student.setGroup(groupDao.findById(groupId));
-//TODO attention! can be a problem - bidirectional
+        if (groupId != 0 && student.getGroup()==null) {
+            Group group = new Group();
+            group.setId(groupId);
+            group.getStudents().add(student);
+            student.setGroup(groupDao.findById(group));
         }
         return student;
     }
@@ -115,7 +142,7 @@ public class StudentDaoImpl implements StudentDao {
     public List<Student> findAll() {
         String sql = "select person_id from students";
         List<Integer> studentsId = new ArrayList<>();
-        List<Student> students = new ArrayList<>();
+        List<Student> students = null;
 
         Connection connection = null;
         PreparedStatement preparedStatement = null;
@@ -136,16 +163,30 @@ public class StudentDaoImpl implements StudentDao {
             daoFactory.closePreparedStatement(preparedStatement);
             daoFactory.closeConnection(connection);
         }
+        students = getStudentsById(studentsId);
+        return students;
+    }
 
-        studentsId.forEach(id -> students.add(findById(id)));
-
+    private List<Student> getStudentsById(List<Integer> studentsId) {
+        List<Student> students = new ArrayList<Student>();
+        studentsId.forEach(id -> {
+            Student student = new Student();
+            student.setId(id);
+            students.add(findById(student));
+        });
         return students;
     }
 
     @Override
-    public Student findByIdFees(int idFees) {
+    public Student findByIdFees(Student student) {
+        student = findPersonIdByIdfees(student);
+        return findById(student);
+    }
+
+    @Override
+    public Student findPersonIdByIdfees(Student student) {
         String sql = "select id from persons where idfees=?";
-        int studentId = 0;
+        int personId = 0;
 
         Connection connection = null;
         PreparedStatement preparedStatement = null;
@@ -155,10 +196,11 @@ public class StudentDaoImpl implements StudentDao {
             connection = daoFactory.getConnection();
 
             preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setInt(1, idFees);
+            preparedStatement.setInt(1, student.getIdFees());
             resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
-                studentId = resultSet.getInt("id");
+                personId = resultSet.getInt("id");
+                student.setId(personId);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -167,15 +209,14 @@ public class StudentDaoImpl implements StudentDao {
             daoFactory.closePreparedStatement(preparedStatement);
             daoFactory.closeConnection(connection);
         }
-
-        return findById(studentId);
+        return student;
     }
 
     @Override
     public List<Student> findByGroupId(int id) {
         String sql = "select person_id from students where group_id=?";
         List<Integer> studentsId = new ArrayList<>();
-        List<Student> students = new ArrayList<>();
+        List<Student> students;
 
         Connection connection = null;
         PreparedStatement preparedStatement = null;
@@ -197,9 +238,7 @@ public class StudentDaoImpl implements StudentDao {
             daoFactory.closePreparedStatement(preparedStatement);
             daoFactory.closeConnection(connection);
         }
-
-        studentsId.forEach(i -> students.add(findById(i)));
-
+        students = getStudentsById(studentsId);
         return students;
     }
 

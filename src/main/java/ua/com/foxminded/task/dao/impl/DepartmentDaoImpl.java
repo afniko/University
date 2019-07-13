@@ -25,7 +25,7 @@ public class DepartmentDaoImpl implements DepartmentDao {
     @Override
     public boolean create(Department department) {
         int departmentId = department.getId();
-        if (departmentId == 0 && findByTitle(department.getTitle()) == null) {
+        if (departmentId == 0 && findByTitle(department).equals(department)) {
             insertDepartmentRecord(department);
             department = setDepartmentIdFromLastRecordInTable(department);
         }
@@ -81,14 +81,15 @@ public class DepartmentDaoImpl implements DepartmentDao {
     }
 
     private void createGroupRecords(Department department) {
-//        groupDao = new GroupDaoImpl();
         List<Group> groups = department.getGroups();
         Iterator<Group> iteratorGroup = groups.iterator();
         while (iteratorGroup.hasNext()) {
             Group group = iteratorGroup.next();
-            if (groupDao.findByTitle(group.getTitle()) == null) {
+            if (groupDao.findByTitle(group).equals(group)) {
                 groupDao.create(group);
-                group = groupDao.findByTitle(group.getTitle());
+                if (group.getId() == 0) {
+                    group = groupDao.findByTitle(group);
+                }
                 updateGroupRecordSetDepartmentId(department, group);
             }
         }
@@ -113,7 +114,6 @@ public class DepartmentDaoImpl implements DepartmentDao {
     }
 
     private void createTeacherRecords(Department department) {
-//        teacherDao = new TeacherDaoImpl();
         List<Teacher> teachers = department.getTeachers();
         Iterator<Teacher> iteratorTeacher = teachers.iterator();
         while (iteratorTeacher.hasNext()) {
@@ -145,9 +145,8 @@ public class DepartmentDaoImpl implements DepartmentDao {
     }
 
     @Override
-    public Department findById(int id) {
+    public Department findById(Department department) {
         String sql = "select * from departments where id=?";
-        Department department = null;
 
         Connection connection = null;
         PreparedStatement preparedStatement = null;
@@ -156,10 +155,9 @@ public class DepartmentDaoImpl implements DepartmentDao {
         try {
             connection = daoFactory.getConnection();
             preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setInt(1, id);
+            preparedStatement.setInt(1, department.getId());
             resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
-                department = new Department();
                 department.setId(resultSet.getInt("id"));
                 department.setTitle(resultSet.getString("title"));
                 department.setDescription(resultSet.getString("description"));
@@ -174,7 +172,9 @@ public class DepartmentDaoImpl implements DepartmentDao {
 
         int departmentId = department.getId();
         List<Group> groups = department.getGroups();
-        groups.addAll(groupDao.findByDepartmentId(departmentId));
+        if (groups.isEmpty()) {
+            groups.addAll(groupDao.findByDepartmentId(departmentId));
+        }
 //        List<Teacher> teachers = department.getTeachers();
 //        teachers.addAll(teacherDao.findByDepartmentId(departmentId));
 
@@ -185,7 +185,7 @@ public class DepartmentDaoImpl implements DepartmentDao {
     public List<Department> findAll() {
         String sql = "select id from departments";
         List<Integer> departmentsId = new ArrayList<>();
-        List<Department> departments = new ArrayList<>();
+        List<Department> departments = null;
 
         Connection connection = null;
         PreparedStatement preparedStatement = null;
@@ -206,29 +206,29 @@ public class DepartmentDaoImpl implements DepartmentDao {
             daoFactory.closePreparedStatement(preparedStatement);
             daoFactory.closeConnection(connection);
         }
-
-        departmentsId.forEach(id -> departments.add(findById(id)));
-
+        if (!departmentsId.isEmpty()) {
+            departments = getDepartmentsById(departmentsId);
+        }
         return departments;
     }
 
     @Override
-    public Department findByTitle(String title) {
+    public Department findByTitle(Department department) {
         String sql = "select id from departments where title=?";
 
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
-        Department department = null;
         int departmentId = 0;
         try {
             connection = daoFactory.getConnection();
 
             preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setString(1, title);
+            preparedStatement.setString(1, department.getTitle());
             resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
                 departmentId = resultSet.getInt("id");
+                department.setId(departmentId);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -238,7 +238,7 @@ public class DepartmentDaoImpl implements DepartmentDao {
             daoFactory.closeConnection(connection);
         }
         if (departmentId != 0) {
-            department = findById(departmentId);
+            department = findById(department);
         }
         return department;
     }
@@ -246,8 +246,8 @@ public class DepartmentDaoImpl implements DepartmentDao {
     @Override
     public List<Department> findByFacultyId(int facultyId) {
         String sql = "select id from departments where faculty_id=?";
-        List<Integer> departmentIds = new ArrayList<>();
-        List<Department> departments = new ArrayList<>();
+        List<Integer> departmentsId = new ArrayList<>();
+        List<Department> departments = null;
 
         Connection connection = null;
         PreparedStatement preparedStatement = null;
@@ -260,7 +260,7 @@ public class DepartmentDaoImpl implements DepartmentDao {
             preparedStatement.setInt(1, facultyId);
             resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                departmentIds.add(resultSet.getInt("id"));
+                departmentsId.add(resultSet.getInt("id"));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -269,9 +269,19 @@ public class DepartmentDaoImpl implements DepartmentDao {
             daoFactory.closePreparedStatement(preparedStatement);
             daoFactory.closeConnection(connection);
         }
+        if (!departmentsId.isEmpty()) {
+            departments = getDepartmentsById(departmentsId);
+        }
+        return departments;
+    }
 
-        departmentIds.forEach(i -> departments.add(findById(i)));
-
+    private List<Department> getDepartmentsById(List<Integer> departmentsId) {
+        List<Department> departments = new ArrayList<>();
+        departmentsId.forEach(id -> {
+            Department department = new Department();
+            department.setId(id);
+            departments.add(findById(department));
+        });
         return departments;
     }
 }

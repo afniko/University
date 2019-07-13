@@ -8,11 +8,13 @@ public interface StudentDao {
 
     public boolean create(Student student);
 
-    public Student findById(int id);
+    public Student findById(Student student);
 
     public List<Student> findAll();
 
-    public Student findByIdFees(int idFees);
+    public Student findByIdFees(Student student);
+    
+    public Student findPersonIdByIdfees(Student student);
     
     public List<Student> findByGroupId(int id);
 }

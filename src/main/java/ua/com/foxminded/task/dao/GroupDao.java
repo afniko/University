@@ -8,11 +8,11 @@ public interface GroupDao {
 
     public boolean create(Group group);
 
-    public Group findById(int id);
+    public Group findById(Group group);
 
     public List<Group> findAll();
 
-    public Group findByTitle(String title);
+    public Group findByTitle(Group group);
     
     public List<Group> findByDepartmentId(int id);
 }

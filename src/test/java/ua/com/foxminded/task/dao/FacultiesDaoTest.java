@@ -34,10 +34,15 @@ public class FacultiesDaoTest {
 
     @Test
     public void test() {
-        Faculty faculty = facultyDao.findById(1);
+        Faculty faculty = new Faculty();
+        faculty.setId(1);
+        faculty = facultyDao.findById(faculty);
+        System.out.println("faculty Dao , find by id!!!");
         System.out.println("faculty : " + faculty);
         System.out.println("departments : " + faculty.getDepartments());
-        System.out.println("groups of first department : "+ faculty.getDepartments().get(1).getGroups());
+        System.out.println("groups of first department : " + faculty.getDepartments().get(0).getGroups());
+        System.out.println("student : " + faculty.getDepartments().get(0).getGroups().get(0).getStudents());
+//        System.out.println("student : "+faculty.getDepartments().get(1).getGroups().get(1).getStudents());
     }
 
 //    @Test
@@ -48,7 +53,7 @@ public class FacultiesDaoTest {
 //    @Test
     public void WhenPutAtTableDbFacultyObjects_thenGetThisObjectsFindByTitle() {
         String title = FACULTY2.getTitle();
-        assertTrue(facultyDao.findByTitle(title).equals(FACULTY2));
+//        assertTrue(facultyDao.findByTitle(title).equals(FACULTY2));
     }
 
 //    @AfterAll

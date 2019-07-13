@@ -121,7 +121,7 @@ public class TeacherDaoImpl implements TeacherDao {
             daoFactory.closeConnection(connection);
         }
         if (departmentId != 0) {
-            teacher.setDepartment(departmentDao.findById(departmentId));
+//            teacher.setDepartment(departmentDao.findById(departmentId));
 //TODO attention! can be a problem - bidirectional
         }
         return teacher;
