@@ -9,6 +9,7 @@ import java.util.List;
 
 import ua.com.foxminded.task.dao.DaoFactory;
 import ua.com.foxminded.task.dao.LectureDao;
+import ua.com.foxminded.task.domain.Auditory;
 import ua.com.foxminded.task.domain.Lecture;
 
 public class LectureDaoImpl implements LectureDao {
@@ -40,9 +41,8 @@ public class LectureDaoImpl implements LectureDao {
     }
 
     @Override
-    public Lecture findById(int id) {
+    public Lecture findById(Lecture lecture) {
         String sql = "select * from lecturies where id=?";
-        Lecture lecture = null;
 
         Connection connection = null;
         PreparedStatement preparedStatement = null;
@@ -52,10 +52,9 @@ public class LectureDaoImpl implements LectureDao {
             connection = daoFactory.getConnection();
 
             preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setInt(1, id);
+            preparedStatement.setInt(1, lecture.getId());
             resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
-                lecture = new Lecture();
                 lecture.setId(resultSet.getInt("id"));
                 lecture.setNumber(resultSet.getString("number"));
                 lecture.setStartTime(resultSet.getTime("start_time"));
@@ -68,15 +67,14 @@ public class LectureDaoImpl implements LectureDao {
             daoFactory.closePreparedStatement(preparedStatement);
             daoFactory.closeConnection(connection);
         }
-
         return lecture;
     }
 
     @Override
     public List<Lecture> findAll() {
-        String sql = "select * from lecturies";
-        List<Lecture> lectures = new ArrayList<>();
-
+        String sql = "select id from lecturies";
+        List<Lecture> lectures = null;
+        List<Integer> lecturiesId = new ArrayList<>();
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
@@ -87,12 +85,8 @@ public class LectureDaoImpl implements LectureDao {
             preparedStatement = connection.prepareStatement(sql);
             resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                Lecture lecture = new Lecture();
-                lecture.setId(resultSet.getInt("id"));
-                lecture.setNumber(resultSet.getString("number"));
-                lecture.setStartTime(resultSet.getTime("start_time"));
-                lecture.setEndTime(resultSet.getTime("end_time"));
-                lectures.add(lecture);
+                int id = resultSet.getInt("id");
+                lecturiesId.add(id);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -101,14 +95,13 @@ public class LectureDaoImpl implements LectureDao {
             daoFactory.closePreparedStatement(preparedStatement);
             daoFactory.closeConnection(connection);
         }
-
+        lectures = getLecturesById(lecturiesId);
         return lectures;
     }
 
     @Override
-    public Lecture findByNumber(String number) {
+    public Lecture findByNumber(Lecture lecture) {
         String sql = "select * from lecturies where number=?";
-        Lecture lecture = null;
 
         Connection connection = null;
         PreparedStatement preparedStatement = null;
@@ -118,7 +111,7 @@ public class LectureDaoImpl implements LectureDao {
             connection = daoFactory.getConnection();
 
             preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setString(1, number);
+            preparedStatement.setString(1, lecture.getNumber());
             resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
                 lecture = new Lecture();
@@ -136,6 +129,16 @@ public class LectureDaoImpl implements LectureDao {
         }
 
         return lecture;
+    }
+
+    private List<Lecture> getLecturesById(List<Integer> lecturesId) {
+        List<Lecture> lectures = new ArrayList<>();
+        lecturesId.forEach(id -> {
+            Lecture lecture = new Lecture();
+            lecture.setId(id);
+            lectures.add(findById(lecture));
+        });
+        return lectures;
     }
 
 }

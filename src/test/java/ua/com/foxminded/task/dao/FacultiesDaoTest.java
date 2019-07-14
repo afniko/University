@@ -43,18 +43,16 @@ public class FacultiesDaoTest {
         System.out.println("groups of first department : " + faculty.getDepartments().get(0).getGroups());
         System.out.println("student : " + faculty.getDepartments().get(0).getGroups().get(0).getStudents());
         System.out.println("teacher : " + faculty.getDepartments().get(0).getTeachers());
-//        System.out.println("student : "+faculty.getDepartments().get(1).getGroups().get(1).getStudents());
     }
 
-//    @Test
+    @Test
     public void WhenPutAtTableDbFacultyObjects_thenGetThisObjects() {
         assertTrue(facultyDao.findAll().containsAll(Arrays.asList(FACULTY1, FACULTY2, FACULTY3)));
     }
 
-//    @Test
+    @Test
     public void WhenPutAtTableDbFacultyObjects_thenGetThisObjectsFindByTitle() {
-        String title = FACULTY2.getTitle();
-//        assertTrue(facultyDao.findByTitle(title).equals(FACULTY2));
+        assertTrue(facultyDao.findByTitle(FACULTY2).equals(FACULTY2));
     }
 
     @AfterAll

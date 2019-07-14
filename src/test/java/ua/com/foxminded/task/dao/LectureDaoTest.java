@@ -14,7 +14,7 @@ import ua.com.foxminded.task.dao.impl.LectureDaoImpl;
 import ua.com.foxminded.task.domain.Lecture;
 import ua.com.foxminded.task.domain.repository.LectureModelRepository;
 
-//@RunWith(JUnitPlatform.class)
+@RunWith(JUnitPlatform.class)
 public class LectureDaoTest {
 
     private static LectureDao lectureDao;
@@ -44,8 +44,7 @@ public class LectureDaoTest {
 
     @Test
     public void WhenPutAtTableDbLectureObjects_thenGetThisObjectsFindByNumber() {
-        String number = LECTURE2.getNumber();
-        assertTrue(lectureDao.findByNumber(number).equals(LECTURE2));
+        assertTrue(lectureDao.findByNumber(LECTURE2).equals(LECTURE2));
     }
 
     @AfterAll

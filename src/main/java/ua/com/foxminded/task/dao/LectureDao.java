@@ -8,9 +8,9 @@ public interface LectureDao {
 
     public boolean create(Lecture lecture);
 
-    public Lecture findById(int id);
+    public Lecture findById(Lecture lecture);
 
     public List<Lecture> findAll();
 
-    public Lecture findByNumber(String number);
+    public Lecture findByNumber(Lecture lectures);
 }

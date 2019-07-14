@@ -8,9 +8,9 @@ public interface AuditoryTypeDao {
 
     public boolean create(AuditoryType auditoryType);
 
-    public AuditoryType findById(int id);
+    public AuditoryType findById(AuditoryType auditoryType);
 
     public List<AuditoryType> findAll();
 
-    public AuditoryType findByType(String type);
+    public AuditoryType findByType(AuditoryType auditoryType);
 }

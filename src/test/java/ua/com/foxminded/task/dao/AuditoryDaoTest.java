@@ -15,10 +15,10 @@ import ua.com.foxminded.task.domain.Auditory;
 import ua.com.foxminded.task.domain.AuditoryType;
 import ua.com.foxminded.task.domain.repository.AuditoryModelRepository;
 
-//@RunWith(JUnitPlatform.class)
+@RunWith(JUnitPlatform.class)
 public class AuditoryDaoTest {
 
-    private static AuditoryDao auditoryDao;
+    private static AuditoryDao auditoryDao = new AuditoryDaoImpl();
     private static final Auditory AUDITORY1 = AuditoryModelRepository.getModel1();
     private static final Auditory AUDITORY2 = AuditoryModelRepository.getModel2();
     private static final Auditory AUDITORY3 = AuditoryModelRepository.getModel3();
@@ -29,7 +29,6 @@ public class AuditoryDaoTest {
     @BeforeAll
     public static void createRecords() {
         DaoFactory.getInstance().createTables();
-        auditoryDao = new AuditoryDaoImpl();
         auditoryDao.create(AUDITORY1);
         auditoryDao.create(AUDITORY2);
         auditoryDao.create(AUDITORY3);
@@ -45,26 +44,34 @@ public class AuditoryDaoTest {
 
     @Test
     public void whenPutAtInputAuditory_thenGetAuditoryByFindById() {
-        assertTrue(auditoryDao.findById(1).equals(AUDITORY1));
+        Auditory auditory = new Auditory();
+        auditory.setId(1);
+        assertTrue(auditoryDao.findById(auditory).equals(AUDITORY1));
     }
 
     @Test
     public void whenPutAtInputAuditory_thenGetAuditoryTypeByFindById() {
         AuditoryType auditoryType = AUDITORY1.getType();
-        assertTrue(auditoryDao.findById(1).getType().equals(auditoryType));
+        Auditory auditory = new Auditory();
+        auditory.setType(auditoryType);
+        assertTrue(auditoryDao.findById(auditory).getType().equals(auditoryType));
     }
 
     @Test
     public void whenPutAtInputAuditory_thenGetAuditoryByFindByNumber() {
         String testAuditoryNumber2 = AUDITORY2.getAuditoryNumber();
-        assertTrue(auditoryDao.findByNumber(testAuditoryNumber2).equals(AUDITORY2));
+        Auditory auditory = new Auditory();
+        auditory.setAuditoryNumber(testAuditoryNumber2);
+        assertTrue(auditoryDao.findByNumber(auditory).equals(AUDITORY2));
     }
 
     @Test
     public void whenPutAtInputAuditory_thenGetAuditoryTypeByFindByNumber() {
         String testAuditoryNumber2 = AUDITORY2.getAuditoryNumber();
         AuditoryType auditoryType = AUDITORY2.getType();
-        assertTrue(auditoryDao.findByNumber(testAuditoryNumber2).getType().equals(auditoryType));
+        Auditory auditory = new Auditory();
+        auditory.setAuditoryNumber(testAuditoryNumber2);
+        assertTrue(auditoryDao.findByNumber(auditory).getType().equals(auditoryType));
     }
 
     @AfterAll

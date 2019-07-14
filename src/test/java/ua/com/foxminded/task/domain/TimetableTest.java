@@ -40,33 +40,21 @@ public class TimetableTest {
         Student student = StudentModelRepository.getModel1();
         Date startPeriod = Date.valueOf("2019-01-25");
         Date endPeriod = Date.valueOf("2019-03-25");
-        List<TimetableItem> timetableItemsExpected = Arrays.asList(
-                TimetableItemModelRepository.getModel3(), 
-                TimetableItemModelRepository.getModel4(), 
-                TimetableItemModelRepository.getModel5());
-        List<TimetableItem> timetableItemsUnexpected = Arrays.asList(
-                TimetableItemModelRepository.getModel1(), 
-                TimetableItemModelRepository.getModel2(), 
-                TimetableItemModelRepository.getModel6());
+        List<TimetableItem> timetableItemsExpected = Arrays.asList(TimetableItemModelRepository.getModel3(), TimetableItemModelRepository.getModel4(), TimetableItemModelRepository.getModel5());
+        List<TimetableItem> timetableItemsUnexpected = Arrays.asList(TimetableItemModelRepository.getModel1(), TimetableItemModelRepository.getModel2(), TimetableItemModelRepository.getModel6());
         Timetable timetableActual = timetable.findSchedule(student, startPeriod, endPeriod);
-        System.out.println(timetableActual.getTimetableItems());
         assertTrue(timetableActual.getTimetableItems().containsAll(timetableItemsExpected));
         assertFalse(timetableActual.getTimetableItems().containsAll(timetableItemsUnexpected));
     }
-    
+
     @Test
     public void whenSetPeriodForTeacher_thenGetFindSchedule() {
         Timetable timetable = TimetableModelRepository.getModel();
-       Teacher teacher= TeacherModelRepository.getModel1();
+        Teacher teacher = TeacherModelRepository.getModel1();
         Date startPeriod = Date.valueOf("2019-01-22");
         Date endPeriod = Date.valueOf("2019-03-25");
-        List<TimetableItem> timetableItemsExpected = Arrays.asList(
-                TimetableItemModelRepository.getModel2(), 
-                TimetableItemModelRepository.getModel4());
-        List<TimetableItem> timetableItemsUnexpected = Arrays.asList(
-                TimetableItemModelRepository.getModel1(), 
-                TimetableItemModelRepository.getModel3(), 
-                TimetableItemModelRepository.getModel5(), 
+        List<TimetableItem> timetableItemsExpected = Arrays.asList(TimetableItemModelRepository.getModel2(), TimetableItemModelRepository.getModel4());
+        List<TimetableItem> timetableItemsUnexpected = Arrays.asList(TimetableItemModelRepository.getModel1(), TimetableItemModelRepository.getModel3(), TimetableItemModelRepository.getModel5(),
                 TimetableItemModelRepository.getModel6());
         Timetable timetableActual = timetable.findSchedule(teacher, startPeriod, endPeriod);
         assertTrue(timetableActual.getTimetableItems().containsAll(timetableItemsExpected));

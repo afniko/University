@@ -8,10 +8,10 @@ public interface AuditoryDao {
 
     public boolean create(Auditory auditory);
 
-    public Auditory findById(int id);
+    public Auditory findById(Auditory auditory);
 
     public List<Auditory> findAll();
 
-    public Auditory findByNumber(String number);
+    public Auditory findByNumber(Auditory auditory);
 
 }

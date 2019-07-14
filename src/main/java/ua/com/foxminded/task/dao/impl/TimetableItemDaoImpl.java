@@ -14,7 +14,9 @@ import ua.com.foxminded.task.dao.LectureDao;
 import ua.com.foxminded.task.dao.SubjectDao;
 import ua.com.foxminded.task.dao.TeacherDao;
 import ua.com.foxminded.task.dao.TimetableItemDao;
+import ua.com.foxminded.task.domain.Auditory;
 import ua.com.foxminded.task.domain.Group;
+import ua.com.foxminded.task.domain.Lecture;
 import ua.com.foxminded.task.domain.Teacher;
 import ua.com.foxminded.task.domain.TimetableItem;
 
@@ -125,10 +127,14 @@ public class TimetableItemDaoImpl implements TimetableItemDao {
             timetableItem.setSubject(subjectDao.findById(subjectId));
         }
         if (auditoryId != 0) {
-            timetableItem.setAuditory(auditoryDao.findById(auditoryId));
+            Auditory auditory = new Auditory();
+            auditory.setId(auditoryId);
+            timetableItem.setAuditory(auditoryDao.findById(auditory));
         }
         if (lectureId != 0) {
-            timetableItem.setLecture(lectureDao.findById(lectureId));
+            Lecture lecture = new Lecture();
+            lecture.setId(teacherId);
+            timetableItem.setLecture(lectureDao.findById(lecture));
         }
         if (teacherId != 0) {
             Teacher teacher = new Teacher();

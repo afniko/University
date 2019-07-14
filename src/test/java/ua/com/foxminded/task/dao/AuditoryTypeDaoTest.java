@@ -14,7 +14,7 @@ import ua.com.foxminded.task.dao.impl.AuditoryTypeDaoImpl;
 import ua.com.foxminded.task.domain.AuditoryType;
 import ua.com.foxminded.task.domain.repository.AuditoryTypeModelRepository;
 
-//@RunWith(JUnitPlatform.class)
+@RunWith(JUnitPlatform.class)
 public class AuditoryTypeDaoTest {
 
     private static AuditoryTypeDao auditoryTypeDao;
@@ -44,8 +44,7 @@ public class AuditoryTypeDaoTest {
 
     @Test
     public void WhenPutAtTableDbAuditoryTypeObjects_thenGetThisObjectsFindByAuditoryType() {
-        String testAuditoryType2 = AUDITORY_TYPE2.getType();
-        assertTrue(auditoryTypeDao.findByType(testAuditoryType2).equals(AUDITORY_TYPE2));
+        assertTrue(auditoryTypeDao.findByType(AUDITORY_TYPE2).equals(AUDITORY_TYPE2));
     }
 
     @AfterAll
