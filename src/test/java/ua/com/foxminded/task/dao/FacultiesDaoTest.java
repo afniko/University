@@ -26,9 +26,9 @@ public class FacultiesDaoTest {
     public static void createRecords() {
         DaoFactory.getInstance().createTables();
         facultyDao = new FacultyDaoImpl();
-//        facultyDao.create(FACULTY1);
-//        facultyDao.create(FACULTY2);
-//        facultyDao.create(FACULTY3);
+        facultyDao.create(FACULTY1);
+        facultyDao.create(FACULTY2);
+        facultyDao.create(FACULTY3);
         System.out.println("Faculty created!");
     }
 
@@ -57,7 +57,7 @@ public class FacultiesDaoTest {
 //        assertTrue(facultyDao.findByTitle(title).equals(FACULTY2));
     }
 
-//    @AfterAll
+    @AfterAll
     public static void removeCreatedTables() {
         DaoFactory.getInstance().removeTables();
     }

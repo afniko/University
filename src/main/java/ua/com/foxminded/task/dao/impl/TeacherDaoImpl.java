@@ -137,7 +137,6 @@ public class TeacherDaoImpl implements TeacherDao {
             department.setId(departmentId);
             department.addTeacher(teacher);
             teacher.setDepartment(department);
-//            TODO ????
             teacher.setDepartment(departmentDao.findById(department));
         }
         return teacher;
