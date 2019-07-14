@@ -128,7 +128,9 @@ public class FacultyDaoImpl implements FacultyDao {
             daoFactory.closePreparedStatement(preparedStatement);
             daoFactory.closeConnection(connection);
         }
-        faculty.setDepartments(departmentDao.findByFacultyId(faculty.getId()));
+        if (faculty.getDepartments().isEmpty()) {
+            faculty.setDepartments(departmentDao.findByFacultyId(faculty.getId()));
+        }
         return faculty;
     }
 

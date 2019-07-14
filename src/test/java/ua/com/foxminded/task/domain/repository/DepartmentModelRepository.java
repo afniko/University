@@ -39,7 +39,7 @@ public class DepartmentModelRepository {
         department.setTitle("department1");
         department.setDescription("bla bla bla 1");
         department.setGroups(GroupModelRepository.getModels1());
-//        department.setTeachers(TeacherModelRepository.getModels());
+        department.setTeachers(TeacherModelRepository.getModels1());
         return department;
     }
 
@@ -48,7 +48,7 @@ public class DepartmentModelRepository {
         department.setTitle("department2");
         department.setDescription("bla bla bla 2");
         department.setGroups(GroupModelRepository.getModels2());
-//        department.setTeachers(TeacherModelRepository.getModels());
+        department.setTeachers(TeacherModelRepository.getModels2());
         return department;
     }
 
@@ -57,7 +57,7 @@ public class DepartmentModelRepository {
         department.setTitle("department3");
         department.setDescription("bla bla bla 3");
         department.setGroups(GroupModelRepository.getModels3());
-//        department.setTeachers(TeacherModelRepository.getModels());
+        department.setTeachers(TeacherModelRepository.getModels3());
         return department;
     }
 
@@ -66,7 +66,7 @@ public class DepartmentModelRepository {
         department.setTitle("department4");
         department.setDescription("bla bla bla 4");
         department.setGroups(GroupModelRepository.getModels4());
-//        department.setTeachers(TeacherModelRepository.getModels());
+        department.setTeachers(TeacherModelRepository.getModels4());
         return department;
     }
 
@@ -75,7 +75,7 @@ public class DepartmentModelRepository {
         department.setTitle("department5");
         department.setDescription("bla bla bla 5");
         department.setGroups(GroupModelRepository.getModels5());
-//        department.setTeachers(TeacherModelRepository.getModels());
+        department.setTeachers(TeacherModelRepository.getModels5());
         return department;
     }
 }

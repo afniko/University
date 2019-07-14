@@ -26,9 +26,9 @@ public class FacultiesDaoTest {
     public static void createRecords() {
         DaoFactory.getInstance().createTables();
         facultyDao = new FacultyDaoImpl();
-        facultyDao.create(FACULTY1);
-        facultyDao.create(FACULTY2);
-        facultyDao.create(FACULTY3);
+//        facultyDao.create(FACULTY1);
+//        facultyDao.create(FACULTY2);
+//        facultyDao.create(FACULTY3);
         System.out.println("Faculty created!");
     }
 
@@ -42,6 +42,7 @@ public class FacultiesDaoTest {
         System.out.println("departments : " + faculty.getDepartments());
         System.out.println("groups of first department : " + faculty.getDepartments().get(0).getGroups());
         System.out.println("student : " + faculty.getDepartments().get(0).getGroups().get(0).getStudents());
+        System.out.println("teacher : " + faculty.getDepartments().get(0).getTeachers());
 //        System.out.println("student : "+faculty.getDepartments().get(1).getGroups().get(1).getStudents());
     }
 

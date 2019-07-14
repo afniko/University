@@ -215,10 +215,10 @@ public class GroupDaoImpl implements GroupDao {
     }
 
     @Override
-    public List<Group> findByDepartmentId(int id) {
+    public List<Group> findByDepartmentId(Department department) {
         String sql = "select id from groups where department_id=?";
         List<Integer> groupsId = new ArrayList<>();
-        List<Group> groups = new ArrayList<Group>();
+        List<Group> groups = department.getGroups();
 
         Connection connection = null;
         PreparedStatement preparedStatement = null;
@@ -228,7 +228,7 @@ public class GroupDaoImpl implements GroupDao {
             connection = daoFactory.getConnection();
 
             preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setInt(1, id);
+            preparedStatement.setInt(1, department.getId());
             resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 groupsId.add(resultSet.getInt("id"));
@@ -241,7 +241,7 @@ public class GroupDaoImpl implements GroupDao {
             daoFactory.closeConnection(connection);
         }
         if (!groupsId.isEmpty()) {
-            groups = getGroupsById(groupsId);
+            groups.addAll(getGroupsById(groupsId));
         }
         return groups;
     }

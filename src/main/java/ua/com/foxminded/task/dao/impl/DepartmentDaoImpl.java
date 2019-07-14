@@ -118,9 +118,9 @@ public class DepartmentDaoImpl implements DepartmentDao {
         Iterator<Teacher> iteratorTeacher = teachers.iterator();
         while (iteratorTeacher.hasNext()) {
             Teacher teacher = iteratorTeacher.next();
-            if (teacherDao.findByIdFees(teacher.getIdFees()) == null) {
+            if (teacherDao.findByIdFees(teacher).equals(teacher)) {
                 teacherDao.create(teacher);
-                teacher = teacherDao.findByIdFees(teacher.getIdFees());
+                teacher = teacherDao.findByIdFees(teacher);
                 updateTeacherRecordSetDepartmentId(department, teacher);
             }
         }
@@ -170,14 +170,14 @@ public class DepartmentDaoImpl implements DepartmentDao {
             daoFactory.closeConnection(connection);
         }
 
-        int departmentId = department.getId();
         List<Group> groups = department.getGroups();
         if (groups.isEmpty()) {
-            groups.addAll(groupDao.findByDepartmentId(departmentId));
+            groups.addAll(groupDao.findByDepartmentId(department));
         }
-//        List<Teacher> teachers = department.getTeachers();
-//        teachers.addAll(teacherDao.findByDepartmentId(departmentId));
-
+        List<Teacher> teachers = department.getTeachers();
+        if (teachers.isEmpty()) {
+            teachers.addAll(teacherDao.findByDepartmentId(department));
+        }
         return department;
     }
 
