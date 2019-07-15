@@ -8,9 +8,9 @@ public interface SubjectDao {
 
     public boolean create(Subject subject);
 
-    public Subject findById(int id);
+    public Subject findById(Subject subject);
 
     public List<Subject> findAll();
 
-    public Subject findByTitle(String title);
+    public Subject findByTitle(Subject subject);
 }

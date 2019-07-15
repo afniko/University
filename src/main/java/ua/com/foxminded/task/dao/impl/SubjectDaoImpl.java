@@ -9,7 +9,9 @@ import java.util.List;
 
 import ua.com.foxminded.task.dao.DaoFactory;
 import ua.com.foxminded.task.dao.SubjectDao;
+import ua.com.foxminded.task.domain.Department;
 import ua.com.foxminded.task.domain.Subject;
+import ua.com.foxminded.task.domain.Teacher;
 
 public class SubjectDaoImpl implements SubjectDao {
     private DaoFactory daoFactory = DaoFactory.getInstance();
@@ -38,9 +40,8 @@ public class SubjectDaoImpl implements SubjectDao {
     }
 
     @Override
-    public Subject findById(int id) {
+    public Subject findById(Subject subject) {
         String sql = "select * from subjects where id=?";
-        Subject subject = null;
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
@@ -49,10 +50,9 @@ public class SubjectDaoImpl implements SubjectDao {
             connection = daoFactory.getConnection();
 
             preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setInt(1, id);
+            preparedStatement.setInt(1, subject.getId());
             resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
-                subject = new Subject();
                 subject.setId(resultSet.getInt("id"));
                 subject.setTitle(resultSet.getString("title"));
             }
@@ -68,8 +68,9 @@ public class SubjectDaoImpl implements SubjectDao {
 
     @Override
     public List<Subject> findAll() {
-        String sql = "select * from subjects";
-        List<Subject> subjects = new ArrayList<>();
+        String sql = "select id from subjects";
+        List<Subject> subjects = null;
+        List<Integer> subjectsId = new ArrayList<Integer>();
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
@@ -80,10 +81,8 @@ public class SubjectDaoImpl implements SubjectDao {
             preparedStatement = connection.prepareStatement(sql);
             resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                Subject subject = new Subject();
-                subject.setId(resultSet.getInt("id"));
-                subject.setTitle(resultSet.getString("title"));
-                subjects.add(subject);
+                int id = resultSet.getInt("id");
+                subjectsId.add(id);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -92,13 +91,13 @@ public class SubjectDaoImpl implements SubjectDao {
             daoFactory.closePreparedStatement(preparedStatement);
             daoFactory.closeConnection(connection);
         }
+        subjects = getSubjectsById(subjectsId);
         return subjects;
     }
 
     @Override
-    public Subject findByTitle(String title) {
-        String sql = "select * from subjects where title=?";
-        Subject subject = null;
+    public Subject findByTitle(Subject subject) {
+        String sql = "select id from subjects where title=?";
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
@@ -107,13 +106,11 @@ public class SubjectDaoImpl implements SubjectDao {
             connection = daoFactory.getConnection();
 
             preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setString(1, title);
+            preparedStatement.setString(1, subject.getTitle());
             resultSet = preparedStatement.executeQuery();
 
             if (resultSet.next()) {
-                subject = new Subject();
                 subject.setId(resultSet.getInt("id"));
-                subject.setTitle(resultSet.getString("title"));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -122,7 +119,17 @@ public class SubjectDaoImpl implements SubjectDao {
             daoFactory.closePreparedStatement(preparedStatement);
             daoFactory.closeConnection(connection);
         }
+        subject = findById(subject);
         return subject;
     }
 
+    private List<Subject> getSubjectsById(List<Integer> subjectsId) {
+        List<Subject> subjects = new ArrayList<>();
+        subjectsId.forEach(id -> {
+            Subject subject = new Subject();
+            subject.setId(id);
+            subjects.add(findById(subject));
+        });
+        return subjects;
+    }
 }
