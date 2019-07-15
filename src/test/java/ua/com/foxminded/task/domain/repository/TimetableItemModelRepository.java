@@ -23,8 +23,7 @@ public class TimetableItemModelRepository {
 
     public static TimetableItem getModel1() {
         TimetableItem timetableItem = new TimetableItem();
-        timetableItem.setId(1);
-        timetableItem.setSubject(SubjectModelRepository.getModel());
+        timetableItem.setSubject(SubjectModelRepository.getModel1());
         timetableItem.setAuditory(AuditoryModelRepository.getModel1());
         timetableItem.setGroups(GroupModelRepository.getModels());
         timetableItem.setLecture(LectureModelRepository.getModel1());
@@ -35,8 +34,7 @@ public class TimetableItemModelRepository {
 
     public static TimetableItem getModel2() {
         TimetableItem timetableItem = new TimetableItem();
-        timetableItem.setId(2);
-        timetableItem.setSubject(SubjectModelRepository.getModel());
+        timetableItem.setSubject(SubjectModelRepository.getModel2());
         timetableItem.setAuditory(AuditoryModelRepository.getModel2());
         timetableItem.setGroups(GroupModelRepository.getModels());
         timetableItem.setLecture(LectureModelRepository.getModel2());
@@ -47,8 +45,7 @@ public class TimetableItemModelRepository {
 
     public static TimetableItem getModel3() {
         TimetableItem timetableItem = new TimetableItem();
-        timetableItem.setId(3);
-        timetableItem.setSubject(SubjectModelRepository.getModel());
+        timetableItem.setSubject(SubjectModelRepository.getModel3());
         timetableItem.setAuditory(AuditoryModelRepository.getModel3());
         timetableItem.setGroups(GroupModelRepository.getModels());
         timetableItem.setLecture(LectureModelRepository.getModel3());
@@ -59,8 +56,7 @@ public class TimetableItemModelRepository {
 
     public static TimetableItem getModel4() {
         TimetableItem timetableItem = new TimetableItem();
-        timetableItem.setId(4);
-        timetableItem.setSubject(SubjectModelRepository.getModel());
+        timetableItem.setSubject(SubjectModelRepository.getModel4());
         timetableItem.setAuditory(AuditoryModelRepository.getModel4());
         timetableItem.setGroups(GroupModelRepository.getModels());
         timetableItem.setLecture(LectureModelRepository.getModel4());
@@ -71,8 +67,7 @@ public class TimetableItemModelRepository {
 
     public static TimetableItem getModel5() {
         TimetableItem timetableItem = new TimetableItem();
-        timetableItem.setId(5);
-        timetableItem.setSubject(SubjectModelRepository.getModel());
+        timetableItem.setSubject(SubjectModelRepository.getModel1());
         timetableItem.setAuditory(AuditoryModelRepository.getModel5());
         timetableItem.setGroups(GroupModelRepository.getModels());
         timetableItem.setLecture(LectureModelRepository.getModel5());
@@ -83,8 +78,7 @@ public class TimetableItemModelRepository {
 
     public static TimetableItem getModel6() {
         TimetableItem timetableItem = new TimetableItem();
-        timetableItem.setId(6);
-        timetableItem.setSubject(SubjectModelRepository.getModel());
+        timetableItem.setSubject(SubjectModelRepository.getModel2());
         timetableItem.setAuditory(AuditoryModelRepository.getModel6());
         timetableItem.setGroups(GroupModelRepository.getModels());
         timetableItem.setLecture(LectureModelRepository.getModel6());

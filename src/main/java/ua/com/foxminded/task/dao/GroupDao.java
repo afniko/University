@@ -16,4 +16,6 @@ public interface GroupDao {
     public Group findByTitle(Group group);
 
     public List<Group> findByDepartmentId(Department department);
+
+    public List<Group> getGroupsById(List<Integer> groupsId);
 }

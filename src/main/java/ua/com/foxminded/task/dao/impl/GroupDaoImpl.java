@@ -246,7 +246,8 @@ public class GroupDaoImpl implements GroupDao {
         return groups;
     }
 
-    private List<Group> getGroupsById(List<Integer> groupsId) {
+    @Override
+    public List<Group> getGroupsById(List<Integer> groupsId) {
         List<Group> groups = new ArrayList<>();
         groupsId.forEach(id -> {
             Group group = new Group();
