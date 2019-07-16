@@ -16,10 +16,8 @@ import ua.com.foxminded.task.dao.SubjectDao;
 import ua.com.foxminded.task.dao.TeacherDao;
 import ua.com.foxminded.task.dao.TimetableItemDao;
 import ua.com.foxminded.task.domain.Auditory;
-import ua.com.foxminded.task.domain.Department;
 import ua.com.foxminded.task.domain.Group;
 import ua.com.foxminded.task.domain.Lecture;
-import ua.com.foxminded.task.domain.Student;
 import ua.com.foxminded.task.domain.Subject;
 import ua.com.foxminded.task.domain.Teacher;
 import ua.com.foxminded.task.domain.TimetableItem;
@@ -50,18 +48,34 @@ public class TimetableItemDaoImpl implements TimetableItemDao {
     private TimetableItem getIdComponentsTimetableItems(TimetableItem timetableItem) {
         if (timetableItem.getSubject().getId() == 0) {
             Subject subject = subjectDao.findByTitle(timetableItem.getSubject());
+            if (subject.getId() == 0) {
+                subjectDao.create(timetableItem.getSubject());
+                subject = subjectDao.findByTitle(timetableItem.getSubject());
+            }
             timetableItem.setSubject(subject);
         }
         if (timetableItem.getAuditory().getId() == 0) {
             Auditory auditory = auditoryDao.findByNumber(timetableItem.getAuditory());
+            if (auditory.getId() == 0) {
+                auditoryDao.create(timetableItem.getAuditory());
+                auditory = auditoryDao.findByNumber(timetableItem.getAuditory());
+            }
             timetableItem.setAuditory(auditory);
         }
         if (timetableItem.getLecture().getId() == 0) {
             Lecture lecture = lectureDao.findByNumber(timetableItem.getLecture());
+            if (lecture.getId() == 0) {
+                lectureDao.create(timetableItem.getLecture());
+                lecture = lectureDao.findByNumber(timetableItem.getLecture());
+            }
             timetableItem.setLecture(lecture);
         }
         if (timetableItem.getTeacher().getId() == 0) {
             Teacher teacher = teacherDao.findByIdFees(timetableItem.getTeacher());
+            if (teacher.getId() == 0) {
+                teacherDao.create(timetableItem.getTeacher());
+                teacher = teacherDao.findByIdFees(timetableItem.getTeacher());
+            }
             timetableItem.setTeacher(teacher);
         }
         return timetableItem;
@@ -153,69 +167,9 @@ public class TimetableItemDaoImpl implements TimetableItemDao {
         }
     }
 
-//    public boolean create2(TimetableItem timetableItem) {
-//        String sqlInsertTimetablesItem = "insert into timetable_items (subject_id, auditory_id, lecture_id, date, teacher_id) values (?, ?, ?, ?, ?)";
-//        String sqlRequestId = "select id timetable_items where subject_id=? and auditory_id=? and lecture_id=? and date=? and teacher_id=?";
-//        String sqlInsertGroups = "insert into groups_timetable_items (group_id, timetable_item_id) values (?, ?)";
-//        Connection connection = null;
-//        PreparedStatement preparedStatement = null;
-//        ResultSet resultSet = null;
-//        boolean isCreate = false;
-//        int timetableItemId = 0;
-//
-//        try {
-//            connection = daoFactory.getConnection();
-//
-//            preparedStatement = connection.prepareStatement(sqlInsertTimetablesItem);
-//            preparedStatement.setInt(1, timetableItem.getSubject().getId());
-//            preparedStatement.setInt(2, timetableItem.getAuditory().getId());
-//            preparedStatement.setInt(3, timetableItem.getLecture().getId());
-//            preparedStatement.setDate(4, timetableItem.getDate());
-//            preparedStatement.setInt(5, timetableItem.getTeacher().getId());
-//            isCreate = preparedStatement.execute();
-//
-//            daoFactory.closePreparedStatement(preparedStatement);
-//
-//            if (isCreate) {
-//                preparedStatement = connection.prepareStatement(sqlRequestId);
-//                preparedStatement.setInt(1, timetableItem.getSubject().getId());
-//                preparedStatement.setInt(2, timetableItem.getAuditory().getId());
-//                preparedStatement.setInt(3, timetableItem.getLecture().getId());
-//                preparedStatement.setDate(4, timetableItem.getDate());
-//                preparedStatement.setInt(5, timetableItem.getTeacher().getId());
-//                resultSet = preparedStatement.executeQuery();
-//                if (resultSet.next()) {
-//                    timetableItemId = resultSet.getInt("id");
-//                }
-//                daoFactory.closeResultSet(resultSet);
-//                daoFactory.closePreparedStatement(preparedStatement);
-//
-//                if (!timetableItem.getGroups().isEmpty()) {
-//                    List<Group> groups = timetableItem.getGroups();
-//                    Iterator<Group> iteratorGroup = groups.iterator();
-//                    while (iteratorGroup.hasNext()) {
-//                        int groupId = iteratorGroup.next().getId();
-//                        preparedStatement = connection.prepareStatement(sqlInsertGroups);
-//                        preparedStatement.setInt(1, groupId);
-//                        preparedStatement.setInt(2, timetableItemId);
-//                        isCreate = preparedStatement.execute();
-//                    }
-//                }
-//            }
-//
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        } finally {
-//            daoFactory.closePreparedStatement(preparedStatement);
-//            daoFactory.closeConnection(connection);
-//        }
-//        return isCreate;
-//    }
-
     @Override
-    public TimetableItem findById(int id) {
+    public TimetableItem findById(TimetableItem timetableItem) {
         String sql = "select * from timetable_items where id=?";
-        TimetableItem timetableItem = null;
 
         Connection connection = null;
         PreparedStatement preparedStatement = null;
@@ -229,17 +183,15 @@ public class TimetableItemDaoImpl implements TimetableItemDao {
             connection = daoFactory.getConnection();
 
             preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setInt(1, id);
+            preparedStatement.setInt(1, timetableItem.getId());
             resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
-                timetableItem = new TimetableItem();
                 timetableItem.setId(resultSet.getInt("id"));
                 subjectId = resultSet.getInt("subject_id");
                 auditoryId = resultSet.getInt("auditory_id");
                 lectureId = resultSet.getInt("lecture_id");
                 timetableItem.setDate(resultSet.getDate("date"));
                 teacherId = resultSet.getInt("teacher_id");
-                // TODO many to many to groups table
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -311,7 +263,6 @@ public class TimetableItemDaoImpl implements TimetableItemDao {
     public List<TimetableItem> findAll() {
         String sql = "select id from timetable_items";
         List<Integer> timetableItemsId = new ArrayList<>();
-        List<TimetableItem> timetableItems = new ArrayList<>();
 
         Connection connection = null;
         PreparedStatement preparedStatement = null;
@@ -333,9 +284,16 @@ public class TimetableItemDaoImpl implements TimetableItemDao {
             daoFactory.closeConnection(connection);
         }
 
-        timetableItemsId.forEach(id -> timetableItems.add(findById(id)));
-
-        return timetableItems;
+        return getTimetableItemsById(timetableItemsId);
     }
 
+    private List<TimetableItem> getTimetableItemsById(List<Integer> timetableItemsId) {
+        List<TimetableItem> timetableItems = new ArrayList<>();
+        timetableItemsId.forEach(id -> {
+            TimetableItem timetableItem = new TimetableItem();
+            timetableItem.setId(id);
+            timetableItems.add(findById(timetableItem));
+        });
+        return timetableItems;
+    }
 }

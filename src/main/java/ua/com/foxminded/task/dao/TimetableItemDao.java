@@ -8,7 +8,7 @@ public interface TimetableItemDao {
 
     public boolean create(TimetableItem timetableItem);
 
-    public TimetableItem findById(int id);
+    public TimetableItem findById(TimetableItem timetableItem);
 
     public List<TimetableItem> findAll();
 }
