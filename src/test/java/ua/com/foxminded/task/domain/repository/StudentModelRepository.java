@@ -39,7 +39,7 @@ public class StudentModelRepository {
         return student;
     }
 
-    private static Student getModel2() {
+    public static Student getModel2() {
         Student student = new Student();
         student.setFirstName("firstName2");
         student.setMiddleName("middleName2");
@@ -49,7 +49,7 @@ public class StudentModelRepository {
         return student;
     }
 
-    private static Student getModel3() {
+    public static Student getModel3() {
         Student student = new Student();
         student.setFirstName("firstName3");
         student.setMiddleName("middleName3");
