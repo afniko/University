@@ -35,7 +35,7 @@ public class FacultiesDaoTest {
     public void WhenPutAtTableDbFacultyObjects_thenGetThisObjectsFindById() {
         Faculty faculty = new Faculty();
         faculty.setId(2);
-        assertTrue(facultyDao.findByTitle(faculty).equals(FACULTY2));
+        assertTrue(facultyDao.findById(faculty).equals(FACULTY2));
     }
 
     @Test
@@ -47,7 +47,7 @@ public class FacultiesDaoTest {
     public void WhenPutAtTableDbFacultyObjects_thenGetThisObjectsFindByTitle() {
         Faculty faculty = new Faculty();
         faculty.setTitle(FACULTY3.getTitle());
-        assertTrue(facultyDao.findByTitle(FACULTY2).equals(FACULTY3));
+        assertTrue(facultyDao.findByTitle(faculty).equals(FACULTY3));
     }
 
     @AfterAll
