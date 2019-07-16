@@ -33,7 +33,7 @@ public class TimetableItemDaoImpl implements TimetableItemDao {
     @Override
     public boolean create(TimetableItem timetableItem) {
         int timetableItemId = timetableItem.getId();
-        if (timetableItemId == 0 && !findAll().contains(timetableItem)) {
+        if (timetableItemId == 0) {
             timetableItem = getIdComponentsTimetableItems(timetableItem);
             insertTimetableItemRecord(timetableItem);
             timetableItem = setTimetableItemIdFromLastRecordInTable(timetableItem);
@@ -212,7 +212,7 @@ public class TimetableItemDaoImpl implements TimetableItemDao {
         }
         if (lectureId != 0) {
             Lecture lecture = new Lecture();
-            lecture.setId(teacherId);
+            lecture.setId(lectureId);
             timetableItem.setLecture(lectureDao.findById(lecture));
         }
         if (teacherId != 0) {

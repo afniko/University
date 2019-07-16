@@ -16,7 +16,6 @@ public class TimetableItemModelRepository {
 
     public static TimetableItem getEmptyModel() {
         TimetableItem timetableItem = new TimetableItem();
-        timetableItem.setId(1);
         timetableItem.setDate(Date.valueOf("2019-01-21"));
         return timetableItem;
     }

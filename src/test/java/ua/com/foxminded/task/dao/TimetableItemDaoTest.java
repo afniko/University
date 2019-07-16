@@ -1,5 +1,9 @@
 package ua.com.foxminded.task.dao;
 
+import static org.junit.Assert.assertTrue;
+
+import java.util.Arrays;
+
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -29,8 +33,8 @@ public class TimetableItemDaoTest {
     }
 
     @Test
-    public void test() {
-        System.out.println("timetableItem ok!!" + timetableItemDao.findAll());
+    public void whenGetTimetableItemsByFindAll_thenContainsTimetableItems() {
+        assertTrue(timetableItemDao.findAll().containsAll(Arrays.asList(TIMETABLE_ITEM1, TIMETABLE_ITEM2, TIMETABLE_ITEM3)));
     }
 
     @AfterAll
