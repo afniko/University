@@ -29,7 +29,6 @@ public class TimetableItemDaoTest {
         timetableItemDao.create(TIMETABLE_ITEM1);
         timetableItemDao.create(TIMETABLE_ITEM2);
         timetableItemDao.create(TIMETABLE_ITEM3);
-        System.out.println("TimetableItem created!");
     }
 
     @Test
