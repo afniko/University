@@ -33,6 +33,13 @@ public class TimetableItemDaoTest {
     }
 
     @Test
+    public void whenGetTimetableItemsByFindId_thenContainsTimetableItem() {
+        TimetableItem timetableItem = new TimetableItem();
+        timetableItem.setId(1);
+        assertTrue(timetableItemDao.findById(timetableItem).equals(TIMETABLE_ITEM1));
+    }
+
+    @Test
     public void whenGetTimetableItemsByFindAll_thenContainsTimetableItems() {
         assertTrue(timetableItemDao.findAll().containsAll(Arrays.asList(TIMETABLE_ITEM1, TIMETABLE_ITEM2, TIMETABLE_ITEM3)));
     }
