@@ -29,7 +29,6 @@ public class FacultiesDaoTest {
         facultyDao.create(FACULTY1);
         facultyDao.create(FACULTY2);
         facultyDao.create(FACULTY3);
-        System.out.println("Faculty created!");
     }
 
     @Test

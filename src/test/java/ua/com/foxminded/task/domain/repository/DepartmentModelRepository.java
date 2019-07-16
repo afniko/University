@@ -43,7 +43,7 @@ public class DepartmentModelRepository {
         return department;
     }
 
-    private static Department getModel2() {
+    public static Department getModel2() {
         Department department = new Department();
         department.setTitle("department2");
         department.setDescription("bla bla bla 2");
@@ -52,7 +52,7 @@ public class DepartmentModelRepository {
         return department;
     }
 
-    private static Department getModel3() {
+    public static Department getModel3() {
         Department department = new Department();
         department.setTitle("department3");
         department.setDescription("bla bla bla 3");
@@ -61,7 +61,7 @@ public class DepartmentModelRepository {
         return department;
     }
 
-    private static Department getModel4() {
+    public static Department getModel4() {
         Department department = new Department();
         department.setTitle("department4");
         department.setDescription("bla bla bla 4");
@@ -70,7 +70,7 @@ public class DepartmentModelRepository {
         return department;
     }
 
-    private static Department getModel5() {
+    public static Department getModel5() {
         Department department = new Department();
         department.setTitle("department5");
         department.setDescription("bla bla bla 5");

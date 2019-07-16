@@ -38,6 +38,13 @@ public class AuditoryTypeDaoTest {
     }
 
     @Test
+    public void WhenPutAtTableDbAuditoryTypeObjects_thenGetThisObjectsFindById() {
+        AuditoryType auditoryType = new AuditoryType();
+        auditoryType.setId(2);
+        assertTrue(auditoryTypeDao.findById(auditoryType).equals(AUDITORY_TYPE2));
+    }
+
+    @Test
     public void WhenPutAtTableDbAuditoryTypeObjects_thenGetThisObjects() {
         assertTrue(auditoryTypeDao.findAll().containsAll(Arrays.asList(AUDITORY_TYPE1, AUDITORY_TYPE2)));
     }
