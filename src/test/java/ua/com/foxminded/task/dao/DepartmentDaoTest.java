@@ -32,7 +32,7 @@ public class DepartmentDaoTest {
     }
 
     @Test
-    public void WhenPutAtTableDbFacultyObjects_thenGetThisObjectsFindById() {
+    public void WhenPutAtTableDbDepartmentObjects_thenGetThisObjectsFindById() {
         Department department = new Department();
         department.setId(3);
         assertTrue(departmentDao.findById(department).equals(DEPARTMENT3));
@@ -44,7 +44,7 @@ public class DepartmentDaoTest {
     }
 
     @Test
-    public void WhenPutAtTableDbFacultyObjects_thenGetThisObjectsFindByTitle() {
+    public void WhenPutAtTableDbDepartmentObjects_thenGetThisObjectsFindByTitle() {
         Department department = new Department();
         department.setTitle(DEPARTMENT2.getTitle());
         assertTrue(departmentDao.findByTitle(department).equals(DEPARTMENT2));

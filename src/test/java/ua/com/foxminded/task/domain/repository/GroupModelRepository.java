@@ -54,7 +54,7 @@ public class GroupModelRepository {
         return group;
     }
 
-    private static Group getModel2() {
+    public static Group getModel2() {
         Group group = new Group();
         group.setTitle("group2");
         group.setYearEntry(Date.valueOf("2018-01-01"));
@@ -62,7 +62,7 @@ public class GroupModelRepository {
         return group;
     }
 
-    private static Group getModel3() {
+    public static Group getModel3() {
         Group group = new Group();
         group.setTitle("group3");
         group.setYearEntry(Date.valueOf("2017-01-01"));
