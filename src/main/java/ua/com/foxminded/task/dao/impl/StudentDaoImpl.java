@@ -20,7 +20,7 @@ public class StudentDaoImpl implements StudentDao {
     @Override
     public boolean create(Student student) {
         int studentId = student.getId();
-        if (studentId == 0 && findByIdFees(student).equals(student)) {
+        if (studentId == 0 && findByIdFees(student).getId() == 0) {
             insertPersonRecord(student);
             student = setPersonIdFromLastRecordInTable(student);
             insertStudentRecord(student);
@@ -129,7 +129,7 @@ public class StudentDaoImpl implements StudentDao {
             daoFactory.closePreparedStatement(preparedStatement);
             daoFactory.closeConnection(connection);
         }
-        if (groupId != 0 && student.getGroup()==null) {
+        if (groupId != 0 && student.getGroup() == null) {
             Group group = new Group();
             group.setId(groupId);
             group.getStudents().add(student);
@@ -164,16 +164,6 @@ public class StudentDaoImpl implements StudentDao {
             daoFactory.closeConnection(connection);
         }
         students = getStudentsById(studentsId);
-        return students;
-    }
-
-    private List<Student> getStudentsById(List<Integer> studentsId) {
-        List<Student> students = new ArrayList<Student>();
-        studentsId.forEach(id -> {
-            Student student = new Student();
-            student.setId(id);
-            students.add(findById(student));
-        });
         return students;
     }
 
@@ -242,4 +232,13 @@ public class StudentDaoImpl implements StudentDao {
         return students;
     }
 
+    private List<Student> getStudentsById(List<Integer> studentsId) {
+        List<Student> students = new ArrayList<Student>();
+        studentsId.forEach(id -> {
+            Student student = new Student();
+            student.setId(id);
+            students.add(findById(student));
+        });
+        return students;
+    }
 }

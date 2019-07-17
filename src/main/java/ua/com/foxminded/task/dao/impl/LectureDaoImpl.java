@@ -9,7 +9,6 @@ import java.util.List;
 
 import ua.com.foxminded.task.dao.DaoFactory;
 import ua.com.foxminded.task.dao.LectureDao;
-import ua.com.foxminded.task.domain.Auditory;
 import ua.com.foxminded.task.domain.Lecture;
 
 public class LectureDaoImpl implements LectureDao {
@@ -17,10 +16,16 @@ public class LectureDaoImpl implements LectureDao {
 
     @Override
     public boolean create(Lecture lecture) {
+        if (lecture.getId() == 0 && findByNumber(lecture).getId() == 0) {
+            insertLectureRecord(lecture);
+        }
+        return true;
+    }
+
+    private void insertLectureRecord(Lecture lecture) {
         String sql = "insert into lecturies (number, start_time, end_time) values (?, ?, ?)";
         Connection connection = null;
         PreparedStatement preparedStatement = null;
-        boolean isCreate = false;
 
         try {
             connection = daoFactory.getConnection();
@@ -29,15 +34,13 @@ public class LectureDaoImpl implements LectureDao {
             preparedStatement.setString(1, lecture.getNumber());
             preparedStatement.setTime(2, lecture.getStartTime());
             preparedStatement.setTime(3, lecture.getEndTime());
-            isCreate = preparedStatement.execute();
-
+            preparedStatement.execute();
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
             daoFactory.closePreparedStatement(preparedStatement);
             daoFactory.closeConnection(connection);
         }
-        return isCreate;
     }
 
     @Override
@@ -114,7 +117,6 @@ public class LectureDaoImpl implements LectureDao {
             preparedStatement.setString(1, lecture.getNumber());
             resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
-                lecture = new Lecture();
                 lecture.setId(resultSet.getInt("id"));
                 lecture.setNumber(resultSet.getString("number"));
                 lecture.setStartTime(resultSet.getTime("start_time"));
@@ -127,7 +129,6 @@ public class LectureDaoImpl implements LectureDao {
             daoFactory.closePreparedStatement(preparedStatement);
             daoFactory.closeConnection(connection);
         }
-
         return lecture;
     }
 

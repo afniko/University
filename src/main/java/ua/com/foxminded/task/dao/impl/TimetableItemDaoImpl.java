@@ -32,8 +32,7 @@ public class TimetableItemDaoImpl implements TimetableItemDao {
 
     @Override
     public boolean create(TimetableItem timetableItem) {
-        int timetableItemId = timetableItem.getId();
-        if (timetableItemId == 0) {
+        if (timetableItem.getId() == 0) {
             timetableItem = getIdComponentsTimetableItems(timetableItem);
             insertTimetableItemRecord(timetableItem);
             timetableItem = setTimetableItemIdFromLastRecordInTable(timetableItem);
@@ -132,11 +131,9 @@ public class TimetableItemDaoImpl implements TimetableItemDao {
         Iterator<Group> iteratorGroup = groups.iterator();
         while (iteratorGroup.hasNext()) {
             Group group = iteratorGroup.next();
-            if (group.getId() == 0 && groupDao.findByTitle(group).equals(group)) {
+            if (group.getId() == 0 && groupDao.findByTitle(group).getId() == 0) {
                 groupDao.create(group);
-                if (group.getId() == 0) {
-                    group = groupDao.findByTitle(group);
-                }
+                group = groupDao.findByTitle(group);
             }
 
         }

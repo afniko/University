@@ -5,15 +5,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import ua.com.foxminded.task.dao.DaoFactory;
 import ua.com.foxminded.task.dao.DepartmentDao;
 import ua.com.foxminded.task.dao.TeacherDao;
 import ua.com.foxminded.task.domain.Department;
-import ua.com.foxminded.task.domain.Student;
-import ua.com.foxminded.task.domain.Subject;
 import ua.com.foxminded.task.domain.Teacher;
 
 public class TeacherDaoImpl implements TeacherDao {
@@ -23,7 +20,7 @@ public class TeacherDaoImpl implements TeacherDao {
     @Override
     public boolean create(Teacher teacher) {
         int tescherId = teacher.getId();
-        if (tescherId == 0 && findByIdFees(teacher).equals(teacher)) {
+        if (tescherId == 0 && findByIdFees(teacher).getId() == 0) {
             insertPersonRecord(teacher);
             teacher = setPersonIdFromLastRecordInTable(teacher);
             insertTeacherRecord(teacher);

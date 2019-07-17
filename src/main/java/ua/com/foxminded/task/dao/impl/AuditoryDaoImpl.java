@@ -12,7 +12,6 @@ import ua.com.foxminded.task.dao.AuditoryTypeDao;
 import ua.com.foxminded.task.dao.DaoFactory;
 import ua.com.foxminded.task.domain.Auditory;
 import ua.com.foxminded.task.domain.AuditoryType;
-import ua.com.foxminded.task.domain.Group;
 
 public class AuditoryDaoImpl implements AuditoryDao {
 
@@ -21,15 +20,19 @@ public class AuditoryDaoImpl implements AuditoryDao {
 
     @Override
     public boolean create(Auditory auditory) {
+        if (auditory.getId() == 0 && findByNumber(auditory).getId() == 0) {
+            insertAuditoryRecord(auditory);
+        }
+        return true;
+    }
+
+    private void insertAuditoryRecord(Auditory auditory) {
         String sql = "insert into auditories (number, auditory_type_id, capacity, description) values (?, ?, ?, ?)";
         Connection connection = null;
         PreparedStatement preparedStatement = null;
 
+        insertAuditoryTypeRecord(auditory);
         AuditoryType auditoryType = auditoryTypeDao.findByType(auditory.getAuditoryType());
-        if (auditoryType.getId() == 0) {
-            auditoryTypeDao.create(auditory.getAuditoryType());
-        }
-        auditoryType = auditoryTypeDao.findByType(auditory.getAuditoryType());
         try {
             connection = daoFactory.getConnection();
 
@@ -46,7 +49,13 @@ public class AuditoryDaoImpl implements AuditoryDao {
             daoFactory.closePreparedStatement(preparedStatement);
             daoFactory.closeConnection(connection);
         }
-        return true;
+    }
+
+    private void insertAuditoryTypeRecord(Auditory auditory) {
+        AuditoryType auditoryType = auditoryTypeDao.findByType(auditory.getAuditoryType());
+        if (auditory.getId() == 0 && auditoryType.getId() == 0) {
+            auditoryTypeDao.create(auditory.getAuditoryType());
+        }
     }
 
     @Override

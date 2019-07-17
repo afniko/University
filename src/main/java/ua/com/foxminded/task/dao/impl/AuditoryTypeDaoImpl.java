@@ -18,6 +18,14 @@ public class AuditoryTypeDaoImpl implements AuditoryTypeDao {
 
     @Override
     public boolean create(AuditoryType auditoryType) {
+
+        if (auditoryType.getId() == 0 && findByType(auditoryType).getId() == 0) {
+            insertAuditoryTypeRecord(auditoryType);
+        }
+        return true;
+    }
+
+    private void insertAuditoryTypeRecord(AuditoryType auditoryType) {
         String sql = "insert into auditory_types (type) values (?)";
         Connection connection = null;
         PreparedStatement preparedStatement = null;
@@ -35,7 +43,6 @@ public class AuditoryTypeDaoImpl implements AuditoryTypeDao {
             daoFactory.closePreparedStatement(preparedStatement);
             daoFactory.closeConnection(connection);
         }
-        return true;
     }
 
     @Override

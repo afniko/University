@@ -9,34 +9,36 @@ import java.util.List;
 
 import ua.com.foxminded.task.dao.DaoFactory;
 import ua.com.foxminded.task.dao.SubjectDao;
-import ua.com.foxminded.task.domain.Department;
 import ua.com.foxminded.task.domain.Subject;
-import ua.com.foxminded.task.domain.Teacher;
 
 public class SubjectDaoImpl implements SubjectDao {
     private DaoFactory daoFactory = DaoFactory.getInstance();
 
     @Override
     public boolean create(Subject subject) {
+        if (subject.getId() == 0 && findByTitle(subject).getId() == 0) {
+            insertSubjectRecord(subject);
+        }
+        return true;
+    }
+
+    private void insertSubjectRecord(Subject subject) {
         String sql = "insert into subjects (title) values (?)";
         Connection connection = null;
         PreparedStatement preparedStatement = null;
-        boolean isCreate = false;
 
         try {
             connection = daoFactory.getConnection();
 
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1, subject.getTitle());
-            isCreate = preparedStatement.execute();
-
+            preparedStatement.execute();
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
             daoFactory.closePreparedStatement(preparedStatement);
             daoFactory.closeConnection(connection);
         }
-        return isCreate;
     }
 
     @Override

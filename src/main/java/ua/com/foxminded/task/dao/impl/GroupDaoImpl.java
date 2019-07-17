@@ -24,7 +24,7 @@ public class GroupDaoImpl implements GroupDao {
     @Override
     public boolean create(Group group) {
         int groupId = group.getId();
-        if (groupId == 0 && findByTitle(group).equals(group)) {
+        if (groupId == 0 && findByTitle(group).getId() == 0) {
             insertGroupRecord(group);
             group = setGroupIdFromLastRecordInTable(group);
         }
@@ -89,7 +89,7 @@ public class GroupDaoImpl implements GroupDao {
         Iterator<Student> iteratorStudent = students.iterator();
         while (iteratorStudent.hasNext()) {
             Student student = iteratorStudent.next();
-            if (studentDao.findByIdFees(student).equals(student)) {
+            if (studentDao.findByIdFees(student).getId() == 0) {
                 studentDao.create(student);
                 student = studentDao.findPersonIdByIdfees(student);
                 updateStudentRecordSetStudentId(group, student.getId());
