@@ -23,7 +23,7 @@ public class FacultyDaoImpl implements FacultyDao {
     @Override
     public boolean create(Faculty faculty) {
         int facultyId = faculty.getId();
-        if (facultyId == 0 && findByTitle(faculty).equals(faculty)) {
+        if (facultyId == 0 && findByTitle(faculty).getId() == 0) {
             insertFacultyRecord(faculty);
             faculty = setFacultyIdFromLastRecordInTable(faculty);
         }
@@ -79,7 +79,7 @@ public class FacultyDaoImpl implements FacultyDao {
         Iterator<Department> iteratorDepartment = departments.iterator();
         while (iteratorDepartment.hasNext()) {
             Department department = iteratorDepartment.next();
-            if (departmentDao.findByTitle(department).equals(department)) {
+            if (departmentDao.findByTitle(department).getId() == 0) {
                 departmentDao.create(department);
                 department = departmentDao.findByTitle(department);
                 updateDepartmentRecordSetFacultyId(faculty, department);

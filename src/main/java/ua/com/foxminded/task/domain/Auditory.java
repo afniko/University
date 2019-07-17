@@ -24,7 +24,7 @@ public class Auditory {
         this.auditoryNumber = auditoryNumber;
     }
 
-    public AuditoryType getType() {
+    public AuditoryType getAuditoryType() {
         return type;
     }
 

@@ -51,10 +51,10 @@ public class AuditoryDaoTest {
 
     @Test
     public void whenPutAtInputAuditory_thenGetAuditoryTypeByFindById() {
-        AuditoryType auditoryType = AUDITORY1.getType();
+        AuditoryType auditoryType = AUDITORY1.getAuditoryType();
         Auditory auditory = new Auditory();
         auditory.setType(auditoryType);
-        assertTrue(auditoryDao.findById(auditory).getType().equals(auditoryType));
+        assertTrue(auditoryDao.findById(auditory).getAuditoryType().equals(auditoryType));
     }
 
     @Test
@@ -68,10 +68,10 @@ public class AuditoryDaoTest {
     @Test
     public void whenPutAtInputAuditory_thenGetAuditoryTypeByFindByNumber() {
         String testAuditoryNumber2 = AUDITORY2.getAuditoryNumber();
-        AuditoryType auditoryType = AUDITORY2.getType();
+        AuditoryType auditoryType = AUDITORY2.getAuditoryType();
         Auditory auditory = new Auditory();
         auditory.setAuditoryNumber(testAuditoryNumber2);
-        assertTrue(auditoryDao.findByNumber(auditory).getType().equals(auditoryType));
+        assertTrue(auditoryDao.findByNumber(auditory).getAuditoryType().equals(auditoryType));
     }
 
     @AfterAll

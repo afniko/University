@@ -25,11 +25,11 @@ public class AuditoryDaoImpl implements AuditoryDao {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
 
-        AuditoryType auditoryType = auditoryTypeDao.findByType(auditory.getType());
+        AuditoryType auditoryType = auditoryTypeDao.findByType(auditory.getAuditoryType());
         if (auditoryType.getId() == 0) {
-            auditoryTypeDao.create(auditory.getType());
+            auditoryTypeDao.create(auditory.getAuditoryType());
         }
-        auditoryType = auditoryTypeDao.findByType(auditory.getType());
+        auditoryType = auditoryTypeDao.findByType(auditory.getAuditoryType());
         try {
             connection = daoFactory.getConnection();
 

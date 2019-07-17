@@ -25,7 +25,7 @@ public class DepartmentDaoImpl implements DepartmentDao {
     @Override
     public boolean create(Department department) {
         int departmentId = department.getId();
-        if (departmentId == 0 && findByTitle(department).equals(department)) {
+        if (departmentId == 0 && findByTitle(department).getId() == 0) {
             insertDepartmentRecord(department);
             department = setDepartmentIdFromLastRecordInTable(department);
         }
@@ -85,7 +85,7 @@ public class DepartmentDaoImpl implements DepartmentDao {
         Iterator<Group> iteratorGroup = groups.iterator();
         while (iteratorGroup.hasNext()) {
             Group group = iteratorGroup.next();
-            if (groupDao.findByTitle(group).equals(group)) {
+            if (groupDao.findByTitle(group).getId() == 0) {
                 groupDao.create(group);
                 if (group.getId() == 0) {
                     group = groupDao.findByTitle(group);
@@ -118,7 +118,7 @@ public class DepartmentDaoImpl implements DepartmentDao {
         Iterator<Teacher> iteratorTeacher = teachers.iterator();
         while (iteratorTeacher.hasNext()) {
             Teacher teacher = iteratorTeacher.next();
-            if (teacherDao.findByIdFees(teacher).equals(teacher)) {
+            if (teacherDao.findByIdFees(teacher).getId() == 0) {
                 teacherDao.create(teacher);
                 teacher = teacherDao.findByIdFees(teacher);
                 updateTeacherRecordSetDepartmentId(department, teacher);
