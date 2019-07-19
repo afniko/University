@@ -23,7 +23,7 @@ public class DaoFactory {
         properties = getProperties(APPLICATION_PROPERTIES_FILE);
 
         try {
-            Class.forName(properties.getProperty("flyway.driver"));
+            Class.forName(properties.getProperty("db.driver"));
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
@@ -44,7 +44,7 @@ public class DaoFactory {
     }
 
     public Connection getConnection() throws SQLException {
-        return DriverManager.getConnection(properties.getProperty("flyway.url"), properties.getProperty("flyway.user"), properties.getProperty("flyway.password"));
+        return DriverManager.getConnection(properties.getProperty("db.url"), properties.getProperty("db.user"), properties.getProperty("db.password"));
     }
 
     public void closeConnection(Connection connection) {
