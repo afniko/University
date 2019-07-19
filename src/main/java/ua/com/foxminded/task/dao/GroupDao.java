@@ -5,13 +5,7 @@ import java.util.List;
 import ua.com.foxminded.task.domain.Department;
 import ua.com.foxminded.task.domain.Group;
 
-public interface GroupDao {
-
-    public boolean create(Group group);
-
-    public Group findById(Group group);
-
-    public List<Group> findAll();
+public interface GroupDao extends CRUDDao<Group> {
 
     public Group findByTitle(Group group);
 
