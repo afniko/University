@@ -26,7 +26,8 @@ public class GroupDaoImpl implements GroupDao {
         int groupId = group.getId();
         if (groupId == 0 && findByTitle(group).getId() == 0) {
             insertGroupRecord(group);
-            group = setGroupIdFromLastRecordInTable(group);
+            int id = getTheLastRecordId();
+            group.setId(id);
         }
         if (!group.getStudents().isEmpty()) {
             createStudentRecords(group);
@@ -61,18 +62,18 @@ public class GroupDaoImpl implements GroupDao {
         }
     }
 
-    private Group setGroupIdFromLastRecordInTable(Group group) {
+    private int getTheLastRecordId() {
         String sql = "select id from groups where id = (select max(id) from groups)";
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
+        int groupId = 0;
         try {
             connection = daoFactory.getConnection();
             preparedStatement = connection.prepareStatement(sql);
             resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
-                int groupId = resultSet.getInt("id");
-                group.setId(groupId);
+                groupId = resultSet.getInt("id");
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -81,7 +82,7 @@ public class GroupDaoImpl implements GroupDao {
             daoFactory.closePreparedStatement(preparedStatement);
             daoFactory.closeConnection(connection);
         }
-        return group;
+        return groupId;
     }
 
     private void createStudentRecords(Group group) {
