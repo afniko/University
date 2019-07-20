@@ -14,7 +14,7 @@ import ua.com.foxminded.task.dao.impl.LectureDaoImpl;
 import ua.com.foxminded.task.domain.Lecture;
 import ua.com.foxminded.task.domain.repository.LectureModelRepository;
 
-@RunWith(JUnitPlatform.class)
+//@RunWith(JUnitPlatform.class)
 public class LectureDaoTest {
 
     private static LectureDao lectureDao;

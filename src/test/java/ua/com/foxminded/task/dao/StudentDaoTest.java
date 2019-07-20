@@ -10,44 +10,53 @@ import org.junit.jupiter.api.Test;
 import org.junit.platform.runner.JUnitPlatform;
 import org.junit.runner.RunWith;
 
+import ua.com.foxminded.task.dao.impl.GroupDaoImpl;
 import ua.com.foxminded.task.dao.impl.StudentDaoImpl;
+import ua.com.foxminded.task.domain.Group;
 import ua.com.foxminded.task.domain.Student;
+import ua.com.foxminded.task.domain.repository.GroupModelRepository;
 import ua.com.foxminded.task.domain.repository.StudentModelRepository;
 
 @RunWith(JUnitPlatform.class)
 public class StudentDaoTest {
 
     private static StudentDao studentDao;
-    private static final Student GROUP1 = StudentModelRepository.getModel1();
-    private static final Student GROUP2 = StudentModelRepository.getModel2();
-    private static final Student GROUP3 = StudentModelRepository.getModel3();
+    private static GroupDao groupDao;
+    private static final Student STUDENT1 = StudentModelRepository.getModel1();
+    private static final Student STUDENT2 = StudentModelRepository.getModel2();
+    private static final Student STUDENT3 = StudentModelRepository.getModel3();
+    private static final Group GROUP1 = GroupModelRepository.getModel1();
+    private static final Group GROUP2 = GroupModelRepository.getModel2();
+    private static final Group GROUP3 = GroupModelRepository.getModel3();
 
     @BeforeAll
     public static void createRecords() {
         DaoFactory.getInstance().createTables();
         studentDao = new StudentDaoImpl();
-        studentDao.create(GROUP1);
-        studentDao.create(GROUP2);
-        studentDao.create(GROUP3);
+        groupDao = new GroupDaoImpl();
+        groupDao.create(GROUP1);
+        groupDao.create(GROUP2);
+        groupDao.create(GROUP3);
+        studentDao.create(STUDENT1);
+        studentDao.create(STUDENT2);
+        studentDao.create(STUDENT3);
     }
 
     @Test
     public void WhenPutAtTableDbStudentObjects_thenGetThisObjectsFindById() {
-        Student student = new Student();
-        student.setId(2);
-        assertTrue(studentDao.findById(student).equals(GROUP2));
+        int id = STUDENT2.getId();
+        assertTrue(studentDao.findById(id).equals(STUDENT2));
     }
 
     @Test
     public void WhenPutAtTableDbStudentObjects_thenGetThisObjects() {
-        assertTrue(studentDao.findAll().containsAll(Arrays.asList(GROUP1, GROUP2, GROUP3)));
+        assertTrue(studentDao.findAll().containsAll(Arrays.asList(STUDENT1, STUDENT2, STUDENT3)));
     }
 
     @Test
     public void WhenPutAtTableDbStudentObjects_thenGetThisObjectsFindByTitle() {
-        Student student = new Student();
-        student.setIdFees(GROUP3.getIdFees());
-        assertTrue(studentDao.findByIdFees(student).equals(GROUP3));
+        int idFees = STUDENT3.getIdFees();
+        assertTrue(studentDao.findByIdFees(idFees).equals(STUDENT3));
     }
 
     @AfterAll

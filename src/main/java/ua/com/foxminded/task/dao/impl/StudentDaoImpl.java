@@ -10,7 +10,6 @@ import java.util.List;
 import ua.com.foxminded.task.dao.DaoFactory;
 import ua.com.foxminded.task.dao.GroupDao;
 import ua.com.foxminded.task.dao.StudentDao;
-import ua.com.foxminded.task.domain.Group;
 import ua.com.foxminded.task.domain.Student;
 
 public class StudentDaoImpl implements StudentDao {
@@ -20,7 +19,7 @@ public class StudentDaoImpl implements StudentDao {
     @Override
     public boolean create(Student student) {
         int studentId = student.getId();
-        if (studentId == 0 && findByIdFees(student).getId() == 0) {
+        if (studentId == 0 && findByIdFees(student.getIdFees()).getId() == 0) {
             insertPersonRecord(student);
             student = setPersonIdFromLastRecordInTable(student);
             insertStudentRecord(student);
@@ -99,20 +98,22 @@ public class StudentDaoImpl implements StudentDao {
     }
 
     @Override
-    public Student findById(Student student) {
+    public Student findById(int id) {
         String sql = "select * from persons p inner join students s on p.id = s.person_id where p.id=?";
 
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
         int groupId = 0;
+        Student student = null;
 
         try {
             connection = daoFactory.getConnection();
 
             preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setInt(1, student.getId());
+            preparedStatement.setInt(1, id);
             resultSet = preparedStatement.executeQuery();
+            student = new Student();
             if (resultSet.next()) {
                 student.setId(resultSet.getInt("id"));
                 student.setFirstName(resultSet.getString("first_name"));
@@ -130,10 +131,7 @@ public class StudentDaoImpl implements StudentDao {
             daoFactory.closeConnection(connection);
         }
         if (groupId != 0 && student.getGroup() == null) {
-            Group group = new Group();
-            group.setId(groupId);
-            group.getStudents().add(student);
-            student.setGroup(groupDao.findById(group));
+            student.setGroup(groupDao.findById(groupId));
         }
         return student;
     }
@@ -168,13 +166,13 @@ public class StudentDaoImpl implements StudentDao {
     }
 
     @Override
-    public Student findByIdFees(Student student) {
-        student = findPersonIdByIdfees(student);
-        return findById(student);
+    public Student findByIdFees(int idFees) {
+        int id = findPersonIdByIdfees(idFees);
+        return findById(id);
     }
 
     @Override
-    public Student findPersonIdByIdfees(Student student) {
+    public int findPersonIdByIdfees(int idFees) {
         String sql = "select id from persons where idfees=?";
         int personId = 0;
 
@@ -186,11 +184,10 @@ public class StudentDaoImpl implements StudentDao {
             connection = daoFactory.getConnection();
 
             preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setInt(1, student.getIdFees());
+            preparedStatement.setInt(1, idFees);
             resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
                 personId = resultSet.getInt("id");
-                student.setId(personId);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -199,7 +196,7 @@ public class StudentDaoImpl implements StudentDao {
             daoFactory.closePreparedStatement(preparedStatement);
             daoFactory.closeConnection(connection);
         }
-        return student;
+        return personId;
     }
 
     @Override
@@ -234,11 +231,7 @@ public class StudentDaoImpl implements StudentDao {
 
     private List<Student> getStudentsById(List<Integer> studentsId) {
         List<Student> students = new ArrayList<Student>();
-        studentsId.forEach(id -> {
-            Student student = new Student();
-            student.setId(id);
-            students.add(findById(student));
-        });
+        studentsId.forEach(id -> students.add(findById(id)));
         return students;
     }
 }

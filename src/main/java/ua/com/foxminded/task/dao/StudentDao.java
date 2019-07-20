@@ -6,9 +6,9 @@ import ua.com.foxminded.task.domain.Student;
 
 public interface StudentDao extends CRUDDao<Student> {
 
-    public Student findByIdFees(Student student);
+    public Student findByIdFees(int idFees);
 
-    public Student findPersonIdByIdfees(Student student);
+    public int findPersonIdByIdfees(int idFees);
 
     public List<Student> findByGroupId(int id);
 }

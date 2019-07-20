@@ -38,7 +38,7 @@ public class TimetableItemDaoImpl implements TimetableItemDao {
             timetableItem = setTimetableItemIdFromLastRecordInTable(timetableItem);
         }
         if (!timetableItem.getGroups().isEmpty()) {
-            createGroupRecords(timetableItem);
+//            createGroupRecords(timetableItem);
         }
         insertGropsTimetableItemsRecodrs(timetableItem);
         return true;
@@ -131,9 +131,9 @@ public class TimetableItemDaoImpl implements TimetableItemDao {
         Iterator<Group> iteratorGroup = groups.iterator();
         while (iteratorGroup.hasNext()) {
             Group group = iteratorGroup.next();
-            if (group.getId() == 0 && groupDao.findByTitle(group).getId() == 0) {
+            if (group.getId() == 0 && groupDao.findByTitle(group.getTitle()).getId() == 0) {
                 groupDao.create(group);
-                group = groupDao.findByTitle(group);
+                group = groupDao.findByTitle(group.getTitle());
             }
 
         }

@@ -6,7 +6,7 @@ public interface CRUDDao<T> {
 
     public boolean create(T t);
 
-    public T findById(T t);
+    public T findById(int id);
 
     public List<T> findAll();
 }

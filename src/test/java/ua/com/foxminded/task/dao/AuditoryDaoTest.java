@@ -15,7 +15,7 @@ import ua.com.foxminded.task.domain.Auditory;
 import ua.com.foxminded.task.domain.AuditoryType;
 import ua.com.foxminded.task.domain.repository.AuditoryModelRepository;
 
-@RunWith(JUnitPlatform.class)
+//@RunWith(JUnitPlatform.class)
 public class AuditoryDaoTest {
 
     private static AuditoryDao auditoryDao = new AuditoryDaoImpl();

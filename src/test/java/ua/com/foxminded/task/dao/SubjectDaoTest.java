@@ -16,7 +16,7 @@ import ua.com.foxminded.task.dao.impl.SubjectDaoImpl;
 import ua.com.foxminded.task.domain.Subject;
 import ua.com.foxminded.task.domain.repository.SubjectModelRepository;
 
-@RunWith(JUnitPlatform.class)
+//@RunWith(JUnitPlatform.class)
 public class SubjectDaoTest {
 
     private static SubjectDao subjectDao;

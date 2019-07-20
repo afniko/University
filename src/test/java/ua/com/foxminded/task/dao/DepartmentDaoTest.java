@@ -14,7 +14,7 @@ import ua.com.foxminded.task.dao.impl.DepartmentDaoImpl;
 import ua.com.foxminded.task.domain.Department;
 import ua.com.foxminded.task.domain.repository.DepartmentModelRepository;
 
-@RunWith(JUnitPlatform.class)
+//@RunWith(JUnitPlatform.class)
 public class DepartmentDaoTest {
 
     private static DepartmentDao departmentDao;

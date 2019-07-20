@@ -14,7 +14,7 @@ import ua.com.foxminded.task.dao.impl.FacultyDaoImpl;
 import ua.com.foxminded.task.domain.Faculty;
 import ua.com.foxminded.task.domain.repository.FacultyModelRepository;
 
-@RunWith(JUnitPlatform.class)
+//@RunWith(JUnitPlatform.class)
 public class FacultiesDaoTest {
 
     private static FacultyDao facultyDao;

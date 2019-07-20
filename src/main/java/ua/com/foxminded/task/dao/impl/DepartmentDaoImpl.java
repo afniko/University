@@ -30,7 +30,7 @@ public class DepartmentDaoImpl implements DepartmentDao {
             department = setDepartmentIdFromLastRecordInTable(department);
         }
         if (!department.getGroups().isEmpty()) {
-            createGroupRecords(department);
+//            createGroupRecords(department);
         }
         if (!department.getTeachers().isEmpty()) {
             createTeacherRecords(department);
@@ -85,10 +85,10 @@ public class DepartmentDaoImpl implements DepartmentDao {
         Iterator<Group> iteratorGroup = groups.iterator();
         while (iteratorGroup.hasNext()) {
             Group group = iteratorGroup.next();
-            if (groupDao.findByTitle(group).getId() == 0) {
+            if (groupDao.findByTitle(group.getTitle()).getId() == 0) {
                 groupDao.create(group);
                 if (group.getId() == 0) {
-                    group = groupDao.findByTitle(group);
+                    group = groupDao.findByTitle(group.getTitle());
                 }
                 updateGroupRecordSetDepartmentId(department, group);
             }
@@ -172,7 +172,7 @@ public class DepartmentDaoImpl implements DepartmentDao {
 
         List<Group> groups = department.getGroups();
         if (groups.isEmpty()) {
-            groups.addAll(groupDao.findByDepartmentId(department));
+            groups.addAll(groupDao.findByDepartmentId(department.getId()));
         }
         List<Teacher> teachers = department.getTeachers();
         if (teachers.isEmpty()) {
