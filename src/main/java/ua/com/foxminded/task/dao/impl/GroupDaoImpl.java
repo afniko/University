@@ -23,12 +23,9 @@ public class GroupDaoImpl implements GroupDao {
 
     @Override
     public boolean create(Group group) {
-        int groupId = group.getId();
-        if (groupId == 0 && findByTitle(group.getTitle()).getId() == 0) {
-            insertGroupRecord(group);
-            int id = getTheLastRecordId();
-            group.setId(id);
-        }
+        insertGroupRecord(group);
+        int id = getTheLastRecordId();
+        group.setId(id);
         if (!group.getStudents().isEmpty()) {
             addStudentRecords(group);
         }

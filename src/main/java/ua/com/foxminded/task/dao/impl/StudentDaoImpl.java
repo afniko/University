@@ -18,12 +18,9 @@ public class StudentDaoImpl implements StudentDao {
 
     @Override
     public boolean create(Student student) {
-        int studentId = student.getId();
-        if (studentId == 0 && findByIdFees(student.getIdFees()).getId() == 0) {
-            insertPersonRecord(student);
-            student = setPersonIdFromLastRecordInTable(student);
-            insertStudentRecord(student);
-        }
+        insertPersonRecord(student);
+        student = setPersonIdFromLastRecordInTable(student);
+        insertStudentRecord(student);
         return true;
     }
 
