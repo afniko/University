@@ -9,16 +9,13 @@ import java.util.Iterator;
 import java.util.List;
 
 import ua.com.foxminded.task.dao.DaoFactory;
-import ua.com.foxminded.task.dao.DepartmentDao;
 import ua.com.foxminded.task.dao.GroupDao;
 import ua.com.foxminded.task.dao.StudentDao;
-import ua.com.foxminded.task.domain.Department;
 import ua.com.foxminded.task.domain.Group;
 import ua.com.foxminded.task.domain.Student;
 
 public class GroupDaoImpl implements GroupDao {
     private DaoFactory daoFactory = DaoFactory.getInstance();
-    private static DepartmentDao departmentDao = new DepartmentDaoImpl();;
     private static StudentDao studentDao = new StudentDaoImpl();
 
     @Override
@@ -142,12 +139,6 @@ public class GroupDaoImpl implements GroupDao {
             daoFactory.closeResultSet(resultSet);
             daoFactory.closePreparedStatement(preparedStatement);
             daoFactory.closeConnection(connection);
-        }
-        if (departmentId != 0 && group.getDepartment() == null) {
-            Department department = new Department();
-            department.setId(departmentId);
-            department.addGroup(group);
-            group.setDepartment(departmentDao.findById(department));
         }
 //        if (group.getStudents().isEmpty()) {
 //            group.setStudents(studentDao.findByGroupId(group.getId()));
