@@ -16,4 +16,9 @@ public class Student extends Person {
         this.group = group;
     }
 
+    @Override
+    public String toString() {
+        return "Student [group=" + group + ", id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", middleName=" + middleName + ", birthday=" + birthday + ", idFees=" + idFees + "]";
+    }
+
 }

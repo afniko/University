@@ -74,7 +74,7 @@ public class GroupModelRepository {
         Group group = new Group();
         group.setTitle("group4");
         group.setYearEntry(Date.valueOf("2016-01-01"));
-//        group.setStudents(StudentModelRepository.getModels());
+        group.setStudents(StudentModelRepository.getModels());
         return group;
     }
 
@@ -82,7 +82,7 @@ public class GroupModelRepository {
         Group group = new Group();
         group.setTitle("group5");
         group.setYearEntry(Date.valueOf("2010-01-01"));
-//        group.setStudents(StudentModelRepository.getModels());
+        group.setStudents(StudentModelRepository.getModels());
         return group;
     }
 
@@ -90,7 +90,7 @@ public class GroupModelRepository {
         Group group = new Group();
         group.setTitle("group6");
         group.setYearEntry(Date.valueOf("2019-01-01"));
-//        group.setStudents(StudentModelRepository.getModels());
+        group.setStudents(StudentModelRepository.getModels());
         return group;
     }
 
@@ -98,7 +98,7 @@ public class GroupModelRepository {
         Group group = new Group();
         group.setTitle("group7");
         group.setYearEntry(Date.valueOf("2017-10-01"));
-//        group.setStudents(StudentModelRepository.getModels());
+        group.setStudents(StudentModelRepository.getModels());
         return group;
     }
 
@@ -106,7 +106,28 @@ public class GroupModelRepository {
         Group group = new Group();
         group.setTitle("group8");
         group.setYearEntry(Date.valueOf("2013-01-01"));
-//        group.setStudents(StudentModelRepository.getModels());
+        group.setStudents(StudentModelRepository.getModels());
+        return group;
+    }
+
+    public static Group getModel11() {
+        Group group = new Group();
+        group.setTitle("group11");
+        group.setYearEntry(Date.valueOf("2016-10-01"));
+        return group;
+    }
+
+    public static Group getModel12() {
+        Group group = new Group();
+        group.setTitle("group12");
+        group.setYearEntry(Date.valueOf("2018-11-01"));
+        return group;
+    }
+
+    public static Group getModel13() {
+        Group group = new Group();
+        group.setTitle("group13");
+        group.setYearEntry(Date.valueOf("2017-02-01"));
         return group;
     }
 }

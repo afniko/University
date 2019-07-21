@@ -25,21 +25,27 @@ public class StudentDaoTest {
     private static final Student STUDENT1 = StudentModelRepository.getModel1();
     private static final Student STUDENT2 = StudentModelRepository.getModel2();
     private static final Student STUDENT3 = StudentModelRepository.getModel3();
-    private static final Group GROUP1 = GroupModelRepository.getModel1();
-    private static final Group GROUP2 = GroupModelRepository.getModel2();
-    private static final Group GROUP3 = GroupModelRepository.getModel3();
+    private static final Student STUDENT4 = StudentModelRepository.getModel4();
+    private static final Student STUDENT5 = StudentModelRepository.getModel5();
+    private static final Student STUDENT6 = StudentModelRepository.getModel6();
+    private static final Group GROUP11 = GroupModelRepository.getModel11();
+    private static final Group GROUP12 = GroupModelRepository.getModel12();
+    private static final Group GROUP13 = GroupModelRepository.getModel13();
 
     @BeforeAll
     public static void createRecords() {
         DaoFactory.getInstance().createTables();
         studentDao = new StudentDaoImpl();
         groupDao = new GroupDaoImpl();
-        groupDao.create(GROUP1);
-        groupDao.create(GROUP2);
-        groupDao.create(GROUP3);
+        groupDao.create(GROUP11);
+        groupDao.create(GROUP12);
+        groupDao.create(GROUP13);
         studentDao.create(STUDENT1);
         studentDao.create(STUDENT2);
         studentDao.create(STUDENT3);
+        studentDao.create(STUDENT4);
+        studentDao.create(STUDENT5);
+        studentDao.create(STUDENT6);
     }
 
     @Test
@@ -57,6 +63,20 @@ public class StudentDaoTest {
     public void WhenPutAtTableDbStudentObjects_thenGetThisObjectsFindByTitle() {
         int idFees = STUDENT3.getIdFees();
         assertTrue(studentDao.findByIdFees(idFees).equals(STUDENT3));
+    }
+
+    @Test
+    public void WhenPutAtTableDbGroupObjects_thenGetThisObjectsFindByTitle() {
+        String title = GROUP13.getTitle();
+        assertTrue(groupDao.findByTitle(title).equals(GROUP13));
+    }
+
+    @Test
+    public void WhenPutAtTableDbStudentObjects_thenGetThisObjectsFindById222222() {
+        Student student = studentDao.findById(1);
+        System.out.println("students dao, group: " + student.getGroup());
+        System.out.println("students dao, student: " + student);
+        System.out.println("students dao, all student: " + studentDao.findAll());
     }
 
     @AfterAll
