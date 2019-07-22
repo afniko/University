@@ -25,7 +25,7 @@ public class GroupDaoImpl implements GroupDao {
         int id = getTheLastRecordId();
         group.setId(id);
         if (!group.getStudents().isEmpty()) {
-            addStudentRecords(group);
+            addLinkToStudentRecords(group);
         }
         return true;
     }
@@ -75,7 +75,7 @@ public class GroupDaoImpl implements GroupDao {
         return groupId;
     }
 
-    private void addStudentRecords(Group group) {
+    private void addLinkToStudentRecords(Group group) {
         List<Student> students = group.getStudents();
         Iterator<Student> iteratorStudent = students.iterator();
         while (iteratorStudent.hasNext()) {
