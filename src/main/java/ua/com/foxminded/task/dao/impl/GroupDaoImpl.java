@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Objects;
 
 import ua.com.foxminded.task.dao.DaoFactory;
 import ua.com.foxminded.task.dao.GroupDao;
@@ -30,23 +31,18 @@ public class GroupDaoImpl implements GroupDao {
     }
 
     private void insertGroupRecord(Group group) {
-        String sqlWithDepartmentId = "insert into groups (title, department_id, yearEntry) values (?, ?, ?)";
-        String sqlWithoutDepartmentId = "insert into groups (title, yearEntry) values (?, ?)";
+        String sql = "insert into groups (title, department_id, yearEntry) values (?, ?, ?)";
         Connection connection = null;
         PreparedStatement preparedStatement = null;
 
+        int departmentId = Objects.nonNull(group.getDepartment()) ? group.getDepartment().getId() : 0;
         try {
             connection = daoFactory.getConnection();
-            if (group.getDepartment() != null) {
-                preparedStatement = connection.prepareStatement(sqlWithDepartmentId);
-                preparedStatement.setString(1, group.getTitle());
-                preparedStatement.setInt(2, group.getDepartment().getId());
-                preparedStatement.setDate(3, group.getYearEntry());
-            } else {
-                preparedStatement = connection.prepareStatement(sqlWithoutDepartmentId);
-                preparedStatement.setString(1, group.getTitle());
-                preparedStatement.setDate(2, group.getYearEntry());
-            }
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, group.getTitle());
+            preparedStatement.setInt(2, departmentId);
+            preparedStatement.setDate(3, group.getYearEntry());
+
             preparedStatement.execute();
         } catch (SQLException e) {
             e.printStackTrace();
