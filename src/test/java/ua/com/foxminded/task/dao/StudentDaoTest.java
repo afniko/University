@@ -56,7 +56,7 @@ public class StudentDaoTest {
 
     @Test
     public void WhenPutAtTableDbStudentObjects_thenGetThisObjects() {
-        assertTrue(studentDao.findAll().containsAll(Arrays.asList(STUDENT1, STUDENT2, STUDENT3)));
+        assertTrue(studentDao.findAll().containsAll(Arrays.asList(STUDENT1, STUDENT2, STUDENT3, STUDENT4, STUDENT5, STUDENT6)));
     }
 
     @Test
@@ -72,11 +72,11 @@ public class StudentDaoTest {
     }
 
     @Test
-    public void WhenPutAtTableDbStudentObjects_thenGetThisObjectsFindById222222() {
-        Student student = studentDao.findById(1);
-        System.out.println("students dao, group: " + student.getGroup());
-        System.out.println("students dao, student: " + student);
-        System.out.println("students dao, all student: " + studentDao.findAll());
+    public void WhenPutAtTableDbStudentObject_thenGetGroupFromStudent() {
+        Group group = STUDENT5.getGroup();
+        int idFees = STUDENT5.getIdFees();
+        Student student = studentDao.findByIdFees(idFees);
+        assertTrue(student.getGroup().equals(group));
     }
 
     @AfterAll

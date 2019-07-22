@@ -92,7 +92,7 @@ public class StudentDaoImpl implements StudentDao {
     private int getIdGroup(Student student) {
         int groupId = 0;
         if (student.getGroup() != null) {
-            groupId = student.getId();
+            groupId = student.getGroup().getId();
         }
         if (groupId == 0) {
             String titleGroup = student.getGroup().getTitle();
@@ -134,7 +134,7 @@ public class StudentDaoImpl implements StudentDao {
             daoFactory.closePreparedStatement(preparedStatement);
             daoFactory.closeConnection(connection);
         }
-        if (groupId != 0 && student.getGroup() == null) {
+        if (groupId != 0) {
             student.setGroup(groupDao.findById(groupId));
         }
         return student;

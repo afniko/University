@@ -66,7 +66,6 @@ public class Group {
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + id;
         result = prime * result + ((title == null) ? 0 : title.hashCode());
         result = prime * result + ((yearEntry == null) ? 0 : yearEntry.hashCode());
         return result;
@@ -81,8 +80,6 @@ public class Group {
         if (getClass() != obj.getClass())
             return false;
         Group other = (Group) obj;
-        if (id != other.id)
-            return false;
         if (title == null) {
             if (other.title != null)
                 return false;
