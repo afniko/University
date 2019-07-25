@@ -9,6 +9,4 @@ public interface GroupDao extends CRUDDao<Group> {
     public Group findByTitle(String title);
 
     public List<Group> findByDepartmentId(int id);
-
-    public List<Group> getGroupsById(List<Integer> groupsId);
 }
