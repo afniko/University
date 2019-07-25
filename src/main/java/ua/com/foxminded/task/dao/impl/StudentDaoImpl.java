@@ -10,6 +10,7 @@ import java.util.List;
 import ua.com.foxminded.task.dao.DaoFactory;
 import ua.com.foxminded.task.dao.GroupDao;
 import ua.com.foxminded.task.dao.StudentDao;
+import ua.com.foxminded.task.domain.Group;
 import ua.com.foxminded.task.domain.Student;
 
 public class StudentDaoImpl implements StudentDao {
@@ -17,12 +18,14 @@ public class StudentDaoImpl implements StudentDao {
     private static GroupDao groupDao = new GroupDaoImpl();
 
     @Override
-    public boolean create(Student student) {
+    public Student create(Student student) {
         insertPersonRecord(student);
         int id = getTheLastRecordId();
         student.setId(id);
-        insertStudentRecord(student);
-        return true;
+        if (student.getGroup().getId() != 0) {
+            insertStudentRecord(student);
+        }
+        return student;
     }
 
     private void insertPersonRecord(Student student) {
@@ -74,12 +77,11 @@ public class StudentDaoImpl implements StudentDao {
         String sql = "insert into students (person_id, group_id) values (?, ?)";
         Connection connection = null;
         PreparedStatement preparedStatement = null;
-        int groupId = getIdGroup(student);
         try {
             connection = daoFactory.getConnection();
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setInt(1, student.getId());
-            preparedStatement.setInt(2, groupId);
+            preparedStatement.setInt(2, student.getGroup().getId());
             preparedStatement.execute();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -89,20 +91,17 @@ public class StudentDaoImpl implements StudentDao {
         }
     }
 
-    private int getIdGroup(Student student) {
-        int groupId = 0;
-        if (student.getGroup() != null) {
-            groupId = student.getGroup().getId();
-        }
-        if (groupId == 0) {
-            String titleGroup = student.getGroup().getTitle();
-            groupId = groupDao.findByTitle(titleGroup).getId();
-        }
-        return groupId;
-    }
-
     @Override
     public Student findById(int id) {
+        Student student = findByIdWithoutGroup(id);
+        int groupId = student.getGroup().getId();
+        if (groupId != 0) {
+            student.setGroup(groupDao.findById(groupId));
+        }
+        return student;
+    }
+
+    private Student findByIdWithoutGroup(int id) {
         String sql = "select * from persons p inner join students s on p.id = s.person_id where p.id=?";
 
         Connection connection = null;
@@ -134,9 +133,9 @@ public class StudentDaoImpl implements StudentDao {
             daoFactory.closePreparedStatement(preparedStatement);
             daoFactory.closeConnection(connection);
         }
-        if (groupId != 0) {
-            student.setGroup(groupDao.findById(groupId));
-        }
+        Group group = new Group();
+        group.setId(groupId);
+        student.setGroup(group);
         return student;
     }
 
@@ -230,6 +229,39 @@ public class StudentDaoImpl implements StudentDao {
             daoFactory.closeConnection(connection);
         }
         students = getStudentsById(studentsId);
+        return students;
+    }
+
+    @Override
+    public List<Student> findByGroupNoBidirectional(int id) {
+        String sql = "select person_id from students where group_id=?";
+        List<Integer> studentsId = new ArrayList<>();
+        List<Student> students = new ArrayList<Student>();
+        ;
+
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+        try {
+            connection = daoFactory.getConnection();
+
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, id);
+            resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                studentsId.add(resultSet.getInt("person_id"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            daoFactory.closeResultSet(resultSet);
+            daoFactory.closePreparedStatement(preparedStatement);
+            daoFactory.closeConnection(connection);
+        }
+
+        studentsId.forEach(i -> students.add(findByIdWithoutGroup(i)));
+
         return students;
     }
 

@@ -60,7 +60,7 @@ public class StudentDaoTest {
     }
 
     @Test
-    public void WhenPutAtTableDbStudentObjects_thenGetThisObjectsFindByTitle() {
+    public void WhenPutAtTableDbStudentObjects_thenGetThisObjectsFindByIdFees() {
         int idFees = STUDENT3.getIdFees();
         assertTrue(studentDao.findByIdFees(idFees).equals(STUDENT3));
     }

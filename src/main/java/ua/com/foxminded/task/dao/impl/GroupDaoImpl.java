@@ -5,7 +5,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 
@@ -20,14 +19,11 @@ public class GroupDaoImpl implements GroupDao {
     private static StudentDao studentDao = new StudentDaoImpl();
 
     @Override
-    public boolean create(Group group) {
+    public Group create(Group group) {
         insertGroupRecord(group);
         int id = getTheLastRecordId();
         group.setId(id);
-        if (!group.getStudents().isEmpty()) {
-            addLinkToStudentRecords(group);
-        }
-        return true;
+        return group;
     }
 
     private void insertGroupRecord(Group group) {
@@ -75,37 +71,6 @@ public class GroupDaoImpl implements GroupDao {
         return groupId;
     }
 
-    private void addLinkToStudentRecords(Group group) {
-        List<Student> students = group.getStudents();
-        Iterator<Student> iteratorStudent = students.iterator();
-        while (iteratorStudent.hasNext()) {
-            Student student = iteratorStudent.next();
-            if (student.getId() == 0) {
-                int id = studentDao.findPersonIdByIdfees(student.getIdFees());
-                student.setId(id);
-            }
-            updateStudentRecordSetGroupId(group.getId(), student.getId());
-        }
-    }
-
-    private void updateStudentRecordSetGroupId(int groupId, int studentId) {
-        String sql = "update students set group_id=? where person_id=?";
-        Connection connection = null;
-        PreparedStatement preparedStatement = null;
-        try {
-            connection = daoFactory.getConnection();
-            preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setInt(1, groupId);
-            preparedStatement.setInt(2, studentId);
-            preparedStatement.execute();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            daoFactory.closePreparedStatement(preparedStatement);
-            daoFactory.closeConnection(connection);
-        }
-    }
-
     @Override
     public Group findById(int id) {
         String sql = "select * from groups where id=?";
@@ -114,7 +79,7 @@ public class GroupDaoImpl implements GroupDao {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
-        Group group = null;
+        Group group = new Group();
 
         try {
             connection = daoFactory.getConnection();
@@ -122,7 +87,6 @@ public class GroupDaoImpl implements GroupDao {
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setInt(1, id);
             resultSet = preparedStatement.executeQuery();
-            group = new Group();
             if (resultSet.next()) {
                 group.setId(resultSet.getInt("id"));
                 group.setTitle(resultSet.getString("title"));
@@ -136,10 +100,9 @@ public class GroupDaoImpl implements GroupDao {
             daoFactory.closePreparedStatement(preparedStatement);
             daoFactory.closeConnection(connection);
         }
-//        if (group.getStudents().isEmpty()) {
-//            group.setStudents(studentDao.findByGroupId(group.getId()));
-//        }
-//        remove bidirectional!!!
+        List<Student> students = studentDao.findByGroupNoBidirectional(group.getId());
+        students.forEach(s -> s.setGroup(group));
+        group.setStudents(students);
         return group;
     }
 

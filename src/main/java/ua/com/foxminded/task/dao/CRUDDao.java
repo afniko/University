@@ -4,7 +4,7 @@ import java.util.List;
 
 public interface CRUDDao<T> {
 
-    public boolean create(T t);
+    public T create(T t);
 
     public T findById(int id);
 

@@ -11,4 +11,6 @@ public interface StudentDao extends CRUDDao<Student> {
     public int findPersonIdByIdfees(int idFees);
 
     public List<Student> findByGroupId(int id);
+
+    public List<Student> findByGroupNoBidirectional(int id);
 }
