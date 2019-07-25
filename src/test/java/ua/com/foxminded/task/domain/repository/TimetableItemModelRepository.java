@@ -5,12 +5,19 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import net.bytebuddy.asm.Advice.Return;
 import ua.com.foxminded.task.domain.TimetableItem;
 
 public class TimetableItemModelRepository {
 
     public static List<TimetableItem> getModels() {
-        List<TimetableItem> timetableItems = Arrays.asList(getModel1(), getModel2(), getModel3(), getModel4(), getModel5(), getModel6());
+        List<TimetableItem> timetableItems = Arrays.asList(
+                getModel1(), 
+                getModel2(), 
+                getModel3(), 
+                getModel4(), 
+                getModel5(), 
+                getModel6());
         return new ArrayList<>(timetableItems);
     }
 
@@ -18,6 +25,38 @@ public class TimetableItemModelRepository {
         TimetableItem timetableItem = new TimetableItem();
         timetableItem.setDate(Date.valueOf("2019-01-21"));
         return timetableItem;
+    }
+
+    public static List<TimetableItem> getTimetableItemsStudentsExpected() {
+        List<TimetableItem> timetableItemsExpected = Arrays.asList(
+                TimetableItemModelRepository.getModel3(), 
+                TimetableItemModelRepository.getModel4(), 
+                TimetableItemModelRepository.getModel5());
+        return timetableItemsExpected;
+    }
+
+    public static List<TimetableItem> getTimetableItemsStudentUnexpected() {
+        List<TimetableItem> timetableItemsUnexpected = Arrays.asList(
+                TimetableItemModelRepository.getModel1(), 
+                TimetableItemModelRepository.getModel2(), 
+                TimetableItemModelRepository.getModel6());
+        return timetableItemsUnexpected;
+    }
+
+    public static List<TimetableItem> getTimetableItemsTeacherExpected() {
+        List<TimetableItem> timetableItemsExpected = Arrays.asList(
+                TimetableItemModelRepository.getModel2(), 
+                TimetableItemModelRepository.getModel4());
+        return timetableItemsExpected;
+    }
+
+    public static List<TimetableItem> getTimetableItemsTeacherUnexpected() {
+        List<TimetableItem> timetableItemsUnexpected = Arrays.asList(
+                TimetableItemModelRepository.getModel1(), 
+                TimetableItemModelRepository.getModel3(), 
+                TimetableItemModelRepository.getModel5(),
+                TimetableItemModelRepository.getModel6());
+        return timetableItemsUnexpected;
     }
 
     public static TimetableItem getModel1() {
