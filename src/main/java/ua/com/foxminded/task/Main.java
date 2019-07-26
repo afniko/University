@@ -20,8 +20,6 @@ public class Main {
         groupDao.create(GROUP1);
         groupDao.create(GROUP2);
         groupDao.create(GROUP3);
-        int id = GROUP2.getId();
-        System.out.println("group: " + groupDao.findById(id));
     }
 
     public static Group getModel1() {
