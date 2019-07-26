@@ -96,7 +96,7 @@ public class StudentDaoImpl implements StudentDao {
         Student student = findByIdWithoutGroup(id);
         int groupId = student.getGroup().getId();
         if (groupId != 0) {
-            student.setGroup(groupDao.findById(groupId));
+            student.setGroup(groupDao.findByIdNoBidirectional(groupId));
         }
         return student;
     }
@@ -233,7 +233,7 @@ public class StudentDaoImpl implements StudentDao {
     }
 
     @Override
-    public List<Student> findByGroupNoBidirectional(int id) {
+    public List<Student> findByGroupIdNoBidirectional(int id) {
         String sql = "select person_id from students where group_id=?";
         List<Integer> studentsId = new ArrayList<>();
         List<Student> students = new ArrayList<Student>();

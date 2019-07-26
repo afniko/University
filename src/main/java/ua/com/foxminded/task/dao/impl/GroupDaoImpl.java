@@ -73,34 +73,8 @@ public class GroupDaoImpl implements GroupDao {
 
     @Override
     public Group findById(int id) {
-        String sql = "select * from groups where id=?";
-        int departmentId = 0;
-
-        Connection connection = null;
-        PreparedStatement preparedStatement = null;
-        ResultSet resultSet = null;
-        Group group = new Group();
-
-        try {
-            connection = daoFactory.getConnection();
-
-            preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setInt(1, id);
-            resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()) {
-                group.setId(resultSet.getInt("id"));
-                group.setTitle(resultSet.getString("title"));
-                departmentId = resultSet.getInt("department_id");
-                group.setYearEntry(resultSet.getDate("yearEntry"));
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            daoFactory.closeResultSet(resultSet);
-            daoFactory.closePreparedStatement(preparedStatement);
-            daoFactory.closeConnection(connection);
-        }
-        List<Student> students = studentDao.findByGroupNoBidirectional(group.getId());
+        Group group = findByIdNoBidirectional(id);
+        List<Student> students = studentDao.findByGroupIdNoBidirectional(group.getId());
         students.forEach(s -> s.setGroup(group));
         group.setStudents(students);
         return group;
@@ -133,6 +107,38 @@ public class GroupDaoImpl implements GroupDao {
         }
         groups = getGroupsById(groupsId);
         return groups;
+    }
+
+    @Override
+    public Group findByIdNoBidirectional(int id) {
+        String sql = "select * from groups where id=?";
+        int departmentId = 0;
+
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        Group group = new Group();
+
+        try {
+            connection = daoFactory.getConnection();
+
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, id);
+            resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                group.setId(resultSet.getInt("id"));
+                group.setTitle(resultSet.getString("title"));
+                departmentId = resultSet.getInt("department_id");
+                group.setYearEntry(resultSet.getDate("yearEntry"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            daoFactory.closeResultSet(resultSet);
+            daoFactory.closePreparedStatement(preparedStatement);
+            daoFactory.closeConnection(connection);
+        }
+        return group;
     }
 
     @Override
