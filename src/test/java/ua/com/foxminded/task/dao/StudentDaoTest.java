@@ -59,26 +59,6 @@ public class StudentDaoTest {
         assertTrue(studentDao.findAll().containsAll(Arrays.asList(STUDENT1, STUDENT2, STUDENT3, STUDENT4, STUDENT5, STUDENT6)));
     }
 
-    @Test
-    public void WhenPutAtTableDbStudentObjects_thenGetThisObjectsFindByIdFees() {
-        int idFees = STUDENT3.getIdFees();
-        assertTrue(studentDao.findByIdFees(idFees).equals(STUDENT3));
-    }
-
-    @Test
-    public void WhenPutAtTableDbGroupObjects_thenGetThisObjectsFindByTitle() {
-        String title = GROUP13.getTitle();
-        assertTrue(groupDao.findByTitle(title).equals(GROUP13));
-    }
-
-    @Test
-    public void WhenPutAtTableDbStudentObject_thenGetGroupFromStudent() {
-        Group group = STUDENT5.getGroup();
-        int idFees = STUDENT5.getIdFees();
-        Student student = studentDao.findByIdFees(idFees);
-        assertTrue(student.getGroup().equals(group));
-    }
-
     @AfterAll
     public static void removeCreatedTables() {
         DaoFactory.getInstance().removeTables();

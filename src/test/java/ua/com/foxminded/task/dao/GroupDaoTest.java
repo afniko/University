@@ -59,12 +59,6 @@ public class GroupDaoTest {
         assertTrue(groupDao.findAll().containsAll(Arrays.asList(GROUP11, GROUP12, GROUP13)));
     }
 
-    @Test
-    public void WhenPutAtTableDbGroupObjects_thenGetThisObjectsFindByTitle() {
-        String title = GROUP13.getTitle();
-        assertTrue(groupDao.findByTitle(title).equals(GROUP13));
-    }
-
     @AfterAll
     public static void removeCreatedTables() {
         DaoFactory.getInstance().removeTables();

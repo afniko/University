@@ -1,4 +1,4 @@
-  CREATE TABLE IF NOT EXISTS auditories 
+CREATE TABLE IF NOT EXISTS auditories 
   (
     id SERIAL PRIMARY KEY,
     number VARCHAR(20) NOT NULL UNIQUE,
@@ -7,13 +7,13 @@
     description VARCHAR(200)
   );
   
-  CREATE TABLE IF NOT EXISTS auditory_types 
+CREATE TABLE IF NOT EXISTS auditory_types 
   (
     id SERIAL PRIMARY KEY,
     type VARCHAR(45) NOT NULL UNIQUE
   );
 
-    CREATE TABLE IF NOT EXISTS lecturies
+CREATE TABLE IF NOT EXISTS lecturies
   (
   id SERIAL PRIMARY KEY,
   number VARCHAR(5) NOT NULL UNIQUE,
@@ -21,13 +21,13 @@
   end_time TIME
   );
   
-  CREATE TABLE IF NOT EXISTS faculties
+CREATE TABLE IF NOT EXISTS faculties
   (
   id SERIAL PRIMARY KEY,
   title VARCHAR(20) NOT NULL UNIQUE
   );
   
-   CREATE TABLE IF NOT EXISTS departments
+CREATE TABLE IF NOT EXISTS departments
   (
   id SERIAL PRIMARY KEY,
   title VARCHAR(20) NOT NULL UNIQUE,
@@ -36,7 +36,7 @@
   FOREIGN KEY (faculty_id) REFERENCES faculties (id)
   );
   
-  CREATE TABLE IF NOT EXISTS groups
+CREATE TABLE IF NOT EXISTS groups
   (
   id SERIAL PRIMARY KEY,
   title VARCHAR(20) NOT NULL UNIQUE,
@@ -44,7 +44,7 @@
   yearEntry DATE
   );
 
-  CREATE TABLE IF NOT EXISTS persons
+CREATE TABLE IF NOT EXISTS persons
   (
   id SERIAL PRIMARY KEY,
   first_name VARCHAR(20) NOT NULL,
@@ -54,27 +54,27 @@
   idfees INT NOT NULL UNIQUE
   );
   
-  CREATE TABLE IF NOT EXISTS students
+CREATE TABLE IF NOT EXISTS students
   (
   person_id INT PRIMARY KEY,
   group_id INT,
   FOREIGN KEY (person_id) REFERENCES persons (id) ON DELETE CASCADE
   );
   
-  CREATE TABLE IF NOT EXISTS teachers
+CREATE TABLE IF NOT EXISTS teachers
   (
   person_id INT PRIMARY KEY,
   department_id INT,
   FOREIGN KEY (person_id) REFERENCES persons (id) ON DELETE CASCADE
   );
   
-  CREATE TABLE IF NOT EXISTS subjects
+CREATE TABLE IF NOT EXISTS subjects
   (
   id SERIAL PRIMARY KEY,
   title VARCHAR(45) NOT NULL UNIQUE
   );
   
-  CREATE TABLE IF NOT EXISTS timetable_items
+CREATE TABLE IF NOT EXISTS timetable_items
   (
   id SERIAL PRIMARY KEY,
   subject_id INT,
@@ -84,7 +84,7 @@
   teacher_id INT
   );
   
-  CREATE TABLE IF NOT EXISTS groups_timetable_items
+CREATE TABLE IF NOT EXISTS groups_timetable_items
   (
   group_id INT,
   timetable_item_id INT,
@@ -93,7 +93,7 @@
   FOREIGN KEY (timetable_item_id) REFERENCES timetable_items (id)
   );
   
-  CREATE TABLE IF NOT EXISTS teachers_subjects
+CREATE TABLE IF NOT EXISTS teachers_subjects
   (
   subject_id INT,
   teacher_id INT,

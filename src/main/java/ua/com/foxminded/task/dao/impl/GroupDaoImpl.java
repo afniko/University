@@ -31,12 +31,16 @@ public class GroupDaoImpl implements GroupDao {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
 
-        int departmentId = Objects.nonNull(group.getDepartment()) ? group.getDepartment().getId() : 0;
+        Integer departmentId = Objects.nonNull(group.getDepartment()) ? group.getDepartment().getId() : null;
         try {
             connection = daoFactory.getConnection();
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1, group.getTitle());
-            preparedStatement.setInt(2, departmentId);
+            if (Objects.isNull(departmentId)) {
+                preparedStatement.setNull(2, java.sql.Types.INTEGER);
+            } else {
+                preparedStatement.setInt(2, departmentId);
+            }
             preparedStatement.setDate(3, group.getYearEntry());
 
             preparedStatement.execute();
@@ -112,7 +116,7 @@ public class GroupDaoImpl implements GroupDao {
     @Override
     public Group findByIdNoBidirectional(int id) {
         String sql = "select * from groups where id=?";
-        int departmentId = 0;
+        Integer departmentId = null;
 
         Connection connection = null;
         PreparedStatement preparedStatement = null;
@@ -128,39 +132,10 @@ public class GroupDaoImpl implements GroupDao {
             if (resultSet.next()) {
                 group.setId(resultSet.getInt("id"));
                 group.setTitle(resultSet.getString("title"));
-                departmentId = resultSet.getInt("department_id");
+                if (Objects.nonNull(resultSet.getObject("department_id"))) {
+                    departmentId = resultSet.getInt("department_id");
+                }
                 group.setYearEntry(resultSet.getDate("yearEntry"));
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            daoFactory.closeResultSet(resultSet);
-            daoFactory.closePreparedStatement(preparedStatement);
-            daoFactory.closeConnection(connection);
-        }
-        return group;
-    }
-
-    @Override
-    public Group findByTitle(String title) {
-        String sql = "select id from groups where title=?";
-        int groupId = 0;
-        Group group = null;
-
-        Connection connection = null;
-        PreparedStatement preparedStatement = null;
-        ResultSet resultSet = null;
-
-        try {
-            connection = daoFactory.getConnection();
-
-            preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setString(1, title);
-            resultSet = preparedStatement.executeQuery();
-            group = new Group();
-            if (resultSet.next()) {
-                groupId = resultSet.getInt("id");
-                group = findById(groupId);
             }
         } catch (SQLException e) {
             e.printStackTrace();

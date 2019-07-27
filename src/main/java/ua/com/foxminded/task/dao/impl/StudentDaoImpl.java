@@ -169,40 +169,6 @@ public class StudentDaoImpl implements StudentDao {
     }
 
     @Override
-    public Student findByIdFees(int idFees) {
-        int id = findPersonIdByIdfees(idFees);
-        return findById(id);
-    }
-
-    @Override
-    public int findPersonIdByIdfees(int idFees) {
-        String sql = "select id from persons where idfees=?";
-        int personId = 0;
-
-        Connection connection = null;
-        PreparedStatement preparedStatement = null;
-        ResultSet resultSet = null;
-
-        try {
-            connection = daoFactory.getConnection();
-
-            preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setInt(1, idFees);
-            resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()) {
-                personId = resultSet.getInt("id");
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            daoFactory.closeResultSet(resultSet);
-            daoFactory.closePreparedStatement(preparedStatement);
-            daoFactory.closeConnection(connection);
-        }
-        return personId;
-    }
-
-    @Override
     public List<Student> findByGroupId(int id) {
         String sql = "select person_id from students where group_id=?";
         List<Integer> studentsId = new ArrayList<>();

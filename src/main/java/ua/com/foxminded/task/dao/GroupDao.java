@@ -8,7 +8,5 @@ public interface GroupDao extends CRUDDao<Group> {
 
     public Group findByIdNoBidirectional(int id);
 
-    public Group findByTitle(String title);
-
     public List<Group> findByDepartmentId(int id);
 }
