@@ -8,5 +8,4 @@ public interface StudentDao extends CRUDDao<Student> {
 
     public List<Student> findByGroupId(int id);
 
-    public List<Student> findByGroupIdNoBidirectional(int id);
 }

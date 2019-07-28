@@ -10,13 +10,11 @@ import java.util.Objects;
 
 import ua.com.foxminded.task.dao.DaoFactory;
 import ua.com.foxminded.task.dao.GroupDao;
-import ua.com.foxminded.task.dao.StudentDao;
 import ua.com.foxminded.task.domain.Group;
 import ua.com.foxminded.task.domain.Student;
 
 public class GroupDaoImpl implements GroupDao {
     private DaoFactory daoFactory = DaoFactory.getInstance();
-    private static StudentDao studentDao = new StudentDaoImpl();
 
     @Override
     public Group create(Group group) {
@@ -78,7 +76,7 @@ public class GroupDaoImpl implements GroupDao {
     @Override
     public Group findById(int id) {
         Group group = findByIdNoBidirectional(id);
-        List<Student> students = studentDao.findByGroupIdNoBidirectional(group.getId());
+        List<Student> students = new StudentDaoImpl().findByGroupIdNoBidirectional(group.getId());
         students.forEach(s -> s.setGroup(group));
         group.setStudents(students);
         return group;
@@ -113,7 +111,7 @@ public class GroupDaoImpl implements GroupDao {
         return groups;
     }
 
-    public Group findByIdNoBidirectional(int id) {
+    Group findByIdNoBidirectional(int id) {
         String sql = "select * from groups where id=?";
         Integer departmentId = null;
 

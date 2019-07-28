@@ -203,8 +203,7 @@ public class StudentDaoImpl implements StudentDao {
         return students;
     }
 
-    @Override
-    public List<Student> findByGroupIdNoBidirectional(int id) {
+    List<Student> findByGroupIdNoBidirectional(int id) {
         String sql = "select person_id from students where group_id=?";
         List<Integer> studentsId = new ArrayList<>();
         List<Student> students = new ArrayList<Student>();
