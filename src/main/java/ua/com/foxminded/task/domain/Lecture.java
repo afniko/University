@@ -46,7 +46,6 @@ public class Lecture {
         final int prime = 31;
         int result = 1;
         result = prime * result + ((endTime == null) ? 0 : endTime.hashCode());
-        result = prime * result + id;
         result = prime * result + ((number == null) ? 0 : number.hashCode());
         result = prime * result + ((startTime == null) ? 0 : startTime.hashCode());
         return result;
@@ -65,8 +64,6 @@ public class Lecture {
             if (other.endTime != null)
                 return false;
         } else if (!endTime.equals(other.endTime))
-            return false;
-        if (id != other.id)
             return false;
         if (number == null) {
             if (other.number != null)

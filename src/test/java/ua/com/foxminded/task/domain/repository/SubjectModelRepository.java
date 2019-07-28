@@ -7,35 +7,31 @@ import java.util.List;
 import ua.com.foxminded.task.domain.Subject;
 
 public class SubjectModelRepository {
-    public static Subject getModel() {
+
+    public static List<Subject> getModels() {
+        List<Subject> subjects = Arrays.asList(getModel2(), getModel3(), getModel4());
+        return new ArrayList<>(subjects);
+    }
+    public static Subject getModel1() {
         Subject subject = new Subject();
-        subject.setId(6);
         subject.setTitle("Programming");
         return subject;
     }
 
-    public static List<Subject> getModels() {
-        List<Subject> subjects = Arrays.asList(createModel1(), createModel2(), createModel3());
-        return new ArrayList<>(subjects);
-    }
-
-    private static Subject createModel1() {
+    public static Subject getModel2() {
         Subject subject = new Subject();
-        subject.setId(1);
         subject.setTitle("Phisics");
         return subject;
     }
 
-    private static Subject createModel2() {
+    public static Subject getModel3() {
         Subject subject = new Subject();
-        subject.setId(2);
         subject.setTitle("Mathmatics");
         return subject;
     }
 
-    private static Subject createModel3() {
+    public static Subject getModel4() {
         Subject subject = new Subject();
-        subject.setId(3);
         subject.setTitle("Biologic");
         return subject;
     }
