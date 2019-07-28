@@ -9,14 +9,12 @@ import java.util.List;
 import java.util.Objects;
 
 import ua.com.foxminded.task.dao.DaoFactory;
-import ua.com.foxminded.task.dao.GroupDao;
 import ua.com.foxminded.task.dao.StudentDao;
 import ua.com.foxminded.task.domain.Group;
 import ua.com.foxminded.task.domain.Student;
 
 public class StudentDaoImpl implements StudentDao {
     private DaoFactory daoFactory = DaoFactory.getInstance();
-    private static GroupDao groupDao = new GroupDaoImpl();
 
     @Override
     public Student create(Student student) {
