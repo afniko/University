@@ -113,7 +113,6 @@ public class GroupDaoImpl implements GroupDao {
         return groups;
     }
 
-    @Override
     public Group findByIdNoBidirectional(int id) {
         String sql = "select * from groups where id=?";
         Integer departmentId = null;

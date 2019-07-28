@@ -101,7 +101,7 @@ public class StudentDaoImpl implements StudentDao {
         Student student = findByIdWithoutGroup(id);
         int groupId = student.getGroup().getId();
         if (groupId != 0) {
-            student.setGroup(groupDao.findByIdNoBidirectional(groupId));
+            student.setGroup(new GroupDaoImpl().findByIdNoBidirectional(groupId));
         }
         return student;
     }
