@@ -6,7 +6,7 @@ CREATE TABLE IF NOT EXISTS auditories
     capacity INT,
     description VARCHAR(200)
   );
-  
+
 CREATE TABLE IF NOT EXISTS auditory_types 
   (
     id SERIAL PRIMARY KEY,

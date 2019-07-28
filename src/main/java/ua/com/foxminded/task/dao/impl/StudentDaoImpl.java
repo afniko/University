@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import ua.com.foxminded.task.dao.DaoFactory;
 import ua.com.foxminded.task.dao.GroupDao;
@@ -22,9 +23,7 @@ public class StudentDaoImpl implements StudentDao {
         insertPersonRecord(student);
         int id = getTheLastRecordId();
         student.setId(id);
-        if (student.getGroup().getId() != 0) {
-            insertStudentRecord(student);
-        }
+        insertStudentRecord(student);
         return student;
     }
 
@@ -77,11 +76,17 @@ public class StudentDaoImpl implements StudentDao {
         String sql = "insert into students (person_id, group_id) values (?, ?)";
         Connection connection = null;
         PreparedStatement preparedStatement = null;
+
+        Integer groupId = student.getGroup().getId() == 0 ? null : student.getGroup().getId();
         try {
             connection = daoFactory.getConnection();
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setInt(1, student.getId());
-            preparedStatement.setInt(2, student.getGroup().getId());
+            if (Objects.isNull(groupId)) {
+                preparedStatement.setNull(2, java.sql.Types.INTEGER);
+            } else {
+                preparedStatement.setInt(2, groupId);
+            }
             preparedStatement.execute();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -107,7 +112,7 @@ public class StudentDaoImpl implements StudentDao {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
-        int groupId = 0;
+        Integer groupId = null;
         Student student = null;
 
         try {
@@ -124,7 +129,9 @@ public class StudentDaoImpl implements StudentDao {
                 student.setMiddleName(resultSet.getString("middle_name"));
                 student.setBirthday(resultSet.getDate("birthday"));
                 student.setIdFees(resultSet.getInt("idfees"));
-                groupId = resultSet.getInt("group_id");
+                if (Objects.nonNull(resultSet.getObject("group_id"))) {
+                    groupId = resultSet.getInt("group_id");
+                }
             }
         } catch (SQLException e) {
             e.printStackTrace();
