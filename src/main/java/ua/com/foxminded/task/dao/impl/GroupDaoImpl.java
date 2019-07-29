@@ -14,6 +14,8 @@ import org.slf4j.LoggerFactory;
 
 import ua.com.foxminded.task.dao.DaoFactory;
 import ua.com.foxminded.task.dao.GroupDao;
+import ua.com.foxminded.task.dao.exception.NoCreatedEntity;
+import ua.com.foxminded.task.dao.exception.NoEntityFound;
 import ua.com.foxminded.task.domain.Group;
 import ua.com.foxminded.task.domain.Student;
 
@@ -68,9 +70,12 @@ public class GroupDaoImpl implements GroupDao {
             resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
                 groupId = resultSet.getInt("id");
+            } else {
+                logger.warn("Don`t find the last record id in table groups. Sql query = {}.", preparedStatement);
             }
         } catch (SQLException e) {
-            logger.warn("Don`t find the last record id in table groups. Sql query = {}. {}", preparedStatement, e);
+            logger.warn("Crached request for finding the last record id in table groups. Sql query = {}. {}", preparedStatement, e);
+            throw new NoCreatedEntity("Group entity was not created", e);
         } finally {
             daoFactory.closeResultSet(resultSet);
             daoFactory.closePreparedStatement(preparedStatement);
@@ -112,8 +117,8 @@ public class GroupDaoImpl implements GroupDao {
                 }
                 group.setYearEntry(resultSet.getDate("yearEntry"));
             } else {
-//              TODO add exception
                 logger.warn("Group with id {} not finded", id);
+                throw new NoEntityFound("Group by department id #" + id + " not finded");
             }
         } catch (SQLException e) {
             logger.error("Select Group with id {} was crashed. Sql query = {}, {}", id, preparedStatement, e);
@@ -145,6 +150,7 @@ public class GroupDaoImpl implements GroupDao {
             }
             if (groupsId.isEmpty()) {
                 logger.warn("Groups by findAll not find. Sql query = {}", preparedStatement);
+                throw new NoEntityFound("Groups not finded");
             }
         } catch (SQLException e) {
             logger.error("Select all Groups query was crashed. Sql query = {}, {}", preparedStatement, e);
@@ -178,6 +184,7 @@ public class GroupDaoImpl implements GroupDao {
             }
             if (groupsId.isEmpty()) {
                 logger.warn("Groups by department id {} do nobody find. Sql query = {}", id, preparedStatement);
+                throw new NoEntityFound("Groups by department id #" + id + " not finded");
             }
         } catch (SQLException e) {
             logger.error("Select Groups query by department id {} was crashed. Sql query = {}, {}", id, preparedStatement, e);
