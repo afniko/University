@@ -144,7 +144,7 @@ public class GroupDaoImpl implements GroupDao {
                 groupsId.add(resultSet.getInt("id"));
             }
             if (groupsId.isEmpty()) {
-                logger.warn("Groups by findAll not find. Sql request = {}", preparedStatement);
+                logger.warn("Groups by findAll not find. Sql query = {}", preparedStatement);
             }
         } catch (SQLException e) {
             logger.error("Select all Groups query was crashed. Sql query = {}, {}", preparedStatement, e);
@@ -177,7 +177,7 @@ public class GroupDaoImpl implements GroupDao {
                 groupsId.add(resultSet.getInt("id"));
             }
             if (groupsId.isEmpty()) {
-                logger.warn("Groups by department id {} do nobody find. Sql request = {}", id, preparedStatement);
+                logger.warn("Groups by department id {} do nobody find. Sql query = {}", id, preparedStatement);
             }
         } catch (SQLException e) {
             logger.error("Select Groups query by department id {} was crashed. Sql query = {}, {}", id, preparedStatement, e);

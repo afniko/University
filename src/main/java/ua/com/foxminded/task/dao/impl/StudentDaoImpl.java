@@ -175,7 +175,7 @@ public class StudentDaoImpl implements StudentDao {
                 studentsId.add(resultSet.getInt("person_id"));
             }
             if (studentsId.isEmpty()) {
-                logger.warn("Students by findAll not find. Sql request = {}", preparedStatement);
+                logger.warn("Students by findAll not find. Sql query = {}", preparedStatement);
             }
         } catch (SQLException e) {
             logger.error("Select all Students query was crashed. Sql query = {}, {}", preparedStatement, e);
@@ -208,7 +208,7 @@ public class StudentDaoImpl implements StudentDao {
                 studentsId.add(resultSet.getInt("person_id"));
             }
             if (studentsId.isEmpty()) {
-                logger.warn("Students by group id {} do nobody find. Sql request = {}", id, preparedStatement);
+                logger.warn("Students by group id {} do nobody find. Sql query = {}", id, preparedStatement);
             }
         } catch (SQLException e) {
             logger.error("Select Students query by group id {} was crashed. Sql query = {}, {}", id, preparedStatement, e);
