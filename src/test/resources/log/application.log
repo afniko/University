@@ -1,0 +1,662 @@
+2019-07-28 20:56:23 INFO  org.flywaydb.core.internal.license.VersionPrinter [main]: - Flyway Community Edition 5.2.4 by Boxfuse
+2019-07-28 20:56:23 INFO  org.flywaydb.core.internal.database.DatabaseFactory [main]: - Database: jdbc:postgresql://localhost/university_test (PostgreSQL 9.5)
+2019-07-28 20:56:23 DEBUG org.flywaydb.core.internal.database.DatabaseFactory [main]: - Driver  : PostgreSQL Native Driver PostgreSQL 9.1 JDBC4 (build 901)
+2019-07-28 20:56:23 DEBUG org.flywaydb.core.Flyway [main]: - DDL Transactions Supported: true
+2019-07-28 20:56:23 DEBUG org.flywaydb.core.Flyway [main]: - Schema: public
+2019-07-28 20:56:23 DEBUG org.flywaydb.core.internal.scanner.filesystem.FileSystemScanner [main]: - Scanning for filesystem resources at 'src/main/resources/db/migrations'
+2019-07-28 20:56:23 DEBUG org.flywaydb.core.internal.scanner.filesystem.FileSystemScanner [main]: - Scanning for resources in path: src/main/resources/db/migrations (src/main/resources/db/migrations)
+2019-07-28 20:56:23 DEBUG org.flywaydb.core.internal.scanner.filesystem.FileSystemScanner [main]: - Found filesystem resource: src/main/resources/db/migrations/V1.1__create_tables.sql
+2019-07-28 20:56:23 DEBUG org.flywaydb.core.internal.scanner.filesystem.FileSystemScanner [main]: - Scanning for filesystem resources at 'src/test/resources/db/migrations'
+2019-07-28 20:56:23 WARN  org.flywaydb.core.internal.scanner.filesystem.FileSystemScanner [main]: - Skipping filesystem location:src/test/resources/db/migrations (not found)
+2019-07-28 20:56:23 DEBUG org.flywaydb.core.internal.callback.SqlScriptCallbackFactory [main]: - Scanning for SQL callbacks ...
+2019-07-28 20:56:23 DEBUG org.flywaydb.core.internal.util.FeatureDetector [main]: - Spring Jdbc available: false
+2019-07-28 20:56:23 DEBUG org.flywaydb.core.internal.command.DbValidate [main]: - Validating migrations ...
+2019-07-28 20:56:23 DEBUG org.flywaydb.core.internal.sqlscript.SqlScript [main]: - Parsing V1.1__create_tables.sql ...
+2019-07-28 20:56:23 DEBUG org.flywaydb.core.internal.sqlscript.SqlScript [main]: - Found statement at line 1: CREATE TABLE IF NOT EXISTS auditories 
+  (
+     id SERIAL PRIMARY KEY,
+     number VARCHAR(20) NOT NULL UNIQUE,
+     auditory_type_id INT,
+     capacity INT,
+     description VARCHAR(200)
+  )
+2019-07-28 20:56:23 DEBUG org.flywaydb.core.internal.sqlscript.SqlScript [main]: - Found statement at line 10: CREATE TABLE IF NOT EXISTS auditory_types 
+  (
+     id SERIAL PRIMARY KEY,
+     type VARCHAR(45) NOT NULL UNIQUE
+  )
+2019-07-28 20:56:23 DEBUG org.flywaydb.core.internal.sqlscript.SqlScript [main]: - Found statement at line 16: CREATE TABLE IF NOT EXISTS lecturies
+  (
+     id SERIAL PRIMARY KEY,
+     number VARCHAR(5) NOT NULL UNIQUE,
+     start_time TIME,
+     end_time TIME
+  )
+2019-07-28 20:56:23 DEBUG org.flywaydb.core.internal.sqlscript.SqlScript [main]: - Found statement at line 24: CREATE TABLE IF NOT EXISTS faculties
+  (
+     id SERIAL PRIMARY KEY,
+     title VARCHAR(20) NOT NULL UNIQUE
+  )
+2019-07-28 20:56:23 DEBUG org.flywaydb.core.internal.sqlscript.SqlScript [main]: - Found statement at line 30: CREATE TABLE IF NOT EXISTS departments
+  (
+     id SERIAL PRIMARY KEY,
+     title VARCHAR(20) NOT NULL UNIQUE,
+     description VARCHAR(200),
+     faculty_id INT,
+     FOREIGN KEY (faculty_id) REFERENCES faculties (id)
+  )
+2019-07-28 20:56:23 DEBUG org.flywaydb.core.internal.sqlscript.SqlScript [main]: - Found statement at line 39: CREATE TABLE IF NOT EXISTS groups
+  (
+     id SERIAL PRIMARY KEY,
+     title VARCHAR(20) NOT NULL UNIQUE,
+     department_id INT,
+     yearEntry DATE
+  )
+2019-07-28 20:56:23 DEBUG org.flywaydb.core.internal.sqlscript.SqlScript [main]: - Found statement at line 47: CREATE TABLE IF NOT EXISTS persons
+  (
+     id SERIAL PRIMARY KEY,
+     first_name VARCHAR(20) NOT NULL,
+     last_name VARCHAR(20),
+     middle_name VARCHAR(20),
+     birthday DATE,
+     idfees INT NOT NULL UNIQUE
+  )
+2019-07-28 20:56:23 DEBUG org.flywaydb.core.internal.sqlscript.SqlScript [main]: - Found statement at line 57: CREATE TABLE IF NOT EXISTS students
+  (
+     person_id INT PRIMARY KEY,
+     group_id INT,
+     FOREIGN KEY (person_id) REFERENCES persons (id) ON DELETE CASCADE
+  )
+2019-07-28 20:56:23 DEBUG org.flywaydb.core.internal.sqlscript.SqlScript [main]: - Found statement at line 64: CREATE TABLE IF NOT EXISTS teachers
+  (
+     person_id INT PRIMARY KEY,
+     department_id INT,
+     FOREIGN KEY (person_id) REFERENCES persons (id) ON DELETE CASCADE
+  )
+2019-07-28 20:56:23 DEBUG org.flywaydb.core.internal.sqlscript.SqlScript [main]: - Found statement at line 71: CREATE TABLE IF NOT EXISTS subjects
+  (
+     id SERIAL PRIMARY KEY,
+     title VARCHAR(45) NOT NULL UNIQUE
+  )
+2019-07-28 20:56:23 DEBUG org.flywaydb.core.internal.sqlscript.SqlScript [main]: - Found statement at line 77: CREATE TABLE IF NOT EXISTS timetable_items
+  (
+     id SERIAL PRIMARY KEY,
+     subject_id INT,
+     auditory_id INT,
+     lecture_id INT,
+     date DATE,
+     teacher_id INT
+  )
+2019-07-28 20:56:23 DEBUG org.flywaydb.core.internal.sqlscript.SqlScript [main]: - Found statement at line 87: CREATE TABLE IF NOT EXISTS groups_timetable_items
+  (
+     group_id INT,
+     timetable_item_id INT,
+     CONSTRAINT PK_groups_timetable_item PRIMARY KEY (group_id,timetable_item_id),
+     FOREIGN KEY (group_id) REFERENCES groups (id),
+     FOREIGN KEY (timetable_item_id) REFERENCES timetable_items (id)
+  )
+2019-07-28 20:56:23 DEBUG org.flywaydb.core.internal.sqlscript.SqlScript [main]: - Found statement at line 96: CREATE TABLE IF NOT EXISTS teachers_subjects
+  (
+     subject_id INT,
+     teacher_id INT,
+     CONSTRAINT PK_teachers_subjects PRIMARY KEY (subject_id,teacher_id),
+     FOREIGN KEY (subject_id) REFERENCES subjects (id),
+     FOREIGN KEY (teacher_id) REFERENCES teachers (person_id)
+  )
+2019-07-28 20:56:23 DEBUG org.flywaydb.core.internal.scanner.Scanner [main]: - Filtering out resource: src/main/resources/db/migrations/V1.1__create_tables.sql (filename: V1.1__create_tables.sql)
+2019-07-28 20:56:23 INFO  org.flywaydb.core.internal.command.DbValidate [main]: - Successfully validated 1 migration (execution time 00:00.174s)
+2019-07-28 20:56:23 DEBUG org.flywaydb.core.internal.command.DbSchemas [main]: - Schema "public" already exists. Skipping schema creation.
+2019-07-28 20:56:23 INFO  org.flywaydb.core.internal.schemahistory.JdbcTableSchemaHistory [main]: - Creating Schema History table: "public"."flyway_schema_history"
+2019-07-28 20:56:23 DEBUG org.flywaydb.core.internal.sqlscript.SqlScript [main]: - Parsing createMetaDataTable.sql ...
+2019-07-28 20:56:23 DEBUG org.flywaydb.core.internal.sqlscript.SqlScript [main]: - Found statement at line 17: CREATE TABLE "public"."flyway_schema_history" (
+    "installed_rank" INT NOT NULL,
+    "version" VARCHAR(50),
+    "description" VARCHAR(200) NOT NULL,
+    "type" VARCHAR(20) NOT NULL,
+    "script" VARCHAR(1000) NOT NULL,
+    "checksum" INTEGER,
+    "installed_by" VARCHAR(100) NOT NULL,
+    "installed_on" TIMESTAMP NOT NULL DEFAULT now(),
+    "execution_time" INTEGER NOT NULL,
+    "success" BOOLEAN NOT NULL
+)
+2019-07-28 20:56:23 DEBUG org.flywaydb.core.internal.sqlscript.SqlScript [main]: - Found statement at line 29: ALTER TABLE "public"."flyway_schema_history" ADD CONSTRAINT "flyway_schema_history_pk" PRIMARY KEY ("installed_rank")
+2019-07-28 20:56:23 DEBUG org.flywaydb.core.internal.sqlscript.SqlScript [main]: - Found statement at line 31: CREATE INDEX "flyway_schema_history_s_idx" ON "public"."flyway_schema_history" ("success")
+2019-07-28 20:56:23 DEBUG org.flywaydb.core.internal.sqlscript.DefaultSqlScriptExecutor [main]: - Executing SQL: CREATE TABLE "public"."flyway_schema_history" (
+    "installed_rank" INT NOT NULL,
+    "version" VARCHAR(50),
+    "description" VARCHAR(200) NOT NULL,
+    "type" VARCHAR(20) NOT NULL,
+    "script" VARCHAR(1000) NOT NULL,
+    "checksum" INTEGER,
+    "installed_by" VARCHAR(100) NOT NULL,
+    "installed_on" TIMESTAMP NOT NULL DEFAULT now(),
+    "execution_time" INTEGER NOT NULL,
+    "success" BOOLEAN NOT NULL
+)
+2019-07-28 20:56:23 DEBUG org.flywaydb.core.internal.sqlscript.DefaultSqlScriptExecutor [main]: - Update Count: 0
+2019-07-28 20:56:23 DEBUG org.flywaydb.core.internal.sqlscript.DefaultSqlScriptExecutor [main]: - Executing SQL: ALTER TABLE "public"."flyway_schema_history" ADD CONSTRAINT "flyway_schema_history_pk" PRIMARY KEY ("installed_rank")
+2019-07-28 20:56:23 DEBUG org.flywaydb.core.internal.sqlscript.DefaultSqlScriptExecutor [main]: - Update Count: 0
+2019-07-28 20:56:23 DEBUG org.flywaydb.core.internal.sqlscript.DefaultSqlScriptExecutor [main]: - Executing SQL: CREATE INDEX "flyway_schema_history_s_idx" ON "public"."flyway_schema_history" ("success")
+2019-07-28 20:56:23 DEBUG org.flywaydb.core.internal.sqlscript.DefaultSqlScriptExecutor [main]: - Update Count: 0
+2019-07-28 20:56:23 DEBUG org.flywaydb.core.internal.schemahistory.JdbcTableSchemaHistory [main]: - Created Schema History table: "public"."flyway_schema_history"
+2019-07-28 20:56:23 INFO  org.flywaydb.core.internal.command.DbMigrate [main]: - Current version of schema "public": << Empty Schema >>
+2019-07-28 20:56:23 INFO  org.flywaydb.core.internal.command.DbMigrate [main]: - Migrating schema "public" to version 1.1 - create tables
+2019-07-28 20:56:23 DEBUG org.flywaydb.core.internal.sqlscript.DefaultSqlScriptExecutor [main]: - Executing SQL: CREATE TABLE IF NOT EXISTS auditories 
+  (
+     id SERIAL PRIMARY KEY,
+     number VARCHAR(20) NOT NULL UNIQUE,
+     auditory_type_id INT,
+     capacity INT,
+     description VARCHAR(200)
+  )
+2019-07-28 20:56:23 DEBUG org.flywaydb.core.internal.sqlscript.DefaultSqlScriptExecutor [main]: - Update Count: 0
+2019-07-28 20:56:23 DEBUG org.flywaydb.core.internal.sqlscript.DefaultSqlScriptExecutor [main]: - Executing SQL: CREATE TABLE IF NOT EXISTS auditory_types 
+  (
+     id SERIAL PRIMARY KEY,
+     type VARCHAR(45) NOT NULL UNIQUE
+  )
+2019-07-28 20:56:23 DEBUG org.flywaydb.core.internal.sqlscript.DefaultSqlScriptExecutor [main]: - Update Count: 0
+2019-07-28 20:56:23 DEBUG org.flywaydb.core.internal.sqlscript.DefaultSqlScriptExecutor [main]: - Executing SQL: CREATE TABLE IF NOT EXISTS lecturies
+  (
+     id SERIAL PRIMARY KEY,
+     number VARCHAR(5) NOT NULL UNIQUE,
+     start_time TIME,
+     end_time TIME
+  )
+2019-07-28 20:56:23 DEBUG org.flywaydb.core.internal.sqlscript.DefaultSqlScriptExecutor [main]: - Update Count: 0
+2019-07-28 20:56:23 DEBUG org.flywaydb.core.internal.sqlscript.DefaultSqlScriptExecutor [main]: - Executing SQL: CREATE TABLE IF NOT EXISTS faculties
+  (
+     id SERIAL PRIMARY KEY,
+     title VARCHAR(20) NOT NULL UNIQUE
+  )
+2019-07-28 20:56:23 DEBUG org.flywaydb.core.internal.sqlscript.DefaultSqlScriptExecutor [main]: - Update Count: 0
+2019-07-28 20:56:23 DEBUG org.flywaydb.core.internal.sqlscript.DefaultSqlScriptExecutor [main]: - Executing SQL: CREATE TABLE IF NOT EXISTS departments
+  (
+     id SERIAL PRIMARY KEY,
+     title VARCHAR(20) NOT NULL UNIQUE,
+     description VARCHAR(200),
+     faculty_id INT,
+     FOREIGN KEY (faculty_id) REFERENCES faculties (id)
+  )
+2019-07-28 20:56:23 DEBUG org.flywaydb.core.internal.sqlscript.DefaultSqlScriptExecutor [main]: - Update Count: 0
+2019-07-28 20:56:23 DEBUG org.flywaydb.core.internal.sqlscript.DefaultSqlScriptExecutor [main]: - Executing SQL: CREATE TABLE IF NOT EXISTS groups
+  (
+     id SERIAL PRIMARY KEY,
+     title VARCHAR(20) NOT NULL UNIQUE,
+     department_id INT,
+     yearEntry DATE
+  )
+2019-07-28 20:56:23 DEBUG org.flywaydb.core.internal.sqlscript.DefaultSqlScriptExecutor [main]: - Update Count: 0
+2019-07-28 20:56:23 DEBUG org.flywaydb.core.internal.sqlscript.DefaultSqlScriptExecutor [main]: - Executing SQL: CREATE TABLE IF NOT EXISTS persons
+  (
+     id SERIAL PRIMARY KEY,
+     first_name VARCHAR(20) NOT NULL,
+     last_name VARCHAR(20),
+     middle_name VARCHAR(20),
+     birthday DATE,
+     idfees INT NOT NULL UNIQUE
+  )
+2019-07-28 20:56:23 DEBUG org.flywaydb.core.internal.sqlscript.DefaultSqlScriptExecutor [main]: - Update Count: 0
+2019-07-28 20:56:23 DEBUG org.flywaydb.core.internal.sqlscript.DefaultSqlScriptExecutor [main]: - Executing SQL: CREATE TABLE IF NOT EXISTS students
+  (
+     person_id INT PRIMARY KEY,
+     group_id INT,
+     FOREIGN KEY (person_id) REFERENCES persons (id) ON DELETE CASCADE
+  )
+2019-07-28 20:56:23 DEBUG org.flywaydb.core.internal.sqlscript.DefaultSqlScriptExecutor [main]: - Update Count: 0
+2019-07-28 20:56:23 DEBUG org.flywaydb.core.internal.sqlscript.DefaultSqlScriptExecutor [main]: - Executing SQL: CREATE TABLE IF NOT EXISTS teachers
+  (
+     person_id INT PRIMARY KEY,
+     department_id INT,
+     FOREIGN KEY (person_id) REFERENCES persons (id) ON DELETE CASCADE
+  )
+2019-07-28 20:56:24 DEBUG org.flywaydb.core.internal.sqlscript.DefaultSqlScriptExecutor [main]: - Update Count: 0
+2019-07-28 20:56:24 DEBUG org.flywaydb.core.internal.sqlscript.DefaultSqlScriptExecutor [main]: - Executing SQL: CREATE TABLE IF NOT EXISTS subjects
+  (
+     id SERIAL PRIMARY KEY,
+     title VARCHAR(45) NOT NULL UNIQUE
+  )
+2019-07-28 20:56:24 DEBUG org.flywaydb.core.internal.sqlscript.DefaultSqlScriptExecutor [main]: - Update Count: 0
+2019-07-28 20:56:24 DEBUG org.flywaydb.core.internal.sqlscript.DefaultSqlScriptExecutor [main]: - Executing SQL: CREATE TABLE IF NOT EXISTS timetable_items
+  (
+     id SERIAL PRIMARY KEY,
+     subject_id INT,
+     auditory_id INT,
+     lecture_id INT,
+     date DATE,
+     teacher_id INT
+  )
+2019-07-28 20:56:24 DEBUG org.flywaydb.core.internal.sqlscript.DefaultSqlScriptExecutor [main]: - Update Count: 0
+2019-07-28 20:56:24 DEBUG org.flywaydb.core.internal.sqlscript.DefaultSqlScriptExecutor [main]: - Executing SQL: CREATE TABLE IF NOT EXISTS groups_timetable_items
+  (
+     group_id INT,
+     timetable_item_id INT,
+     CONSTRAINT PK_groups_timetable_item PRIMARY KEY (group_id,timetable_item_id),
+     FOREIGN KEY (group_id) REFERENCES groups (id),
+     FOREIGN KEY (timetable_item_id) REFERENCES timetable_items (id)
+  )
+2019-07-28 20:56:24 DEBUG org.flywaydb.core.internal.sqlscript.DefaultSqlScriptExecutor [main]: - Update Count: 0
+2019-07-28 20:56:24 DEBUG org.flywaydb.core.internal.sqlscript.DefaultSqlScriptExecutor [main]: - Executing SQL: CREATE TABLE IF NOT EXISTS teachers_subjects
+  (
+     subject_id INT,
+     teacher_id INT,
+     CONSTRAINT PK_teachers_subjects PRIMARY KEY (subject_id,teacher_id),
+     FOREIGN KEY (subject_id) REFERENCES subjects (id),
+     FOREIGN KEY (teacher_id) REFERENCES teachers (person_id)
+  )
+2019-07-28 20:56:24 DEBUG org.flywaydb.core.internal.sqlscript.DefaultSqlScriptExecutor [main]: - Update Count: 0
+2019-07-28 20:56:24 DEBUG org.flywaydb.core.internal.command.DbMigrate [main]: - Successfully completed migration of schema "public" to version 1.1 - create tables
+2019-07-28 20:56:24 DEBUG org.flywaydb.core.internal.schemahistory.JdbcTableSchemaHistory [main]: - Schema History table "public"."flyway_schema_history" successfully updated to reflect changes
+2019-07-28 20:56:24 INFO  org.flywaydb.core.internal.command.DbMigrate [main]: - Successfully applied 1 migration to schema "public" (execution time 00:00.490s)
+2019-07-28 20:56:24 DEBUG org.flywaydb.core.Flyway [main]: - Memory usage: 9 of 59M
+2019-07-28 20:56:24 DEBUG org.flywaydb.core.Flyway [main]: - DDL Transactions Supported: true
+2019-07-28 20:56:24 DEBUG org.flywaydb.core.Flyway [main]: - Schema: public
+2019-07-28 20:56:24 DEBUG org.flywaydb.core.internal.scanner.filesystem.FileSystemScanner [main]: - Scanning for filesystem resources at 'src/main/resources/db/migrations'
+2019-07-28 20:56:24 DEBUG org.flywaydb.core.internal.scanner.filesystem.FileSystemScanner [main]: - Scanning for resources in path: src/main/resources/db/migrations (src/main/resources/db/migrations)
+2019-07-28 20:56:24 DEBUG org.flywaydb.core.internal.scanner.filesystem.FileSystemScanner [main]: - Found filesystem resource: src/main/resources/db/migrations/V1.1__create_tables.sql
+2019-07-28 20:56:24 DEBUG org.flywaydb.core.internal.scanner.filesystem.FileSystemScanner [main]: - Scanning for filesystem resources at 'src/test/resources/db/migrations'
+2019-07-28 20:56:24 WARN  org.flywaydb.core.internal.scanner.filesystem.FileSystemScanner [main]: - Skipping filesystem location:src/test/resources/db/migrations (not found)
+2019-07-28 20:56:24 DEBUG org.flywaydb.core.internal.callback.SqlScriptCallbackFactory [main]: - Scanning for SQL callbacks ...
+2019-07-28 20:56:24 DEBUG org.flywaydb.core.internal.util.FeatureDetector [main]: - Spring Jdbc available: false
+2019-07-28 20:56:24 DEBUG org.flywaydb.core.internal.command.DbValidate [main]: - Validating migrations ...
+2019-07-28 20:56:24 DEBUG org.flywaydb.core.internal.sqlscript.SqlScript [main]: - Parsing V1.1__create_tables.sql ...
+2019-07-28 20:56:24 DEBUG org.flywaydb.core.internal.sqlscript.SqlScript [main]: - Found statement at line 1: CREATE TABLE IF NOT EXISTS auditories 
+  (
+     id SERIAL PRIMARY KEY,
+     number VARCHAR(20) NOT NULL UNIQUE,
+     auditory_type_id INT,
+     capacity INT,
+     description VARCHAR(200)
+  )
+2019-07-28 20:56:24 DEBUG org.flywaydb.core.internal.sqlscript.SqlScript [main]: - Found statement at line 10: CREATE TABLE IF NOT EXISTS auditory_types 
+  (
+     id SERIAL PRIMARY KEY,
+     type VARCHAR(45) NOT NULL UNIQUE
+  )
+2019-07-28 20:56:24 DEBUG org.flywaydb.core.internal.sqlscript.SqlScript [main]: - Found statement at line 16: CREATE TABLE IF NOT EXISTS lecturies
+  (
+     id SERIAL PRIMARY KEY,
+     number VARCHAR(5) NOT NULL UNIQUE,
+     start_time TIME,
+     end_time TIME
+  )
+2019-07-28 20:56:24 DEBUG org.flywaydb.core.internal.sqlscript.SqlScript [main]: - Found statement at line 24: CREATE TABLE IF NOT EXISTS faculties
+  (
+     id SERIAL PRIMARY KEY,
+     title VARCHAR(20) NOT NULL UNIQUE
+  )
+2019-07-28 20:56:24 DEBUG org.flywaydb.core.internal.sqlscript.SqlScript [main]: - Found statement at line 30: CREATE TABLE IF NOT EXISTS departments
+  (
+     id SERIAL PRIMARY KEY,
+     title VARCHAR(20) NOT NULL UNIQUE,
+     description VARCHAR(200),
+     faculty_id INT,
+     FOREIGN KEY (faculty_id) REFERENCES faculties (id)
+  )
+2019-07-28 20:56:24 DEBUG org.flywaydb.core.internal.sqlscript.SqlScript [main]: - Found statement at line 39: CREATE TABLE IF NOT EXISTS groups
+  (
+     id SERIAL PRIMARY KEY,
+     title VARCHAR(20) NOT NULL UNIQUE,
+     department_id INT,
+     yearEntry DATE
+  )
+2019-07-28 20:56:24 DEBUG org.flywaydb.core.internal.sqlscript.SqlScript [main]: - Found statement at line 47: CREATE TABLE IF NOT EXISTS persons
+  (
+     id SERIAL PRIMARY KEY,
+     first_name VARCHAR(20) NOT NULL,
+     last_name VARCHAR(20),
+     middle_name VARCHAR(20),
+     birthday DATE,
+     idfees INT NOT NULL UNIQUE
+  )
+2019-07-28 20:56:24 DEBUG org.flywaydb.core.internal.sqlscript.SqlScript [main]: - Found statement at line 57: CREATE TABLE IF NOT EXISTS students
+  (
+     person_id INT PRIMARY KEY,
+     group_id INT,
+     FOREIGN KEY (person_id) REFERENCES persons (id) ON DELETE CASCADE
+  )
+2019-07-28 20:56:24 DEBUG org.flywaydb.core.internal.sqlscript.SqlScript [main]: - Found statement at line 64: CREATE TABLE IF NOT EXISTS teachers
+  (
+     person_id INT PRIMARY KEY,
+     department_id INT,
+     FOREIGN KEY (person_id) REFERENCES persons (id) ON DELETE CASCADE
+  )
+2019-07-28 20:56:24 DEBUG org.flywaydb.core.internal.sqlscript.SqlScript [main]: - Found statement at line 71: CREATE TABLE IF NOT EXISTS subjects
+  (
+     id SERIAL PRIMARY KEY,
+     title VARCHAR(45) NOT NULL UNIQUE
+  )
+2019-07-28 20:56:24 DEBUG org.flywaydb.core.internal.sqlscript.SqlScript [main]: - Found statement at line 77: CREATE TABLE IF NOT EXISTS timetable_items
+  (
+     id SERIAL PRIMARY KEY,
+     subject_id INT,
+     auditory_id INT,
+     lecture_id INT,
+     date DATE,
+     teacher_id INT
+  )
+2019-07-28 20:56:24 DEBUG org.flywaydb.core.internal.sqlscript.SqlScript [main]: - Found statement at line 87: CREATE TABLE IF NOT EXISTS groups_timetable_items
+  (
+     group_id INT,
+     timetable_item_id INT,
+     CONSTRAINT PK_groups_timetable_item PRIMARY KEY (group_id,timetable_item_id),
+     FOREIGN KEY (group_id) REFERENCES groups (id),
+     FOREIGN KEY (timetable_item_id) REFERENCES timetable_items (id)
+  )
+2019-07-28 20:56:24 DEBUG org.flywaydb.core.internal.sqlscript.SqlScript [main]: - Found statement at line 96: CREATE TABLE IF NOT EXISTS teachers_subjects
+  (
+     subject_id INT,
+     teacher_id INT,
+     CONSTRAINT PK_teachers_subjects PRIMARY KEY (subject_id,teacher_id),
+     FOREIGN KEY (subject_id) REFERENCES subjects (id),
+     FOREIGN KEY (teacher_id) REFERENCES teachers (person_id)
+  )
+2019-07-28 20:56:24 DEBUG org.flywaydb.core.internal.scanner.Scanner [main]: - Filtering out resource: src/main/resources/db/migrations/V1.1__create_tables.sql (filename: V1.1__create_tables.sql)
+2019-07-28 20:56:24 INFO  org.flywaydb.core.internal.command.DbValidate [main]: - Successfully validated 1 migration (execution time 00:00.032s)
+2019-07-28 20:56:24 DEBUG org.flywaydb.core.internal.command.DbSchemas [main]: - Schema "public" already exists. Skipping schema creation.
+2019-07-28 20:56:24 INFO  org.flywaydb.core.internal.command.DbMigrate [main]: - Current version of schema "public": 1.1
+2019-07-28 20:56:24 INFO  org.flywaydb.core.internal.command.DbMigrate [main]: - Schema "public" is up to date. No migration necessary.
+2019-07-28 20:56:24 DEBUG org.flywaydb.core.Flyway [main]: - Memory usage: 11 of 59M
+2019-07-28 20:56:24 INFO  GroupDaoImpl [main]: - created group: Group [id=1, title=group11, department=null, yearEntry=2016-10-01]
+2019-07-28 20:56:24 INFO  GroupDaoImpl [main]: - created group: Group [id=2, title=group12, department=null, yearEntry=2018-11-01]
+2019-07-28 20:56:24 INFO  GroupDaoImpl [main]: - created group: Group [id=3, title=group13, department=null, yearEntry=2017-02-01]
+2019-07-28 20:56:24 INFO  StudentDaoImpl [main]: - created student: Student [group=Group [id=1, title=group11, department=null, yearEntry=2016-10-01], id=1, firstName=firstName1, lastName=lastName1, middleName=middleName1, birthday=1999-06-25, idFees=1111111111]
+2019-07-28 20:56:24 INFO  StudentDaoImpl [main]: - created student: Student [group=Group [id=1, title=group11, department=null, yearEntry=2016-10-01], id=2, firstName=firstName2, lastName=lastName2, middleName=middleName2, birthday=1998-06-25, idFees=1222211111]
+2019-07-28 20:56:24 INFO  StudentDaoImpl [main]: - created student: Student [group=Group [id=2, title=group12, department=null, yearEntry=2018-11-01], id=3, firstName=firstName3, lastName=lastName3, middleName=middleName3, birthday=2001-07-25, idFees=1111133331]
+2019-07-28 20:56:24 INFO  StudentDaoImpl [main]: - created student: Student [group=Group [id=2, title=group12, department=null, yearEntry=2018-11-01], id=4, firstName=firstName4, lastName=lastName4, middleName=middleName4, birthday=1999-06-25, idFees=1411111141]
+2019-07-28 20:56:24 INFO  StudentDaoImpl [main]: - created student: Student [group=Group [id=2, title=group12, department=null, yearEntry=2018-11-01], id=5, firstName=firstName5, lastName=lastName5, middleName=middleName5, birthday=1998-01-20, idFees=1111111551]
+2019-07-28 20:56:24 INFO  StudentDaoImpl [main]: - created student: Student [group=Group [id=3, title=group13, department=null, yearEntry=2017-02-01], id=6, firstName=firstName6, lastName=lastName6, middleName=middleName6, birthday=1997-02-15, idFees=1111111661]
+2019-07-28 20:56:24 INFO  StudentDaoImpl [main]: - findById student: Student [group=Group [id=1, title=group11, department=null, yearEntry=2016-10-01], id=2, firstName=firstName2, lastName=lastName2, middleName=middleName2, birthday=1998-06-25, idFees=1222211111]
+2019-07-28 20:56:24 INFO  StudentDaoImpl [main]: - findById student: Student [group=Group [id=1, title=group11, department=null, yearEntry=2016-10-01], id=1, firstName=firstName1, lastName=lastName1, middleName=middleName1, birthday=1999-06-25, idFees=1111111111]
+2019-07-28 20:56:24 INFO  StudentDaoImpl [main]: - findById student: Student [group=Group [id=1, title=group11, department=null, yearEntry=2016-10-01], id=2, firstName=firstName2, lastName=lastName2, middleName=middleName2, birthday=1998-06-25, idFees=1222211111]
+2019-07-28 20:56:24 INFO  StudentDaoImpl [main]: - findById student: Student [group=Group [id=2, title=group12, department=null, yearEntry=2018-11-01], id=3, firstName=firstName3, lastName=lastName3, middleName=middleName3, birthday=2001-07-25, idFees=1111133331]
+2019-07-28 20:56:24 INFO  StudentDaoImpl [main]: - findById student: Student [group=Group [id=2, title=group12, department=null, yearEntry=2018-11-01], id=4, firstName=firstName4, lastName=lastName4, middleName=middleName4, birthday=1999-06-25, idFees=1411111141]
+2019-07-28 20:56:24 INFO  StudentDaoImpl [main]: - findById student: Student [group=Group [id=2, title=group12, department=null, yearEntry=2018-11-01], id=5, firstName=firstName5, lastName=lastName5, middleName=middleName5, birthday=1998-01-20, idFees=1111111551]
+2019-07-28 20:56:24 INFO  StudentDaoImpl [main]: - findById student: Student [group=Group [id=3, title=group13, department=null, yearEntry=2017-02-01], id=6, firstName=firstName6, lastName=lastName6, middleName=middleName6, birthday=1997-02-15, idFees=1111111661]
+2019-07-28 20:56:24 DEBUG org.flywaydb.core.Flyway [main]: - DDL Transactions Supported: true
+2019-07-28 20:56:24 DEBUG org.flywaydb.core.Flyway [main]: - Schema: public
+2019-07-28 20:56:24 DEBUG org.flywaydb.core.internal.scanner.filesystem.FileSystemScanner [main]: - Scanning for filesystem resources at 'src/main/resources/db/migrations'
+2019-07-28 20:56:24 DEBUG org.flywaydb.core.internal.scanner.filesystem.FileSystemScanner [main]: - Scanning for resources in path: src/main/resources/db/migrations (src/main/resources/db/migrations)
+2019-07-28 20:56:24 DEBUG org.flywaydb.core.internal.scanner.filesystem.FileSystemScanner [main]: - Found filesystem resource: src/main/resources/db/migrations/V1.1__create_tables.sql
+2019-07-28 20:56:24 DEBUG org.flywaydb.core.internal.scanner.filesystem.FileSystemScanner [main]: - Scanning for filesystem resources at 'src/test/resources/db/migrations'
+2019-07-28 20:56:24 WARN  org.flywaydb.core.internal.scanner.filesystem.FileSystemScanner [main]: - Skipping filesystem location:src/test/resources/db/migrations (not found)
+2019-07-28 20:56:24 DEBUG org.flywaydb.core.internal.callback.SqlScriptCallbackFactory [main]: - Scanning for SQL callbacks ...
+2019-07-28 20:56:24 DEBUG org.flywaydb.core.internal.util.FeatureDetector [main]: - Spring Jdbc available: false
+2019-07-28 20:56:24 DEBUG org.flywaydb.core.internal.command.DbClean [main]: - Cleaning schema "public" ...
+2019-07-28 20:56:25 INFO  org.flywaydb.core.internal.command.DbClean [main]: - Successfully cleaned schema "public" (execution time 00:00.086s)
+2019-07-28 20:56:25 DEBUG org.flywaydb.core.Flyway [main]: - Memory usage: 15 of 59M
+2019-07-28 20:56:25 DEBUG org.flywaydb.core.Flyway [main]: - DDL Transactions Supported: true
+2019-07-28 20:56:25 DEBUG org.flywaydb.core.Flyway [main]: - Schema: public
+2019-07-28 20:56:25 DEBUG org.flywaydb.core.internal.scanner.filesystem.FileSystemScanner [main]: - Scanning for filesystem resources at 'src/main/resources/db/migrations'
+2019-07-28 20:56:25 DEBUG org.flywaydb.core.internal.scanner.filesystem.FileSystemScanner [main]: - Scanning for resources in path: src/main/resources/db/migrations (src/main/resources/db/migrations)
+2019-07-28 20:56:25 DEBUG org.flywaydb.core.internal.scanner.filesystem.FileSystemScanner [main]: - Found filesystem resource: src/main/resources/db/migrations/V1.1__create_tables.sql
+2019-07-28 20:56:25 DEBUG org.flywaydb.core.internal.scanner.filesystem.FileSystemScanner [main]: - Scanning for filesystem resources at 'src/test/resources/db/migrations'
+2019-07-28 20:56:25 WARN  org.flywaydb.core.internal.scanner.filesystem.FileSystemScanner [main]: - Skipping filesystem location:src/test/resources/db/migrations (not found)
+2019-07-28 20:56:25 DEBUG org.flywaydb.core.internal.callback.SqlScriptCallbackFactory [main]: - Scanning for SQL callbacks ...
+2019-07-28 20:56:25 DEBUG org.flywaydb.core.internal.util.FeatureDetector [main]: - Spring Jdbc available: false
+2019-07-28 20:56:25 DEBUG org.flywaydb.core.internal.command.DbValidate [main]: - Validating migrations ...
+2019-07-28 20:56:25 DEBUG org.flywaydb.core.internal.sqlscript.SqlScript [main]: - Parsing V1.1__create_tables.sql ...
+2019-07-28 20:56:25 DEBUG org.flywaydb.core.internal.sqlscript.SqlScript [main]: - Found statement at line 1: CREATE TABLE IF NOT EXISTS auditories 
+  (
+     id SERIAL PRIMARY KEY,
+     number VARCHAR(20) NOT NULL UNIQUE,
+     auditory_type_id INT,
+     capacity INT,
+     description VARCHAR(200)
+  )
+2019-07-28 20:56:25 DEBUG org.flywaydb.core.internal.sqlscript.SqlScript [main]: - Found statement at line 10: CREATE TABLE IF NOT EXISTS auditory_types 
+  (
+     id SERIAL PRIMARY KEY,
+     type VARCHAR(45) NOT NULL UNIQUE
+  )
+2019-07-28 20:56:25 DEBUG org.flywaydb.core.internal.sqlscript.SqlScript [main]: - Found statement at line 16: CREATE TABLE IF NOT EXISTS lecturies
+  (
+     id SERIAL PRIMARY KEY,
+     number VARCHAR(5) NOT NULL UNIQUE,
+     start_time TIME,
+     end_time TIME
+  )
+2019-07-28 20:56:25 DEBUG org.flywaydb.core.internal.sqlscript.SqlScript [main]: - Found statement at line 24: CREATE TABLE IF NOT EXISTS faculties
+  (
+     id SERIAL PRIMARY KEY,
+     title VARCHAR(20) NOT NULL UNIQUE
+  )
+2019-07-28 20:56:25 DEBUG org.flywaydb.core.internal.sqlscript.SqlScript [main]: - Found statement at line 30: CREATE TABLE IF NOT EXISTS departments
+  (
+     id SERIAL PRIMARY KEY,
+     title VARCHAR(20) NOT NULL UNIQUE,
+     description VARCHAR(200),
+     faculty_id INT,
+     FOREIGN KEY (faculty_id) REFERENCES faculties (id)
+  )
+2019-07-28 20:56:25 DEBUG org.flywaydb.core.internal.sqlscript.SqlScript [main]: - Found statement at line 39: CREATE TABLE IF NOT EXISTS groups
+  (
+     id SERIAL PRIMARY KEY,
+     title VARCHAR(20) NOT NULL UNIQUE,
+     department_id INT,
+     yearEntry DATE
+  )
+2019-07-28 20:56:25 DEBUG org.flywaydb.core.internal.sqlscript.SqlScript [main]: - Found statement at line 47: CREATE TABLE IF NOT EXISTS persons
+  (
+     id SERIAL PRIMARY KEY,
+     first_name VARCHAR(20) NOT NULL,
+     last_name VARCHAR(20),
+     middle_name VARCHAR(20),
+     birthday DATE,
+     idfees INT NOT NULL UNIQUE
+  )
+2019-07-28 20:56:25 DEBUG org.flywaydb.core.internal.sqlscript.SqlScript [main]: - Found statement at line 57: CREATE TABLE IF NOT EXISTS students
+  (
+     person_id INT PRIMARY KEY,
+     group_id INT,
+     FOREIGN KEY (person_id) REFERENCES persons (id) ON DELETE CASCADE
+  )
+2019-07-28 20:56:25 DEBUG org.flywaydb.core.internal.sqlscript.SqlScript [main]: - Found statement at line 64: CREATE TABLE IF NOT EXISTS teachers
+  (
+     person_id INT PRIMARY KEY,
+     department_id INT,
+     FOREIGN KEY (person_id) REFERENCES persons (id) ON DELETE CASCADE
+  )
+2019-07-28 20:56:25 DEBUG org.flywaydb.core.internal.sqlscript.SqlScript [main]: - Found statement at line 71: CREATE TABLE IF NOT EXISTS subjects
+  (
+     id SERIAL PRIMARY KEY,
+     title VARCHAR(45) NOT NULL UNIQUE
+  )
+2019-07-28 20:56:25 DEBUG org.flywaydb.core.internal.sqlscript.SqlScript [main]: - Found statement at line 77: CREATE TABLE IF NOT EXISTS timetable_items
+  (
+     id SERIAL PRIMARY KEY,
+     subject_id INT,
+     auditory_id INT,
+     lecture_id INT,
+     date DATE,
+     teacher_id INT
+  )
+2019-07-28 20:56:25 DEBUG org.flywaydb.core.internal.sqlscript.SqlScript [main]: - Found statement at line 87: CREATE TABLE IF NOT EXISTS groups_timetable_items
+  (
+     group_id INT,
+     timetable_item_id INT,
+     CONSTRAINT PK_groups_timetable_item PRIMARY KEY (group_id,timetable_item_id),
+     FOREIGN KEY (group_id) REFERENCES groups (id),
+     FOREIGN KEY (timetable_item_id) REFERENCES timetable_items (id)
+  )
+2019-07-28 20:56:25 DEBUG org.flywaydb.core.internal.sqlscript.SqlScript [main]: - Found statement at line 96: CREATE TABLE IF NOT EXISTS teachers_subjects
+  (
+     subject_id INT,
+     teacher_id INT,
+     CONSTRAINT PK_teachers_subjects PRIMARY KEY (subject_id,teacher_id),
+     FOREIGN KEY (subject_id) REFERENCES subjects (id),
+     FOREIGN KEY (teacher_id) REFERENCES teachers (person_id)
+  )
+2019-07-28 20:56:25 DEBUG org.flywaydb.core.internal.scanner.Scanner [main]: - Filtering out resource: src/main/resources/db/migrations/V1.1__create_tables.sql (filename: V1.1__create_tables.sql)
+2019-07-28 20:56:25 INFO  org.flywaydb.core.internal.command.DbValidate [main]: - Successfully validated 1 migration (execution time 00:00.024s)
+2019-07-28 20:56:25 DEBUG org.flywaydb.core.internal.command.DbSchemas [main]: - Schema "public" already exists. Skipping schema creation.
+2019-07-28 20:56:25 INFO  org.flywaydb.core.internal.schemahistory.JdbcTableSchemaHistory [main]: - Creating Schema History table: "public"."flyway_schema_history"
+2019-07-28 20:56:25 DEBUG org.flywaydb.core.internal.sqlscript.SqlScript [main]: - Parsing createMetaDataTable.sql ...
+2019-07-28 20:56:25 DEBUG org.flywaydb.core.internal.sqlscript.SqlScript [main]: - Found statement at line 17: CREATE TABLE "public"."flyway_schema_history" (
+    "installed_rank" INT NOT NULL,
+    "version" VARCHAR(50),
+    "description" VARCHAR(200) NOT NULL,
+    "type" VARCHAR(20) NOT NULL,
+    "script" VARCHAR(1000) NOT NULL,
+    "checksum" INTEGER,
+    "installed_by" VARCHAR(100) NOT NULL,
+    "installed_on" TIMESTAMP NOT NULL DEFAULT now(),
+    "execution_time" INTEGER NOT NULL,
+    "success" BOOLEAN NOT NULL
+)
+2019-07-28 20:56:25 DEBUG org.flywaydb.core.internal.sqlscript.SqlScript [main]: - Found statement at line 29: ALTER TABLE "public"."flyway_schema_history" ADD CONSTRAINT "flyway_schema_history_pk" PRIMARY KEY ("installed_rank")
+2019-07-28 20:56:25 DEBUG org.flywaydb.core.internal.sqlscript.SqlScript [main]: - Found statement at line 31: CREATE INDEX "flyway_schema_history_s_idx" ON "public"."flyway_schema_history" ("success")
+2019-07-28 20:56:25 DEBUG org.flywaydb.core.internal.sqlscript.DefaultSqlScriptExecutor [main]: - Executing SQL: CREATE TABLE "public"."flyway_schema_history" (
+    "installed_rank" INT NOT NULL,
+    "version" VARCHAR(50),
+    "description" VARCHAR(200) NOT NULL,
+    "type" VARCHAR(20) NOT NULL,
+    "script" VARCHAR(1000) NOT NULL,
+    "checksum" INTEGER,
+    "installed_by" VARCHAR(100) NOT NULL,
+    "installed_on" TIMESTAMP NOT NULL DEFAULT now(),
+    "execution_time" INTEGER NOT NULL,
+    "success" BOOLEAN NOT NULL
+)
+2019-07-28 20:56:25 DEBUG org.flywaydb.core.internal.sqlscript.DefaultSqlScriptExecutor [main]: - Update Count: 0
+2019-07-28 20:56:25 DEBUG org.flywaydb.core.internal.sqlscript.DefaultSqlScriptExecutor [main]: - Executing SQL: ALTER TABLE "public"."flyway_schema_history" ADD CONSTRAINT "flyway_schema_history_pk" PRIMARY KEY ("installed_rank")
+2019-07-28 20:56:25 DEBUG org.flywaydb.core.internal.sqlscript.DefaultSqlScriptExecutor [main]: - Update Count: 0
+2019-07-28 20:56:25 DEBUG org.flywaydb.core.internal.sqlscript.DefaultSqlScriptExecutor [main]: - Executing SQL: CREATE INDEX "flyway_schema_history_s_idx" ON "public"."flyway_schema_history" ("success")
+2019-07-28 20:56:25 DEBUG org.flywaydb.core.internal.sqlscript.DefaultSqlScriptExecutor [main]: - Update Count: 0
+2019-07-28 20:56:25 DEBUG org.flywaydb.core.internal.schemahistory.JdbcTableSchemaHistory [main]: - Created Schema History table: "public"."flyway_schema_history"
+2019-07-28 20:56:25 INFO  org.flywaydb.core.internal.command.DbMigrate [main]: - Current version of schema "public": << Empty Schema >>
+2019-07-28 20:56:25 INFO  org.flywaydb.core.internal.command.DbMigrate [main]: - Migrating schema "public" to version 1.1 - create tables
+2019-07-28 20:56:25 DEBUG org.flywaydb.core.internal.sqlscript.DefaultSqlScriptExecutor [main]: - Executing SQL: CREATE TABLE IF NOT EXISTS auditories 
+  (
+     id SERIAL PRIMARY KEY,
+     number VARCHAR(20) NOT NULL UNIQUE,
+     auditory_type_id INT,
+     capacity INT,
+     description VARCHAR(200)
+  )
+2019-07-28 20:56:25 DEBUG org.flywaydb.core.internal.sqlscript.DefaultSqlScriptExecutor [main]: - Update Count: 0
+2019-07-28 20:56:25 DEBUG org.flywaydb.core.internal.sqlscript.DefaultSqlScriptExecutor [main]: - Executing SQL: CREATE TABLE IF NOT EXISTS auditory_types 
+  (
+     id SERIAL PRIMARY KEY,
+     type VARCHAR(45) NOT NULL UNIQUE
+  )
+2019-07-28 20:56:25 DEBUG org.flywaydb.core.internal.sqlscript.DefaultSqlScriptExecutor [main]: - Update Count: 0
+2019-07-28 20:56:25 DEBUG org.flywaydb.core.internal.sqlscript.DefaultSqlScriptExecutor [main]: - Executing SQL: CREATE TABLE IF NOT EXISTS lecturies
+  (
+     id SERIAL PRIMARY KEY,
+     number VARCHAR(5) NOT NULL UNIQUE,
+     start_time TIME,
+     end_time TIME
+  )
+2019-07-28 20:56:25 DEBUG org.flywaydb.core.internal.sqlscript.DefaultSqlScriptExecutor [main]: - Update Count: 0
+2019-07-28 20:56:25 DEBUG org.flywaydb.core.internal.sqlscript.DefaultSqlScriptExecutor [main]: - Executing SQL: CREATE TABLE IF NOT EXISTS faculties
+  (
+     id SERIAL PRIMARY KEY,
+     title VARCHAR(20) NOT NULL UNIQUE
+  )
+2019-07-28 20:56:25 DEBUG org.flywaydb.core.internal.sqlscript.DefaultSqlScriptExecutor [main]: - Update Count: 0
+2019-07-28 20:56:25 DEBUG org.flywaydb.core.internal.sqlscript.DefaultSqlScriptExecutor [main]: - Executing SQL: CREATE TABLE IF NOT EXISTS departments
+  (
+     id SERIAL PRIMARY KEY,
+     title VARCHAR(20) NOT NULL UNIQUE,
+     description VARCHAR(200),
+     faculty_id INT,
+     FOREIGN KEY (faculty_id) REFERENCES faculties (id)
+  )
+2019-07-28 20:56:25 DEBUG org.flywaydb.core.internal.sqlscript.DefaultSqlScriptExecutor [main]: - Update Count: 0
+2019-07-28 20:56:25 DEBUG org.flywaydb.core.internal.sqlscript.DefaultSqlScriptExecutor [main]: - Executing SQL: CREATE TABLE IF NOT EXISTS groups
+  (
+     id SERIAL PRIMARY KEY,
+     title VARCHAR(20) NOT NULL UNIQUE,
+     department_id INT,
+     yearEntry DATE
+  )
+2019-07-28 20:56:25 DEBUG org.flywaydb.core.internal.sqlscript.DefaultSqlScriptExecutor [main]: - Update Count: 0
+2019-07-28 20:56:25 DEBUG org.flywaydb.core.internal.sqlscript.DefaultSqlScriptExecutor [main]: - Executing SQL: CREATE TABLE IF NOT EXISTS persons
+  (
+     id SERIAL PRIMARY KEY,
+     first_name VARCHAR(20) NOT NULL,
+     last_name VARCHAR(20),
+     middle_name VARCHAR(20),
+     birthday DATE,
+     idfees INT NOT NULL UNIQUE
+  )
+2019-07-28 20:56:25 DEBUG org.flywaydb.core.internal.sqlscript.DefaultSqlScriptExecutor [main]: - Update Count: 0
+2019-07-28 20:56:25 DEBUG org.flywaydb.core.internal.sqlscript.DefaultSqlScriptExecutor [main]: - Executing SQL: CREATE TABLE IF NOT EXISTS students
+  (
+     person_id INT PRIMARY KEY,
+     group_id INT,
+     FOREIGN KEY (person_id) REFERENCES persons (id) ON DELETE CASCADE
+  )
+2019-07-28 20:56:25 DEBUG org.flywaydb.core.internal.sqlscript.DefaultSqlScriptExecutor [main]: - Update Count: 0
+2019-07-28 20:56:25 DEBUG org.flywaydb.core.internal.sqlscript.DefaultSqlScriptExecutor [main]: - Executing SQL: CREATE TABLE IF NOT EXISTS teachers
+  (
+     person_id INT PRIMARY KEY,
+     department_id INT,
+     FOREIGN KEY (person_id) REFERENCES persons (id) ON DELETE CASCADE
+  )
+2019-07-28 20:56:25 DEBUG org.flywaydb.core.internal.sqlscript.DefaultSqlScriptExecutor [main]: - Update Count: 0
+2019-07-28 20:56:25 DEBUG org.flywaydb.core.internal.sqlscript.DefaultSqlScriptExecutor [main]: - Executing SQL: CREATE TABLE IF NOT EXISTS subjects
+  (
+     id SERIAL PRIMARY KEY,
+     title VARCHAR(45) NOT NULL UNIQUE
+  )
+2019-07-28 20:56:25 DEBUG org.flywaydb.core.internal.sqlscript.DefaultSqlScriptExecutor [main]: - Update Count: 0
+2019-07-28 20:56:25 DEBUG org.flywaydb.core.internal.sqlscript.DefaultSqlScriptExecutor [main]: - Executing SQL: CREATE TABLE IF NOT EXISTS timetable_items
+  (
+     id SERIAL PRIMARY KEY,
+     subject_id INT,
+     auditory_id INT,
+     lecture_id INT,
+     date DATE,
+     teacher_id INT
+  )
+2019-07-28 20:56:25 DEBUG org.flywaydb.core.internal.sqlscript.DefaultSqlScriptExecutor [main]: - Update Count: 0
+2019-07-28 20:56:25 DEBUG org.flywaydb.core.internal.sqlscript.DefaultSqlScriptExecutor [main]: - Executing SQL: CREATE TABLE IF NOT EXISTS groups_timetable_items
+  (
+     group_id INT,
+     timetable_item_id INT,
+     CONSTRAINT PK_groups_timetable_item PRIMARY KEY (group_id,timetable_item_id),
+     FOREIGN KEY (group_id) REFERENCES groups (id),
+     FOREIGN KEY (timetable_item_id) REFERENCES timetable_items (id)
+  )
+2019-07-28 20:56:25 DEBUG org.flywaydb.core.internal.sqlscript.DefaultSqlScriptExecutor [main]: - Update Count: 0
+2019-07-28 20:56:25 DEBUG org.flywaydb.core.internal.sqlscript.DefaultSqlScriptExecutor [main]: - Executing SQL: CREATE TABLE IF NOT EXISTS teachers_subjects
+  (
+     subject_id INT,
+     teacher_id INT,
+     CONSTRAINT PK_teachers_subjects PRIMARY KEY (subject_id,teacher_id),
+     FOREIGN KEY (subject_id) REFERENCES subjects (id),
+     FOREIGN KEY (teacher_id) REFERENCES teachers (person_id)
+  )
+2019-07-28 20:56:25 DEBUG org.flywaydb.core.internal.sqlscript.DefaultSqlScriptExecutor [main]: - Update Count: 0
+2019-07-28 20:56:25 DEBUG org.flywaydb.core.internal.command.DbMigrate [main]: - Successfully completed migration of schema "public" to version 1.1 - create tables
+2019-07-28 20:56:25 DEBUG org.flywaydb.core.internal.schemahistory.JdbcTableSchemaHistory [main]: - Schema History table "public"."flyway_schema_history" successfully updated to reflect changes
+2019-07-28 20:56:25 INFO  org.flywaydb.core.internal.command.DbMigrate [main]: - Successfully applied 1 migration to schema "public" (execution time 00:00.332s)
+2019-07-28 20:56:25 DEBUG org.flywaydb.core.Flyway [main]: - Memory usage: 19 of 59M
+2019-07-28 20:56:25 INFO  GroupDaoImpl [main]: - created group: Group [id=1, title=group11, department=null, yearEntry=2016-10-01]
+2019-07-28 20:56:25 INFO  GroupDaoImpl [main]: - created group: Group [id=2, title=group12, department=null, yearEntry=2018-11-01]
+2019-07-28 20:56:25 INFO  GroupDaoImpl [main]: - created group: Group [id=3, title=group13, department=null, yearEntry=2017-02-01]
+2019-07-28 20:56:25 INFO  StudentDaoImpl [main]: - created student: Student [group=Group [id=1, title=group11, department=null, yearEntry=2016-10-01], id=1, firstName=firstName1, lastName=lastName1, middleName=middleName1, birthday=1999-06-25, idFees=1111111111]
+2019-07-28 20:56:25 INFO  StudentDaoImpl [main]: - created student: Student [group=Group [id=1, title=group11, department=null, yearEntry=2016-10-01], id=2, firstName=firstName2, lastName=lastName2, middleName=middleName2, birthday=1998-06-25, idFees=1222211111]
+2019-07-28 20:56:25 INFO  StudentDaoImpl [main]: - created student: Student [group=Group [id=2, title=group12, department=null, yearEntry=2018-11-01], id=3, firstName=firstName3, lastName=lastName3, middleName=middleName3, birthday=2001-07-25, idFees=1111133331]
+2019-07-28 20:56:25 INFO  StudentDaoImpl [main]: - created student: Student [group=Group [id=2, title=group12, department=null, yearEntry=2018-11-01], id=4, firstName=firstName4, lastName=lastName4, middleName=middleName4, birthday=1999-06-25, idFees=1411111141]
+2019-07-28 20:56:25 INFO  StudentDaoImpl [main]: - created student: Student [group=Group [id=2, title=group12, department=null, yearEntry=2018-11-01], id=5, firstName=firstName5, lastName=lastName5, middleName=middleName5, birthday=1998-01-20, idFees=1111111551]
+2019-07-28 20:56:25 INFO  StudentDaoImpl [main]: - created student: Student [group=Group [id=3, title=group13, department=null, yearEntry=2017-02-01], id=6, firstName=firstName6, lastName=lastName6, middleName=middleName6, birthday=1997-02-15, idFees=1111111661]
+2019-07-28 20:56:25 INFO  GroupDaoImpl [main]: - findById group: Group [id=2, title=group12, department=null, yearEntry=2018-11-01]
+2019-07-28 20:56:26 INFO  GroupDaoImpl [main]: - findById group: Group [id=1, title=group11, department=null, yearEntry=2016-10-01]
+2019-07-28 20:56:26 INFO  GroupDaoImpl [main]: - findById group: Group [id=2, title=group12, department=null, yearEntry=2018-11-01]
+2019-07-28 20:56:26 INFO  GroupDaoImpl [main]: - findById group: Group [id=3, title=group13, department=null, yearEntry=2017-02-01]
+2019-07-28 20:56:26 DEBUG org.flywaydb.core.Flyway [main]: - DDL Transactions Supported: true
+2019-07-28 20:56:26 DEBUG org.flywaydb.core.Flyway [main]: - Schema: public
+2019-07-28 20:56:26 DEBUG org.flywaydb.core.internal.scanner.filesystem.FileSystemScanner [main]: - Scanning for filesystem resources at 'src/main/resources/db/migrations'
+2019-07-28 20:56:26 DEBUG org.flywaydb.core.internal.scanner.filesystem.FileSystemScanner [main]: - Scanning for resources in path: src/main/resources/db/migrations (src/main/resources/db/migrations)
+2019-07-28 20:56:26 DEBUG org.flywaydb.core.internal.scanner.filesystem.FileSystemScanner [main]: - Found filesystem resource: src/main/resources/db/migrations/V1.1__create_tables.sql
+2019-07-28 20:56:26 DEBUG org.flywaydb.core.internal.scanner.filesystem.FileSystemScanner [main]: - Scanning for filesystem resources at 'src/test/resources/db/migrations'
+2019-07-28 20:56:26 WARN  org.flywaydb.core.internal.scanner.filesystem.FileSystemScanner [main]: - Skipping filesystem location:src/test/resources/db/migrations (not found)
+2019-07-28 20:56:26 DEBUG org.flywaydb.core.internal.callback.SqlScriptCallbackFactory [main]: - Scanning for SQL callbacks ...
+2019-07-28 20:56:26 DEBUG org.flywaydb.core.internal.util.FeatureDetector [main]: - Spring Jdbc available: false
+2019-07-28 20:56:26 DEBUG org.flywaydb.core.internal.command.DbClean [main]: - Cleaning schema "public" ...
+2019-07-28 20:56:26 INFO  org.flywaydb.core.internal.command.DbClean [main]: - Successfully cleaned schema "public" (execution time 00:00.084s)
+2019-07-28 20:56:26 DEBUG org.flywaydb.core.Flyway [main]: - Memory usage: 9 of 59M
