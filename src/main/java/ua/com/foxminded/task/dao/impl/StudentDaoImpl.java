@@ -46,7 +46,8 @@ public class StudentDaoImpl implements StudentDao {
             preparedStatement.setInt(5, student.getIdFees());
             preparedStatement.execute();
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.warn("Student (Person) {} was not inserted. Sql query = {}.  {}", student, preparedStatement, e);
+//           TODO add exception
         } finally {
             daoFactory.closePreparedStatement(preparedStatement);
             daoFactory.closeConnection(connection);
@@ -67,7 +68,7 @@ public class StudentDaoImpl implements StudentDao {
                 personId = resultSet.getInt("id");
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.warn("Don`t find the last record id in table persons. Sql query = {}. {}", preparedStatement, e);
         } finally {
             daoFactory.closeResultSet(resultSet);
             daoFactory.closePreparedStatement(preparedStatement);
@@ -93,7 +94,8 @@ public class StudentDaoImpl implements StudentDao {
             }
             preparedStatement.execute();
         } catch (SQLException e) {
-            e.printStackTrace();
+// TODO add exception
+            logger.warn("Student {} was not inserted. Sql query = {}. {}.", student, preparedStatement, e);
         } finally {
             daoFactory.closePreparedStatement(preparedStatement);
             daoFactory.closeConnection(connection);
@@ -137,9 +139,12 @@ public class StudentDaoImpl implements StudentDao {
                 if (Objects.nonNull(resultSet.getObject("group_id"))) {
                     groupId = resultSet.getInt("group_id");
                 }
+            } else {
+//                TODO add exception
+                logger.warn("Student with id {} not finded", id);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("Select Student with id {} was crashed. Sql query = {}, {}", id, preparedStatement, e);
         } finally {
             daoFactory.closeResultSet(resultSet);
             daoFactory.closePreparedStatement(preparedStatement);
@@ -169,8 +174,11 @@ public class StudentDaoImpl implements StudentDao {
             while (resultSet.next()) {
                 studentsId.add(resultSet.getInt("person_id"));
             }
+            if (studentsId.isEmpty()) {
+                logger.warn("Students by findAll not find. Sql request = {}", preparedStatement);
+            }
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("Select all Students query was crashed. Sql query = {}, {}", preparedStatement, e);
         } finally {
             daoFactory.closeResultSet(resultSet);
             daoFactory.closePreparedStatement(preparedStatement);
@@ -199,8 +207,11 @@ public class StudentDaoImpl implements StudentDao {
             while (resultSet.next()) {
                 studentsId.add(resultSet.getInt("person_id"));
             }
+            if (studentsId.isEmpty()) {
+                logger.warn("Students by group id {} do nobody find. Sql request = {}", id, preparedStatement);
+            }
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("Select Students query by group id {} was crashed. Sql query = {}, {}", id, preparedStatement, e);
         } finally {
             daoFactory.closeResultSet(resultSet);
             daoFactory.closePreparedStatement(preparedStatement);
@@ -229,8 +240,11 @@ public class StudentDaoImpl implements StudentDao {
             while (resultSet.next()) {
                 studentsId.add(resultSet.getInt("person_id"));
             }
+            if (studentsId.isEmpty()) {
+                logger.warn("Students by goupId don`t nobody find. Sql request = {}", preparedStatement);
+            }
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("Select Students query by group id {} was crashed. Sql query = {}, {}", id, preparedStatement, e);
         } finally {
             daoFactory.closeResultSet(resultSet);
             daoFactory.closePreparedStatement(preparedStatement);
