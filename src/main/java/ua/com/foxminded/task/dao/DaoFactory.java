@@ -3,6 +3,7 @@ package ua.com.foxminded.task.dao;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.lang.invoke.MethodHandles;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -12,9 +13,12 @@ import java.sql.Statement;
 import java.util.Properties;
 
 import org.flywaydb.core.Flyway;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class DaoFactory {
     private static final String APPLICATION_PROPERTIES_FILE = "application.properties";
+    private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getSimpleName());
     private static DaoFactory instance;
     private Properties properties;
     private Flyway flyway;
@@ -24,8 +28,9 @@ public class DaoFactory {
 
         try {
             Class.forName(properties.getProperty("db.driver"));
+            logger.debug("Driver database {} registered", properties.getProperty("db.driver"));
         } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+            logger.error("Driver database {} not found : {}", properties.getProperty("db.driver"), e);
         }
         flywayInit();
         createTables();
@@ -44,15 +49,18 @@ public class DaoFactory {
     }
 
     public Connection getConnection() throws SQLException {
-        return DriverManager.getConnection(properties.getProperty("db.url"), properties.getProperty("db.user"), properties.getProperty("db.password"));
+        Connection connection = DriverManager.getConnection(properties.getProperty("db.url"), properties.getProperty("db.user"), properties.getProperty("db.password"));
+        logger.debug("Get connection: {}", connection);
+        return connection;
     }
 
     public void closeConnection(Connection connection) {
         if (connection != null) {
             try {
                 connection.close();
+                logger.debug("Close connection: {}", connection);
             } catch (SQLException e) {
-                e.printStackTrace();
+                logger.error("Connection {} cannot close {}", connection, e);
             }
         }
     }
@@ -61,8 +69,9 @@ public class DaoFactory {
         if (resultSet != null) {
             try {
                 resultSet.close();
+                logger.debug("Close ResultSet: {}", resultSet);
             } catch (SQLException e) {
-                e.printStackTrace();
+                logger.error("ResultSet {} cannot close {}", resultSet, e);
             }
         }
     }
@@ -71,8 +80,9 @@ public class DaoFactory {
         if (preparedStatement != null) {
             try {
                 preparedStatement.close();
+                logger.debug("Close PreparedStatement: {}", preparedStatement);
             } catch (SQLException e) {
-                e.printStackTrace();
+                logger.error("PreparedStatement {} cannot close {}", preparedStatement, e);
             }
         }
     }
@@ -81,8 +91,9 @@ public class DaoFactory {
         if (statement != null) {
             try {
                 statement.close();
+                logger.debug("Close Statement: {}", statement);
             } catch (SQLException e) {
-                e.printStackTrace();
+                logger.error("Statement {} cannot close {}", statement, e);
             }
         }
     }
@@ -100,12 +111,11 @@ public class DaoFactory {
         Properties properties = new Properties();
         try {
             properties.load(new FileInputStream(propertiesFilePath));
+            logger.debug("Properties load: {}", properties);
         } catch (FileNotFoundException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            logger.error("File properties {} not found. {}", propertiesFilePath, e);
         } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            logger.error("Input file properties {} had problem. {}", propertiesFilePath, e);
         }
         return properties;
     }

@@ -1,5 +1,6 @@
 package ua.com.foxminded.task.dao.impl;
 
+import java.lang.invoke.MethodHandles;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -8,6 +9,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import ua.com.foxminded.task.dao.DaoFactory;
 import ua.com.foxminded.task.dao.StudentDao;
 import ua.com.foxminded.task.domain.Group;
@@ -15,6 +19,7 @@ import ua.com.foxminded.task.domain.Student;
 
 public class StudentDaoImpl implements StudentDao {
     private DaoFactory daoFactory = DaoFactory.getInstance();
+    private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getSimpleName());
 
     @Override
     public Student create(Student student) {
@@ -22,6 +27,7 @@ public class StudentDaoImpl implements StudentDao {
         int id = getTheLastRecordId();
         student.setId(id);
         insertStudentRecord(student);
+        logger.debug("Insert Student record {}", student);
         return student;
     }
 
@@ -101,6 +107,7 @@ public class StudentDaoImpl implements StudentDao {
         if (groupId != 0) {
             student.setGroup(new GroupDaoImpl().findByIdNoBidirectional(groupId));
         }
+        logger.debug("FindById Student {}", student);
         return student;
     }
 
