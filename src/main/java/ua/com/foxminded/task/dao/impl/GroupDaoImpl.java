@@ -51,7 +51,6 @@ public class GroupDaoImpl implements GroupDao {
             preparedStatement.execute();
         } catch (SQLException e) {
             logger.warn("Group {} was not inserted. Sql query = {}.  {}", group, preparedStatement, e);
-//          TODO add exception
         } finally {
             daoFactory.closePreparedStatement(preparedStatement);
             daoFactory.closeConnection(connection);
@@ -121,7 +120,7 @@ public class GroupDaoImpl implements GroupDao {
                 throw new NoEntityFound("Group by department id #" + id + " not finded");
             }
         } catch (SQLException e) {
-            logger.error("Select Group with id {} was crashed. Sql query = {}, {}", id, preparedStatement, e);
+            logger.warn("Select Group with id {} was crashed. Sql query = {}, {}", id, preparedStatement, e);
         } finally {
             daoFactory.closeResultSet(resultSet);
             daoFactory.closePreparedStatement(preparedStatement);
@@ -149,11 +148,10 @@ public class GroupDaoImpl implements GroupDao {
                 groupsId.add(resultSet.getInt("id"));
             }
             if (groupsId.isEmpty()) {
-                logger.warn("Groups by findAll not find. Sql query = {}", preparedStatement);
-                throw new NoEntityFound("Groups not finded");
+                logger.debug("Groups by findAll not find. Sql query = {}", preparedStatement);
             }
         } catch (SQLException e) {
-            logger.error("Select all Groups query was crashed. Sql query = {}, {}", preparedStatement, e);
+            logger.warn("Select all Groups query was crashed. Sql query = {}, {}", preparedStatement, e);
         } finally {
             daoFactory.closeResultSet(resultSet);
             daoFactory.closePreparedStatement(preparedStatement);
@@ -183,11 +181,10 @@ public class GroupDaoImpl implements GroupDao {
                 groupsId.add(resultSet.getInt("id"));
             }
             if (groupsId.isEmpty()) {
-                logger.warn("Groups by department id {} do nobody find. Sql query = {}", id, preparedStatement);
-                throw new NoEntityFound("Groups by department id #" + id + " not finded");
+                logger.debug("Groups by department id {} do nobody find. Sql query = {}", id, preparedStatement);
             }
         } catch (SQLException e) {
-            logger.error("Select Groups query by department id {} was crashed. Sql query = {}, {}", id, preparedStatement, e);
+            logger.warn("Select Groups query by department id {} was crashed. Sql query = {}, {}", id, preparedStatement, e);
         } finally {
             daoFactory.closeResultSet(resultSet);
             daoFactory.closePreparedStatement(preparedStatement);

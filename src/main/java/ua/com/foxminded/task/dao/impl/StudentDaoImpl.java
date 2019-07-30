@@ -72,7 +72,7 @@ public class StudentDaoImpl implements StudentDao {
                 logger.warn("Don`t find the last record id in table persons. Sql query = {}.", preparedStatement);
             }
         } catch (SQLException e) {
-            logger.warn("Crached request for finding  the last record id in table persons. Sql query = {}. {}", preparedStatement, e);
+            logger.error("Crached request for finding  the last record id in table persons. Sql query = {}. {}", preparedStatement, e);
         } finally {
             daoFactory.closeResultSet(resultSet);
             daoFactory.closePreparedStatement(preparedStatement);
@@ -147,7 +147,7 @@ public class StudentDaoImpl implements StudentDao {
                 throw new NoEntityFound("Student id #" + id + "not found");
             }
         } catch (SQLException e) {
-            logger.error("Select Student with id {} was crashed. Sql query = {}, {}", id, preparedStatement, e);
+            logger.warn("Select Student with id {} was crashed. Sql query = {}, {}", id, preparedStatement, e);
         } finally {
             daoFactory.closeResultSet(resultSet);
             daoFactory.closePreparedStatement(preparedStatement);
@@ -179,10 +179,9 @@ public class StudentDaoImpl implements StudentDao {
             }
             if (studentsId.isEmpty()) {
                 logger.warn("Students by findAll not finded. Sql query = {}", preparedStatement);
-                throw new NoEntityFound("Students not finded");
             }
         } catch (SQLException e) {
-            logger.error("Select all Students query was crashed. Sql query = {}, {}", preparedStatement, e);
+            logger.warn("Select all Students query was crashed. Sql query = {}, {}", preparedStatement, e);
         } finally {
             daoFactory.closeResultSet(resultSet);
             daoFactory.closePreparedStatement(preparedStatement);
@@ -213,10 +212,9 @@ public class StudentDaoImpl implements StudentDao {
             }
             if (studentsId.isEmpty()) {
                 logger.warn("Students by group id {} do nobody find. Sql query = {}", id, preparedStatement);
-                throw new NoEntityFound("Students by group id #" + id + " not finded");
             }
         } catch (SQLException e) {
-            logger.error("Select Students query by group id {} was crashed. Sql query = {}, {}", id, preparedStatement, e);
+            logger.warn("Select Students query by group id {} was crashed. Sql query = {}, {}", id, preparedStatement, e);
         } finally {
             daoFactory.closeResultSet(resultSet);
             daoFactory.closePreparedStatement(preparedStatement);
@@ -247,10 +245,9 @@ public class StudentDaoImpl implements StudentDao {
             }
             if (studentsId.isEmpty()) {
                 logger.warn("Students by goupId don`t nobody finded. Sql query = {}", preparedStatement);
-                throw new NoEntityFound("Students by group id #" + id + " not finded");
             }
         } catch (SQLException e) {
-            logger.error("Select Students query by group id {} was crashed. Sql query = {}, {}", id, preparedStatement, e);
+            logger.warn("Select Students query by group id {} was crashed. Sql query = {}, {}", id, preparedStatement, e);
         } finally {
             daoFactory.closeResultSet(resultSet);
             daoFactory.closePreparedStatement(preparedStatement);
