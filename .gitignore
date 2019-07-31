@@ -9,4 +9,5 @@ output\
 build/
 /target/
 /.apt_generated_tests/
-/log/
+**/log/*
+*.log
