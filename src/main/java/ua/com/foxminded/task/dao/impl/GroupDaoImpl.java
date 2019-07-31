@@ -72,9 +72,7 @@ public class GroupDaoImpl implements GroupDao {
             resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
                 groupId = resultSet.getInt("id");
-            } else {
-                logger.warn("getTheLastRecordId() Don`t find the last record id in table groups. Sql query = {}.", preparedStatement);
-            }
+            } 
         } catch (SQLException e) {
             logger.error("getTheLastRecordId() Crached request for finding the last record id in table groups. Sql query = {}. {}", preparedStatement, e);
             throw new NoExecuteQueryException("getTheLastRecordId() Group entity was not created", e);
