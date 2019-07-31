@@ -49,7 +49,7 @@ public class StudentDaoImpl implements StudentDao {
             preparedStatement.setInt(5, student.getIdFees());
             preparedStatement.execute();
         } catch (SQLException e) {
-            logger.error("insertPersonRecord() [student:{}] was not inserted. Sql query = {}.  {}", student, preparedStatement, e);
+            logger.error("insertPersonRecord() [student:{}] was not inserted. Sql query:{}. {}", student, preparedStatement, e);
             throw new NoExecuteQueryException("insertPersonRecord() Student entity was not created", e);
         } finally {
             daoFactory.closePreparedStatement(preparedStatement);
@@ -71,10 +71,10 @@ public class StudentDaoImpl implements StudentDao {
             if (resultSet.next()) {
                 personId = resultSet.getInt("id");
             } else {
-                logger.warn("getTheLastRecordId() Don`t find the last record id in table persons. Sql query = {}.", preparedStatement);
+                logger.warn("getTheLastRecordId() Don`t find the last record id in table persons. Sql query:{}.", preparedStatement);
             }
         } catch (SQLException e) {
-            logger.error("getTheLastRecordId() Crached request for finding  the last record id in table persons. Sql query = {}. {}", preparedStatement, e);
+            logger.error("getTheLastRecordId() Crached request for finding  the last record id in table persons. Sql query:{}. {}", preparedStatement, e);
             throw new NoExecuteQueryException("getTheLastRecordId() Crached request for finding  the last record id in table persons. Sql query:" + preparedStatement, e);
         } finally {
             daoFactory.closeResultSet(resultSet);
@@ -102,7 +102,7 @@ public class StudentDaoImpl implements StudentDao {
             }
             preparedStatement.execute();
         } catch (SQLException e) {
-            logger.error("insertStudentRecord() [student:{}] was not inserted. Sql query = {}. {}.", student, preparedStatement, e);
+            logger.error("insertStudentRecord() [student:{}] was not inserted. Sql query:{}. {}.", student, preparedStatement, e);
             throw new NoExecuteQueryException("insertStudentRecord() [student:" + student + "] was not inserted. Sql query:" + preparedStatement, e);
         } finally {
             daoFactory.closePreparedStatement(preparedStatement);
@@ -149,11 +149,11 @@ public class StudentDaoImpl implements StudentDao {
                     groupId = resultSet.getInt("group_id");
                 }
             } else {
-                logger.warn("findByIdWithoutGroup() Student with id {} not finded", id);
-                throw new NoEntityFoundException("Student id #" + id + "not found");
+                logger.warn("findByIdWithoutGroup() Student with id#{} not finded", id);
+                throw new NoEntityFoundException("Student id#" + id + "not found");
             }
         } catch (SQLException e) {
-            logger.error("findByIdWithoutGroup() Select Student with id#{} was crashed. Sql query = {}, {}", id, preparedStatement, e);
+            logger.error("findByIdWithoutGroup() Select Student with id#{} was crashed. Sql query:{}, {}", id, preparedStatement, e);
             throw new NoExecuteQueryException("findByIdWithoutGroup() Select Student with id#" + id + " was crashed. Sql query:" + preparedStatement, e);
         } finally {
             daoFactory.closeResultSet(resultSet);
@@ -186,7 +186,7 @@ public class StudentDaoImpl implements StudentDao {
                 studentsId.add(resultSet.getInt("person_id"));
             }
         } catch (SQLException e) {
-            logger.error("findAll() Select all Students query was crashed. Sql query = {}, {}", preparedStatement, e);
+            logger.error("findAll() Select all Students query was crashed. Sql query:{}, {}", preparedStatement, e);
             throw new NoExecuteQueryException("findAll() Select all Students query was crashed. Sql query:" + preparedStatement, e);
         } finally {
             daoFactory.closeResultSet(resultSet);
@@ -218,7 +218,7 @@ public class StudentDaoImpl implements StudentDao {
                 studentsId.add(resultSet.getInt("person_id"));
             }
         } catch (SQLException e) {
-            logger.error("findByGroupId() Select Students query by group id#{} was crashed. Sql query = {}, {}", id, preparedStatement, e);
+            logger.error("findByGroupId() Select Students query by group id#{} was crashed. Sql query:{}, {}", id, preparedStatement, e);
             throw new NoExecuteQueryException("findByGroupId() Select Students query by group id#" + id + " was crashed. Sql query:" + preparedStatement, e);
         } finally {
             daoFactory.closeResultSet(resultSet);
@@ -249,7 +249,7 @@ public class StudentDaoImpl implements StudentDao {
                 studentsId.add(resultSet.getInt("person_id"));
             }
         } catch (SQLException e) {
-            logger.error("findByGroupIdNoBidirectional() Select Students query by group id#{} was crashed. Sql query = {}, {}", id, preparedStatement, e);
+            logger.error("findByGroupIdNoBidirectional() Select Students query by group id#{} was crashed. Sql query:{}, {}", id, preparedStatement, e);
             throw new NoExecuteQueryException("findByGroupIdNoBidirectional() Select Students query by group id#" + id + " was crashed. Sql query:" + preparedStatement, e);
         } finally {
             daoFactory.closeResultSet(resultSet);

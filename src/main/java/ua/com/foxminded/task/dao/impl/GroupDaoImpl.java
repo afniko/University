@@ -51,7 +51,7 @@ public class GroupDaoImpl implements GroupDao {
             preparedStatement.setDate(3, group.getYearEntry());
             preparedStatement.execute();
         } catch (SQLException e) {
-            logger.error("insertGroupRecord() [group:{}] was not inserted. Sql query = {}.  {}", group, preparedStatement, e);
+            logger.error("insertGroupRecord() [group:{}] was not inserted. Sql query:{}. {}", group, preparedStatement, e);
             throw new NoExecuteQueryException("insertGroupRecord() [group:" + group + "] was not inserted. Sql query:" + preparedStatement, e);
         } finally {
             daoFactory.closePreparedStatement(preparedStatement);
@@ -72,9 +72,9 @@ public class GroupDaoImpl implements GroupDao {
             resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
                 groupId = resultSet.getInt("id");
-            } 
+            }
         } catch (SQLException e) {
-            logger.error("getTheLastRecordId() Crached request for finding the last record id in table groups. Sql query = {}. {}", preparedStatement, e);
+            logger.error("getTheLastRecordId() Crached request for finding the last record id in table groups. Sql query:{}. {}", preparedStatement, e);
             throw new NoExecuteQueryException("getTheLastRecordId() Group entity was not created", e);
         } finally {
             daoFactory.closeResultSet(resultSet);
@@ -119,10 +119,10 @@ public class GroupDaoImpl implements GroupDao {
                 group.setYearEntry(resultSet.getDate("yearEntry"));
             } else {
                 logger.warn("findByIdNoBidirectional() Group with id#{} not finded", id);
-                throw new NoEntityFoundException("Group by id #" + id + " not finded");
+                throw new NoEntityFoundException("Group by id#" + id + " not finded");
             }
         } catch (SQLException e) {
-            logger.error("findByIdNoBidirectional() Select Group with id#{} was crashed. Sql query = {}, {}", id, preparedStatement, e);
+            logger.error("findByIdNoBidirectional() Select Group with id#{} was crashed. Sql query:{}, {}", id, preparedStatement, e);
             throw new NoExecuteQueryException("findByIdNoBidirectional() Select Group with id#" + id + " was crashed. Sql query:" + preparedStatement, e);
         } finally {
             daoFactory.closeResultSet(resultSet);
@@ -152,7 +152,7 @@ public class GroupDaoImpl implements GroupDao {
                 groupsId.add(resultSet.getInt("id"));
             }
         } catch (SQLException e) {
-            logger.error("findAll() Select all groups query was crashed. Sql query = {}, {}", preparedStatement, e);
+            logger.error("findAll() Select all groups query was crashed. Sql query:{}, {}", preparedStatement, e);
             throw new NoExecuteQueryException("findAll() Select all groups query was crashed. Sql query:" + preparedStatement, e);
         } finally {
             daoFactory.closeResultSet(resultSet);
@@ -184,7 +184,7 @@ public class GroupDaoImpl implements GroupDao {
                 groupsId.add(resultSet.getInt("id"));
             }
         } catch (SQLException e) {
-            logger.error("findByDepartmentId() Select Groups query by department id {} was crashed. Sql query = {}, {}", id, preparedStatement, e);
+            logger.error("findByDepartmentId() Select Groups query by department id#{} was crashed. Sql query:{}, {}", id, preparedStatement, e);
             throw new NoExecuteQueryException("findByDepartmentId() Select Groups query by department id#" + id + " was crashed. Sql query:" + preparedStatement, e);
         } finally {
             daoFactory.closeResultSet(resultSet);
