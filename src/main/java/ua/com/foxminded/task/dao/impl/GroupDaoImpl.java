@@ -33,6 +33,7 @@ public class GroupDaoImpl implements GroupDao {
     }
 
     private void insertGroupRecord(Group group) {
+        logger.debug("insertGroupRecord() [group:{}]", group);
         String sql = "insert into groups (title, department_id, yearEntry) values (?, ?, ?)";
         Connection connection = null;
         PreparedStatement preparedStatement = null;
@@ -58,6 +59,7 @@ public class GroupDaoImpl implements GroupDao {
     }
 
     private int getTheLastRecordId() {
+        logger.debug("getTheLastRecordId()");
         String sql = "select id from groups where id = (select max(id) from groups)";
         Connection connection = null;
         PreparedStatement preparedStatement = null;
@@ -85,7 +87,7 @@ public class GroupDaoImpl implements GroupDao {
 
     @Override
     public Group findById(int id) {
-        logger.debug("findById() [group id:{}]", id);
+        logger.debug("findById() [id:{}]", id);
         Group group = findByIdNoBidirectional(id);
         List<Student> students = new StudentDaoImpl().findByGroupIdNoBidirectional(group.getId());
         students.forEach(s -> s.setGroup(group));
@@ -94,6 +96,7 @@ public class GroupDaoImpl implements GroupDao {
     }
 
     Group findByIdNoBidirectional(int id) {
+        logger.debug("findByIdNoBidirectional() [id:{}]", id);
         String sql = "select * from groups where id=?";
         Integer departmentId = null;
 
@@ -131,6 +134,7 @@ public class GroupDaoImpl implements GroupDao {
 
     @Override
     public List<Group> findAll() {
+        logger.debug("findAll()");
         String sql = "select id from groups";
         List<Integer> groupsId = new ArrayList<>();
         List<Group> groups = null;
@@ -160,6 +164,7 @@ public class GroupDaoImpl implements GroupDao {
 
     @Override
     public List<Group> findByDepartmentId(int id) {
+        logger.debug("findByDepartmentId() [id:{}]", id);
         String sql = "select id from groups where department_id=?";
         List<Integer> groupsId = new ArrayList<>();
         List<Group> groups = new ArrayList<Group>();
@@ -191,6 +196,7 @@ public class GroupDaoImpl implements GroupDao {
     }
 
     private List<Group> getGroupsById(List<Integer> groupsId) {
+        logger.debug("getGroupsById() [groupsId:{}]", groupsId);
         List<Group> groups = new ArrayList<>();
         groupsId.forEach(id -> groups.add(findById(id)));
         return groups;

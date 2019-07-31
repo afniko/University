@@ -34,6 +34,7 @@ public class StudentDaoImpl implements StudentDao {
     }
 
     private void insertPersonRecord(Student student) {
+        logger.debug("insertPersonRecord() [student:{}]", student);
         String sql = "insert into persons (first_name, last_name, middle_name, birthday, idfees) values (?, ?, ?, ?, ?)";
         Connection connection = null;
         PreparedStatement preparedStatement = null;
@@ -57,6 +58,7 @@ public class StudentDaoImpl implements StudentDao {
     }
 
     private int getTheLastRecordId() {
+        logger.debug("getTheLastRecordId()");
         String sql = "select id from persons where id = (select max(id) from persons)";
         Connection connection = null;
         PreparedStatement preparedStatement = null;
@@ -82,6 +84,7 @@ public class StudentDaoImpl implements StudentDao {
     }
 
     private void insertStudentRecord(Student student) {
+        logger.debug("insertStudentRecord() [student:{}]", student);
         String sql = "insert into students (person_id, group_id) values (?, ?)";
         Connection connection = null;
         PreparedStatement preparedStatement = null;
@@ -117,6 +120,7 @@ public class StudentDaoImpl implements StudentDao {
     }
 
     private Student findByIdWithoutGroup(int id) {
+        logger.debug("findByIdWithoutGroup() [id:{}]", id);
         String sql = "select * from persons p inner join students s on p.id = s.person_id where p.id=?";
 
         Connection connection = null;
@@ -161,6 +165,7 @@ public class StudentDaoImpl implements StudentDao {
 
     @Override
     public List<Student> findAll() {
+        logger.debug("findAll()");
         String sql = "select person_id from students";
         List<Integer> studentsId = new ArrayList<>();
         List<Student> students = null;
@@ -190,6 +195,7 @@ public class StudentDaoImpl implements StudentDao {
 
     @Override
     public List<Student> findByGroupId(int id) {
+        logger.debug("findByGroupId() [id:{}]", id);
         String sql = "select person_id from students where group_id=?";
         List<Integer> studentsId = new ArrayList<>();
         List<Student> students;
@@ -219,6 +225,7 @@ public class StudentDaoImpl implements StudentDao {
     }
 
     List<Student> findByGroupIdNoBidirectional(int id) {
+        logger.debug("findByGroupIdNoBidirectional() [id:{}]", id);
         String sql = "select person_id from students where group_id=?";
         List<Integer> studentsId = new ArrayList<>();
         List<Student> students = new ArrayList<Student>();
@@ -250,6 +257,7 @@ public class StudentDaoImpl implements StudentDao {
     }
 
     private List<Student> getStudentsById(List<Integer> studentsId) {
+        logger.debug("getStudentsById() [studentsId:{}]", studentsId);
         List<Student> students = new ArrayList<Student>();
         studentsId.forEach(id -> students.add(findById(id)));
         return students;
