@@ -18,10 +18,10 @@ import ua.com.foxminded.task.domain.repository.GroupModelRepository;
 import ua.com.foxminded.task.domain.repository.StudentModelRepository;
 
 @RunWith(JUnitPlatform.class)
-public class StudentDaoTest {
+public class ITGroupDaoTest {
 
-    private static StudentDao studentDao;
     private static GroupDao groupDao;
+    private static StudentDao studentDao;
     private static final Student STUDENT1 = StudentModelRepository.getModel1();
     private static final Student STUDENT2 = StudentModelRepository.getModel2();
     private static final Student STUDENT3 = StudentModelRepository.getModel3();
@@ -35,11 +35,11 @@ public class StudentDaoTest {
     @BeforeAll
     public static void createRecords() {
         DaoFactory.getInstance().createTables();
-        studentDao = new StudentDaoImpl();
         groupDao = new GroupDaoImpl();
-        groupDao.create(GROUP11);
-        groupDao.create(GROUP12);
-        groupDao.create(GROUP13);
+        studentDao = new StudentDaoImpl();
+        groupDao.create(GROUP11).getStudents();
+        groupDao.create(GROUP12).getStudents();
+        groupDao.create(GROUP13).getStudents();
         studentDao.create(STUDENT1);
         studentDao.create(STUDENT2);
         studentDao.create(STUDENT3);
@@ -49,14 +49,14 @@ public class StudentDaoTest {
     }
 
     @Test
-    public void WhenPutAtTableDbStudentObjects_thenGetThisObjectsFindById() {
-        int id = STUDENT2.getId();
-        assertTrue(studentDao.findById(id).equals(STUDENT2));
+    public void WhenPutAtTableDbGroupObjects_thenGetThisObjectsFindById() {
+        int id = GROUP12.getId();
+        assertTrue(groupDao.findById(id).equals(GROUP12));
     }
 
     @Test
-    public void WhenPutAtTableDbStudentObjects_thenGetThisObjects() {
-        assertTrue(studentDao.findAll().containsAll(Arrays.asList(STUDENT1, STUDENT2, STUDENT3, STUDENT4, STUDENT5, STUDENT6)));
+    public void WhenPutAtTableDbGroupObjects_thenGetThisObjects() {
+        assertTrue(groupDao.findAll().containsAll(Arrays.asList(GROUP11, GROUP12, GROUP13)));
     }
 
     @AfterAll
