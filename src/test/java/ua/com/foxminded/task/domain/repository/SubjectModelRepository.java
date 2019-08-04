@@ -8,6 +8,8 @@ import ua.com.foxminded.task.domain.Subject;
 
 public class SubjectModelRepository {
 
+    private SubjectModelRepository() {
+    }
     public static List<Subject> getModels() {
         List<Subject> subjects = Arrays.asList(getModel2(), getModel3(), getModel4());
         return new ArrayList<>(subjects);

@@ -4,6 +4,9 @@ import ua.com.foxminded.task.domain.AuditoryType;
 
 public class AuditoryTypeModelRepository {
 
+    private AuditoryTypeModelRepository() {
+    }
+
     public static AuditoryType getModel1() {
         AuditoryType auditoryType = new AuditoryType();
         auditoryType.setType("Lecture");

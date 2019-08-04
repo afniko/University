@@ -4,6 +4,9 @@ import ua.com.foxminded.task.domain.Timetable;
 
 public class TimetableModelRepository {
 
+    private TimetableModelRepository() {
+    }
+
     private static Timetable timetable;
 
     public static Timetable getModel() {

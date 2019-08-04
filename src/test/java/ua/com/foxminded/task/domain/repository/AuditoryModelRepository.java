@@ -8,6 +8,9 @@ import ua.com.foxminded.task.domain.Auditory;
 
 public class AuditoryModelRepository {
 
+    private AuditoryModelRepository() {
+    }
+
     public static List<Auditory> getModels() {
         List<Auditory> auditories = Arrays.asList(getModel1(), getModel2(), getModel3(), getModel4(), getModel5(), getModel6());
         return new ArrayList<>(auditories);

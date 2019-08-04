@@ -10,6 +10,9 @@ import ua.com.foxminded.task.domain.Student;
 
 public class StudentModelRepository {
 
+    private StudentModelRepository() {
+    }
+
     public static List<Student> getModels() {
         List<Student> students = Arrays.asList(getModel1(), getModel2(), getModel3(), getModel4(), getModel5(), getModel6());
         return new ArrayList<>(students);

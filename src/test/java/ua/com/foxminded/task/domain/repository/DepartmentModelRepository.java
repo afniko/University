@@ -8,6 +8,9 @@ import ua.com.foxminded.task.domain.Department;
 
 public class DepartmentModelRepository {
 
+    private DepartmentModelRepository() {
+    }
+
     public static Department getEmptyModel() {
         Department department = new Department();
         department.setTitle("test");

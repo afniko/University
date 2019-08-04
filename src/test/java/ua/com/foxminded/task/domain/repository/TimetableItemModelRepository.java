@@ -5,10 +5,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import net.bytebuddy.asm.Advice.Return;
 import ua.com.foxminded.task.domain.TimetableItem;
 
 public class TimetableItemModelRepository {
+    
+    private TimetableItemModelRepository() {
+    }
 
     public static List<TimetableItem> getModels() {
         List<TimetableItem> timetableItems = Arrays.asList(
