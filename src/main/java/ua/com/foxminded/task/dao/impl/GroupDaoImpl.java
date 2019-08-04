@@ -21,11 +21,11 @@ import ua.com.foxminded.task.domain.Student;
 
 public class GroupDaoImpl implements GroupDao {
     private DaoFactory daoFactory = DaoFactory.getInstance();
-    private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getSimpleName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getSimpleName());
 
     @Override
     public Group create(Group group) {
-        logger.debug("create() [group:{}]", group);
+        LOGGER.debug("create() [group:{}]", group);
         insertGroupRecord(group);
         int id = getTheLastRecordId();
         group.setId(id);
@@ -33,7 +33,7 @@ public class GroupDaoImpl implements GroupDao {
     }
 
     private void insertGroupRecord(Group group) {
-        logger.debug("insertGroupRecord() [group:{}]", group);
+        LOGGER.debug("insertGroupRecord() [group:{}]", group);
         String sql = "insert into groups (title, department_id, yearEntry) values (?, ?, ?)";
         Connection connection = null;
         PreparedStatement preparedStatement = null;
@@ -51,7 +51,7 @@ public class GroupDaoImpl implements GroupDao {
             preparedStatement.setDate(3, group.getYearEntry());
             preparedStatement.execute();
         } catch (SQLException e) {
-            logger.error("insertGroupRecord() [group:{}] was not inserted. Sql query:{}. {}", group, preparedStatement, e);
+            LOGGER.error("insertGroupRecord() [group:{}] was not inserted. Sql query:{}. {}", group, preparedStatement, e);
             throw new NoExecuteQueryException("insertGroupRecord() [group:" + group + "] was not inserted. Sql query:" + preparedStatement, e);
         } finally {
             daoFactory.closePreparedStatement(preparedStatement);
@@ -60,7 +60,7 @@ public class GroupDaoImpl implements GroupDao {
     }
 
     private int getTheLastRecordId() {
-        logger.debug("getTheLastRecordId()");
+        LOGGER.debug("getTheLastRecordId()");
         String sql = "select id from groups where id = (select max(id) from groups)";
         Connection connection = null;
         PreparedStatement preparedStatement = null;
@@ -74,7 +74,7 @@ public class GroupDaoImpl implements GroupDao {
                 groupId = resultSet.getInt("id");
             }
         } catch (SQLException e) {
-            logger.error("getTheLastRecordId() Crached request for finding the last record id in table groups. Sql query:{}. {}", preparedStatement, e);
+            LOGGER.error("getTheLastRecordId() Crached request for finding the last record id in table groups. Sql query:{}. {}", preparedStatement, e);
             throw new NoExecuteQueryException("getTheLastRecordId() Group entity was not created", e);
         } finally {
             daoFactory.closeResultSet(resultSet);
@@ -86,7 +86,7 @@ public class GroupDaoImpl implements GroupDao {
 
     @Override
     public Group findById(int id) {
-        logger.debug("findById() [id:{}]", id);
+        LOGGER.debug("findById() [id:{}]", id);
         Group group = findByIdNoBidirectional(id);
         List<Student> students = new StudentDaoImpl().findByGroupIdNoBidirectional(group.getId());
         students.forEach(s -> s.setGroup(group));
@@ -95,7 +95,7 @@ public class GroupDaoImpl implements GroupDao {
     }
 
     Group findByIdNoBidirectional(int id) {
-        logger.debug("findByIdNoBidirectional() [id:{}]", id);
+        LOGGER.debug("findByIdNoBidirectional() [id:{}]", id);
         String sql = "select * from groups where id=?";
         Integer departmentId = null;
 
@@ -118,11 +118,11 @@ public class GroupDaoImpl implements GroupDao {
                 }
                 group.setYearEntry(resultSet.getDate("yearEntry"));
             } else {
-                logger.warn("findByIdNoBidirectional() Group with id#{} not finded", id);
+                LOGGER.warn("findByIdNoBidirectional() Group with id#{} not finded", id);
                 throw new NoEntityFoundException("Group by id#" + id + " not finded");
             }
         } catch (SQLException e) {
-            logger.error("findByIdNoBidirectional() Select Group with id#{} was crashed. Sql query:{}, {}", id, preparedStatement, e);
+            LOGGER.error("findByIdNoBidirectional() Select Group with id#{} was crashed. Sql query:{}, {}", id, preparedStatement, e);
             throw new NoExecuteQueryException("findByIdNoBidirectional() Select Group with id#" + id + " was crashed. Sql query:" + preparedStatement, e);
         } finally {
             daoFactory.closeResultSet(resultSet);
@@ -134,7 +134,7 @@ public class GroupDaoImpl implements GroupDao {
 
     @Override
     public List<Group> findAll() {
-        logger.debug("findAll()");
+        LOGGER.debug("findAll()");
         String sql = "select id from groups";
         List<Integer> groupsId = new ArrayList<>();
         List<Group> groups = null;
@@ -152,7 +152,7 @@ public class GroupDaoImpl implements GroupDao {
                 groupsId.add(resultSet.getInt("id"));
             }
         } catch (SQLException e) {
-            logger.error("findAll() Select all groups query was crashed. Sql query:{}, {}", preparedStatement, e);
+            LOGGER.error("findAll() Select all groups query was crashed. Sql query:{}, {}", preparedStatement, e);
             throw new NoExecuteQueryException("findAll() Select all groups query was crashed. Sql query:" + preparedStatement, e);
         } finally {
             daoFactory.closeResultSet(resultSet);
@@ -165,7 +165,7 @@ public class GroupDaoImpl implements GroupDao {
 
     @Override
     public List<Group> findByDepartmentId(int id) {
-        logger.debug("findByDepartmentId() [id:{}]", id);
+        LOGGER.debug("findByDepartmentId() [id:{}]", id);
         String sql = "select id from groups where department_id=?";
         List<Integer> groupsId = new ArrayList<>();
         List<Group> groups = new ArrayList<Group>();
@@ -184,7 +184,7 @@ public class GroupDaoImpl implements GroupDao {
                 groupsId.add(resultSet.getInt("id"));
             }
         } catch (SQLException e) {
-            logger.error("findByDepartmentId() Select Groups query by department id#{} was crashed. Sql query:{}, {}", id, preparedStatement, e);
+            LOGGER.error("findByDepartmentId() Select Groups query by department id#{} was crashed. Sql query:{}, {}", id, preparedStatement, e);
             throw new NoExecuteQueryException("findByDepartmentId() Select Groups query by department id#" + id + " was crashed. Sql query:" + preparedStatement, e);
         } finally {
             daoFactory.closeResultSet(resultSet);
@@ -198,7 +198,7 @@ public class GroupDaoImpl implements GroupDao {
     }
 
     private List<Group> getGroupsById(List<Integer> groupsId) {
-        logger.debug("getGroupsById() [groupsId:{}]", groupsId);
+        LOGGER.debug("getGroupsById() [groupsId:{}]", groupsId);
         List<Group> groups = new ArrayList<>();
         groupsId.forEach(id -> groups.add(findById(id)));
         return groups;

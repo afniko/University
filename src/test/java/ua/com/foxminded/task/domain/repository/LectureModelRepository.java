@@ -6,6 +6,9 @@ import ua.com.foxminded.task.domain.Lecture;
 
 public class LectureModelRepository {
 
+    private LectureModelRepository() {
+    }
+
     public static Lecture getModel1() {
         Lecture lecture = new Lecture();
         lecture.setNumber("1");

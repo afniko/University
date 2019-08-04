@@ -18,19 +18,19 @@ import org.slf4j.LoggerFactory;
 
 public class DaoFactory {
     private static final String APPLICATION_PROPERTIES_FILE = "application.properties";
-    private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getSimpleName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getSimpleName());
     private static DaoFactory instance;
     private Properties properties;
     private Flyway flyway;
 
     private DaoFactory() {
         properties = getProperties(APPLICATION_PROPERTIES_FILE);
-
+        
         try {
             Class.forName(properties.getProperty("db.driver"));
-            logger.debug("Driver database {} registered", properties.getProperty("db.driver"));
+            LOGGER.debug("Driver database {} registered", properties.getProperty("db.driver"));
         } catch (ClassNotFoundException e) {
-            logger.error("Driver database {} not found : {}", properties.getProperty("db.driver"), e);
+            LOGGER.error("Driver database {} not found : {}", properties.getProperty("db.driver"), e);
         }
         flywayInit();
         createTables();
@@ -50,7 +50,7 @@ public class DaoFactory {
 
     public Connection getConnection() throws SQLException {
         Connection connection = DriverManager.getConnection(properties.getProperty("db.url"), properties.getProperty("db.user"), properties.getProperty("db.password"));
-        logger.debug("Get connection: {}", connection);
+        LOGGER.debug("Get connection: {}", connection);
         return connection;
     }
 
@@ -58,9 +58,9 @@ public class DaoFactory {
         if (connection != null) {
             try {
                 connection.close();
-                logger.debug("Close connection: {}", connection);
+                LOGGER.debug("Close connection: {}", connection);
             } catch (SQLException e) {
-                logger.error("Connection {} cannot close {}", connection, e);
+                LOGGER.error("Connection {} cannot close {}", connection, e);
             }
         }
     }
@@ -69,9 +69,9 @@ public class DaoFactory {
         if (resultSet != null) {
             try {
                 resultSet.close();
-                logger.debug("Close ResultSet: {}", resultSet);
+                LOGGER.debug("Close ResultSet: {}", resultSet);
             } catch (SQLException e) {
-                logger.error("ResultSet {} cannot close {}", resultSet, e);
+                LOGGER.error("ResultSet {} cannot close {}", resultSet, e);
             }
         }
     }
@@ -80,9 +80,9 @@ public class DaoFactory {
         if (preparedStatement != null) {
             try {
                 preparedStatement.close();
-                logger.debug("Close PreparedStatement: {}", preparedStatement);
+                LOGGER.debug("Close PreparedStatement: {}", preparedStatement);
             } catch (SQLException e) {
-                logger.error("PreparedStatement {} cannot close {}", preparedStatement, e);
+                LOGGER.error("PreparedStatement {} cannot close {}", preparedStatement, e);
             }
         }
     }
@@ -91,9 +91,9 @@ public class DaoFactory {
         if (statement != null) {
             try {
                 statement.close();
-                logger.debug("Close Statement: {}", statement);
+                LOGGER.debug("Close Statement: {}", statement);
             } catch (SQLException e) {
-                logger.error("Statement {} cannot close {}", statement, e);
+                LOGGER.error("Statement {} cannot close {}", statement, e);
             }
         }
     }
@@ -111,11 +111,11 @@ public class DaoFactory {
         Properties properties = new Properties();
         try {
             properties.load(new FileInputStream(propertiesFilePath));
-            logger.debug("Properties load: {}", properties);
+            LOGGER.debug("Properties load: {}", properties);
         } catch (FileNotFoundException e) {
-            logger.error("File properties {} not found. {}", propertiesFilePath, e);
+            LOGGER.error("File properties {} not found. {}", propertiesFilePath, e);
         } catch (IOException e) {
-            logger.error("Input file properties {} had problem. {}", propertiesFilePath, e);
+            LOGGER.error("Input file properties {} had problem. {}", propertiesFilePath, e);
         }
         return properties;
     }

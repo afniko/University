@@ -4,6 +4,9 @@ import ua.com.foxminded.task.domain.University;
 
 public class UniversityModelRepository {
 
+    private UniversityModelRepository() {
+    }
+
     public static University getModel() {
         University university = new University();
         university.setTitle("university");

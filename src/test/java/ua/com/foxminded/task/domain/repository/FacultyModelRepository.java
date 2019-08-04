@@ -8,6 +8,9 @@ import ua.com.foxminded.task.domain.Faculty;
 
 public class FacultyModelRepository {
 
+    private FacultyModelRepository() {
+    }
+
     public static List<Faculty> getModels() {
         List<Faculty> faculties = Arrays.asList(getModel1(), getModel2(), getModel3(), getModel4(), getModel5(), getModel6());
         return new ArrayList<>(faculties);

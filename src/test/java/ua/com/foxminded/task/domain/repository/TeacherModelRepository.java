@@ -8,6 +8,9 @@ import ua.com.foxminded.task.domain.Teacher;
 
 public class TeacherModelRepository {
 
+    private TeacherModelRepository() {
+    }
+
     public static Teacher getEmptyModel() {
         Teacher teacher = new Teacher();
         teacher.setFirstName("firstName6");
