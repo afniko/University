@@ -25,7 +25,7 @@ public class DaoFactory {
 
     private DaoFactory() {
         properties = getProperties(APPLICATION_PROPERTIES_FILE);
-
+        
         try {
             Class.forName(properties.getProperty("db.driver"));
             LOGGER.debug("Driver database {} registered", properties.getProperty("db.driver"));

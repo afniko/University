@@ -13,9 +13,10 @@
 
 
     <module name="TreeWalker">
-        <!-- Operator must be at end of wrapped line -->
+        <!-- Operator must be at begin of wrapped line -->
         <module name="OperatorWrap">
-            <property name="option" value="eol" />
+            <property name="tokens" value="DIV,PLUS,MINUS,STAR" />
+            <property name="option" value="nl" />
         </module>
 
         <!-- Interfaces must be types (not just constants) -->
