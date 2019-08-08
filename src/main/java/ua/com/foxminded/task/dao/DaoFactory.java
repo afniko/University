@@ -25,7 +25,7 @@ public class DaoFactory {
 
     private DaoFactory() {
         properties = getProperties(APPLICATION_PROPERTIES_FILE);
-        
+
         try {
             Class.forName(properties.getProperty("db.driver"));
             LOGGER.debug("Driver database {} registered", properties.getProperty("db.driver"));
@@ -37,10 +37,12 @@ public class DaoFactory {
     }
 
     private void flywayInit() {
+        LOGGER.info("flywayInit() [flyway:{}]", flyway);
         flyway = Flyway.configure().configuration(properties).load();
     }
 
     public void createTables() {
+        LOGGER.info("createTables() [flyway:{}]", flyway);
         flyway.migrate();
     }
 

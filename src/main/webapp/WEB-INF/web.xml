@@ -3,26 +3,24 @@
     xmlns="http://java.sun.com/xml/ns/javaee"
     xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
     version="3.0">
-
-    <display-name>Archetype Created Web Application</display-name>
-
-    <session-config>
-        <session-timeout>30</session-timeout>
-    </session-config>
-
-    <welcome-file-list>
-        <welcome-file>index.jsp</welcome-file>
-    </welcome-file-list>
-
+    
+   <!--  <display-name>LoginServlet</display-name>
     <servlet>
-        <servlet-name>servname</servlet-name>
-        <servlet-class>ua.com.foxminded.task.ui.ServletHelloWorld</servlet-class>
-        <load-on-startup>1</load-on-startup>
+        <servlet-name>main</servlet-name>
+        <servlet-class>ua.com.foxminded.task.ui.MainServlet</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>servname</servlet-name>
-        <url-pattern>/welcome</url-pattern>
+        <servlet-name>main</servlet-name>
+        <url-pattern>/</url-pattern>
+    </servlet-mapping> -->
+   <!--  <servlet>
+        <servlet-name>student</servlet-name>
+        <servlet-class>ua.com.foxminded.task.ui.StudentServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>student</servlet-name>
+        <url-pattern>/student</url-pattern>
     </servlet-mapping>
-
+ -->
 
 </web-app>

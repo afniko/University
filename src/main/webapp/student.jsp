@@ -8,7 +8,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<h1>Hello. Is not servlet #2</h1>
-	<a>index #2</a>
-</body>
+	<h1>${text}</h1>
+	<a href="../">Click here to main page</a>
 </html>
