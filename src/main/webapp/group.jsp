@@ -23,33 +23,27 @@ table#t01 {
 }
 </style>
 
-<title>Student page</title>
+<title>Group page</title>
 </head>
 <body>
 	<h1>${text}</h1>
 	<br />
+
 	<a href="history.back()">Click here to previous page</a>
+
 	<br />
 
 	<table id="t01">
 		<tr>
 			<th>id</th>
-			<th>First name</th>
-			<th>Last name</th>
-			<th>Middle name</th>
-			<th>Birthday</th>
-			<th>Id fees</th>
-			<th>Group title</th>
+			<th>Title</th>
+			<th>Year of entry</th>
 		</tr>
-		<c:forEach var="student" items="${students}">
+		<c:forEach var="group" items="${groups}">
 			<tr>
-				<td>${student.id}</td>
-				<td>${student.firstName}</td>
-				<td>${student.lastName}</td>
-				<td>${student.middleName}</td>
-				<td>${student.birthday}</td>
-				<td>${student.idFees}</td>
-				<td>${student.group.title}</td>
+				<td>${group.id}</td>
+				<td>${group.title}</td>
+				<td>${group.yearEntry}</td>
 			</tr>
 		</c:forEach>
 	</table>
