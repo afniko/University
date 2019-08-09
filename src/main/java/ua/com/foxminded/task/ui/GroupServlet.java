@@ -16,7 +16,7 @@ import ua.com.foxminded.task.domain.Group;
 @WebServlet(urlPatterns = "/group")
 public class GroupServlet extends HttpServlet {
 
-    private static final long serialVersionUID = -8107642356833737724L;
+    private static final long serialVersionUID = 4603484417851175285L;
 
     private static GroupDao groupDao = new GroupDaoImpl();
     private String text = "Group page";
@@ -26,7 +26,7 @@ public class GroupServlet extends HttpServlet {
         List<Group> groups = groupDao.findAll();
         req.setAttribute("groups", groups);
         req.setAttribute("text", text);
-        req.getRequestDispatcher("student.jsp").forward(req, resp);
+        req.getRequestDispatcher("group.jsp").forward(req, resp);
     }
 
 }
