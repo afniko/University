@@ -28,9 +28,13 @@ table#t01 {
 <body>
 	<h1>${text}</h1>
 	<br />
-
 	<a href="history.back()">Click here to previous page</a>
+	<br />
 
+	<form action="${pageContext.request.contextPath}/group">
+		<input type="text" name="id"> 
+		<input type="submit" value="search">
+	</form>
 	<br />
 
 	<table id="t01">

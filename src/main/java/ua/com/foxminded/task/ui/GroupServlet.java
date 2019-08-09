@@ -1,6 +1,7 @@
 package ua.com.foxminded.task.ui;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -8,6 +9,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.apache.commons.lang3.StringUtils;
 
 import ua.com.foxminded.task.dao.GroupDao;
 import ua.com.foxminded.task.dao.impl.GroupDaoImpl;
@@ -23,7 +26,17 @@ public class GroupServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        List<Group> groups = groupDao.findAll();
+        List<Group> groups = null;
+        String idString = req.getParameter("id");
+        if (StringUtils.isBlank(idString)) {
+            groups = groupDao.findAll();
+        } else {
+            int id = Integer.valueOf(idString);
+            groups = new ArrayList<Group>();
+            Group group = groupDao.findById(id);
+            groups.add(group);
+        }
+
         req.setAttribute("groups", groups);
         req.setAttribute("text", text);
         req.getRequestDispatcher("group.jsp").forward(req, resp);

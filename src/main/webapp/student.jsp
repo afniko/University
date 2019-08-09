@@ -31,6 +31,12 @@ table#t01 {
 	<a href="history.back()">Click here to previous page</a>
 	<br />
 
+	<form action="${pageContext.request.contextPath}/student">
+		<input type="text" name="id"> 
+		<input type="submit" value="search">
+	</form>
+	<br />
+
 	<table id="t01">
 		<tr>
 			<th>id</th>
