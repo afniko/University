@@ -47,6 +47,9 @@ table#t01 {
 			</tr>
 		</c:forEach>
 	</table>
-
+	<br />
+	<a href="${pageContext.request.contextPath}" class="btn btn-success">
+		Back to main page </a>
+	<br />
 </body>
 </html>
