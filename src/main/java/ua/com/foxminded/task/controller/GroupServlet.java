@@ -1,4 +1,4 @@
-package ua.com.foxminded.task.ui;
+package ua.com.foxminded.task.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
