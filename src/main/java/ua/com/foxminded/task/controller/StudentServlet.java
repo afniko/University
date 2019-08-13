@@ -10,18 +10,15 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang3.StringUtils;
 
-import ua.com.foxminded.task.dao.StudentDao;
 import ua.com.foxminded.task.dao.exception.NoEntityFoundException;
 import ua.com.foxminded.task.dao.exception.NoExecuteQueryException;
-import ua.com.foxminded.task.dao.impl.StudentDaoImpl;
 import ua.com.foxminded.task.domain.Student;
+import ua.com.foxminded.task.domain.service.StudentController;
 
 @WebServlet(urlPatterns = "/student")
 public class StudentServlet extends HttpServlet {
 
     private static final long serialVersionUID = -8107642356833737724L;
-
-    private static StudentDao studentDao = new StudentDaoImpl();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -49,7 +46,8 @@ public class StudentServlet extends HttpServlet {
         String text = null;
         int id = Integer.valueOf(idString);
         try {
-            student = studentDao.findById(id);
+            StudentController studentController = StudentController.getInstance();
+            student = studentController.findById(id);
         } catch (NoEntityFoundException e) {
             text = "Student by id#" + id + " not found!";
             req.setAttribute("text", text);

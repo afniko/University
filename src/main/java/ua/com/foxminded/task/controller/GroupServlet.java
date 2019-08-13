@@ -10,18 +10,15 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang3.StringUtils;
 
-import ua.com.foxminded.task.dao.GroupDao;
 import ua.com.foxminded.task.dao.exception.NoEntityFoundException;
 import ua.com.foxminded.task.dao.exception.NoExecuteQueryException;
-import ua.com.foxminded.task.dao.impl.GroupDaoImpl;
 import ua.com.foxminded.task.domain.Group;
+import ua.com.foxminded.task.domain.service.GroupController;
 
 @WebServlet(urlPatterns = "/group")
 public class GroupServlet extends HttpServlet {
 
     private static final long serialVersionUID = 4603484417851175285L;
-
-    private static GroupDao groupDao = new GroupDaoImpl();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -48,7 +45,8 @@ public class GroupServlet extends HttpServlet {
         String text = null;
         int id = Integer.valueOf(idString);
         try {
-            group = groupDao.findById(id);
+            GroupController groupController = GroupController.getInstance();
+            group = groupController.findById(id);
         } catch (NoEntityFoundException e) {
             text = "Group by id#" + id + " not found!";
             req.setAttribute("text", text);

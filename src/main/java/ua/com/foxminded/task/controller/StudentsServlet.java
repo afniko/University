@@ -9,24 +9,22 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import ua.com.foxminded.task.dao.StudentDao;
 import ua.com.foxminded.task.dao.exception.NoExecuteQueryException;
-import ua.com.foxminded.task.dao.impl.StudentDaoImpl;
 import ua.com.foxminded.task.domain.Student;
+import ua.com.foxminded.task.domain.service.StudentController;
 
 @WebServlet(urlPatterns = "/students")
 public class StudentsServlet extends HttpServlet {
 
     private static final long serialVersionUID = -3291272855773910283L;
 
-    private static StudentDao studentDao = new StudentDaoImpl();
-
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String text = null;
         List<Student> students = null;
         try {
-            students = studentDao.findAll();
+            StudentController studentController = StudentController.getInstance();
+            students = studentController.findAll();
         } catch (NoExecuteQueryException e) {
             text = "Something with student goes wrong!";
         } finally {
