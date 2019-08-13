@@ -13,12 +13,13 @@ import org.apache.commons.lang3.StringUtils;
 import ua.com.foxminded.task.dao.exception.NoEntityFoundException;
 import ua.com.foxminded.task.dao.exception.NoExecuteQueryException;
 import ua.com.foxminded.task.domain.Group;
-import ua.com.foxminded.task.domain.service.GroupController;
+import ua.com.foxminded.task.domain.service.GroupService;
 
 @WebServlet(urlPatterns = "/group")
 public class GroupServlet extends HttpServlet {
 
     private static final long serialVersionUID = 4603484417851175285L;
+    private GroupService groupService = new GroupService();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -45,8 +46,7 @@ public class GroupServlet extends HttpServlet {
         String text = null;
         int id = Integer.valueOf(idString);
         try {
-            GroupController groupController = GroupController.getInstance();
-            group = groupController.findById(id);
+            group = groupService.findById(id);
         } catch (NoEntityFoundException e) {
             text = "Group by id#" + id + " not found!";
             req.setAttribute("text", text);

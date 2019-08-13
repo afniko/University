@@ -116,6 +116,13 @@
                         <location>db/migrations</location>
                     </locations>
                 </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>migrate</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
 
             <plugin>

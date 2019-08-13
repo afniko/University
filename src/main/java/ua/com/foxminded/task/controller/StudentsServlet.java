@@ -11,20 +11,20 @@ import javax.servlet.http.HttpServletResponse;
 
 import ua.com.foxminded.task.dao.exception.NoExecuteQueryException;
 import ua.com.foxminded.task.domain.Student;
-import ua.com.foxminded.task.domain.service.StudentController;
+import ua.com.foxminded.task.domain.service.StudentService;
 
 @WebServlet(urlPatterns = "/students")
 public class StudentsServlet extends HttpServlet {
 
     private static final long serialVersionUID = -3291272855773910283L;
+    private StudentService studentService = new StudentService();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String text = null;
         List<Student> students = null;
         try {
-            StudentController studentController = StudentController.getInstance();
-            students = studentController.findAll();
+            students = studentService.findAll();
         } catch (NoExecuteQueryException e) {
             text = "Something with student goes wrong!";
         } finally {
