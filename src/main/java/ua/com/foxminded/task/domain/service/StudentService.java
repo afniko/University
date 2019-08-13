@@ -7,7 +7,7 @@ import ua.com.foxminded.task.dao.impl.StudentDaoImpl;
 import ua.com.foxminded.task.domain.Student;
 
 public class StudentService {
-    private static StudentDao studentDao = new StudentDaoImpl();
+    private StudentDao studentDao = new StudentDaoImpl();
 
     public Student findById(int id) {
         return studentDao.findById(id);

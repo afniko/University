@@ -7,7 +7,7 @@ import ua.com.foxminded.task.dao.impl.GroupDaoImpl;
 import ua.com.foxminded.task.domain.Group;
 
 public class GroupService {
-    private static GroupDao groupDao = new GroupDaoImpl();
+    private GroupDao groupDao = new GroupDaoImpl();
 
     public Group findById(int id) {
         return groupDao.findById(id);
