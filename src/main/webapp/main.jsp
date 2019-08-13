@@ -8,9 +8,9 @@
 <title>Main page</title>
 </head>
 <body>
-	<h1>${text}</h1>
-	<a href="student">Click here to student page</a>
-	<br />
-	<a href="group">Click here to group page</a>
+    <h1>${text}</h1>
+    <a href="students">Click here to students page</a>
+    <br />
+    <a href="groups">Click here to groups page</a>
 </body>
 </html>

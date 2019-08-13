@@ -23,14 +23,19 @@ table#t01 {
 }
 </style>
 
-<title>Student page</title>
+<title>Students page</title>
 </head>
 <body>
-    <h1>Student page</h1>
+    <h1>Students page</h1>
     <br />
     <h2>${text}</h2>
     <br />
-    <a href="${pageContext.request.contextPath}/students"> Back to students page </a>
+    <a href="history.back()">Click here to previous page</a>
+    <br />
+    <h6>Find student by id:</h6>
+    <form action="${pageContext.request.contextPath}/student">
+        <input type="text" name="id"> <input type="submit" value="search">
+    </form>
     <br />
 
     <table id="t01">
@@ -43,18 +48,20 @@ table#t01 {
             <th>Id fees</th>
             <th>Group title</th>
         </tr>
-        <tr>
-            <td>${student.id}</td>
-            <td>${student.firstName}</td>
-            <td>${student.lastName}</td>
-            <td>${student.middleName}</td>
-            <td>${student.birthday}</td>
-            <td>${student.idFees}</td>
-            <td>${student.group.title}</td>
-        </tr>
+        <c:forEach var="student" items="${students}">
+            <tr>
+                <td>${student.id}</td>
+                <td>${student.firstName}</td>
+                <td>${student.lastName}</td>
+                <td>${student.middleName}</td>
+                <td>${student.birthday}</td>
+                <td>${student.idFees}</td>
+                <td>${student.group.title}</td>
+            </tr>
+        </c:forEach>
     </table>
     <br />
-    <a href="${pageContext.request.contextPath}"> Back to main page </a>
+    <a href="${pageContext.request.contextPath}" class="btn btn-success"> Back to main page </a>
     <br />
 </body>
 </html>

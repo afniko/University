@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 public class MainServlet extends HttpServlet {
 
     private static final long serialVersionUID = 7553902061756712545L;
-    private String text = "main text page";
+    private String text = "Main text page";
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

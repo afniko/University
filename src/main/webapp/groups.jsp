@@ -23,14 +23,20 @@ table#t01 {
 }
 </style>
 
-<title>Group page</title>
+<title>Groups page</title>
 </head>
 <body>
-    <h1>Group page</h1>
+    <h1>Groups page</h1>
     <br />
     <h2>${text}</h2>
     <br />
-    <a href="${pageContext.request.contextPath}/groups"> Back to groups page </a>
+    <a href="history.back()">Click here to previous page</a>
+    <br />
+
+    <h6>Find group by id:</h6>
+    <form action="${pageContext.request.contextPath}/group">
+        <input type="text" name="id"> <input type="submit" value="search">
+    </form>
     <br />
 
     <table id="t01">
@@ -39,14 +45,16 @@ table#t01 {
             <th>Title</th>
             <th>Year of entry</th>
         </tr>
-        <tr>
-            <td>${group.id}</td>
-            <td>${group.title}</td>
-            <td>${group.yearEntry}</td>
-        </tr>
+        <c:forEach var="group" items="${groups}">
+            <tr>
+                <td>${group.id}</td>
+                <td>${group.title}</td>
+                <td>${group.yearEntry}</td>
+            </tr>
+        </c:forEach>
     </table>
     <br />
-    <a href="${pageContext.request.contextPath}"> Back to main page </a>
+    <a href="${pageContext.request.contextPath}" class="btn btn-success"> Back to main page </a>
     <br />
 </body>
 </html>

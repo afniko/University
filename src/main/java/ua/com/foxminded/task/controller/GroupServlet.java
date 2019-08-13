@@ -1,8 +1,6 @@
 package ua.com.foxminded.task.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -27,21 +25,19 @@ public class GroupServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String text = "Group page";
-        List<Group> groups = null;
+        String text = null;
+        Group group = null;
         String idString = req.getParameter("id");
         try {
             if (StringUtils.isBlank(idString)) {
-                groups = groupDao.findAll();
+                text = "You id is blank";
             } else {
-                Group group = findGroupById(idString, req, resp);
-                groups = new ArrayList<Group>();
-                groups.add(group);
+                group = findGroupById(idString, req, resp);
             }
         } catch (NoExecuteQueryException e) {
             text = "Something with group goes wrong!";
         } finally {
-            req.setAttribute("groups", groups);
+            req.setAttribute("group", group);
             req.setAttribute("text", text);
             req.getRequestDispatcher("group.jsp").forward(req, resp);
         }

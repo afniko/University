@@ -32,8 +32,6 @@ public class DaoFactory {
         } catch (ClassNotFoundException e) {
             LOGGER.error("Driver database {} not found : {}", properties.getProperty("db.driver"), e);
         }
-        flywayInit();
-        createTables();
     }
 
     private void flywayInit() {
@@ -42,6 +40,7 @@ public class DaoFactory {
     }
 
     public void createTables() {
+        flywayInit();
         LOGGER.info("createTables() [flyway:{}]", flyway);
         flyway.migrate();
     }

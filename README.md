@@ -18,6 +18,11 @@ mvn install
 ```
 
 ###Starting project:
+First time starting, create database by command:
+```
+mvn flyway:migrate
+```
+
 For starting project deploy war file on web-server. And follow 
 to web link: http://{ip address web-server:port}/{name of war file}
 ```

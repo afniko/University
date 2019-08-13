@@ -13,7 +13,7 @@
             <groupId>postgresql</groupId>
             <artifactId>postgresql</artifactId>
             <version>9.1-901-1.jdbc4</version>
-            <scope>provide</scope>
+            <scope>runtime</scope>
         </dependency>
 
         <dependency>
@@ -93,6 +93,31 @@
 
     <build>
         <plugins>
+            <plugin>
+                <groupId>org.flywaydb</groupId>
+                <artifactId>flyway-maven-plugin</artifactId>
+                <version>5.2.4</version>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.flywaydb</groupId>
+                        <artifactId>flyway-core</artifactId>
+                        <version>5.2.4</version>
+                    </dependency>
+                </dependencies>
+                <configuration>
+                    <schemas>
+                        <schema>public</schema>
+                    </schemas>
+                    <user>afniko</user>
+                    <password>078990</password>
+                    <url>jdbc:postgresql://localhost/university</url>
+                    <driver>org.postgresql.Driver</driver>
+                    <locations>
+                        <location>db/migrations</location>
+                    </locations>
+                </configuration>
+            </plugin>
+
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.8.0</version>

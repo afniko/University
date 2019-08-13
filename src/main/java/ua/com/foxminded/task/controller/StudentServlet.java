@@ -1,8 +1,6 @@
 package ua.com.foxminded.task.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -27,22 +25,20 @@ public class StudentServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String text = "Student page";
-        List<Student> students = null;
+        String text = null;
+        Student student = null;
         try {
 
             String idString = req.getParameter("id");
             if (StringUtils.isBlank(idString)) {
-                students = studentDao.findAll();
+                text = "You id is blank";
             } else {
-                Student student = findStudentById(idString, req, resp);
-                students = new ArrayList<Student>();
-                students.add(student);
+                student = findStudentById(idString, req, resp);
             }
         } catch (NoExecuteQueryException e) {
             text = "Something with student goes wrong!";
         } finally {
-            req.setAttribute("students", students);
+            req.setAttribute("student", student);
             req.setAttribute("text", text);
             req.getRequestDispatcher("student.jsp").forward(req, resp);
         }
