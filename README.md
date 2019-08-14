@@ -14,15 +14,10 @@ mvn compile
 ###Create execute war 
 For create execute war file and type in the following command and hit "Enter"
 ```
-mvn install
+mvn clean install
 ```
 
 ###Starting project:
-First time starting, create database by command:
-```
-mvn flyway:migrate
-```
-
 For starting project deploy war file on web-server. And follow 
 to web link: http://{ip address web-server:port}/{name of war file}
 ```
