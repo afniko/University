@@ -34,11 +34,10 @@ public class GroupServlet extends HttpServlet {
             }
         } catch (NoExecuteQueryException e) {
             text = "Something with group goes wrong!";
-        } finally {
-            req.setAttribute("group", group);
-            req.setAttribute("text", text);
-            req.getRequestDispatcher("group.jsp").forward(req, resp);
         }
+        req.setAttribute("group", group);
+        req.setAttribute("text", text);
+        req.getRequestDispatcher("group.jsp").forward(req, resp);
     }
 
     private Group findGroupById(String idString, HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

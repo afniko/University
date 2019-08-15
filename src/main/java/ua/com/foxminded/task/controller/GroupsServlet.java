@@ -27,10 +27,9 @@ public class GroupsServlet extends HttpServlet {
             groups = groupService.findAll();
         } catch (NoExecuteQueryException e) {
             text = "Something with group goes wrong!";
-        } finally {
-            req.setAttribute("groups", groups);
-            req.setAttribute("text", text);
-            req.getRequestDispatcher("groups.jsp").forward(req, resp);
         }
+        req.setAttribute("groups", groups);
+        req.setAttribute("text", text);
+        req.getRequestDispatcher("groups.jsp").forward(req, resp);
     }
 }

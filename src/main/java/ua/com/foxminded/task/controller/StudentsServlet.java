@@ -27,10 +27,9 @@ public class StudentsServlet extends HttpServlet {
             students = studentService.findAll();
         } catch (NoExecuteQueryException e) {
             text = "Something with student goes wrong!";
-        } finally {
-            req.setAttribute("students", students);
-            req.setAttribute("text", text);
-            req.getRequestDispatcher("students.jsp").forward(req, resp);
         }
+        req.setAttribute("students", students);
+        req.setAttribute("text", text);
+        req.getRequestDispatcher("students.jsp").forward(req, resp);
     }
 }

@@ -35,11 +35,10 @@ public class StudentServlet extends HttpServlet {
             }
         } catch (NoExecuteQueryException e) {
             text = "Something with student goes wrong!";
-        } finally {
-            req.setAttribute("student", student);
-            req.setAttribute("text", text);
-            req.getRequestDispatcher("student.jsp").forward(req, resp);
         }
+        req.setAttribute("student", student);
+        req.setAttribute("text", text);
+        req.getRequestDispatcher("student.jsp").forward(req, resp);
     }
 
     private Student findStudentById(String idString, HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
