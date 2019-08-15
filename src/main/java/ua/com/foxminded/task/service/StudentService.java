@@ -1,4 +1,4 @@
-package ua.com.foxminded.task.domain.service;
+package ua.com.foxminded.task.service;
 
 import java.util.List;
 

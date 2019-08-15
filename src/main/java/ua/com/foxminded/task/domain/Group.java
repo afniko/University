@@ -4,6 +4,8 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
+import ua.com.foxminded.task.domain.dto.GroupDto;
+
 public class Group {
 
     private int id;
@@ -60,6 +62,14 @@ public class Group {
 
     public void setYearEntry(Date yearEntry) {
         this.yearEntry = yearEntry;
+    }
+
+    public GroupDto convertToDto() {
+        GroupDto groupDto = new GroupDto();
+        groupDto.setId(this.id);
+        groupDto.setTitle(this.title);
+        groupDto.setYearEntry(this.yearEntry);
+        return groupDto;
     }
 
     @Override

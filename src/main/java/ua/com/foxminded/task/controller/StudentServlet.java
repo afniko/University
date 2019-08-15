@@ -13,7 +13,7 @@ import org.apache.commons.lang3.StringUtils;
 import ua.com.foxminded.task.dao.exception.NoEntityFoundException;
 import ua.com.foxminded.task.dao.exception.NoExecuteQueryException;
 import ua.com.foxminded.task.domain.Student;
-import ua.com.foxminded.task.domain.service.StudentService;
+import ua.com.foxminded.task.service.StudentService;
 
 @WebServlet(urlPatterns = "/student")
 public class StudentServlet extends HttpServlet {

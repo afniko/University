@@ -13,7 +13,7 @@ import org.apache.commons.lang3.StringUtils;
 import ua.com.foxminded.task.dao.exception.NoEntityFoundException;
 import ua.com.foxminded.task.dao.exception.NoExecuteQueryException;
 import ua.com.foxminded.task.domain.Group;
-import ua.com.foxminded.task.domain.service.GroupService;
+import ua.com.foxminded.task.service.GroupService;
 
 @WebServlet(urlPatterns = "/group")
 public class GroupServlet extends HttpServlet {

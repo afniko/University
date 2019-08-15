@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import ua.com.foxminded.task.dao.exception.NoExecuteQueryException;
 import ua.com.foxminded.task.domain.Group;
-import ua.com.foxminded.task.domain.service.GroupService;
+import ua.com.foxminded.task.service.GroupService;
 
 @WebServlet(urlPatterns = "/groups")
 public class GroupsServlet extends HttpServlet {
