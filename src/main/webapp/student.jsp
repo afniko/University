@@ -36,18 +36,26 @@ table#t01 {
     <table id="t01">
         <tr>
             <th>id</th>
-            <th>First name</th>
-            <th>Middle name</th>
-            <th>Birthday</th>
-            <th>Id fees</th>
-            <th>Group title</th>
+            <td>${student.id}</td>
         </tr>
         <tr>
-            <td>${student.id}</td>
+            <th>First name</th>
             <td>${student.firstName}</td>
+        </tr>
+        <tr>
+            <th>Middle name</th>
             <td>${student.middleName}</td>
+        </tr>
+        <tr>
+            <th>Birthday</th>
             <td>${student.birthday}</td>
+        </tr>
+        <tr>
+            <th>Id fees</th>
             <td>${student.idFees}</td>
+        </tr>
+        <tr>
+            <th>Group title</th>
             <td>${student.group.title}</td>
         </tr>
     </table>

@@ -36,12 +36,14 @@ table#t01 {
     <table id="t01">
         <tr>
             <th>id</th>
-            <th>Title</th>
-            <th>Year of entry</th>
+            <td>${group.id}</td>
         </tr>
         <tr>
-            <td>${group.id}</td>
+            <th>Title</th>
             <td>${group.title}</td>
+        </tr>
+        <tr>
+            <th>Year of entry</th>
             <td>${group.yearEntry}</td>
         </tr>
     </table>
