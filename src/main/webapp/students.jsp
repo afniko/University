@@ -6,60 +6,71 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<style>
-table, th, td {
-	border: 1px solid black;
-	border-collapse: collapse;
-}
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu"
+    crossorigin="anonymous">
 
-th, td {
-	padding: 15px;
-	text-align: left;
-}
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap-theme.min.css" integrity="sha384-6pzBo3FDv/PJ8r2KRkGHifhEocL+1X2rVCTTkUfGk7/0pbek5mMa1upzvWbrUbOZ"
+    crossorigin="anonymous">
 
-table#t01 {
-	width: 100%;
-	background-color: #f1f1c1;
-}
-</style>
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
 
 <title>Students page</title>
 </head>
 <body>
-    <h1>Students page</h1>
-    <br />
-    <h2>${text}</h2>
-    <br />
-    <a href="history.back()">Click here to previous page</a>
-    <br />
-    <h6>Find student by id:</h6>
-    <form action="${pageContext.request.contextPath}/student">
-        <input type="text" name="id"> <input type="submit" value="search">
-    </form>
-    <br />
 
-    <table id="t01">
-        <tr>
-            <th>id</th>
-            <th>First name</th>
-            <th>Middle name</th>
-            <th>Birthday</th>
-            <th>Id fees</th>
-            <th>Group title</th>
-        </tr>
-        <c:forEach var="student" items="${students}">
+
+    <nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a href="#" class="navbar-brand">Students page</a>
+        </div>
+    </div>
+
+    <div>
+        <ul class="nav navbar-nav">
+            <li class="active"><a href="history.back()">previous page</a></li>
+            <li><a href="${pageContext.request.contextPath}">main page</a></li>
+            <li><a href="${pageContext.request.contextPath}/groups">groups page</a></li>
+        </ul>
+    </div>
+
+    </nav>
+
+    <div class="container-fluid">
+        <label class="control-label col-sm-3" for="textMessage">${text}</label> <br />
+        <form class="form-inline" action="${pageContext.request.contextPath}/student">
+            <div class="form-group">
+                <label for="idGroup">id#</label> <input type="text" class="form-control" id="idGroup" placeholder="Enter Id" name="id">
+            </div>
+            <button type="submit" class="btn btn-default">Search</button>
+        </form>
+
+        <br />
+
+        <table class="table table-hover">
             <tr>
-                <td>${student.id}</td>
-                <td>${student.firstName}</td>
-                <td>${student.middleName}</td>
-                <td>${student.birthday}</td>
-                <td>${student.idFees}</td>
-                <td>${student.group.title}</td>
+                <th>id</th>
+                <th>First name</th>
+                <th>Middle name</th>
+                <th>Birthday</th>
+                <th>Id fees</th>
+                <th>Group title</th>
             </tr>
-        </c:forEach>
-    </table>
-    <br />
-    <a href="${pageContext.request.contextPath}" class="btn btn-success"> Back to main page </a>
-    <br />
+            <c:forEach var="student" items="${students}">
+                <tr>
+                    <td>${student.id}</td>
+                    <td>${student.firstName}</td>
+                    <td>${student.middleName}</td>
+                    <td>${student.birthday}</td>
+                    <td>${student.idFees}</td>
+                    <td>${student.group.title}</td>
+                </tr>
+            </c:forEach>
+        </table>
+    </div>
 </body>
 </html>
