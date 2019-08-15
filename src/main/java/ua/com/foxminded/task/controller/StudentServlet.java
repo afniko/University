@@ -25,34 +25,22 @@ public class StudentServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String text = null;
         Student student = null;
+        String idString = req.getParameter("id");
+        int id = Integer.valueOf(idString);
         try {
 
-            String idString = req.getParameter("id");
             if (StringUtils.isBlank(idString)) {
                 text = "You id is blank";
             } else {
-                student = findStudentById(idString, req, resp);
+                student = studentService.findById(id);
             }
         } catch (NoExecuteQueryException e) {
             text = "Something with student goes wrong!";
+        } catch (NoEntityFoundException e) {
+            text = "Student by id#" + id + " not found!";
         }
         req.setAttribute("student", student);
         req.setAttribute("text", text);
         req.getRequestDispatcher("student.jsp").forward(req, resp);
     }
-
-    private Student findStudentById(String idString, HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Student student = null;
-        String text = null;
-        int id = Integer.valueOf(idString);
-        try {
-            student = studentService.findById(id);
-        } catch (NoEntityFoundException e) {
-            text = "Student by id#" + id + " not found!";
-            req.setAttribute("text", text);
-            req.getRequestDispatcher("student.jsp").forward(req, resp);
-        }
-        return student;
-    }
-
 }

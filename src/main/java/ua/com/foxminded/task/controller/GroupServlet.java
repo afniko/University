@@ -26,32 +26,21 @@ public class GroupServlet extends HttpServlet {
         String text = null;
         Group group = null;
         String idString = req.getParameter("id");
+        int id = Integer.valueOf(idString);
         try {
             if (StringUtils.isBlank(idString)) {
                 text = "You id is blank";
             } else {
-                group = findGroupById(idString, req, resp);
+                group = groupService.findById(id);
             }
         } catch (NoExecuteQueryException e) {
             text = "Something with group goes wrong!";
+        } catch (NoEntityFoundException e) {
+            text = "Group by id#" + id + " not found!";
         }
         req.setAttribute("group", group);
         req.setAttribute("text", text);
         req.getRequestDispatcher("group.jsp").forward(req, resp);
-    }
-
-    private Group findGroupById(String idString, HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Group group = null;
-        String text = null;
-        int id = Integer.valueOf(idString);
-        try {
-            group = groupService.findById(id);
-        } catch (NoEntityFoundException e) {
-            text = "Group by id#" + id + " not found!";
-            req.setAttribute("text", text);
-            req.getRequestDispatcher("group.jsp").forward(req, resp);
-        }
-        return group;
     }
 
 }
