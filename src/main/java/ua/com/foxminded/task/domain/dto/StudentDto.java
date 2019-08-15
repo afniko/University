@@ -37,4 +37,28 @@ public class StudentDto {
         this.group = group;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getMiddleName() {
+        return middleName;
+    }
+
+    public Date getBirthday() {
+        return birthday;
+    }
+
+    public int getIdFees() {
+        return idFees;
+    }
+
+    public Group getGroup() {
+        return group;
+    }
+
 }

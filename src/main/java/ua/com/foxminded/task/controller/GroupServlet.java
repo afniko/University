@@ -12,7 +12,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import ua.com.foxminded.task.dao.exception.NoEntityFoundException;
 import ua.com.foxminded.task.dao.exception.NoExecuteQueryException;
-import ua.com.foxminded.task.domain.Group;
+import ua.com.foxminded.task.domain.dto.GroupDto;
 import ua.com.foxminded.task.service.GroupService;
 
 @WebServlet(urlPatterns = "/group")
@@ -24,7 +24,7 @@ public class GroupServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String text = null;
-        Group group = null;
+        GroupDto group = null;
         String idString = req.getParameter("id");
         int id = Integer.valueOf(idString);
         try {

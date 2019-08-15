@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import ua.com.foxminded.task.dao.exception.NoExecuteQueryException;
-import ua.com.foxminded.task.domain.Student;
+import ua.com.foxminded.task.domain.dto.StudentDto;
 import ua.com.foxminded.task.service.StudentService;
 
 @WebServlet(urlPatterns = "/students")
@@ -22,7 +22,7 @@ public class StudentsServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String text = null;
-        List<Student> students = null;
+        List<StudentDto> students = null;
         try {
             students = studentService.findAll();
         } catch (NoExecuteQueryException e) {

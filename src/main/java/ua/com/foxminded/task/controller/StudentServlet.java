@@ -12,7 +12,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import ua.com.foxminded.task.dao.exception.NoEntityFoundException;
 import ua.com.foxminded.task.dao.exception.NoExecuteQueryException;
-import ua.com.foxminded.task.domain.Student;
+import ua.com.foxminded.task.domain.dto.StudentDto;
 import ua.com.foxminded.task.service.StudentService;
 
 @WebServlet(urlPatterns = "/student")
@@ -24,7 +24,7 @@ public class StudentServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String text = null;
-        Student student = null;
+        StudentDto student = null;
         String idString = req.getParameter("id");
         int id = Integer.valueOf(idString);
         try {

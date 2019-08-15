@@ -37,7 +37,6 @@ table#t01 {
         <tr>
             <th>id</th>
             <th>First name</th>
-            <th>Last name</th>
             <th>Middle name</th>
             <th>Birthday</th>
             <th>Id fees</th>
@@ -46,7 +45,6 @@ table#t01 {
         <tr>
             <td>${student.id}</td>
             <td>${student.firstName}</td>
-            <td>${student.lastName}</td>
             <td>${student.middleName}</td>
             <td>${student.birthday}</td>
             <td>${student.idFees}</td>

@@ -20,4 +20,16 @@ public class GroupDto {
         this.yearEntry = yearEntry;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public Date getYearEntry() {
+        return yearEntry;
+    }
+
 }
