@@ -26,8 +26,9 @@ public class GroupServlet extends HttpServlet {
         String text = null;
         GroupDto group = null;
         String idString = req.getParameter("id");
-        int id = Integer.valueOf(idString);
+        int id = 0;
         try {
+            id = Integer.valueOf(idString);
             if (StringUtils.isBlank(idString)) {
                 text = "You id is blank";
             } else {
@@ -37,6 +38,8 @@ public class GroupServlet extends HttpServlet {
             text = "Something with group goes wrong!";
         } catch (NoEntityFoundException e) {
             text = "Group by id#" + id + " not found!";
+        } catch (NumberFormatException e) {
+            text = "Group id# must be numeric!";
         }
         req.setAttribute("group", group);
         req.setAttribute("text", text);

@@ -26,9 +26,9 @@ public class StudentServlet extends HttpServlet {
         String text = null;
         StudentDto student = null;
         String idString = req.getParameter("id");
-        int id = Integer.valueOf(idString);
+        int id = 0;
         try {
-
+            id = Integer.valueOf(idString);
             if (StringUtils.isBlank(idString)) {
                 text = "You id is blank";
             } else {
@@ -38,6 +38,8 @@ public class StudentServlet extends HttpServlet {
             text = "Something with student goes wrong!";
         } catch (NoEntityFoundException e) {
             text = "Student by id#" + id + " not found!";
+        } catch (NumberFormatException e) {
+            text = "Student id# must be numeric!";
         }
         req.setAttribute("student", student);
         req.setAttribute("text", text);
