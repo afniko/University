@@ -14,12 +14,13 @@ import ua.com.foxminded.task.dao.exception.NoEntityFoundException;
 import ua.com.foxminded.task.dao.exception.NoExecuteQueryException;
 import ua.com.foxminded.task.domain.dto.StudentDto;
 import ua.com.foxminded.task.service.StudentService;
+import ua.com.foxminded.task.service.impl.StudentServiceImpl;
 
 @WebServlet(urlPatterns = "/student")
 public class StudentServlet extends HttpServlet {
 
     private static final long serialVersionUID = -8107642356833737724L;
-    private StudentService studentService = new StudentService();
+    private StudentService studentService = new StudentServiceImpl();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

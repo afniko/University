@@ -14,12 +14,13 @@ import ua.com.foxminded.task.dao.exception.NoEntityFoundException;
 import ua.com.foxminded.task.dao.exception.NoExecuteQueryException;
 import ua.com.foxminded.task.domain.dto.GroupDto;
 import ua.com.foxminded.task.service.GroupService;
+import ua.com.foxminded.task.service.impl.GroupServiceImpl;
 
 @WebServlet(urlPatterns = "/group")
 public class GroupServlet extends HttpServlet {
 
     private static final long serialVersionUID = 4603484417851175285L;
-    private GroupService groupService = new GroupService();
+    private GroupService groupService = new GroupServiceImpl();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

@@ -12,12 +12,13 @@ import javax.servlet.http.HttpServletResponse;
 import ua.com.foxminded.task.dao.exception.NoExecuteQueryException;
 import ua.com.foxminded.task.domain.dto.StudentDto;
 import ua.com.foxminded.task.service.StudentService;
+import ua.com.foxminded.task.service.impl.StudentServiceImpl;
 
 @WebServlet(urlPatterns = "/students")
 public class StudentsServlet extends HttpServlet {
 
     private static final long serialVersionUID = -3291272855773910283L;
-    private StudentService studentService = new StudentService();
+    private StudentService studentService = new StudentServiceImpl();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
