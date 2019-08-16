@@ -45,10 +45,6 @@
 
         <table class="table table-bordered">
             <tr class="success">
-                <th>id</th>
-                <td>${group.id}</td>
-            </tr>
-            <tr>
                 <th>Title</th>
                 <td>${group.title}</td>
             </tr>

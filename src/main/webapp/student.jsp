@@ -46,10 +46,6 @@
 
         <table class="table table-bordered">
             <tr class="success">
-                <th>id</th>
-                <td>${student.id}</td>
-            </tr>
-            <tr>
                 <th>First name</th>
                 <td>${student.firstName}</td>
             </tr>
@@ -67,7 +63,7 @@
             </tr>
             <tr>
                 <th>Group title</th>
-                <td>${student.group.title}</td>
+                <td>${student.groupTitle}</td>
             </tr>
         </table>
     </div>

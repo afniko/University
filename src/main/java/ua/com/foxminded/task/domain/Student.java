@@ -1,7 +1,5 @@
 package ua.com.foxminded.task.domain;
 
-import ua.com.foxminded.task.domain.dto.StudentDto;
-
 public class Student extends Person {
 
     private Group group;
@@ -16,17 +14,6 @@ public class Student extends Person {
 
     public void setGroup(Group group) {
         this.group = group;
-    }
-
-    public StudentDto convertToDto() {
-        StudentDto studentDto = new StudentDto();
-        studentDto.setId(this.id);
-        studentDto.setFirstName(this.firstName);
-        studentDto.setMiddleName(this.middleName);
-        studentDto.setBirthday(this.birthday);
-        studentDto.setIdFees(this.idFees);
-        studentDto.setGroup(this.group);
-        return studentDto;
     }
 
     @Override

@@ -52,13 +52,11 @@
 
         <table class="table table-hover">
             <tr>
-                <th>id</th>
                 <th>Title</th>
                 <th>Year of entry</th>
             </tr>
             <c:forEach var="group" items="${groups}">
                 <tr>
-                    <td>${group.id}</td>
                     <td>${group.title}</td>
                     <td>${group.yearEntry}</td>
                 </tr>

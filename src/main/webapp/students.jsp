@@ -53,7 +53,6 @@
 
         <table class="table table-hover">
             <tr>
-                <th>id</th>
                 <th>First name</th>
                 <th>Middle name</th>
                 <th>Birthday</th>
@@ -62,12 +61,11 @@
             </tr>
             <c:forEach var="student" items="${students}">
                 <tr>
-                    <td>${student.id}</td>
                     <td>${student.firstName}</td>
                     <td>${student.middleName}</td>
                     <td>${student.birthday}</td>
                     <td>${student.idFees}</td>
-                    <td>${student.group.title}</td>
+                    <td>${student.groupTitle}</td>
                 </tr>
             </c:forEach>
         </table>
