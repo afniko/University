@@ -21,15 +21,15 @@ public class StudentsServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String text = null;
+        String errorMessage = null;
         List<StudentDto> students = null;
         try {
             students = studentService.findAll();
         } catch (NoExecuteQueryException e) {
-            text = "Something with student goes wrong!";
+            errorMessage = "Something with student goes wrong!";
         }
         req.setAttribute("students", students);
-        req.setAttribute("text", text);
+        req.setAttribute("errorMessage", errorMessage);
         req.getRequestDispatcher("students.jsp").forward(req, resp);
     }
 }

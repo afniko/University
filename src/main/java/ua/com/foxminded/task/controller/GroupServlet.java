@@ -23,26 +23,26 @@ public class GroupServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String text = null;
+        String errorMessage = null;
         GroupDto group = null;
         String idString = req.getParameter("id");
         int id = 0;
         try {
             id = Integer.valueOf(idString);
             if (StringUtils.isBlank(idString)) {
-                text = "You id is blank";
+                errorMessage = "You id is blank";
             } else {
                 group = groupService.findById(id);
             }
         } catch (NoExecuteQueryException e) {
-            text = "Something with group goes wrong!";
+            errorMessage = "Something with group goes wrong!";
         } catch (NoEntityFoundException e) {
-            text = "Group by id#" + id + " not found!";
+            errorMessage = "Group by id#" + id + " not found!";
         } catch (NumberFormatException e) {
-            text = "Group id# must be numeric!";
+            errorMessage = "Group id# must be numeric!";
         }
         req.setAttribute("group", group);
-        req.setAttribute("text", text);
+        req.setAttribute("errorMessage", errorMessage);
         req.getRequestDispatcher("group.jsp").forward(req, resp);
     }
 

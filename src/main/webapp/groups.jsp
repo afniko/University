@@ -40,7 +40,7 @@
     </nav>
 
     <div class="container-fluid">
-        <label class="control-label col-sm-3" for="textMessage">${text}</label> <br />
+        <label class="control-label col-sm-3" for="errorMessage">${errorMessage}</label> <br />
         <form class="form-inline" action="${pageContext.request.contextPath}/group">
             <div class="form-group">
                 <label for="idGroup">id#</label> <input type="text" class="form-control" id="idGroup" placeholder="Enter Id" name="id">

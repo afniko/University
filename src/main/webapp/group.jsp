@@ -41,7 +41,7 @@
     </nav>
 
     <div class="container-fluid">
-        <label class="control-label col-sm-3" for="textMessage">${text}</label> <br />
+        <label class="control-label col-sm-3" for="errorMessage">${errorMessage}</label> <br />
 
         <table class="table table-bordered">
             <tr class="success">

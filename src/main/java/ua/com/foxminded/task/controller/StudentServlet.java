@@ -23,26 +23,26 @@ public class StudentServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String text = null;
+        String errorMessage = null;
         StudentDto student = null;
         String idString = req.getParameter("id");
         int id = 0;
         try {
             id = Integer.valueOf(idString);
             if (StringUtils.isBlank(idString)) {
-                text = "You id is blank";
+                errorMessage = "You id is blank";
             } else {
                 student = studentService.findById(id);
             }
         } catch (NoExecuteQueryException e) {
-            text = "Something with student goes wrong!";
+            errorMessage = "Something with student goes wrong!";
         } catch (NoEntityFoundException e) {
-            text = "Student by id#" + id + " not found!";
+            errorMessage = "Student by id#" + id + " not found!";
         } catch (NumberFormatException e) {
-            text = "Student id# must be numeric!";
+            errorMessage = "Student id# must be numeric!";
         }
         req.setAttribute("student", student);
-        req.setAttribute("text", text);
+        req.setAttribute("errorMessage", errorMessage);
         req.getRequestDispatcher("student.jsp").forward(req, resp);
     }
 }

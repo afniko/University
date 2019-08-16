@@ -21,15 +21,15 @@ public class GroupsServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String text = null;
+        String errorMessage = null;
         List<GroupDto> groups = null;
         try {
             groups = groupService.findAll();
         } catch (NoExecuteQueryException e) {
-            text = "Something with group goes wrong!";
+            errorMessage = "Something with group goes wrong!";
         }
         req.setAttribute("groups", groups);
-        req.setAttribute("text", text);
+        req.setAttribute("errorMessage", errorMessage);
         req.getRequestDispatcher("groups.jsp").forward(req, resp);
     }
 }
