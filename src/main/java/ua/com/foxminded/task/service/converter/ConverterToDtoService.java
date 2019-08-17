@@ -12,6 +12,7 @@ public final class ConverterToDtoService {
 
     public static StudentDto convert(Student student) {
         StudentDto studentDto = new StudentDto();
+        studentDto.setId(student.getId());
         studentDto.setFirstName(student.getFirstName());
         studentDto.setMiddleName(student.getMiddleName());
         studentDto.setBirthday(student.getBirthday());
@@ -22,6 +23,7 @@ public final class ConverterToDtoService {
 
     public static GroupDto convert(Group group) {
         GroupDto groupDto = new GroupDto();
+        groupDto.setId(group.getId());
         groupDto.setTitle(group.getTitle());
         groupDto.setYearEntry(group.getYearEntry());
         return groupDto;
