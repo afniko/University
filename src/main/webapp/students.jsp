@@ -46,15 +46,6 @@
             <br />
         </c:if>
         <c:if test="${!empty students}">
-            <form class="form-inline" action="${pageContext.request.contextPath}/student">
-                <div class="form-group">
-                    <label for="idGroup">id#</label> <input type="text" class="form-control" id="idGroup" placeholder="Enter Id" name="id">
-                </div>
-                <button type="submit" class="btn btn-default">Search</button>
-            </form>
-
-            <br />
-
             <table class="table table-hover">
                 <tr>
                     <th>First name</th>
@@ -64,7 +55,7 @@
                     <th>Group title</th>
                 </tr>
                 <c:forEach var="student" items="${students}">
-                    <tr>
+                    <tr onclick="window.location='${pageContext.request.contextPath}/student?id=${student.id}'">
                         <td>${student.firstName}</td>
                         <td>${student.middleName}</td>
                         <td>${student.birthday}</td>

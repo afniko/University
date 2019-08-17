@@ -45,22 +45,13 @@
             <br />
         </c:if>
         <c:if test="${!empty groups}">
-            <form class="form-inline" action="${pageContext.request.contextPath}/group">
-                <div class="form-group">
-                    <label for="idGroup">id#</label> <input type="text" class="form-control" id="idGroup" placeholder="Enter Id" name="id">
-                </div>
-                <button type="submit" class="btn btn-default">Search</button>
-            </form>
-
-            <br />
-
             <table class="table table-hover">
                 <tr>
                     <th>Title</th>
                     <th>Year of entry</th>
                 </tr>
                 <c:forEach var="group" items="${groups}">
-                    <tr>
+                    <tr onclick="window.location='${pageContext.request.contextPath}/group?id=${group.id}'">
                         <td>${group.title}</td>
                         <td>${group.yearEntry}</td>
                     </tr>
