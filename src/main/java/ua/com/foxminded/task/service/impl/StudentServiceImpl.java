@@ -24,4 +24,8 @@ public class StudentServiceImpl implements StudentService {
         return studentDao.findAll().stream().map(ConverterToDtoService::convert).collect(Collectors.toList());
     }
 
+    public void setStudentDao(StudentDao studentDao) {
+        this.studentDao = studentDao;
+    }
+
 }

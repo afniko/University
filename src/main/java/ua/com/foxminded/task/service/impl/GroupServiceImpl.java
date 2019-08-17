@@ -23,4 +23,9 @@ public class GroupServiceImpl implements GroupService {
     public List<GroupDto> findAll() {
         return groupDao.findAll().stream().map(ConverterToDtoService::convert).collect(Collectors.toList());
     }
+
+    public void setGroupDao(GroupDao groupDao) {
+        this.groupDao = groupDao;
+    }
+
 }
