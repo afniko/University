@@ -41,34 +41,39 @@
     </nav>
 
     <div class="container-fluid">
-        <label class="control-label col-sm-3" for="errorMessage">${errorMessage}</label> <br />
-        <form class="form-inline" action="${pageContext.request.contextPath}/student">
-            <div class="form-group">
-                <label for="idGroup">id#</label> <input type="text" class="form-control" id="idGroup" placeholder="Enter Id" name="id">
-            </div>
-            <button type="submit" class="btn btn-default">Search</button>
-        </form>
+        <c:if test="${!empty errorMessage}">
+            <div class="alert alert-danger">${errorMessage}</div>
+            <br />
+        </c:if>
+        <c:if test="${!empty students}">
+            <form class="form-inline" action="${pageContext.request.contextPath}/student">
+                <div class="form-group">
+                    <label for="idGroup">id#</label> <input type="text" class="form-control" id="idGroup" placeholder="Enter Id" name="id">
+                </div>
+                <button type="submit" class="btn btn-default">Search</button>
+            </form>
 
-        <br />
+            <br />
 
-        <table class="table table-hover">
-            <tr>
-                <th>First name</th>
-                <th>Middle name</th>
-                <th>Birthday</th>
-                <th>Id fees</th>
-                <th>Group title</th>
-            </tr>
-            <c:forEach var="student" items="${students}">
+            <table class="table table-hover">
                 <tr>
-                    <td>${student.firstName}</td>
-                    <td>${student.middleName}</td>
-                    <td>${student.birthday}</td>
-                    <td>${student.idFees}</td>
-                    <td>${student.groupTitle}</td>
+                    <th>First name</th>
+                    <th>Middle name</th>
+                    <th>Birthday</th>
+                    <th>Id fees</th>
+                    <th>Group title</th>
                 </tr>
-            </c:forEach>
-        </table>
+                <c:forEach var="student" items="${students}">
+                    <tr>
+                        <td>${student.firstName}</td>
+                        <td>${student.middleName}</td>
+                        <td>${student.birthday}</td>
+                        <td>${student.idFees}</td>
+                        <td>${student.groupTitle}</td>
+                    </tr>
+                </c:forEach>
+            </table>
+        </c:if>
     </div>
 </body>
 </html>

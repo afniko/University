@@ -41,18 +41,22 @@
     </nav>
 
     <div class="container-fluid">
-        <label class="control-label col-sm-3" for="errorMessage">${errorMessage}</label> <br />
-
-        <table class="table table-bordered">
-            <tr class="success">
-                <th>Title</th>
-                <td>${group.title}</td>
-            </tr>
-            <tr>
-                <th>Year of entry</th>
-                <td>${group.yearEntry}</td>
-            </tr>
-        </table>
+        <c:if test="${!empty errorMessage}">
+            <div class="alert alert-danger">${errorMessage}</div>
+            <br />
+        </c:if>
+        <c:if test="${!empty group}">
+            <table class="table table-bordered">
+                <tr class="success">
+                    <th>Title</th>
+                    <td>${group.title}</td>
+                </tr>
+                <tr>
+                    <th>Year of entry</th>
+                    <td>${group.yearEntry}</td>
+                </tr>
+            </table>
+        </c:if>
     </div>
     <br />
 </body>

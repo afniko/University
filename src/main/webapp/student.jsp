@@ -42,30 +42,34 @@
     </nav>
 
     <div class="container-fluid">
-        <label class="control-label col-sm-3" for="errorMessage">${errorMessage}</label> <br />
-
-        <table class="table table-bordered">
-            <tr class="success">
-                <th>First name</th>
-                <td>${student.firstName}</td>
-            </tr>
-            <tr>
-                <th>Middle name</th>
-                <td>${student.middleName}</td>
-            </tr>
-            <tr>
-                <th>Birthday</th>
-                <td>${student.birthday}</td>
-            </tr>
-            <tr>
-                <th>Id fees</th>
-                <td>${student.idFees}</td>
-            </tr>
-            <tr>
-                <th>Group title</th>
-                <td>${student.groupTitle}</td>
-            </tr>
-        </table>
+        <c:if test="${!empty errorMessage}">
+            <div class="alert alert-danger">${errorMessage}</div>
+            <br />
+        </c:if>
+        <c:if test="${!empty student}">
+            <table class="table table-bordered">
+                <tr class="success">
+                    <th>First name</th>
+                    <td>${student.firstName}</td>
+                </tr>
+                <tr>
+                    <th>Middle name</th>
+                    <td>${student.middleName}</td>
+                </tr>
+                <tr>
+                    <th>Birthday</th>
+                    <td>${student.birthday}</td>
+                </tr>
+                <tr>
+                    <th>Id fees</th>
+                    <td>${student.idFees}</td>
+                </tr>
+                <tr>
+                    <th>Group title</th>
+                    <td>${student.groupTitle}</td>
+                </tr>
+            </table>
+        </c:if>
     </div>
     <br />
 </body>

@@ -40,28 +40,33 @@
     </nav>
 
     <div class="container-fluid">
-        <label class="control-label col-sm-3" for="errorMessage">${errorMessage}</label> <br />
-        <form class="form-inline" action="${pageContext.request.contextPath}/group">
-            <div class="form-group">
-                <label for="idGroup">id#</label> <input type="text" class="form-control" id="idGroup" placeholder="Enter Id" name="id">
-            </div>
-            <button type="submit" class="btn btn-default">Search</button>
-        </form>
+        <c:if test="${!empty errorMessage}">
+            <div class="alert alert-danger">${errorMessage}</div>
+            <br />
+        </c:if>
+        <c:if test="${!empty groups}">
+            <form class="form-inline" action="${pageContext.request.contextPath}/group">
+                <div class="form-group">
+                    <label for="idGroup">id#</label> <input type="text" class="form-control" id="idGroup" placeholder="Enter Id" name="id">
+                </div>
+                <button type="submit" class="btn btn-default">Search</button>
+            </form>
 
-        <br />
+            <br />
 
-        <table class="table table-hover">
-            <tr>
-                <th>Title</th>
-                <th>Year of entry</th>
-            </tr>
-            <c:forEach var="group" items="${groups}">
+            <table class="table table-hover">
                 <tr>
-                    <td>${group.title}</td>
-                    <td>${group.yearEntry}</td>
+                    <th>Title</th>
+                    <th>Year of entry</th>
                 </tr>
-            </c:forEach>
-        </table>
+                <c:forEach var="group" items="${groups}">
+                    <tr>
+                        <td>${group.title}</td>
+                        <td>${group.yearEntry}</td>
+                    </tr>
+                </c:forEach>
+            </table>
+        </c:if>
     </div>
     <br />
 </body>
