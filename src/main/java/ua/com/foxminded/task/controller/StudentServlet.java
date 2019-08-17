@@ -30,7 +30,7 @@ public class StudentServlet extends HttpServlet {
         int id = 0;
         try {
             id = Integer.valueOf(idString);
-            if (StringUtils.isBlank(idString)) {
+            if (validate(idString)) {
                 errorMessage = "You id is blank";
             } else {
                 student = studentService.findById(id);
@@ -45,5 +45,9 @@ public class StudentServlet extends HttpServlet {
         req.setAttribute("student", student);
         req.setAttribute("errorMessage", errorMessage);
         req.getRequestDispatcher("student.jsp").forward(req, resp);
+    }
+
+    private boolean validate(String idString) {
+        return StringUtils.isBlank(idString);
     }
 }
