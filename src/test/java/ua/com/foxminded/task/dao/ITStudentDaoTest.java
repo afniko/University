@@ -32,9 +32,11 @@ public class ITStudentDaoTest {
     private static final Group GROUP12 = GroupModelRepository.getModel12();
     private static final Group GROUP13 = GroupModelRepository.getModel13();
 
+    private static FlywayConnection flywayConnection = new FlywayConnection();
+
     @BeforeAll
     public static void createRecords() {
-        DaoFactory.getInstance().createTables();
+        flywayConnection.createTables();
         studentDao = new StudentDaoImpl();
         groupDao = new GroupDaoImpl();
         groupDao.create(GROUP11);
@@ -61,6 +63,6 @@ public class ITStudentDaoTest {
 
     @AfterAll
     public static void removeCreatedTables() {
-        DaoFactory.getInstance().removeTables();
+        flywayConnection.removeTables();
     }
 }

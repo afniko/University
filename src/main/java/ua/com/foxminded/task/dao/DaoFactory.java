@@ -12,7 +12,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Properties;
 
-import org.flywaydb.core.Flyway;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -21,31 +20,16 @@ public class DaoFactory {
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getSimpleName());
     private static DaoFactory instance;
     private Properties properties;
-    private Flyway flyway;
 
     private DaoFactory() {
         properties = getProperties(APPLICATION_PROPERTIES_FILE);
-        
+
         try {
             Class.forName(properties.getProperty("db.driver"));
             LOGGER.debug("Driver database {} registered", properties.getProperty("db.driver"));
         } catch (ClassNotFoundException e) {
             LOGGER.error("Driver database {} not found : {}", properties.getProperty("db.driver"), e);
         }
-        flywayInit();
-        createTables();
-    }
-
-    private void flywayInit() {
-        flyway = Flyway.configure().configuration(properties).load();
-    }
-
-    public void createTables() {
-        flyway.migrate();
-    }
-
-    public void removeTables() {
-        flyway.clean();
     }
 
     public Connection getConnection() throws SQLException {

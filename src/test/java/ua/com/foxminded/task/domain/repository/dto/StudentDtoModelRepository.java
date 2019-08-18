@@ -1,0 +1,109 @@
+package ua.com.foxminded.task.domain.repository.dto;
+
+import java.sql.Date;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import ua.com.foxminded.task.domain.Group;
+import ua.com.foxminded.task.domain.dto.StudentDto;
+import ua.com.foxminded.task.domain.repository.GroupModelRepository;
+
+public class StudentDtoModelRepository {
+
+    private StudentDtoModelRepository() {
+    }
+
+    public static List<StudentDto> getModels() {
+        List<StudentDto> students = Arrays.asList(getModel1(), getModel2(), getModel3(), getModel4(), getModel5(), getModel6());
+        return new ArrayList<>(students);
+    }
+
+    public static List<StudentDto> getModels1() {
+        List<StudentDto> students = Arrays.asList(getModel1(), getModel2());
+        return new ArrayList<>(students);
+    }
+
+    public static List<StudentDto> getModels2() {
+        List<StudentDto> students = Arrays.asList(getModel3(), getModel4());
+        return new ArrayList<>(students);
+    }
+
+    public static List<StudentDto> getModels3() {
+        List<StudentDto> students = Arrays.asList(getModel5(), getModel6());
+        return new ArrayList<>(students);
+    }
+
+    public static StudentDto getModel1() {
+        StudentDto student = new StudentDto();
+        Group group = GroupModelRepository.getModel11();
+        group.setId(1);
+        student.setFirstName("firstName1");
+        student.setMiddleName("middleName1");
+        student.setBirthday(Date.valueOf("1999-06-25"));
+        student.setIdFees(1111111111);
+        student.setGroupTitle(group.getTitle());
+        return student;
+    }
+
+    public static StudentDto getModel2() {
+        StudentDto student = new StudentDto();
+        Group group = GroupModelRepository.getModel11();
+        group.setId(1);
+        student.setFirstName("firstName2");
+        student.setMiddleName("middleName2");
+        student.setBirthday(Date.valueOf("1998-06-25"));
+        student.setIdFees(1222211111);
+        student.setGroupTitle(group.getTitle());
+        return student;
+    }
+
+    public static StudentDto getModel3() {
+        StudentDto student = new StudentDto();
+        Group group = GroupModelRepository.getModel12();
+        group.setId(2);
+        student.setFirstName("firstName3");
+        student.setMiddleName("middleName3");
+        student.setBirthday(Date.valueOf("2001-07-25"));
+        student.setIdFees(1111133331);
+        student.setGroupTitle(group.getTitle());
+        return student;
+    }
+
+    public static StudentDto getModel4() {
+        StudentDto student = new StudentDto();
+        Group group = GroupModelRepository.getModel12();
+        group.setId(2);
+        student.setFirstName("firstName4");
+        student.setMiddleName("middleName4");
+        student.setBirthday(Date.valueOf("1999-06-25"));
+        student.setIdFees(1411111141);
+        student.setGroupTitle(group.getTitle());
+        return student;
+    }
+
+    public static StudentDto getModel5() {
+        StudentDto student = new StudentDto();
+        Group group = GroupModelRepository.getModel12();
+        group.setId(2);
+        student.setFirstName("firstName5");
+        student.setMiddleName("middleName5");
+        student.setBirthday(Date.valueOf("1998-01-20"));
+        student.setIdFees(1111111551);
+        student.setGroupTitle(group.getTitle());
+        return student;
+    }
+
+    public static StudentDto getModel6() {
+        StudentDto student = new StudentDto();
+        Group group = GroupModelRepository.getModel13();
+        group.setId(3);
+        student.setFirstName("firstName6");
+        student.setMiddleName("middleName6");
+        student.setBirthday(Date.valueOf("1997-02-15"));
+        student.setIdFees(1111111661);
+        student.setGroupTitle(group.getTitle());
+        return student;
+    }
+
+}
