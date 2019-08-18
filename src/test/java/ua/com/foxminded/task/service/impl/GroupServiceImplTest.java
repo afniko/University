@@ -4,13 +4,11 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 import java.util.List;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.platform.runner.JUnitPlatform;
 import org.junit.runner.RunWith;
@@ -25,12 +23,7 @@ import ua.com.foxminded.task.domain.repository.dto.GroupDtoModelRepository;
 @RunWith(JUnitPlatform.class)
 public class GroupServiceImplTest {
     private GroupDao groupDao = mock(GroupDaoImpl.class);
-    private GroupServiceImpl groupService = spy(new GroupServiceImpl());
-
-    @BeforeEach
-    private void init() {
-        groupService.setGroupDao(groupDao);
-    }
+    private GroupServiceImpl groupService = new GroupServiceImpl(groupDao);
 
     @Test
     void whenFindById_thenFindGroupAndConvertItToDto() {
@@ -42,7 +35,6 @@ public class GroupServiceImplTest {
 
         verify(groupDao, times(1)).findById(any(Integer.class));
         assertEquals(groupDtoExpected, groupDtoActually);
-
     }
 
     @Test

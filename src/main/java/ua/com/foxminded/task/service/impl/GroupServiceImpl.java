@@ -13,6 +13,13 @@ import ua.com.foxminded.task.service.converter.ConverterToDtoService;
 public class GroupServiceImpl implements GroupService {
     private GroupDao groupDao = new GroupDaoImpl();
 
+    public GroupServiceImpl() {
+    }
+
+    public GroupServiceImpl(GroupDao groupDao) {
+        this.groupDao = groupDao;
+    }
+
     @Override
     public GroupDto findById(int id) {
         Group group = groupDao.findById(id);
@@ -23,9 +30,4 @@ public class GroupServiceImpl implements GroupService {
     public List<GroupDto> findAll() {
         return groupDao.findAll().stream().map(ConverterToDtoService::convert).collect(Collectors.toList());
     }
-
-    public void setGroupDao(GroupDao groupDao) {
-        this.groupDao = groupDao;
-    }
-
 }

@@ -4,13 +4,11 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 import java.util.List;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.platform.runner.JUnitPlatform;
 import org.junit.runner.RunWith;
@@ -25,12 +23,7 @@ import ua.com.foxminded.task.domain.repository.dto.StudentDtoModelRepository;
 @RunWith(JUnitPlatform.class)
 public class StudentServiceImplTest {
     private StudentDao studentDao = mock(StudentDaoImpl.class);
-    private StudentServiceImpl studentService = spy(new StudentServiceImpl());
-
-    @BeforeEach
-    private void init() {
-        studentService.setStudentDao(studentDao);
-    }
+    private StudentServiceImpl studentService = new StudentServiceImpl(studentDao);
 
     @Test
     void whenFindById_thenFindStudentAndConvertItToDto() {
@@ -42,7 +35,6 @@ public class StudentServiceImplTest {
 
         verify(studentDao, times(1)).findById(any(Integer.class));
         assertEquals(studentDtoExpected, studentDtoActually);
-
     }
 
     @Test

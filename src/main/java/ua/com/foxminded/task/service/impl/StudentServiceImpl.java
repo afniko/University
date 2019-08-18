@@ -13,6 +13,13 @@ import ua.com.foxminded.task.service.converter.ConverterToDtoService;
 public class StudentServiceImpl implements StudentService {
     private StudentDao studentDao = new StudentDaoImpl();
 
+    public StudentServiceImpl() {
+    }
+
+    public StudentServiceImpl(StudentDao studentDao) {
+        this.studentDao = studentDao;
+    }
+
     @Override
     public StudentDto findById(int id) {
         Student student = studentDao.findById(id);
@@ -23,9 +30,4 @@ public class StudentServiceImpl implements StudentService {
     public List<StudentDto> findAll() {
         return studentDao.findAll().stream().map(ConverterToDtoService::convert).collect(Collectors.toList());
     }
-
-    public void setStudentDao(StudentDao studentDao) {
-        this.studentDao = studentDao;
-    }
-
 }
