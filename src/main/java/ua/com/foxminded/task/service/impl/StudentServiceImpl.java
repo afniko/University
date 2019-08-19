@@ -30,4 +30,10 @@ public class StudentServiceImpl implements StudentService {
     public List<StudentDto> findAll() {
         return studentDao.findAll().stream().map(ConverterToDtoService::convert).collect(Collectors.toList());
     }
+
+    @Override
+    public Student create(Student student) {
+        return studentDao.create(student);
+    }
+
 }

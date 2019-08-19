@@ -18,14 +18,14 @@
 <!-- Latest compiled and minified JavaScript -->
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
 
-<title>Group create page</title>
+<title>Student create page</title>
 </head>
 <body>
 
     <nav class="navbar navbar-default">
     <div class="container-fluid">
         <div class="navbar-header">
-            <a href="#" class="navbar-brand">Group page</a>
+            <a href="#" class="navbar-brand">Student create page</a>
         </div>
     </div>
 
@@ -45,17 +45,29 @@
             <div class="alert alert-danger">${errorMessage}</div>
             <br />
         </c:if>
-        <c:if test="${!empty group}">
+        <c:if test="${!empty student}">
             <div class="alert alert-success">${successMessage}</div>
             <br />
             <table class="table table-bordered">
                 <tr class="success">
-                    <th>Title</th>
-                    <td>${group.title}</td>
+                    <th>First name</th>
+                    <td>${student.firstName}</td>
                 </tr>
                 <tr>
-                    <th>Year of entry</th>
-                    <td>${group.yearEntry}</td>
+                    <th>Middle name</th>
+                    <td>${student.middleName}</td>
+                </tr>
+                <tr>
+                    <th>Last name</th>
+                    <td>${student.lastName}</td>
+                </tr>
+                <tr>
+                    <th>Date of Birthday</th>
+                    <td>${student.birthday}</td>
+                </tr>
+                <tr>
+                    <th>Id fees</th>
+                    <td>${student.idFees}</td>
                 </tr>
             </table>
         </c:if>
@@ -63,18 +75,30 @@
     <br />
 
     <div class="container-fluid">
-        <form class="form-horizontal" action="${pageContext.request.contextPath}/group_create">
+        <form class="form-horizontal" action="${pageContext.request.contextPath}/student_create">
             <div class="form-group">
-                <label for="text" class="col-sm-3 control-label">Title</label>
+                <label for="text" class="col-sm-3 control-label">First name</label>
                 <div class="col-sm-9">
-                    <input type="text" class="form-control" id="title" name="title" placeholder="Enter title">
+                    <input type="text" class="form-control" id="first_name" name="first_name" placeholder="Enter first name">
                 </div>
-
-                <label for="text" class="col-sm-3 control-label">Year of entry</label>
+                <label for="text" class="col-sm-3 control-label">Middle name</label>
                 <div class="col-sm-9">
-                    <input type="text" class="form-control" id="year_entry" name="year_entry" placeholder="YYYY-MM-DD">
+                    <input type="text" class="form-control" id="middle_name" name="middle_name" placeholder="Enter middle name">
+                </div>
+                <label for="text" class="col-sm-3 control-label">Last name</label>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control" id="last_name" name="last_name" placeholder="Enter last name">
+                </div>
+                <label for="text" class="col-sm-3 control-label">Date of Birthday</label>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control" id="birthday" name="birthday" placeholder="YYYY-MM-DD">
+                </div>
+                <label for="text" class="col-sm-3 control-label">Id Fees</label>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control" id="idFees" name="idFees" placeholder="XXXXXXXXXX - 10 number">
                 </div>
             </div>
+
 
             <div class="form-group">
                 <div class="col-sm-offset-3 col-sm-9">

@@ -25,6 +25,7 @@ public class GroupCreateServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String errorMessage = null;
+        String successMessage = null;
         String title = req.getParameter("title");
         String yearEntry = req.getParameter("year_entry");
         Group group = null;
@@ -34,14 +35,16 @@ public class GroupCreateServlet extends HttpServlet {
             group.setYearEntry(Date.valueOf(yearEntry));
             try {
                 group = groupService.create(group);
+                successMessage = "Record group was created!";
             } catch (NoExecuteQueryException e) {
-                errorMessage = "Group was not created!";
+                errorMessage = "Record group was not created!";
             }
         } else {
             errorMessage = "You enter incorrect data";
         }
         req.setAttribute("group", group);
         req.setAttribute("errorMessage", errorMessage);
+        req.setAttribute("successMessage", successMessage);
         req.getRequestDispatcher("group_create.jsp").forward(req, resp);
     }
 

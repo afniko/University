@@ -34,6 +34,7 @@
             <li><a href="${pageContext.request.contextPath}/students">students page</a></li>
             <li><a href="${pageContext.request.contextPath}/groups">groups page</a></li>
             <li><a href="${pageContext.request.contextPath}/group_create.jsp">group create page</a></li>
+            <li><a href="${pageContext.request.contextPath}/student_create.jsp">student create page</a></li>
         </ul>
     </div>
 

@@ -89,8 +89,10 @@ public class StudentDaoImpl implements StudentDao {
         String sql = "insert into students (person_id, group_id) values (?, ?)";
         Connection connection = null;
         PreparedStatement preparedStatement = null;
-
-        Integer groupId = student.getGroup().getId() == 0 ? null : student.getGroup().getId();
+        Integer groupId = null;
+        if (Objects.nonNull(student.getGroup())) {
+            groupId = student.getGroup().getId() == 0 ? null : student.getGroup().getId();
+        }
         try {
             connection = daoFactory.getConnection();
             preparedStatement = connection.prepareStatement(sql);
@@ -161,7 +163,9 @@ public class StudentDaoImpl implements StudentDao {
             daoFactory.closeConnection(connection);
         }
         Group group = new Group();
-        group.setId(groupId);
+        if (Objects.nonNull(groupId)) {
+            group.setId(groupId);
+        }
         student.setGroup(group);
         return student;
     }
