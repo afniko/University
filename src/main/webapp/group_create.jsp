@@ -65,23 +65,22 @@
             <div class="form-group">
                 <label for="text" class="col-sm-2 control-label">Title</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" id="title" value="${group.title}" name="title" placeholder="Enter title">
+                    <input type="text" class="form-control" id="title" name="title" placeholder="Enter title">
                 </div>
             </div>
             <div class="form-group">
                 <label for="text" class="col-sm-2 control-label">Year of entry</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" id="year_entry" value="${group.yearEntry}" name="year_entry" placeholder="YYYY-MM-DD">
+                    <input type="text" class="form-control" id="year_entry" name="year_entry" placeholder="YYYY-MM-DD">
                 </div>
             </div>
 
             <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">
-                    <button type="submit" class="btn btn-default">Update</button>
+                    <button type="submit" class="btn btn-default">Create</button>
                 </div>
             </div>
         </form>
     </div>
-
 </body>
 </html>

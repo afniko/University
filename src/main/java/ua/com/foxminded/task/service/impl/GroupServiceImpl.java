@@ -11,6 +11,7 @@ import ua.com.foxminded.task.service.GroupService;
 import ua.com.foxminded.task.service.converter.ConverterToDtoService;
 
 public class GroupServiceImpl implements GroupService {
+
     private GroupDao groupDao = new GroupDaoImpl();
 
     public GroupServiceImpl() {
@@ -29,5 +30,10 @@ public class GroupServiceImpl implements GroupService {
     @Override
     public List<GroupDto> findAll() {
         return groupDao.findAll().stream().map(ConverterToDtoService::convert).collect(Collectors.toList());
+    }
+
+    @Override
+    public Group create(Group group) {
+        return groupDao.create(group);
     }
 }

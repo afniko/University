@@ -2,6 +2,7 @@ package ua.com.foxminded.task.service;
 
 import java.util.List;
 
+import ua.com.foxminded.task.domain.Group;
 import ua.com.foxminded.task.domain.dto.GroupDto;
 
 public interface GroupService {
@@ -10,4 +11,5 @@ public interface GroupService {
 
     public List<GroupDto> findAll();
 
+    public Group create(Group group);
 }
