@@ -48,4 +48,17 @@ public class StudentServiceImplTest {
         verify(studentDao, times(1)).findAll();
         assertEquals(studentDtosExpected, studentDtosActually);
     }
+
+    @Test
+    void whenCreate_thenInvocCreateDaoClass() {
+        Student studentInput = StudentModelRepository.getModel1();
+        Student studentExpected = StudentModelRepository.getModel2();
+        doReturn(studentExpected).when(studentDao).create(studentInput);
+
+        Student studentActually = studentService.create(studentInput);
+
+        verify(studentDao, times(1)).create(studentInput);
+        assertEquals(studentExpected, studentActually);
+    }
+
 }
