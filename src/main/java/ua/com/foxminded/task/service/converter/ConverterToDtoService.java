@@ -15,6 +15,7 @@ public final class ConverterToDtoService {
         studentDto.setId(student.getId());
         studentDto.setFirstName(student.getFirstName());
         studentDto.setMiddleName(student.getMiddleName());
+        studentDto.setLastName(student.getLastName());
         studentDto.setBirthday(student.getBirthday());
         studentDto.setIdFees(student.getIdFees());
         studentDto.setGroupTitle(student.getGroup().getTitle());

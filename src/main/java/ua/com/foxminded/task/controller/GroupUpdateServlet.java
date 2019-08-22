@@ -13,6 +13,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import ua.com.foxminded.task.dao.exception.NoExecuteQueryException;
 import ua.com.foxminded.task.domain.Group;
+import ua.com.foxminded.task.domain.dto.GroupDto;
 import ua.com.foxminded.task.service.GroupService;
 import ua.com.foxminded.task.service.impl.GroupServiceImpl;
 
@@ -29,14 +30,14 @@ public class GroupUpdateServlet extends HttpServlet {
         String id = req.getParameter("id");
         String title = req.getParameter("title");
         String yearEntry = req.getParameter("year_entry");
-        Group group = null;
+        GroupDto groupDto = null;
         if (validateTitle(title) && validateYearEntry(yearEntry)) {
-            group = new Group();
-            group.setId(Integer.valueOf(id));
-            group.setTitle(title);
-            group.setYearEntry(Date.valueOf(yearEntry));
             try {
-                group = groupService.update(group);
+                Group group = new Group();
+                group.setId(Integer.valueOf(id));
+                group.setTitle(title);
+                group.setYearEntry(Date.valueOf(yearEntry));
+                groupDto = groupService.update(group);
                 successMessage = "Record group was updated!";
             } catch (NoExecuteQueryException e) {
                 errorMessage = "Record group was not updated!";
@@ -44,7 +45,7 @@ public class GroupUpdateServlet extends HttpServlet {
         } else {
             errorMessage = "You enter incorrect data";
         }
-        req.setAttribute("group", group);
+        req.setAttribute("group", groupDto);
         req.setAttribute("errorMessage", errorMessage);
         req.setAttribute("successMessage", successMessage);
         req.getRequestDispatcher("group.jsp").forward(req, resp);

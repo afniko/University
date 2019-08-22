@@ -274,9 +274,64 @@ public class StudentDaoImpl implements StudentDao {
     }
 
     @Override
-    public Student update(Student t) {
-        // TODO Auto-generated method stub
-        return null;
+    public Student update(Student student) {
+        LOGGER.debug("update() [student:{}]", student);
+        updatePersonRecord(student);
+        updateStudentRecord(student);
+        return findById(student.getId());
+    }
+
+    private void updatePersonRecord(Student student) {
+        LOGGER.debug("updatePersonRecord() [student:{}]", student);
+        String sql = "update persons set first_name=?, last_name=?, middle_name=?, birthday=?, idfees=? where id=?";
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+
+        try {
+            connection = daoFactory.getConnection();
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, student.getFirstName());
+            preparedStatement.setString(2, student.getLastName());
+            preparedStatement.setString(3, student.getMiddleName());
+            preparedStatement.setDate(4, student.getBirthday());
+            preparedStatement.setInt(5, student.getIdFees());
+            preparedStatement.setInt(6, student.getId());
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            LOGGER.error("updatePersonRecord() [student:{}] was not updated. Sql query:{}. {}", student, preparedStatement, e);
+            throw new NoExecuteQueryException("updatePersonRecord() Student entity was not updated", e);
+        } finally {
+            daoFactory.closePreparedStatement(preparedStatement);
+            daoFactory.closeConnection(connection);
+        }
+    }
+
+    private void updateStudentRecord(Student student) {
+        LOGGER.debug("updateStudentRecord() [student:{}]", student);
+        String sql = "update students set group_id=? where person_id=? ";
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        Integer groupId = null;
+        if (Objects.nonNull(student.getGroup())) {
+            groupId = student.getGroup().getId() == 0 ? null : student.getGroup().getId();
+        }
+        try {
+            connection = daoFactory.getConnection();
+            preparedStatement = connection.prepareStatement(sql);
+            if (Objects.isNull(groupId)) {
+                preparedStatement.setNull(1, java.sql.Types.INTEGER);
+            } else {
+                preparedStatement.setInt(1, groupId);
+            }
+            preparedStatement.setInt(2, student.getId());
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            LOGGER.error("updateStudentRecord() [student:{}] was not updated. Sql query:{}. {}.", student, preparedStatement, e);
+            throw new NoExecuteQueryException("updateStudentRecord() [student:" + student + "] was not updated. Sql query:" + preparedStatement, e);
+        } finally {
+            daoFactory.closePreparedStatement(preparedStatement);
+            daoFactory.closeConnection(connection);
+        }
     }
 
 }

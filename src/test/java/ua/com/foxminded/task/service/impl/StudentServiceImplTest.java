@@ -61,4 +61,16 @@ public class StudentServiceImplTest {
         assertEquals(studentExpected, studentActually);
     }
 
+    @Test
+    void whenUpdate_thenInvocUpdateDaoClass() {
+        Student studentInput = StudentModelRepository.getModel1();
+        StudentDto studentDtoExpected = StudentDtoModelRepository.getModel1();
+        doReturn(studentInput).when(studentDao).update(studentInput);
+
+        StudentDto studentDtoActually = studentService.update(studentInput);
+
+        verify(studentDao, times(1)).update(studentInput);
+        assertEquals(studentDtoExpected, studentDtoActually);
+    }
+
 }

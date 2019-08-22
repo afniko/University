@@ -38,8 +38,9 @@ public class GroupServiceImpl implements GroupService {
     }
 
     @Override
-    public Group update(Group group) {
-        return groupDao.update(group);
+    public GroupDto update(Group group) {
+        Group groupUpdated = groupDao.update(group);
+        return ConverterToDtoService.convert(groupUpdated);
     }
 
 }

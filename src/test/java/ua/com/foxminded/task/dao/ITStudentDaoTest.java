@@ -1,5 +1,6 @@
 package ua.com.foxminded.task.dao;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Arrays;
@@ -58,7 +59,22 @@ public class ITStudentDaoTest {
 
     @Test
     public void WhenPutAtTableDbStudentObjects_thenGetThisObjects() {
-        assertTrue(studentDao.findAll().containsAll(Arrays.asList(STUDENT1, STUDENT2, STUDENT3, STUDENT4, STUDENT5, STUDENT6)));
+        assertTrue(studentDao.findAll().containsAll(Arrays.asList(STUDENT1, STUDENT2, STUDENT3, STUDENT4, STUDENT5)));
+    }
+
+    @Test
+    public void WhenUpdateAtTableDbStudentObject_thenGetNewObject() {
+        Student student = studentDao.findById(6);
+        String firstNameExpected = "test_first_name";
+        student.setFirstName(firstNameExpected);
+        student.setGroup(GROUP11);
+
+        Student studentActually = studentDao.update(student);
+
+        String firstNameActually = studentActually.getFirstName();
+        Group groupActually = studentActually.getGroup();
+        assertEquals(firstNameExpected, firstNameActually);
+        assertEquals(GROUP11, groupActually);
     }
 
     @AfterAll

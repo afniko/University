@@ -13,4 +13,6 @@ public interface StudentService {
 
     public Student create(Student student);
 
+    public StudentDto update(Student student);
+
 }

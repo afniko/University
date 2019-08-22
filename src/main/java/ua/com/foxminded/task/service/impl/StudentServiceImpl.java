@@ -36,4 +36,10 @@ public class StudentServiceImpl implements StudentService {
         return studentDao.create(student);
     }
 
+    @Override
+    public StudentDto update(Student student) {
+        Student studenUpdated = studentDao.update(student);
+        return ConverterToDtoService.convert(studenUpdated);
+    }
+
 }

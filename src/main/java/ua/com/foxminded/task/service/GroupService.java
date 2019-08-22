@@ -13,6 +13,6 @@ public interface GroupService {
 
     public Group create(Group group);
 
-    public Group update(Group group);
+    public GroupDto update(Group group);
 
 }

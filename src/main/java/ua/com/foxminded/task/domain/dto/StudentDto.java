@@ -7,48 +7,57 @@ public class StudentDto {
     protected int id;
     protected String firstName;
     protected String middleName;
+    protected String lastName;
     protected Date birthday;
     protected int idFees;
     private String groupTitle;
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public void setMiddleName(String middleName) {
-        this.middleName = middleName;
-    }
-
-    public void setBirthday(Date birthday) {
-        this.birthday = birthday;
-    }
-
-    public void setIdFees(int idFees) {
-        this.idFees = idFees;
-    }
-
     public int getId() {
         return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getFirstName() {
         return firstName;
     }
 
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
     public String getMiddleName() {
         return middleName;
+    }
+
+    public void setMiddleName(String middleName) {
+        this.middleName = middleName;
     }
 
     public Date getBirthday() {
         return birthday;
     }
 
+    public void setBirthday(Date birthday) {
+        this.birthday = birthday;
+    }
+
     public int getIdFees() {
         return idFees;
+    }
+
+    public void setIdFees(int idFees) {
+        this.idFees = idFees;
     }
 
     public String getGroupTitle() {
