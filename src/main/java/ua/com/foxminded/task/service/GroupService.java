@@ -12,4 +12,7 @@ public interface GroupService {
     public List<GroupDto> findAll();
 
     public Group create(Group group);
+
+    public Group update(Group group);
+
 }

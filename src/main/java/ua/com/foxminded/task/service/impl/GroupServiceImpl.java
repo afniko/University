@@ -36,4 +36,10 @@ public class GroupServiceImpl implements GroupService {
     public Group create(Group group) {
         return groupDao.create(group);
     }
+
+    @Override
+    public Group update(Group group) {
+        return groupDao.update(group);
+    }
+
 }

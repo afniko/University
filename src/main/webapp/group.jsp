@@ -46,6 +46,9 @@
             <br />
         </c:if>
         <c:if test="${!empty group}">
+            <c:if test="${!empty successMessage}">
+                <div class="alert alert-success">${successMessage}</div>
+            </c:if>
             <table class="table table-bordered">
                 <tr class="success">
                     <th>Title</th>
@@ -61,7 +64,8 @@
     <br />
 
     <div class="container-fluid">
-        <form class="form-horizontal" action="${pageContext.request.contextPath}/group_create">
+        <form class="form-horizontal" action="${pageContext.request.contextPath}/group_update">
+            <input type="hidden" name="id" value="${group.id}" />
             <div class="form-group">
                 <label for="text" class="col-sm-2 control-label">Title</label>
                 <div class="col-sm-10">
@@ -74,7 +78,6 @@
                     <input type="text" class="form-control" id="year_entry" value="${group.yearEntry}" name="year_entry" placeholder="YYYY-MM-DD">
                 </div>
             </div>
-
             <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">
                     <button type="submit" class="btn btn-default">Update</button>

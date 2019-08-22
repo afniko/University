@@ -61,4 +61,15 @@ public class GroupServiceImplTest {
         assertEquals(groupExpected, groupActually);
     }
 
+    @Test
+    void whenUpdate_thenInvocUpdateDaoClass() {
+        Group groupEmpty = GroupModelRepository.getEmptyModel();
+        Group groupExpected = GroupModelRepository.getModel1();
+        doReturn(groupExpected).when(groupDao).update(groupEmpty);
+
+        Group groupActually = groupService.update(groupEmpty);
+
+        verify(groupDao, times(1)).update(groupEmpty);
+        assertEquals(groupExpected, groupActually);
+    }
 }

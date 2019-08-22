@@ -1,5 +1,6 @@
 package ua.com.foxminded.task.dao;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Arrays;
@@ -39,9 +40,9 @@ public class ITGroupDaoTest {
         flywayConnection.createTables();
         groupDao = new GroupDaoImpl();
         studentDao = new StudentDaoImpl();
-        groupDao.create(GROUP11).getStudents();
-        groupDao.create(GROUP12).getStudents();
-        groupDao.create(GROUP13).getStudents();
+        groupDao.create(GROUP11);
+        groupDao.create(GROUP12);
+        groupDao.create(GROUP13);
         studentDao.create(STUDENT1);
         studentDao.create(STUDENT2);
         studentDao.create(STUDENT3);
@@ -58,7 +59,17 @@ public class ITGroupDaoTest {
 
     @Test
     public void WhenPutAtTableDbGroupObjects_thenGetThisObjects() {
-        assertTrue(groupDao.findAll().containsAll(Arrays.asList(GROUP11, GROUP12, GROUP13)));
+        assertTrue(groupDao.findAll().containsAll(Arrays.asList(GROUP12, GROUP13)));
+    }
+
+    @Test
+    public void WhenUpdateAtTableDbGroupObject_thenGetNewObject() {
+        String titleExpected = "test_title_text";
+        Group group = groupDao.findById(1);
+        group.setTitle(titleExpected);
+        Group groupActually = groupDao.update(group);
+        String titleActually = groupActually.getTitle();
+        assertEquals(titleExpected, titleActually);
     }
 
     @AfterAll

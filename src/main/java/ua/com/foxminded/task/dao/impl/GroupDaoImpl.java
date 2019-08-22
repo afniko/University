@@ -204,4 +204,38 @@ public class GroupDaoImpl implements GroupDao {
         return groups;
     }
 
+    @Override
+    public Group update(Group group) {
+        LOGGER.debug("update() [group:{}]", group);
+        updateGroupRecord(group);
+        return findById(group.getId());
+    }
+
+    private void updateGroupRecord(Group group) {
+        LOGGER.debug("updateGroupRecord() [group:{}]", group);
+        String sql = "update groups set title=?, department_id=?, yearEntry=? where id=? ";
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        Integer departmentId = Objects.nonNull(group.getDepartment()) ? group.getDepartment().getId() : null;
+
+        try {
+            connection = daoFactory.getConnection();
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, group.getTitle());
+            if (Objects.isNull(departmentId)) {
+                preparedStatement.setNull(2, java.sql.Types.INTEGER);
+            } else {
+                preparedStatement.setInt(2, departmentId);
+            }
+            preparedStatement.setDate(3, group.getYearEntry());
+            preparedStatement.setInt(4, group.getId());
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            LOGGER.error("updateGroupRecord() [group:{}] was not updated. Sql query:{}. {}", group, preparedStatement, e);
+            throw new NoExecuteQueryException("updateGroupRecord() [group:" + group + "] was not updated. Sql query:" + preparedStatement, e);
+        } finally {
+            daoFactory.closePreparedStatement(preparedStatement);
+            daoFactory.closeConnection(connection);
+        }
+    }
 }
