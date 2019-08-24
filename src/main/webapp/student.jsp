@@ -88,32 +88,22 @@
                 <div class="col-sm-10">
                     <input type="text" class="form-control" id="first_name" value="${student.firstName}" name="first_name">
                 </div>
-            </div>
-            <div class="form-group">
                 <label for="text" class="col-sm-2 control-label">Last name</label>
                 <div class="col-sm-10">
                     <input type="text" class="form-control" id="last_name" value="${student.lastName}" name="last_name">
                 </div>
-            </div>
-            <div class="form-group">
                 <label for="text" class="col-sm-2 control-label">Middle name</label>
                 <div class="col-sm-10">
                     <input type="text" class="form-control" id="middle_name" value="${student.middleName}" name="middle_name">
                 </div>
-            </div>
-            <div class="form-group">
                 <label for="text" class="col-sm-2 control-label">Birthday</label>
                 <div class="col-sm-10">
                     <input type="text" class="form-control" id="birthday" value="${student.birthday}" name="birthday">
                 </div>
-            </div>
-            <div class="form-group">
                 <label for="text" class="col-sm-2 control-label">Id fees</label>
                 <div class="col-sm-10">
                     <input type="text" class="form-control" id="idFees" value="${student.idFees}" name="idFees">
                 </div>
-            </div>
-            <div class="form-group">
                 <label for="text" class="col-sm-2 control-label">Group</label>
                 <div class="col-sm-10">
                     <select class="selectpicker" data-live-search="true" name="id_group">
@@ -129,8 +119,6 @@
                         </c:forEach>
                     </select>
                 </div>
-            </div>
-            <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">
                     <button type="submit" class="btn btn-default">Update</button>
                 </div>

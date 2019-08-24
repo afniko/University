@@ -35,16 +35,16 @@
     ('G464', 4, '2016-01-01');
 
   INSERT INTO persons (first_name, last_name, middle_name, birthday, idfees) VALUES
-    ('firstname1', 'lastname1', 'middlename1', '1991-02-01', 1111111),
-    ('firstname2', 'lastname2', 'middlename2', '1992-02-02', 1111112),
-    ('firstname3', 'lastname3', 'middlename3', '1993-02-03', 1111113),
-    ('firstname4', 'lastname4', 'middlename4', '1994-02-04', 1111114),
-    ('firstname5', 'lastname5', 'middlename5', '1995-02-05', 1111115),
-    ('firstname6', 'lastname6', 'middlename6', '1996-02-06', 1111116),
-    ('firstname7', 'lastname7', 'middlename7', '1997-02-07', 1111117),
-    ('firstname8', 'lastname8', 'middlename8', '1998-02-08', 1111118),
-    ('firstname9', 'lastname9', 'middlename9', '1999-02-09', 1111119),
-    ('firstname10', 'lastname10', 'middlename10', '2000-02-10', 1111120);
+    ('firstname1', 'lastname1', 'middlename1', '1991-02-01', 111111111),
+    ('firstname2', 'lastname2', 'middlename2', '1992-02-02', 111111112),
+    ('firstname3', 'lastname3', 'middlename3', '1993-02-03', 111111113),
+    ('firstname4', 'lastname4', 'middlename4', '1994-02-04', 111111114),
+    ('firstname5', 'lastname5', 'middlename5', '1995-02-05', 111111115),
+    ('firstname6', 'lastname6', 'middlename6', '1996-02-06', 111111116),
+    ('firstname7', 'lastname7', 'middlename7', '1997-02-07', 111111117),
+    ('firstname8', 'lastname8', 'middlename8', '1998-02-08', 111111118),
+    ('firstname9', 'lastname9', 'middlename9', '1999-02-09', 111111119),
+    ('firstname10', 'lastname10', 'middlename10', '2000-02-10', 111111120);
 
   INSERT INTO students (person_id, group_id) VALUES
     (1,1),

@@ -35,7 +35,7 @@ public class StudentUpdateServlet extends HttpServlet {
         String successMessage = null;
         StudentDto studentDto = null;
         List<GroupDto> groups = null;
-        Group group = null;
+
         String id = req.getParameter("id");
         String firstName = req.getParameter("first_name");
         String middleName = req.getParameter("middle_name");
@@ -44,16 +44,13 @@ public class StudentUpdateServlet extends HttpServlet {
         String idFees = req.getParameter("idFees");
         String idGroup = req.getParameter("id_group");
 
-        if (validateName(firstName) && validateName(middleName) && validateName(lastName) && validateBirthday(birthday) && validateIdFees(idFees)) {
+        if (validateName(firstName) 
+                && validateName(middleName) 
+                && validateName(lastName) 
+                && validateBirthday(birthday) 
+                && validateIdFees(idFees)) 
+        {
             try {
-                if (!StringUtils.isBlank(idGroup)) {
-                    if (idGroup.contains("0")) {
-                        group = new Group();
-                        group.setId(0);
-                    } else {
-                        group = groupService.findById(Integer.valueOf(idGroup));
-                    }
-                }
                 Student student = new Student();
                 student.setId(Integer.valueOf(id));
                 student.setFirstName(firstName);
@@ -61,7 +58,9 @@ public class StudentUpdateServlet extends HttpServlet {
                 student.setLastName(lastName);
                 student.setBirthday(Date.valueOf(birthday));
                 student.setIdFees(Integer.valueOf(idFees));
+                Group group = retrieveGroupById(idGroup);
                 student.setGroup(group);
+
                 studentDto = studentService.update(student);
                 groups = groupService.findAllDto();
                 successMessage = "Record student was updated!";
@@ -69,14 +68,26 @@ public class StudentUpdateServlet extends HttpServlet {
                 errorMessage = "Record student was not updated!";
             }
         } else {
-            errorMessage = "You enter incorrect data! fN= " + validateName(firstName) + " mN=" + validateName(middleName) + " lN=" + validateName(lastName) + " bd=" + validateBirthday(birthday)
-                    + " idF=" + validateIdFees(idFees);
+            errorMessage = "You enter incorrect data!";
         }
         req.setAttribute("student", studentDto);
         req.setAttribute("groups", groups);
         req.setAttribute("errorMessage", errorMessage);
         req.setAttribute("successMessage", successMessage);
         req.getRequestDispatcher("student.jsp").forward(req, resp);
+    }
+    
+    private Group retrieveGroupById(String idGroup) {
+        Group group = null;
+        if (!StringUtils.isBlank(idGroup)) {
+            if (idGroup.contains("0")) {
+                group = new Group();
+                group.setId(0);
+            } else {
+                group = groupService.findById(Integer.valueOf(idGroup));
+            }
+        }
+        return group;
     }
 
     private boolean validateName(String name) {

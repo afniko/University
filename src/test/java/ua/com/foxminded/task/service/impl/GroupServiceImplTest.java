@@ -26,6 +26,16 @@ public class GroupServiceImplTest {
     private GroupServiceImpl groupService = new GroupServiceImpl(groupDao);
 
     @Test
+    void whenFindById_thenFindGroup() {
+        Group group = GroupModelRepository.getModel1();
+        doReturn(group).when(groupDao).findById(1);
+
+        groupService.findById(1);
+
+        verify(groupDao, times(1)).findById(any(Integer.class));
+    }
+
+    @Test
     void whenFindById_thenFindGroupAndConvertItToDto() {
         Group group = GroupModelRepository.getModel1();
         GroupDto groupDtoExpected = GroupDtoModelRepository.getModel1();

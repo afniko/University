@@ -97,10 +97,6 @@
                 <div class="col-sm-9">
                     <input type="text" class="form-control" id="idFees" name="idFees" placeholder="XXXXXXXXX - 9 number">
                 </div>
-            </div>
-
-
-            <div class="form-group">
                 <div class="col-sm-offset-3 col-sm-9">
                     <button type="submit" class="btn btn-default">Create</button>
                 </div>
