@@ -74,6 +74,8 @@ public class StudentUpdateServlet extends HttpServlet {
         req.setAttribute("groups", groups);
         req.setAttribute("errorMessage", errorMessage);
         req.setAttribute("successMessage", successMessage);
+        req.setAttribute("title", "Student page");
+        req.setAttribute("title_header", "Student update page");
         req.getRequestDispatcher("student.jsp").forward(req, resp);
     }
     

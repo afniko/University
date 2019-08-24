@@ -44,6 +44,8 @@ public class GroupServlet extends HttpServlet {
         }
         req.setAttribute("group", group);
         req.setAttribute("errorMessage", errorMessage);
+        req.setAttribute("title", "Group page");
+        req.setAttribute("title_header", "Group page");
         req.getRequestDispatcher("group.jsp").forward(req, resp);
     }
 

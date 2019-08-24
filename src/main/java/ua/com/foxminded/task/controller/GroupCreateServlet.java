@@ -45,6 +45,8 @@ public class GroupCreateServlet extends HttpServlet {
         req.setAttribute("group", group);
         req.setAttribute("errorMessage", errorMessage);
         req.setAttribute("successMessage", successMessage);
+        req.setAttribute("title", "Group page");
+        req.setAttribute("title_header", "Group create page");
         req.getRequestDispatcher("group_create.jsp").forward(req, resp);
     }
 

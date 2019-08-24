@@ -27,12 +27,12 @@ public class GroupUpdateServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String errorMessage = null;
         String successMessage = null;
-        
+
         String id = req.getParameter("id");
         String title = req.getParameter("title");
         String yearEntry = req.getParameter("year_entry");
         GroupDto groupDto = null;
-        
+
         if (validateTitle(title) 
                 && validateYearEntry(yearEntry)) 
         {
@@ -41,7 +41,7 @@ public class GroupUpdateServlet extends HttpServlet {
                 group.setId(Integer.valueOf(id));
                 group.setTitle(title);
                 group.setYearEntry(Date.valueOf(yearEntry));
-                
+
                 groupDto = groupService.update(group);
                 successMessage = "Record group was updated!";
             } catch (NoExecuteQueryException e) {
@@ -53,6 +53,8 @@ public class GroupUpdateServlet extends HttpServlet {
         req.setAttribute("group", groupDto);
         req.setAttribute("errorMessage", errorMessage);
         req.setAttribute("successMessage", successMessage);
+        req.setAttribute("title", "Group page");
+        req.setAttribute("title_header", "Group update list");
         req.getRequestDispatcher("group.jsp").forward(req, resp);
     }
 

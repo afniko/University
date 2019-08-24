@@ -52,6 +52,8 @@ public class StudentServlet extends HttpServlet {
         req.setAttribute("student", student);
         req.setAttribute("groups", groups);
         req.setAttribute("errorMessage", errorMessage);
+        req.setAttribute("title", "Student page");
+        req.setAttribute("title_header", "Student page");
         req.getRequestDispatcher("student.jsp").forward(req, resp);
     }
 
