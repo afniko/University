@@ -21,13 +21,13 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public StudentDto findById(int id) {
+    public StudentDto findByIdDto(int id) {
         Student student = studentDao.findById(id);
         return ConverterToDtoService.convert(student);
     }
 
     @Override
-    public List<StudentDto> findAll() {
+    public List<StudentDto> findAllDto() {
         return studentDao.findAll().stream().map(ConverterToDtoService::convert).collect(Collectors.toList());
     }
 

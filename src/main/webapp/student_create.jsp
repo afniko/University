@@ -95,7 +95,7 @@
                 </div>
                 <label for="text" class="col-sm-3 control-label">Id Fees</label>
                 <div class="col-sm-9">
-                    <input type="text" class="form-control" id="idFees" name="idFees" placeholder="XXXXXXXXXX - 10 number">
+                    <input type="text" class="form-control" id="idFees" name="idFees" placeholder="XXXXXXXXX - 9 number">
                 </div>
             </div>
 

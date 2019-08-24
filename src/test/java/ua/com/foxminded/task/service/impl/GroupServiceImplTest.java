@@ -31,7 +31,7 @@ public class GroupServiceImplTest {
         GroupDto groupDtoExpected = GroupDtoModelRepository.getModel1();
         doReturn(group).when(groupDao).findById(1);
 
-        GroupDto groupDtoActually = groupService.findById(1);
+        GroupDto groupDtoActually = groupService.findByIdDto(1);
 
         verify(groupDao, times(1)).findById(any(Integer.class));
         assertEquals(groupDtoExpected, groupDtoActually);
@@ -43,7 +43,7 @@ public class GroupServiceImplTest {
         List<GroupDto> groupDtosExpected = GroupDtoModelRepository.getModels1();
         doReturn(groups).when(groupDao).findAll();
 
-        List<GroupDto> groupDtosActually = groupService.findAll();
+        List<GroupDto> groupDtosActually = groupService.findAllDto();
 
         verify(groupDao, times(1)).findAll();
         assertEquals(groupDtosExpected, groupDtosActually);

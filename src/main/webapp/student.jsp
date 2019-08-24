@@ -114,6 +114,23 @@
                 </div>
             </div>
             <div class="form-group">
+                <label for="text" class="col-sm-2 control-label">Group</label>
+                <div class="col-sm-10">
+                    <select class="selectpicker" data-live-search="true" name="id_group">
+                        <c:if test="${!empty student.groupTitle}">
+                            <option value="">${student.groupTitle}</option>
+                            <option value="0">Remove group</option>
+                        </c:if>
+                        <c:if test="${empty student.groupTitle}">
+                            <option value="">Choose group</option>
+                        </c:if>
+                        <c:forEach var="group" items="${groups}">
+                            <option data-tokens="${group.title}" value="${group.id}">${group.title}</option>
+                        </c:forEach>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">
                     <button type="submit" class="btn btn-default">Update</button>
                 </div>

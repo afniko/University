@@ -7,9 +7,9 @@ import ua.com.foxminded.task.domain.dto.StudentDto;
 
 public interface StudentService {
 
-    public StudentDto findById(int id);
+    public StudentDto findByIdDto(int id);
 
-    public List<StudentDto> findAll();
+    public List<StudentDto> findAllDto();
 
     public Student create(Student student);
 

@@ -31,7 +31,7 @@ public class StudentServiceImplTest {
         StudentDto studentDtoExpected = StudentDtoModelRepository.getModel1();
         doReturn(student).when(studentDao).findById(1);
 
-        StudentDto studentDtoActually = studentService.findById(1);
+        StudentDto studentDtoActually = studentService.findByIdDto(1);
 
         verify(studentDao, times(1)).findById(any(Integer.class));
         assertEquals(studentDtoExpected, studentDtoActually);
@@ -43,7 +43,7 @@ public class StudentServiceImplTest {
         List<StudentDto> studentDtosExpected = StudentDtoModelRepository.getModels1();
         doReturn(students).when(studentDao).findAll();
 
-        List<StudentDto> studentDtosActually = studentService.findAll();
+        List<StudentDto> studentDtosActually = studentService.findAllDto();
 
         verify(studentDao, times(1)).findAll();
         assertEquals(studentDtosExpected, studentDtosActually);

@@ -25,7 +25,7 @@ public class GroupsServlet extends HttpServlet {
         String errorMessage = null;
         List<GroupDto> groups = null;
         try {
-            groups = groupService.findAll();
+            groups = groupService.findAllDto();
         } catch (NoExecuteQueryException e) {
             errorMessage = "Something with group goes wrong!";
         }

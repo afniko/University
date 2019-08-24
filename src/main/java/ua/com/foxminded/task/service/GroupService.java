@@ -7,9 +7,11 @@ import ua.com.foxminded.task.domain.dto.GroupDto;
 
 public interface GroupService {
 
-    public GroupDto findById(int id);
+    public Group findById(int id);
 
-    public List<GroupDto> findAll();
+    public GroupDto findByIdDto(int id);
+
+    public List<GroupDto> findAllDto();
 
     public Group create(Group group);
 

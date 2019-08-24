@@ -70,7 +70,7 @@ public class StudentCreateServlet extends HttpServlet {
     }
 
     private boolean validateIdFees(String idFees) {
-        String pattern = "^\\d{10}$";
+        String pattern = "^\\d{9}$";
         return idFees.matches(pattern);
     }
 }

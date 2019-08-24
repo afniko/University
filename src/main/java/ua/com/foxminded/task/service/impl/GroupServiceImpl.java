@@ -22,13 +22,18 @@ public class GroupServiceImpl implements GroupService {
     }
 
     @Override
-    public GroupDto findById(int id) {
-        Group group = groupDao.findById(id);
+    public Group findById(int id) {
+        return groupDao.findById(id);
+    }
+
+    @Override
+    public GroupDto findByIdDto(int id) {
+        Group group = findById(id);
         return ConverterToDtoService.convert(group);
     }
 
     @Override
-    public List<GroupDto> findAll() {
+    public List<GroupDto> findAllDto() {
         return groupDao.findAll().stream().map(ConverterToDtoService::convert).collect(Collectors.toList());
     }
 

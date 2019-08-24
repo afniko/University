@@ -277,7 +277,9 @@ public class StudentDaoImpl implements StudentDao {
     public Student update(Student student) {
         LOGGER.debug("update() [student:{}]", student);
         updatePersonRecord(student);
-        updateStudentRecord(student);
+        if (Objects.nonNull(student.getGroup())) {
+            updateStudentRecord(student);
+        }
         return findById(student.getId());
     }
 
@@ -311,10 +313,7 @@ public class StudentDaoImpl implements StudentDao {
         String sql = "update students set group_id=? where person_id=? ";
         Connection connection = null;
         PreparedStatement preparedStatement = null;
-        Integer groupId = null;
-        if (Objects.nonNull(student.getGroup())) {
-            groupId = student.getGroup().getId() == 0 ? null : student.getGroup().getId();
-        }
+        Integer groupId = student.getGroup().getId() == 0 ? null : student.getGroup().getId();
         try {
             connection = daoFactory.getConnection();
             preparedStatement = connection.prepareStatement(sql);

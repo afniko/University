@@ -33,7 +33,7 @@ public class GroupServlet extends HttpServlet {
             if (validate(idString)) {
                 errorMessage = "You id is blank";
             } else {
-                group = groupService.findById(id);
+                group = groupService.findByIdDto(id);
             }
         } catch (NoExecuteQueryException e) {
             errorMessage = "Something with group goes wrong!";

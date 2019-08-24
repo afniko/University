@@ -25,7 +25,7 @@ public class StudentsServlet extends HttpServlet {
         String errorMessage = null;
         List<StudentDto> students = null;
         try {
-            students = studentService.findAll();
+            students = studentService.findAllDto();
         } catch (NoExecuteQueryException e) {
             errorMessage = "Something with student goes wrong!";
         }
