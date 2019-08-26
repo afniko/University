@@ -46,7 +46,7 @@
     <br />
 
     <div class="container-fluid">
-        <form class="form-horizontal" action="${pageContext.request.contextPath}/student_create">
+        <form class="form-horizontal" action="${pageContext.request.contextPath}/student_create" method="post">
             <div class="form-group">
                 <label for="text" class="col-sm-3 control-label">First name</label>
                 <div class="col-sm-9">

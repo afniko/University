@@ -34,7 +34,7 @@
     <br />
 
     <div class="container-fluid">
-        <form class="form-horizontal" action="${pageContext.request.contextPath}/group_create">
+        <form class="form-horizontal" action="${pageContext.request.contextPath}/group_create" method="post">
             <div class="form-group">
                 <label for="text" class="col-sm-3 control-label">Title</label>
                 <div class="col-sm-9">

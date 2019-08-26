@@ -32,9 +32,9 @@
         <ul class="nav navbar-nav">
             <li><a href="${pageContext.request.contextPath}">main page</a></li>
             <li><a href="${pageContext.request.contextPath}/students">students page</a></li>
-            <li><a href="${pageContext.request.contextPath}/student_create_form">student create page</a></li>
+            <li><a href="${pageContext.request.contextPath}/student_create">student create page</a></li>
             <li><a href="${pageContext.request.contextPath}/groups">groups page</a></li>
-            <li><a href="${pageContext.request.contextPath}/group_create_form">group create page</a></li>
+            <li><a href="${pageContext.request.contextPath}/group_create">group create page</a></li>
         </ul>
     </div>
 

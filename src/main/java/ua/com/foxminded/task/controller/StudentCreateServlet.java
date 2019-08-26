@@ -21,9 +21,17 @@ public class StudentCreateServlet extends HttpServlet {
 
     private static final long serialVersionUID = -3975386213249523426L;
     private StudentService studentService = new StudentServiceImpl();
-
+    
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+        req.setAttribute("title", "Student create page");
+        req.setAttribute("title_header", "Student page");
+        req.getRequestDispatcher("student_create.jsp").forward(req, resp);
+    }
+    
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String errorMessage = null;
         String successMessage = null;
         Student student = null;

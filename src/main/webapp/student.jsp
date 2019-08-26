@@ -52,7 +52,7 @@
 
     <div class="container-fluid">
         <c:if test="${!empty student}">
-            <form class="form-horizontal" action="${pageContext.request.contextPath}/student_update">
+            <form class="form-horizontal" action="${pageContext.request.contextPath}/student" method="post">
                 <input type="hidden" name="id" value="${student.id}" />
                 <div class="form-group">
                     <label for="text" class="col-sm-2 control-label">First name</label>

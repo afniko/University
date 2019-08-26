@@ -36,7 +36,7 @@
 
     <div class="container-fluid">
         <c:if test="${!empty group}">
-            <form class="form-horizontal" action="${pageContext.request.contextPath}/group_update">
+            <form class="form-horizontal" action="${pageContext.request.contextPath}/group" method="post">
                 <input type="hidden" name="id" value="${group.id}" />
                 <div class="form-group">
                     <label for="text" class="col-sm-2 control-label">Title</label>

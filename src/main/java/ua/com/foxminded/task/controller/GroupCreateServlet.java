@@ -24,6 +24,13 @@ public class GroupCreateServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.setAttribute("title", "Group page");
+        req.setAttribute("title_header", "Group create page");
+        req.getRequestDispatcher("group_create.jsp").forward(req, resp);
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String errorMessage = null;
         String successMessage = null;
         String title = req.getParameter("title");
