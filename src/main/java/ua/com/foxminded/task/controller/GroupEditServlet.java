@@ -27,7 +27,7 @@ public class GroupEditServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String id = req.getParameter("id");
         if (validateId(id)) {
-            Group group = groupService.findById(Integer.valueOf(id));
+            GroupDto group = groupService.findByIdDto(Integer.valueOf(id));
             req.setAttribute("group", group);
         }
         req.setAttribute("title", "Group page");
@@ -69,7 +69,7 @@ public class GroupEditServlet extends HttpServlet {
         req.setAttribute("successMessage", successMessage);
         req.setAttribute("title", "Group page");
         req.setAttribute("title_header", "Group create page");
-        req.getRequestDispatcher("group_edit.jsp").forward(req, resp);
+        req.getRequestDispatcher("group.jsp").forward(req, resp);
     }
 
     private void updateGroup(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
