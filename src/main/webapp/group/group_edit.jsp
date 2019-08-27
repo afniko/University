@@ -7,7 +7,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<jsp:include page="includes/header.jsp" />
+<jsp:include page="//WEB-INF/includes/header.jsp" />
 </head>
 <body>
 
@@ -16,40 +16,37 @@
             <div class="alert alert-danger">${errorMessage}</div>
             <br />
         </c:if>
-        <c:if test="${!empty group}">
+        <c:if test="${!empty successMessage}">
             <div class="alert alert-success">${successMessage}</div>
-            <br />
-            <table class="table table-bordered">
-                <tr class="success">
-                    <th>Title</th>
-                    <td>${group.title}</td>
-                </tr>
-                <tr>
-                    <th>Year of entry</th>
-                    <td>${group.yearEntry}</td>
-                </tr>
-            </table>
         </c:if>
     </div>
     <br />
 
     <div class="container-fluid">
-        <form class="form-horizontal" action="${pageContext.request.contextPath}/group_create" method="post">
+        <form class="form-horizontal" action="${pageContext.request.contextPath}/group/edit" method="post">
             <div class="form-group">
                 <label for="text" class="col-sm-3 control-label">Title</label>
                 <div class="col-sm-9">
-                    <input type="text" class="form-control" id="title" name="title" placeholder="Enter title">
+                    <input type="text" class="form-control" id="title" name="title" placeholder="Enter title" value="${group.title}">
                 </div>
 
                 <label for="text" class="col-sm-3 control-label">Year of entry</label>
                 <div class="col-sm-9">
-                    <input type="text" class="form-control" id="year_entry" name="year_entry" placeholder="YYYY-MM-DD">
+                    <input type="text" class="form-control" id="year_entry" name="year_entry" placeholder="YYYY-MM-DD" value="${group.yearEntry}">
                 </div>
             </div>
 
             <div class="form-group">
                 <div class="col-sm-offset-3 col-sm-9">
-                    <button type="submit" class="btn btn-default">Create</button>
+                    <c:if test="${empty group}">
+                        <button type="submit" class="btn btn-default">Create</button>
+                    </c:if>
+
+                    <c:if test="${!empty group}">
+                        <input type="hidden" name="id" value="${group.id}" />
+                        <button type="submit" class="btn btn-default">Update</button>
+                    </c:if>
+
                 </div>
             </div>
         </form>
