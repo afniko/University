@@ -17,8 +17,6 @@ public class MainServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setAttribute("text", text);
-        req.setAttribute("title", "Main page");
-        req.setAttribute("title_header", "Main page");
         req.getRequestDispatcher("main.jsp").forward(req, resp);
     }
 

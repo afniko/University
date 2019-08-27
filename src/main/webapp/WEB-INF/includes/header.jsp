@@ -16,7 +16,11 @@
 
 <!-- Latest compiled and minified JavaScript -->
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
-<title>${title}</title>
+<%
+    String title = request.getParameter("title");
+    String title_header = request.getParameter("title_header");
+%>
+<title><%=title%></title>
 </head>
 <body>
 
@@ -24,7 +28,7 @@
     <nav class="navbar navbar-default">
     <div class="container-fluid">
         <div class="navbar-header">
-            <a href="#" class="navbar-brand">${title_header}</a>
+            <a href="#" class="navbar-brand"><%=title_header%></a>
         </div>
     </div>
 

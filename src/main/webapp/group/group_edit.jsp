@@ -7,7 +7,10 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<jsp:include page="//WEB-INF/includes/header.jsp" />
+<jsp:include page="//WEB-INF/includes/header.jsp">
+    <jsp:param value="Group edit page" name="title" />
+    <jsp:param value="Group edit page" name="title_header" />
+</jsp:include>
 </head>
 <body>
 

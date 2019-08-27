@@ -30,8 +30,6 @@ public class GroupEditServlet extends HttpServlet {
             GroupDto group = groupService.findByIdDto(Integer.valueOf(id));
             req.setAttribute("group", group);
         }
-        req.setAttribute("title", "Group page");
-        req.setAttribute("title_header", "Group create page");
         req.getRequestDispatcher("group_edit.jsp").forward(req, resp);
     }
 
@@ -67,8 +65,6 @@ public class GroupEditServlet extends HttpServlet {
         req.setAttribute("group", group);
         req.setAttribute("errorMessage", errorMessage);
         req.setAttribute("successMessage", successMessage);
-        req.setAttribute("title", "Group page");
-        req.setAttribute("title_header", "Group create page");
         req.getRequestDispatcher("group.jsp").forward(req, resp);
     }
 
@@ -99,8 +95,6 @@ public class GroupEditServlet extends HttpServlet {
         req.setAttribute("group", groupDto);
         req.setAttribute("errorMessage", errorMessage);
         req.setAttribute("successMessage", successMessage);
-        req.setAttribute("title", "Group page");
-        req.setAttribute("title_header", "Group update list");
         req.getRequestDispatcher("group.jsp").forward(req, resp);
     }
 

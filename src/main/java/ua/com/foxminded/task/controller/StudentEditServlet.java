@@ -39,8 +39,6 @@ public class StudentEditServlet extends HttpServlet {
         }
         List<GroupDto> groups = groupService.findAllDto();
         req.setAttribute("groups", groups);
-        req.setAttribute("title", "Student create page");
-        req.setAttribute("title_header", "Student page");
         req.getRequestDispatcher("student_edit.jsp").forward(req, resp);
     }
 
@@ -93,8 +91,6 @@ public class StudentEditServlet extends HttpServlet {
         req.setAttribute("student", studentDto);
         req.setAttribute("errorMessage", errorMessage);
         req.setAttribute("successMessage", successMessage);
-        req.setAttribute("title", "Student create page");
-        req.setAttribute("title_header", "Student page");
         req.getRequestDispatcher("student.jsp").forward(req, resp);
     }
     
@@ -142,8 +138,6 @@ public class StudentEditServlet extends HttpServlet {
         req.setAttribute("groups", groups);
         req.setAttribute("errorMessage", errorMessage);
         req.setAttribute("successMessage", successMessage);
-        req.setAttribute("title", "Student page");
-        req.setAttribute("title_header", "Student update page");
         req.getRequestDispatcher("student.jsp").forward(req, resp);
     }
     
