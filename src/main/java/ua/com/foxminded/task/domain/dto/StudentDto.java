@@ -4,13 +4,14 @@ import java.sql.Date;
 
 public class StudentDto {
 
-    protected int id;
-    protected String firstName;
-    protected String middleName;
-    protected String lastName;
-    protected Date birthday;
-    protected int idFees;
+    private int id;
+    private String firstName;
+    private String middleName;
+    private String lastName;
+    private Date birthday;
+    private int idFees;
     private String groupTitle;
+    private int idGroup;
 
     public int getId() {
         return id;
@@ -28,20 +29,20 @@ public class StudentDto {
         this.firstName = firstName;
     }
 
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
     public String getMiddleName() {
         return middleName;
     }
 
     public void setMiddleName(String middleName) {
         this.middleName = middleName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public Date getBirthday() {
@@ -68,6 +69,14 @@ public class StudentDto {
         this.groupTitle = groupTitle;
     }
 
+    public int getIdGroup() {
+        return idGroup;
+    }
+
+    public void setIdGroup(int idGroup) {
+        this.idGroup = idGroup;
+    }
+
     @Override
     public int hashCode() {
         final int prime = 31;
@@ -76,6 +85,7 @@ public class StudentDto {
         result = prime * result + ((firstName == null) ? 0 : firstName.hashCode());
         result = prime * result + ((groupTitle == null) ? 0 : groupTitle.hashCode());
         result = prime * result + idFees;
+        result = prime * result + ((lastName == null) ? 0 : lastName.hashCode());
         result = prime * result + ((middleName == null) ? 0 : middleName.hashCode());
         return result;
     }
@@ -105,6 +115,11 @@ public class StudentDto {
         } else if (!groupTitle.equals(other.groupTitle))
             return false;
         if (idFees != other.idFees)
+            return false;
+        if (lastName == null) {
+            if (other.lastName != null)
+                return false;
+        } else if (!lastName.equals(other.lastName))
             return false;
         if (middleName == null) {
             if (other.middleName != null)
