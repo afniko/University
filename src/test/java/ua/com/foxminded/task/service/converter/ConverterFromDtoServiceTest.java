@@ -28,7 +28,6 @@ public class ConverterFromDtoServiceTest {
         assertEquals(studentExpected.getLastName(), studentActual.getLastName());
         assertEquals(studentExpected.getBirthday(), studentActual.getBirthday());
         assertEquals(studentExpected.getIdFees(), studentActual.getIdFees());
-        assertEquals(studentExpected.getGroup().getTitle(), studentActual.getGroup().getTitle());
     }
 
     @Test

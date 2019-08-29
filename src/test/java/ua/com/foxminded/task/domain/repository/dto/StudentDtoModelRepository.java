@@ -44,6 +44,7 @@ public class StudentDtoModelRepository {
         student.setBirthday(Date.valueOf("1999-06-25"));
         student.setIdFees(1111111111);
         student.setGroupTitle(group.getTitle());
+        student.setIdGroup(String.valueOf(group.getId()));
         return student;
     }
 
@@ -57,6 +58,7 @@ public class StudentDtoModelRepository {
         student.setBirthday(Date.valueOf("1998-06-25"));
         student.setIdFees(1222211111);
         student.setGroupTitle(group.getTitle());
+        student.setIdGroup(String.valueOf(group.getId()));
         return student;
     }
 
@@ -70,6 +72,7 @@ public class StudentDtoModelRepository {
         student.setBirthday(Date.valueOf("2001-07-25"));
         student.setIdFees(1111133331);
         student.setGroupTitle(group.getTitle());
+        student.setIdGroup(String.valueOf(group.getId()));
         return student;
     }
 
@@ -83,6 +86,7 @@ public class StudentDtoModelRepository {
         student.setBirthday(Date.valueOf("1999-06-25"));
         student.setIdFees(1411111141);
         student.setGroupTitle(group.getTitle());
+        student.setIdGroup(String.valueOf(group.getId()));
         return student;
     }
 
@@ -96,6 +100,7 @@ public class StudentDtoModelRepository {
         student.setBirthday(Date.valueOf("1998-01-20"));
         student.setIdFees(1111111551);
         student.setGroupTitle(group.getTitle());
+        student.setIdGroup(String.valueOf(group.getId()));
         return student;
     }
 
@@ -109,6 +114,7 @@ public class StudentDtoModelRepository {
         student.setBirthday(Date.valueOf("1997-02-15"));
         student.setIdFees(1111111661);
         student.setGroupTitle(group.getTitle());
+        student.setIdGroup(String.valueOf(group.getId()));
         return student;
     }
 

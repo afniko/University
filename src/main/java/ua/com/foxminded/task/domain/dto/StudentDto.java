@@ -11,7 +11,7 @@ public class StudentDto {
     private Date birthday;
     private int idFees;
     private String groupTitle;
-    private int idGroup;
+    private String idGroup;
 
     public int getId() {
         return id;
@@ -69,11 +69,11 @@ public class StudentDto {
         this.groupTitle = groupTitle;
     }
 
-    public int getIdGroup() {
+    public String getIdGroup() {
         return idGroup;
     }
 
-    public void setIdGroup(int idGroup) {
+    public void setIdGroup(String idGroup) {
         this.idGroup = idGroup;
     }
 
@@ -83,8 +83,8 @@ public class StudentDto {
         int result = 1;
         result = prime * result + ((birthday == null) ? 0 : birthday.hashCode());
         result = prime * result + ((firstName == null) ? 0 : firstName.hashCode());
-        result = prime * result + ((groupTitle == null) ? 0 : groupTitle.hashCode());
         result = prime * result + idFees;
+        result = prime * result + ((idGroup == null) ? 0 : idGroup.hashCode());
         result = prime * result + ((lastName == null) ? 0 : lastName.hashCode());
         result = prime * result + ((middleName == null) ? 0 : middleName.hashCode());
         return result;
@@ -109,12 +109,12 @@ public class StudentDto {
                 return false;
         } else if (!firstName.equals(other.firstName))
             return false;
-        if (groupTitle == null) {
-            if (other.groupTitle != null)
-                return false;
-        } else if (!groupTitle.equals(other.groupTitle))
-            return false;
         if (idFees != other.idFees)
+            return false;
+        if (idGroup == null) {
+            if (other.idGroup != null)
+                return false;
+        } else if (!idGroup.equals(other.idGroup))
             return false;
         if (lastName == null) {
             if (other.lastName != null)
@@ -127,6 +127,12 @@ public class StudentDto {
         } else if (!middleName.equals(other.middleName))
             return false;
         return true;
+    }
+
+    @Override
+    public String toString() {
+        return "StudentDto [id=" + id + ", firstName=" + firstName + ", middleName=" + middleName + ", lastName=" + lastName + ", birthday=" + birthday + ", idFees=" + idFees + ", groupTitle="
+                + groupTitle + ", idGroup=" + idGroup + "]";
     }
 
 }

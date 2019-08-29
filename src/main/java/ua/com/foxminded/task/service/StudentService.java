@@ -2,7 +2,6 @@ package ua.com.foxminded.task.service;
 
 import java.util.List;
 
-import ua.com.foxminded.task.domain.Student;
 import ua.com.foxminded.task.domain.dto.StudentDto;
 
 public interface StudentService {
@@ -11,8 +10,8 @@ public interface StudentService {
 
     public List<StudentDto> findAllDto();
 
-    public Student create(Student student);
+    public StudentDto create(StudentDto studentDto);
 
-    public StudentDto update(Student student);
+    public StudentDto update(StudentDto studentDto);
 
 }

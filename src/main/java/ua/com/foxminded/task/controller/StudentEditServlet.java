@@ -13,13 +13,10 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.lang3.StringUtils;
 
 import ua.com.foxminded.task.dao.exception.NoExecuteQueryException;
-import ua.com.foxminded.task.domain.Group;
-import ua.com.foxminded.task.domain.Student;
 import ua.com.foxminded.task.domain.dto.GroupDto;
 import ua.com.foxminded.task.domain.dto.StudentDto;
 import ua.com.foxminded.task.service.GroupService;
 import ua.com.foxminded.task.service.StudentService;
-import ua.com.foxminded.task.service.converter.ConverterToDtoService;
 import ua.com.foxminded.task.service.impl.GroupServiceImpl;
 import ua.com.foxminded.task.service.impl.StudentServiceImpl;
 
@@ -55,8 +52,8 @@ public class StudentEditServlet extends HttpServlet {
     private void createStudent(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String errorMessage = null;
         String successMessage = null;
-        Student student = null;
-        StudentDto studentDto = null;
+        StudentDto student = null;
+        List<GroupDto> groups = null;
 
         String firstName = req.getParameter("first_name");
         String middleName = req.getParameter("middle_name");
@@ -70,16 +67,18 @@ public class StudentEditServlet extends HttpServlet {
                 && validateName(lastName) 
                 && validateBirthday(birthday) 
                 && validateIdFees(idFees)) {
-            student = new Student();
+            student = new StudentDto();
             student.setFirstName(firstName);
             student.setMiddleName(middleName);
             student.setLastName(lastName);
             student.setBirthday(Date.valueOf(birthday));
             student.setIdFees(Integer.valueOf(idFees));
             try {
-                Group group = retrieveGroupById(idGroup);
-                student.setGroup(group);
+            if (validateId(idGroup)) {
+                student.setIdGroup(idGroup);
+            }
                 student = studentService.create(student);
+                groups = groupService.findAllDto();
                 successMessage = "Record student was created";
             } catch (NoExecuteQueryException e) {
                 errorMessage = "Record student was not created!";
@@ -87,17 +86,17 @@ public class StudentEditServlet extends HttpServlet {
         } else {
             errorMessage = "You enter incorrect data";
         }
-        studentDto = ConverterToDtoService.convert(student);
-        req.setAttribute("student", studentDto);
+        req.setAttribute("student", student);
+        req.setAttribute("groups", groups);
         req.setAttribute("errorMessage", errorMessage);
         req.setAttribute("successMessage", successMessage);
         req.getRequestDispatcher("student.jsp").forward(req, resp);
     }
     
     private void updateStudent(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        StudentDto student = null;
         String errorMessage = null;
         String successMessage = null;
-        StudentDto studentDto = null;
         List<GroupDto> groups = null;
 
         String id = req.getParameter("id");
@@ -115,17 +114,20 @@ public class StudentEditServlet extends HttpServlet {
                 && validateIdFees(idFees)) 
         {
             try {
-                Student student = new Student();
+                student = new StudentDto();
                 student.setId(Integer.valueOf(id));
                 student.setFirstName(firstName);
                 student.setMiddleName(middleName);
                 student.setLastName(lastName);
                 student.setBirthday(Date.valueOf(birthday));
                 student.setIdFees(Integer.valueOf(idFees));
-                Group group = retrieveGroupById(idGroup);
-                student.setGroup(group);
+                if (validateId(idGroup)) {
+                    student.setIdGroup(idGroup);
+                } else {
+                    student.setIdGroup(null);
+                }
 
-                studentDto = studentService.update(student);
+                student = studentService.update(student);
                 groups = groupService.findAllDto();
                 successMessage = "Record student was updated!";
             } catch (NoExecuteQueryException e) {
@@ -134,29 +136,17 @@ public class StudentEditServlet extends HttpServlet {
         } else {
             errorMessage = "You enter incorrect data!";
         }
-        req.setAttribute("student", studentDto);
+        req.setAttribute("student", student);
         req.setAttribute("groups", groups);
         req.setAttribute("errorMessage", errorMessage);
         req.setAttribute("successMessage", successMessage);
         req.getRequestDispatcher("student.jsp").forward(req, resp);
     }
-    
-    private Group retrieveGroupById(String idGroup) {
-        Group group = null;
-        if (!StringUtils.isBlank(idGroup)) {
-            if (idGroup.contains("0")) {
-                group = new Group();
-                group.setId(0);
-            } else {
-                group = groupService.findById(Integer.valueOf(idGroup));
-            }
-        }
-        return group;
-    }
 
     private boolean validateId(String id) {
         return StringUtils.isNotBlank(id);
     }
+
     private boolean validateName(String name) {
         return StringUtils.isNotBlank(name);
     }

@@ -30,7 +30,7 @@ public class StudentDaoImpl implements StudentDao {
         int id = getTheLastRecordId();
         student.setId(id);
         insertStudentRecord(student);
-        return student;
+        return findById(id);
     }
 
     private void insertPersonRecord(Student student) {

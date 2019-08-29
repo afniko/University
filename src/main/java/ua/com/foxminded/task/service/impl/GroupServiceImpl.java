@@ -8,6 +8,7 @@ import ua.com.foxminded.task.dao.impl.GroupDaoImpl;
 import ua.com.foxminded.task.domain.Group;
 import ua.com.foxminded.task.domain.dto.GroupDto;
 import ua.com.foxminded.task.service.GroupService;
+import ua.com.foxminded.task.service.converter.ConverterFromDtoService;
 import ua.com.foxminded.task.service.converter.ConverterToDtoService;
 
 public class GroupServiceImpl implements GroupService {
@@ -38,12 +39,15 @@ public class GroupServiceImpl implements GroupService {
     }
 
     @Override
-    public Group create(Group group) {
-        return groupDao.create(group);
+    public GroupDto create(GroupDto groupDto) {
+        Group group = ConverterFromDtoService.convert(groupDto);
+        Group groupResult = groupDao.create(group);
+        return ConverterToDtoService.convert(groupResult);
     }
 
     @Override
-    public GroupDto update(Group group) {
+    public GroupDto update(GroupDto groupDto) {
+        Group group = ConverterFromDtoService.convert(groupDto);
         Group groupUpdated = groupDao.update(group);
         return ConverterToDtoService.convert(groupUpdated);
     }

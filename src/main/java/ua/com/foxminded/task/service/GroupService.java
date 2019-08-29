@@ -13,8 +13,8 @@ public interface GroupService {
 
     public List<GroupDto> findAllDto();
 
-    public Group create(Group group);
+    public GroupDto create(GroupDto groupDto);
 
-    public GroupDto update(Group group);
+    public GroupDto update(GroupDto groupDto);
 
 }

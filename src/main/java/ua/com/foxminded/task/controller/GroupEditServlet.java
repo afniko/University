@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.lang3.StringUtils;
 
 import ua.com.foxminded.task.dao.exception.NoExecuteQueryException;
-import ua.com.foxminded.task.domain.Group;
 import ua.com.foxminded.task.domain.dto.GroupDto;
 import ua.com.foxminded.task.service.GroupService;
 import ua.com.foxminded.task.service.impl.GroupServiceImpl;
@@ -48,9 +47,9 @@ public class GroupEditServlet extends HttpServlet {
         String successMessage = null;
         String title = req.getParameter("title");
         String yearEntry = req.getParameter("year_entry");
-        Group group = null;
+        GroupDto group = null;
         if (validateTitle(title) && validateYearEntry(yearEntry)) {
-            group = new Group();
+            group = new GroupDto();
             group.setTitle(title);
             group.setYearEntry(Date.valueOf(yearEntry));
             try {
@@ -79,7 +78,7 @@ public class GroupEditServlet extends HttpServlet {
 
         if (validateTitle(title) && validateYearEntry(yearEntry)) {
             try {
-                Group group = new Group();
+                GroupDto group = new GroupDto();
                 group.setId(Integer.valueOf(id));
                 group.setTitle(title);
                 group.setYearEntry(Date.valueOf(yearEntry));

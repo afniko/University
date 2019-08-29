@@ -25,10 +25,10 @@ public final class ConverterFromDtoService {
         student.setIdFees(studentDto.getIdFees());
         if (Objects.nonNull(studentDto.getIdGroup())) {
             group = new Group();
-            group.setId(studentDto.getId());
-        }
-        if (Objects.nonNull(studentDto.getGroupTitle())) {
-            group.setTitle(studentDto.getGroupTitle());
+            group.setId(Integer.valueOf(studentDto.getIdGroup()));
+            if (Objects.nonNull(studentDto.getGroupTitle())) {
+                group.setTitle(studentDto.getGroupTitle());
+            }
         }
         student.setGroup(group);
         return student;

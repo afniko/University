@@ -8,6 +8,7 @@ import ua.com.foxminded.task.dao.impl.StudentDaoImpl;
 import ua.com.foxminded.task.domain.Student;
 import ua.com.foxminded.task.domain.dto.StudentDto;
 import ua.com.foxminded.task.service.StudentService;
+import ua.com.foxminded.task.service.converter.ConverterFromDtoService;
 import ua.com.foxminded.task.service.converter.ConverterToDtoService;
 
 public class StudentServiceImpl implements StudentService {
@@ -32,12 +33,15 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public Student create(Student student) {
-        return studentDao.create(student);
+    public StudentDto create(StudentDto studentDto) {
+        Student student = ConverterFromDtoService.convert(studentDto);
+        Student studentResult = studentDao.create(student);
+        return ConverterToDtoService.convert(studentResult);
     }
 
     @Override
-    public StudentDto update(Student student) {
+    public StudentDto update(StudentDto studentDto) {
+        Student student = ConverterFromDtoService.convert(studentDto);
         Student studenUpdated = studentDao.update(student);
         return ConverterToDtoService.convert(studenUpdated);
     }
