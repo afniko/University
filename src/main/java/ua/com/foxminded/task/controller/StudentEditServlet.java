@@ -41,62 +41,10 @@ public class StudentEditServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String id = req.getParameter("id");
-        if (checkId(id)) {
-            updateStudent(req, resp);
-        } else {
-            createStudent(req, resp);
-        }
-    }
 
-    private void createStudent(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String errorMessage = null;
         String successMessage = null;
         StudentDto student = null;
-        List<GroupDto> groups = null;
-
-        String firstName = req.getParameter("first_name");
-        String middleName = req.getParameter("middle_name");
-        String lastName = req.getParameter("last_name");
-        String birthday = req.getParameter("birthday");
-        String idFees = req.getParameter("idFees");
-        String idGroup = req.getParameter("id_group");
-        
-        if (checkName(firstName) 
-                && checkName(middleName) 
-                && checkName(lastName) 
-                && checkBirthday(birthday) 
-                && checkIdFees(idFees)) {
-            student = new StudentDto();
-            student.setFirstName(firstName);
-            student.setMiddleName(middleName);
-            student.setLastName(lastName);
-            student.setBirthday(Date.valueOf(birthday));
-            student.setIdFees(Integer.valueOf(idFees));
-            try {
-            if (checkId(idGroup)) {
-                student.setIdGroup(idGroup);
-            }
-                student = studentService.create(student);
-                groups = groupService.findAllDto();
-                successMessage = "Record student was created";
-            } catch (NoExecuteQueryException e) {
-                errorMessage = "Record student was not created!";
-            }
-        } else {
-            errorMessage = "You enter incorrect data";
-        }
-        req.setAttribute("student", student);
-        req.setAttribute("groups", groups);
-        req.setAttribute("errorMessage", errorMessage);
-        req.setAttribute("successMessage", successMessage);
-        req.getRequestDispatcher("student.jsp").forward(req, resp);
-    }
-    
-    private void updateStudent(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        StudentDto student = null;
-        String errorMessage = null;
-        String successMessage = null;
         List<GroupDto> groups = null;
 
         String id = req.getParameter("id");
@@ -115,7 +63,6 @@ public class StudentEditServlet extends HttpServlet {
         {
             try {
                 student = new StudentDto();
-                student.setId(Integer.valueOf(id));
                 student.setFirstName(firstName);
                 student.setMiddleName(middleName);
                 student.setLastName(lastName);
@@ -127,11 +74,18 @@ public class StudentEditServlet extends HttpServlet {
                     student.setIdGroup(null);
                 }
 
-                student = studentService.update(student);
+                if (checkId(id)) {
+                    student.setId(Integer.valueOf(id));
+                    student = studentService.update(student);
+                    successMessage = "Record student was updated!";
+                } else {
+                    student = studentService.create(student);
+                    successMessage = "Record student was created";
+                }
+
                 groups = groupService.findAllDto();
-                successMessage = "Record student was updated!";
             } catch (NoExecuteQueryException e) {
-                errorMessage = "Record student was not updated!";
+                errorMessage = "Record student was not edited!";
             }
         } else {
             errorMessage = "You enter incorrect data!";
