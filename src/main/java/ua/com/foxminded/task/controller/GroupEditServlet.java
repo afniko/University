@@ -34,17 +34,10 @@ public class GroupEditServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String id = req.getParameter("id");
-        if (checkId(id)) {
-            updateGroup(req, resp);
-        } else {
-            createGroup(req, resp);
-        }
-    }
-
-    private void createGroup(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String errorMessage = null;
         String successMessage = null;
+        String id = req.getParameter("id");
+
         String title = req.getParameter("title");
         String yearEntry = req.getParameter("year_entry");
         GroupDto group = null;
@@ -53,45 +46,22 @@ public class GroupEditServlet extends HttpServlet {
             group.setTitle(title);
             group.setYearEntry(Date.valueOf(yearEntry));
             try {
-                group = groupService.create(group);
-                successMessage = "Record group was created!";
+                if (checkId(id)) {
+                    group.setId(Integer.valueOf(id));
+                    group = groupService.update(group);
+                    successMessage = "Record group was updated!";
+                } else {
+                    group = groupService.create(group);
+                    successMessage = "Record group was created!";
+                }
             } catch (NoExecuteQueryException e) {
-                errorMessage = "Record group was not created!";
+                errorMessage = "Record group was not edited!";
             }
         } else {
             errorMessage = "You enter incorrect data";
         }
+
         req.setAttribute("group", group);
-        req.setAttribute("errorMessage", errorMessage);
-        req.setAttribute("successMessage", successMessage);
-        req.getRequestDispatcher("group.jsp").forward(req, resp);
-    }
-
-    private void updateGroup(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String errorMessage = null;
-        String successMessage = null;
-
-        String id = req.getParameter("id");
-        String title = req.getParameter("title");
-        String yearEntry = req.getParameter("year_entry");
-        GroupDto groupDto = null;
-
-        if (checkTitle(title) && checkYearEntry(yearEntry)) {
-            try {
-                GroupDto group = new GroupDto();
-                group.setId(Integer.valueOf(id));
-                group.setTitle(title);
-                group.setYearEntry(Date.valueOf(yearEntry));
-
-                groupDto = groupService.update(group);
-                successMessage = "Record group was updated!";
-            } catch (NoExecuteQueryException e) {
-                errorMessage = "Record group was not updated!";
-            }
-        } else {
-            errorMessage = "You enter incorrect data";
-        }
-        req.setAttribute("group", groupDto);
         req.setAttribute("errorMessage", errorMessage);
         req.setAttribute("successMessage", successMessage);
         req.getRequestDispatcher("group.jsp").forward(req, resp);
