@@ -52,8 +52,8 @@
                 <div class="col-sm-10">
                     <select class="selectpicker" data-live-search="true" name="id_group">
                         <c:if test="${!empty student.groupTitle}">
-                            <option value="">${student.groupTitle}</option>
-                            <option value="0">Remove group</option>
+                            <option value="${student.idGroup}">${student.groupTitle}</option>
+                            <option value="">Remove group</option>
                         </c:if>
                         <c:if test="${empty student.groupTitle}">
                             <option value="">Choose group</option>
