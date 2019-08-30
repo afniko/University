@@ -25,7 +25,7 @@ public class GroupEditServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String id = req.getParameter("id");
-        if (validateId(id)) {
+        if (checkId(id)) {
             GroupDto group = groupService.findByIdDto(Integer.valueOf(id));
             req.setAttribute("group", group);
         }
@@ -35,7 +35,7 @@ public class GroupEditServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String id = req.getParameter("id");
-        if (validateId(id)) {
+        if (checkId(id)) {
             updateGroup(req, resp);
         } else {
             createGroup(req, resp);
@@ -48,7 +48,7 @@ public class GroupEditServlet extends HttpServlet {
         String title = req.getParameter("title");
         String yearEntry = req.getParameter("year_entry");
         GroupDto group = null;
-        if (validateTitle(title) && validateYearEntry(yearEntry)) {
+        if (checkTitle(title) && checkYearEntry(yearEntry)) {
             group = new GroupDto();
             group.setTitle(title);
             group.setYearEntry(Date.valueOf(yearEntry));
@@ -76,7 +76,7 @@ public class GroupEditServlet extends HttpServlet {
         String yearEntry = req.getParameter("year_entry");
         GroupDto groupDto = null;
 
-        if (validateTitle(title) && validateYearEntry(yearEntry)) {
+        if (checkTitle(title) && checkYearEntry(yearEntry)) {
             try {
                 GroupDto group = new GroupDto();
                 group.setId(Integer.valueOf(id));
@@ -97,15 +97,15 @@ public class GroupEditServlet extends HttpServlet {
         req.getRequestDispatcher("group.jsp").forward(req, resp);
     }
 
-    private boolean validateId(String id) {
+    private boolean checkId(String id) {
         return StringUtils.isNotBlank(id);
     }
 
-    private boolean validateTitle(String title) {
+    private boolean checkTitle(String title) {
         return StringUtils.isNotBlank(title);
     }
 
-    private boolean validateYearEntry(String yearEntry) {
+    private boolean checkYearEntry(String yearEntry) {
         String pattern = "^20\\d\\d-\\d\\d-\\d\\d$";
         return yearEntry.matches(pattern);
     }

@@ -30,7 +30,7 @@ public class StudentEditServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String id = req.getParameter("id");
-        if (validateId(id)) {
+        if (checkId(id)) {
             StudentDto student = studentService.findByIdDto(Integer.valueOf(id));
             req.setAttribute("student", student);
         }
@@ -42,7 +42,7 @@ public class StudentEditServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String id = req.getParameter("id");
-        if (validateId(id)) {
+        if (checkId(id)) {
             updateStudent(req, resp);
         } else {
             createStudent(req, resp);
@@ -62,11 +62,11 @@ public class StudentEditServlet extends HttpServlet {
         String idFees = req.getParameter("idFees");
         String idGroup = req.getParameter("id_group");
         
-        if (validateName(firstName) 
-                && validateName(middleName) 
-                && validateName(lastName) 
-                && validateBirthday(birthday) 
-                && validateIdFees(idFees)) {
+        if (checkName(firstName) 
+                && checkName(middleName) 
+                && checkName(lastName) 
+                && checkBirthday(birthday) 
+                && checkIdFees(idFees)) {
             student = new StudentDto();
             student.setFirstName(firstName);
             student.setMiddleName(middleName);
@@ -74,7 +74,7 @@ public class StudentEditServlet extends HttpServlet {
             student.setBirthday(Date.valueOf(birthday));
             student.setIdFees(Integer.valueOf(idFees));
             try {
-            if (validateId(idGroup)) {
+            if (checkId(idGroup)) {
                 student.setIdGroup(idGroup);
             }
                 student = studentService.create(student);
@@ -107,11 +107,11 @@ public class StudentEditServlet extends HttpServlet {
         String idFees = req.getParameter("idFees");
         String idGroup = req.getParameter("id_group");
 
-        if (validateName(firstName) 
-                && validateName(middleName) 
-                && validateName(lastName) 
-                && validateBirthday(birthday) 
-                && validateIdFees(idFees)) 
+        if (checkName(firstName) 
+                && checkName(middleName) 
+                && checkName(lastName) 
+                && checkBirthday(birthday) 
+                && checkIdFees(idFees)) 
         {
             try {
                 student = new StudentDto();
@@ -121,7 +121,7 @@ public class StudentEditServlet extends HttpServlet {
                 student.setLastName(lastName);
                 student.setBirthday(Date.valueOf(birthday));
                 student.setIdFees(Integer.valueOf(idFees));
-                if (validateId(idGroup)) {
+                if (checkId(idGroup)) {
                     student.setIdGroup(idGroup);
                 } else {
                     student.setIdGroup(null);
@@ -143,20 +143,20 @@ public class StudentEditServlet extends HttpServlet {
         req.getRequestDispatcher("student.jsp").forward(req, resp);
     }
 
-    private boolean validateId(String id) {
+    private boolean checkId(String id) {
         return StringUtils.isNotBlank(id);
     }
 
-    private boolean validateName(String name) {
+    private boolean checkName(String name) {
         return StringUtils.isNotBlank(name);
     }
 
-    private boolean validateBirthday(String birthday) {
+    private boolean checkBirthday(String birthday) {
         String pattern = "^(19|20)\\d\\d-\\d\\d-\\d\\d$";
         return birthday.matches(pattern);
     }
 
-    private boolean validateIdFees(String idFees) {
+    private boolean checkIdFees(String idFees) {
         String pattern = "^\\d{9}$";
         return idFees.matches(pattern);
     }

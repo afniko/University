@@ -36,7 +36,7 @@ public class StudentServlet extends HttpServlet {
         int id = 0;
         try {
             id = Integer.valueOf(idString);
-            if (validateId(idString)) {
+            if (checkId(idString)) {
                 errorMessage = "You id is blank";
             } else {
                 student = studentService.findByIdDto(id);
@@ -55,7 +55,7 @@ public class StudentServlet extends HttpServlet {
         req.getRequestDispatcher("student/student.jsp").forward(req, resp);
     }
     
-    private boolean validateId(String idString) {
+    private boolean checkId(String idString) {
         return StringUtils.isBlank(idString);
     }
 }

@@ -30,7 +30,7 @@ public class GroupServlet extends HttpServlet {
         int id = 0;
         try {
             id = Integer.valueOf(idString);
-            if (validateId(idString)) {
+            if (checkId(idString)) {
                 errorMessage = "You id is blank";
             } else {
                 group = groupService.findByIdDto(id);
@@ -47,7 +47,7 @@ public class GroupServlet extends HttpServlet {
         req.getRequestDispatcher("group/group.jsp").forward(req, resp);
     }
 
-    private boolean validateId(String idString) {
+    private boolean checkId(String idString) {
         return StringUtils.isBlank(idString);
     }
 
