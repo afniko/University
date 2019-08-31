@@ -55,11 +55,11 @@ public class StudentEditServlet extends HttpServlet {
         String idFees = req.getParameter("idFees");
         String idGroup = req.getParameter("id_group");
 
-        if (checkName(firstName) 
-                && checkName(middleName) 
-                && checkName(lastName) 
-                && checkBirthday(birthday) 
-                && checkIdFees(idFees)) 
+        if (validateName(firstName) 
+                && validateName(middleName) 
+                && validateName(lastName) 
+                && validateBirthday(birthday) 
+                && validateIdFees(idFees)) 
         {
             try {
                 student = new StudentDto();
@@ -101,16 +101,16 @@ public class StudentEditServlet extends HttpServlet {
         return StringUtils.isNotBlank(id);
     }
 
-    private boolean checkName(String name) {
+    private boolean validateName(String name) {
         return StringUtils.isNotBlank(name);
     }
 
-    private boolean checkBirthday(String birthday) {
+    private boolean validateBirthday(String birthday) {
         String pattern = "^(19|20)\\d\\d-\\d\\d-\\d\\d$";
         return birthday.matches(pattern);
     }
 
-    private boolean checkIdFees(String idFees) {
+    private boolean validateIdFees(String idFees) {
         String pattern = "^\\d{9}$";
         return idFees.matches(pattern);
     }

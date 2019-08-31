@@ -41,7 +41,7 @@ public class GroupEditServlet extends HttpServlet {
         String title = req.getParameter("title");
         String yearEntry = req.getParameter("year_entry");
         GroupDto group = null;
-        if (checkTitle(title) && checkYearEntry(yearEntry)) {
+        if (validateTitle(title) && validateYearEntry(yearEntry)) {
             group = new GroupDto();
             group.setTitle(title);
             group.setYearEntry(Date.valueOf(yearEntry));
@@ -71,11 +71,11 @@ public class GroupEditServlet extends HttpServlet {
         return StringUtils.isNotBlank(id);
     }
 
-    private boolean checkTitle(String title) {
+    private boolean validateTitle(String title) {
         return StringUtils.isNotBlank(title);
     }
 
-    private boolean checkYearEntry(String yearEntry) {
+    private boolean validateYearEntry(String yearEntry) {
         String pattern = "^20\\d\\d-\\d\\d-\\d\\d$";
         return yearEntry.matches(pattern);
     }
