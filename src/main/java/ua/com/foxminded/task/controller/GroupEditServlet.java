@@ -38,33 +38,36 @@ public class GroupEditServlet extends HttpServlet {
         String successMessage = null;
         String id = req.getParameter("id");
 
-        String title = req.getParameter("title");
-        String yearEntry = req.getParameter("year_entry");
-        GroupDto group = null;
-        if (validateTitle(title) && validateYearEntry(yearEntry)) {
-            group = new GroupDto();
-            group.setTitle(title);
-            group.setYearEntry(Date.valueOf(yearEntry));
-            try {
-                if (checkId(id)) {
-                    group.setId(Integer.valueOf(id));
-                    group = groupService.update(group);
-                    successMessage = "Record group was updated!";
-                } else {
-                    group = groupService.create(group);
-                    successMessage = "Record group was created!";
-                }
-            } catch (NoExecuteQueryException e) {
-                errorMessage = "Record group was not edited!";
+//    TODO    if (validateTitle(title) && validateYearEntry(yearEntry)) {
+        GroupDto group = retriveGroup(req);
+        try {
+            if (checkId(id)) {
+                group.setId(Integer.valueOf(id));
+                group = groupService.update(group);
+                successMessage = "Record group was updated!";
+            } else {
+                group = groupService.create(group);
+                successMessage = "Record group was created!";
             }
-        } else {
-            errorMessage = "You enter incorrect data";
+        } catch (NoExecuteQueryException e) {
+            errorMessage = "Record group was not edited!";
         }
+//    TODO        errorMessage = "You enter incorrect data";
 
         req.setAttribute("group", group);
         req.setAttribute("errorMessage", errorMessage);
         req.setAttribute("successMessage", successMessage);
         req.getRequestDispatcher("group.jsp").forward(req, resp);
+    }
+
+    private GroupDto retriveGroup(HttpServletRequest req) {
+        String title = req.getParameter("title");
+        String yearEntry = req.getParameter("year_entry");
+        GroupDto group = null;
+        group = new GroupDto();
+        group.setTitle(title);
+        group.setYearEntry(Date.valueOf(yearEntry));
+        return group;
     }
 
     private boolean checkId(String id) {
