@@ -115,10 +115,11 @@ public class StudentDaoImpl implements StudentDao {
     @Override
     public Student findById(int id) {
         LOGGER.debug("findById() [student id:{}]", id);
+        GroupDaoImpl groupDao = new GroupDaoImpl();
         Student student = findByIdWithoutGroup(id);
         int groupId = student.getGroup().getId();
         if (groupId != 0) {
-            student.setGroup(new GroupDaoImpl().findByIdNoBidirectional(groupId));
+            student.setGroup(groupDao.findByIdNoBidirectional(groupId));
         }
         return student;
     }
