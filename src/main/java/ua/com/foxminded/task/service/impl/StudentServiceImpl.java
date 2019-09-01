@@ -1,7 +1,8 @@
 package ua.com.foxminded.task.service.impl;
 
+import static java.util.Objects.nonNull;
+
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 import ua.com.foxminded.task.dao.GroupDao;
@@ -12,7 +13,6 @@ import ua.com.foxminded.task.domain.Group;
 import ua.com.foxminded.task.domain.Student;
 import ua.com.foxminded.task.domain.dto.StudentDto;
 import ua.com.foxminded.task.service.StudentService;
-import ua.com.foxminded.task.service.converter.ConverterFromDtoService;
 import ua.com.foxminded.task.service.converter.ConverterToDtoService;
 
 public class StudentServiceImpl implements StudentService {
@@ -39,21 +39,32 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public StudentDto create(StudentDto studentDto) {
-        Student student = ConverterFromDtoService.convert(studentDto);
+        Student student = retriveStudentFromDto(studentDto);
+
         Student studentResult = studentDao.create(student);
         return ConverterToDtoService.convert(studentResult);
     }
 
     @Override
     public StudentDto update(StudentDto studentDto) {
-        Group group = null;
-        Student student = ConverterFromDtoService.convert(studentDto);
-        if (Objects.nonNull(student.getGroup())) {
-            group = groupDao.findById(student.getGroup().getId());
-        }
-        student.setGroup(group);
+        Student student = retriveStudentFromDto(studentDto);
+
         Student studenUpdated = studentDao.update(student);
         return ConverterToDtoService.convert(studenUpdated);
+    }
+
+    private Student retriveStudentFromDto(StudentDto studentDto) {
+        Student student = (studentDto.getId() != 0) ? studentDao.findById(studentDto.getId()) : new Student();
+
+        Group group = nonNull(studentDto.getIdGroup()) ? groupDao.findById(Integer.valueOf(studentDto.getIdGroup())) : null;
+        student.setGroup(group);
+
+        student.setFirstName(studentDto.getFirstName());
+        student.setMiddleName(studentDto.getMiddleName());
+        student.setLastName(studentDto.getLastName());
+        student.setBirthday(studentDto.getBirthday());
+        student.setIdFees(studentDto.getIdFees());
+        return student;
     }
 
 }
