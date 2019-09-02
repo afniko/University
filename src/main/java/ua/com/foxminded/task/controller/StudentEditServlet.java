@@ -48,53 +48,60 @@ public class StudentEditServlet extends HttpServlet {
         List<GroupDto> groups = null;
 
         String id = req.getParameter("id");
+
+//        if (validateName(firstName) 
+//                && validateName(middleName) 
+//                && validateName(lastName) 
+//                && validateBirthday(birthday) 
+//                && validateIdFees(idFees)) 
+//        {
+        try {
+            student = retriveStudentDto(req);
+            if (checkId(id)) {
+                student.setId(Integer.valueOf(id));
+                student = studentService.update(student);
+                successMessage = "Record student was updated!";
+            } else {
+                student = studentService.create(student);
+                successMessage = "Record student was created";
+            }
+
+            groups = groupService.findAllDto();
+        } catch (NoExecuteQueryException e) {
+            errorMessage = "Record student was not edited!";
+        }
+//    }
+//    else
+//
+//    {
+//        errorMessage = "You enter incorrect data!";
+//    }
+        req.setAttribute("student", student);
+        req.setAttribute("groups", groups);
+        req.setAttribute("errorMessage", errorMessage);
+        req.setAttribute("successMessage", successMessage);
+        req.getRequestDispatcher("student.jsp").forward(req, resp);
+    }
+
+    private StudentDto retriveStudentDto(HttpServletRequest req) {
         String firstName = req.getParameter("first_name");
         String middleName = req.getParameter("middle_name");
         String lastName = req.getParameter("last_name");
         String birthday = req.getParameter("birthday");
         String idFees = req.getParameter("idFees");
         String idGroup = req.getParameter("id_group");
-
-        if (validateName(firstName) 
-                && validateName(middleName) 
-                && validateName(lastName) 
-                && validateBirthday(birthday) 
-                && validateIdFees(idFees)) 
-        {
-            try {
-                student = new StudentDto();
-                student.setFirstName(firstName);
-                student.setMiddleName(middleName);
-                student.setLastName(lastName);
-                student.setBirthday(Date.valueOf(birthday));
-                student.setIdFees(Integer.valueOf(idFees));
-                if (checkId(idGroup)) {
-                    student.setIdGroup(idGroup);
-                } else {
-                    student.setIdGroup(null);
-                }
-
-                if (checkId(id)) {
-                    student.setId(Integer.valueOf(id));
-                    student = studentService.update(student);
-                    successMessage = "Record student was updated!";
-                } else {
-                    student = studentService.create(student);
-                    successMessage = "Record student was created";
-                }
-
-                groups = groupService.findAllDto();
-            } catch (NoExecuteQueryException e) {
-                errorMessage = "Record student was not edited!";
-            }
+        StudentDto student = new StudentDto();
+        student.setFirstName(firstName);
+        student.setMiddleName(middleName);
+        student.setLastName(lastName);
+        student.setBirthday(Date.valueOf(birthday));
+        student.setIdFees(Integer.valueOf(idFees));
+        if (checkId(idGroup)) {
+            student.setIdGroup(idGroup);
         } else {
-            errorMessage = "You enter incorrect data!";
+            student.setIdGroup(null);
         }
-        req.setAttribute("student", student);
-        req.setAttribute("groups", groups);
-        req.setAttribute("errorMessage", errorMessage);
-        req.setAttribute("successMessage", successMessage);
-        req.getRequestDispatcher("student.jsp").forward(req, resp);
+        return student;
     }
 
     private boolean checkId(String id) {

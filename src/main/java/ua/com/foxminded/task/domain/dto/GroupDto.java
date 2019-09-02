@@ -2,10 +2,17 @@ package ua.com.foxminded.task.domain.dto;
 
 import java.sql.Date;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.PastOrPresent;
+
 public class GroupDto {
 
     private int id;
+    @NotBlank(message = "Title can`t be blank!")
+    @Max(value = 20, message = "Maximum length is 20!")
     private String title;
+    @PastOrPresent(message = "Date can`t in future!")
     private Date yearEntry;
 
     public void setId(int id) {
