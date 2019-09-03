@@ -2,15 +2,33 @@ package ua.com.foxminded.task.domain.dto;
 
 import java.sql.Date;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.NotBlank;
+
+import org.hibernate.validator.constraints.Length;
+
 public class StudentDto {
 
     private int id;
+    
+    @NotBlank(message = "First name can`t be blank!")
+    @Length(max = 20, message = "Maximum length of first name is 20!")
     private String firstName;
+    
+    @Length(max = 20, message = "Maximum length of middle name is 20!")
     private String middleName;
+    
+    @Length(max = 20, message = "Maximum length of last name is 20!")
     private String lastName;
+    
     private Date birthday;
+    
+    @Max(value = 999999999, message = "Maximum value is 9 number!")
     private int idFees;
+    
+    @Length(max = 20, message = "Maximum length of title group is 20!")
     private String groupTitle;
+    
     private String idGroup;
 
     public int getId() {

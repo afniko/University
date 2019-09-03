@@ -1,16 +1,25 @@
 package ua.com.foxminded.task.controller;
 
+import static org.apache.commons.lang3.StringUtils.isNotBlank;
+
 import java.io.IOException;
+import java.lang.invoke.MethodHandles;
 import java.sql.Date;
 import java.util.List;
+import java.util.Set;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.ConstraintViolation;
+import javax.validation.Validation;
+import javax.validation.Validator;
+import javax.validation.ValidatorFactory;
 
-import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import ua.com.foxminded.task.dao.exception.NoExecuteQueryException;
 import ua.com.foxminded.task.domain.dto.GroupDto;
@@ -24,6 +33,7 @@ import ua.com.foxminded.task.service.impl.StudentServiceImpl;
 public class StudentEditServlet extends HttpServlet {
 
     private static final long serialVersionUID = -3975386213249523426L;
+    private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getSimpleName());
     private StudentService studentService = new StudentServiceImpl();
     private GroupService groupService = new GroupServiceImpl();
 
@@ -44,39 +54,32 @@ public class StudentEditServlet extends HttpServlet {
 
         String errorMessage = null;
         String successMessage = null;
-        StudentDto student = null;
+        StudentDto studentDto = null;
         List<GroupDto> groups = null;
 
-        String id = req.getParameter("id");
+        studentDto = retriveStudentDto(req);
+        Set<ConstraintViolation<StudentDto>> violations = validateStudentDto(studentDto);
+        if (violations.size() == 0) {
+            try {
+                if (studentDto.getId() != 0) {
+                    studentDto = studentService.update(studentDto);
+                    successMessage = "Record student was updated!";
+                } else {
+                    studentDto = studentService.create(studentDto);
+                    successMessage = "Record student was created";
+                }
 
-//        if (validateName(firstName) 
-//                && validateName(middleName) 
-//                && validateName(lastName) 
-//                && validateBirthday(birthday) 
-//                && validateIdFees(idFees)) 
-//        {
-        try {
-            student = retriveStudentDto(req);
-            if (checkId(id)) {
-                student.setId(Integer.valueOf(id));
-                student = studentService.update(student);
-                successMessage = "Record student was updated!";
-            } else {
-                student = studentService.create(student);
-                successMessage = "Record student was created";
+                groups = groupService.findAllDto();
+            } catch (NoExecuteQueryException e) {
+                errorMessage = "Record student was not edited!";
             }
-
-            groups = groupService.findAllDto();
-        } catch (NoExecuteQueryException e) {
-            errorMessage = "Record student was not edited!";
+        } else {
+            errorMessage = "You enter incorrect data!";
+            for (ConstraintViolation<StudentDto> violation : violations) {
+                errorMessage += " " + violation.getMessage();
+            }
         }
-//    }
-//    else
-//
-//    {
-//        errorMessage = "You enter incorrect data!";
-//    }
-        req.setAttribute("student", student);
+        req.setAttribute("student", studentDto);
         req.setAttribute("groups", groups);
         req.setAttribute("errorMessage", errorMessage);
         req.setAttribute("successMessage", successMessage);
@@ -84,41 +87,41 @@ public class StudentEditServlet extends HttpServlet {
     }
 
     private StudentDto retriveStudentDto(HttpServletRequest req) {
+        LOGGER.debug("retriveStudentDto()");
+        String id = req.getParameter("id");
         String firstName = req.getParameter("first_name");
         String middleName = req.getParameter("middle_name");
         String lastName = req.getParameter("last_name");
         String birthday = req.getParameter("birthday");
         String idFees = req.getParameter("idFees");
         String idGroup = req.getParameter("id_group");
-        StudentDto student = new StudentDto();
-        student.setFirstName(firstName);
-        student.setMiddleName(middleName);
-        student.setLastName(lastName);
-        student.setBirthday(Date.valueOf(birthday));
-        student.setIdFees(Integer.valueOf(idFees));
-        if (checkId(idGroup)) {
-            student.setIdGroup(idGroup);
-        } else {
-            student.setIdGroup(null);
+        StudentDto studentDto = new StudentDto();
+        if (checkId(id)) {
+            studentDto.setId(Integer.valueOf(id));
         }
-        return student;
+        studentDto.setFirstName(firstName);
+        studentDto.setMiddleName(middleName);
+        studentDto.setLastName(lastName);
+        studentDto.setBirthday(Date.valueOf(birthday));
+        studentDto.setIdFees(Integer.valueOf(idFees));
+        if (checkId(idGroup)) {
+            studentDto.setIdGroup(idGroup);
+        } else {
+            studentDto.setIdGroup(null);
+        }
+        return studentDto;
     }
 
     private boolean checkId(String id) {
-        return StringUtils.isNotBlank(id);
+        return isNotBlank(id);
     }
 
-    private boolean validateName(String name) {
-        return StringUtils.isNotBlank(name);
+    private Set<ConstraintViolation<StudentDto>> validateStudentDto(StudentDto studentDto) {
+        LOGGER.debug("validateStudentDto()");
+        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+        Validator validator = factory.getValidator();
+        Set<ConstraintViolation<StudentDto>> violations = validator.validate(studentDto);
+        return violations;
     }
 
-    private boolean validateBirthday(String birthday) {
-        String pattern = "^(19|20)\\d\\d-\\d\\d-\\d\\d$";
-        return birthday.matches(pattern);
-    }
-
-    private boolean validateIdFees(String idFees) {
-        String pattern = "^\\d{9}$";
-        return idFees.matches(pattern);
-    }
 }
