@@ -37,6 +37,14 @@ public class StudentEditServlet extends HttpServlet {
     private StudentService studentService = new StudentServiceImpl();
     private GroupService groupService = new GroupServiceImpl();
 
+    public StudentEditServlet() {
+    }
+
+    public StudentEditServlet(StudentService studentService, GroupService groupService) {
+        this.studentService = studentService;
+        this.groupService = groupService;
+    }
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String id = req.getParameter("id");

@@ -42,7 +42,7 @@ public class StudentDtoModelRepository {
         student.setMiddleName("middleName1");
         student.setLastName("lastName1");
         student.setBirthday(Date.valueOf("1999-06-25"));
-        student.setIdFees(1111111111);
+        student.setIdFees(111111111);
         student.setGroupTitle(group.getTitle());
         student.setIdGroup(String.valueOf(group.getId()));
         return student;
@@ -56,7 +56,7 @@ public class StudentDtoModelRepository {
         student.setMiddleName("middleName2");
         student.setLastName("lastName2");
         student.setBirthday(Date.valueOf("1998-06-25"));
-        student.setIdFees(1222211111);
+        student.setIdFees(222211111);
         student.setGroupTitle(group.getTitle());
         student.setIdGroup(String.valueOf(group.getId()));
         return student;
@@ -70,7 +70,7 @@ public class StudentDtoModelRepository {
         student.setMiddleName("middleName3");
         student.setLastName("lastName3");
         student.setBirthday(Date.valueOf("2001-07-25"));
-        student.setIdFees(1111133331);
+        student.setIdFees(111133331);
         student.setGroupTitle(group.getTitle());
         student.setIdGroup(String.valueOf(group.getId()));
         return student;
@@ -84,7 +84,7 @@ public class StudentDtoModelRepository {
         student.setMiddleName("middleName4");
         student.setLastName("lastName4");
         student.setBirthday(Date.valueOf("1999-06-25"));
-        student.setIdFees(1411111141);
+        student.setIdFees(411111141);
         student.setGroupTitle(group.getTitle());
         student.setIdGroup(String.valueOf(group.getId()));
         return student;
@@ -98,7 +98,7 @@ public class StudentDtoModelRepository {
         student.setMiddleName("middleName5");
         student.setLastName("lastName5");
         student.setBirthday(Date.valueOf("1998-01-20"));
-        student.setIdFees(1111111551);
+        student.setIdFees(111111551);
         student.setGroupTitle(group.getTitle());
         student.setIdGroup(String.valueOf(group.getId()));
         return student;
@@ -112,7 +112,7 @@ public class StudentDtoModelRepository {
         student.setMiddleName("middleName6");
         student.setLastName("lastName6");
         student.setBirthday(Date.valueOf("1997-02-15"));
-        student.setIdFees(1111111661);
+        student.setIdFees(111111661);
         student.setGroupTitle(group.getTitle());
         student.setIdGroup(String.valueOf(group.getId()));
         return student;
