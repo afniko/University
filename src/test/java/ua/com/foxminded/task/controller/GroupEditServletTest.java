@@ -36,7 +36,7 @@ public class GroupEditServletTest {
         String successMessageExpected = "Record group was created!";
 
         when(request.getParameter("title")).thenReturn(groupDto.getTitle());
-        when(request.getParameter("year_entry")).thenReturn(groupDto.getYearEntry().toString());
+        when(request.getParameter("year_entry")).thenReturn(String.valueOf(groupDto.getYearEntry()));
         when(groupService.create(groupDto)).thenReturn(groupDtoExpected);
         when(request.getRequestDispatcher("group.jsp")).thenReturn(mockDispatcher);
 
@@ -61,7 +61,7 @@ public class GroupEditServletTest {
 
         when(request.getParameter("id")).thenReturn(String.valueOf(groupDto.getId()));
         when(request.getParameter("title")).thenReturn(groupDto.getTitle());
-        when(request.getParameter("year_entry")).thenReturn(groupDto.getYearEntry().toString());
+        when(request.getParameter("year_entry")).thenReturn(String.valueOf(groupDto.getYearEntry()));
         when(groupService.update(groupDto)).thenReturn(groupDtoExpected);
         when(request.getRequestDispatcher("group.jsp")).thenReturn(mockDispatcher);
 

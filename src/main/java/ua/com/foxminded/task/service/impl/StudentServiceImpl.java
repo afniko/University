@@ -3,6 +3,7 @@ package ua.com.foxminded.task.service.impl;
 import static java.util.Objects.nonNull;
 
 import java.lang.invoke.MethodHandles;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -70,7 +71,7 @@ public class StudentServiceImpl implements StudentService {
         student.setFirstName(studentDto.getFirstName());
         student.setMiddleName(studentDto.getMiddleName());
         student.setLastName(studentDto.getLastName());
-        student.setBirthday(studentDto.getBirthday());
+        student.setBirthday(LocalDateTime.parse(studentDto.getBirthday().toString()+"T00:00"));
         student.setIdFees(studentDto.getIdFees());
         return student;
     }

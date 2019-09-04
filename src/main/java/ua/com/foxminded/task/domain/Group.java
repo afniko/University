@@ -1,6 +1,6 @@
 package ua.com.foxminded.task.domain;
 
-import java.sql.Date;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,7 +9,7 @@ public class Group {
     private int id;
     private String title;
     private Department department;
-    private Date yearEntry;
+    private LocalDateTime yearEntry;
     private List<Student> students = new ArrayList<>();
 
     public void addStudent(Student student) {
@@ -54,11 +54,11 @@ public class Group {
         this.students = students;
     }
 
-    public Date getYearEntry() {
+    public LocalDateTime getYearEntry() {
         return yearEntry;
     }
 
-    public void setYearEntry(Date yearEntry) {
+    public void setYearEntry(LocalDateTime yearEntry) {
         this.yearEntry = yearEntry;
     }
 

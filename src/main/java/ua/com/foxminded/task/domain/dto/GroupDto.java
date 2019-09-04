@@ -1,7 +1,5 @@
 package ua.com.foxminded.task.domain.dto;
 
-import java.sql.Date;
-
 import javax.validation.constraints.NotBlank;
 
 import org.hibernate.validator.constraints.Length;
@@ -12,8 +10,8 @@ public class GroupDto {
     @NotBlank(message = "Title can`t be blank!")
     @Length(max = 20, message = "Maximum length is 20!")
     private String title;
-    
-    private Date yearEntry;
+
+    private int yearEntry;
 
     public void setId(int id) {
         this.id = id;
@@ -23,7 +21,7 @@ public class GroupDto {
         this.title = title;
     }
 
-    public void setYearEntry(Date yearEntry) {
+    public void setYearEntry(int yearEntry) {
         this.yearEntry = yearEntry;
     }
 
@@ -35,7 +33,7 @@ public class GroupDto {
         return title;
     }
 
-    public Date getYearEntry() {
+    public int getYearEntry() {
         return yearEntry;
     }
 
@@ -44,7 +42,7 @@ public class GroupDto {
         final int prime = 31;
         int result = 1;
         result = prime * result + ((title == null) ? 0 : title.hashCode());
-        result = prime * result + ((yearEntry == null) ? 0 : yearEntry.hashCode());
+        result = prime * result + yearEntry;
         return result;
     }
 
@@ -62,10 +60,7 @@ public class GroupDto {
                 return false;
         } else if (!title.equals(other.title))
             return false;
-        if (yearEntry == null) {
-            if (other.yearEntry != null)
-                return false;
-        } else if (!yearEntry.equals(other.yearEntry))
+        if (yearEntry != other.yearEntry)
             return false;
         return true;
     }

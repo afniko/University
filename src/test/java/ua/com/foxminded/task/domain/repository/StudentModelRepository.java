@@ -1,6 +1,6 @@
 package ua.com.foxminded.task.domain.repository;
 
-import java.sql.Date;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -40,7 +40,7 @@ public class StudentModelRepository {
         student.setFirstName("firstName1");
         student.setMiddleName("middleName1");
         student.setLastName("lastName1");
-        student.setBirthday(Date.valueOf("1999-06-25"));
+        student.setBirthday(LocalDateTime.of(1999, 06, 25, 00, 00));
         student.setIdFees(111111111);
         student.setGroup(group);
         return student;
@@ -53,7 +53,7 @@ public class StudentModelRepository {
         student.setFirstName("firstName2");
         student.setMiddleName("middleName2");
         student.setLastName("lastName2");
-        student.setBirthday(Date.valueOf("1998-06-25"));
+        student.setBirthday(LocalDateTime.of(1998, 06, 25, 00, 00));
         student.setIdFees(222211111);
         student.setGroup(group);
         return student;
@@ -66,7 +66,7 @@ public class StudentModelRepository {
         student.setFirstName("firstName3");
         student.setMiddleName("middleName3");
         student.setLastName("lastName3");
-        student.setBirthday(Date.valueOf("2001-07-25"));
+        student.setBirthday(LocalDateTime.of(2001, 07, 25, 00, 00));
         student.setIdFees(111133331);
         student.setGroup(group);
         return student;
@@ -79,7 +79,7 @@ public class StudentModelRepository {
         student.setFirstName("firstName4");
         student.setMiddleName("middleName4");
         student.setLastName("lastName4");
-        student.setBirthday(Date.valueOf("1999-06-25"));
+        student.setBirthday(LocalDateTime.of(1999, 06, 25, 00, 00));
         student.setIdFees(411111141);
         student.setGroup(group);
         return student;
@@ -92,7 +92,7 @@ public class StudentModelRepository {
         student.setFirstName("firstName5");
         student.setMiddleName("middleName5");
         student.setLastName("lastName5");
-        student.setBirthday(Date.valueOf("1998-01-20"));
+        student.setBirthday(LocalDateTime.of(1998, 01, 20, 00, 00));
         student.setIdFees(111111551);
         student.setGroup(group);
         return student;
@@ -105,7 +105,7 @@ public class StudentModelRepository {
         student.setFirstName("firstName6");
         student.setMiddleName("middleName6");
         student.setLastName("lastName6");
-        student.setBirthday(Date.valueOf("1997-02-15"));
+        student.setBirthday(LocalDateTime.of(1997, 02, 15, 00, 00));
         student.setIdFees(111111661);
         student.setGroup(group);
         return student;

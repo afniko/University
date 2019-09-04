@@ -5,6 +5,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -45,7 +46,7 @@ public class StudentDaoImpl implements StudentDao {
             preparedStatement.setString(1, student.getFirstName());
             preparedStatement.setString(2, student.getLastName());
             preparedStatement.setString(3, student.getMiddleName());
-            preparedStatement.setDate(4, student.getBirthday());
+            preparedStatement.setTimestamp(4, Timestamp.valueOf(student.getBirthday()));
             preparedStatement.setInt(5, student.getIdFees());
             preparedStatement.execute();
         } catch (SQLException e) {
@@ -146,7 +147,8 @@ public class StudentDaoImpl implements StudentDao {
                 student.setFirstName(resultSet.getString("first_name"));
                 student.setLastName(resultSet.getString("last_name"));
                 student.setMiddleName(resultSet.getString("middle_name"));
-                student.setBirthday(resultSet.getDate("birthday"));
+                Timestamp birthday = resultSet.getTimestamp("birthday");
+                student.setBirthday(birthday.toLocalDateTime());
                 student.setIdFees(resultSet.getInt("idfees"));
                 if (Objects.nonNull(resultSet.getObject("group_id"))) {
                     groupId = resultSet.getInt("group_id");
@@ -294,7 +296,7 @@ public class StudentDaoImpl implements StudentDao {
             preparedStatement.setString(1, student.getFirstName());
             preparedStatement.setString(2, student.getLastName());
             preparedStatement.setString(3, student.getMiddleName());
-            preparedStatement.setDate(4, student.getBirthday());
+            preparedStatement.setTimestamp(4, Timestamp.valueOf(student.getBirthday()));
             preparedStatement.setInt(5, student.getIdFees());
             preparedStatement.setInt(6, student.getId());
             preparedStatement.executeUpdate();

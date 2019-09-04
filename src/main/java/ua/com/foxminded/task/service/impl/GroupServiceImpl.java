@@ -1,6 +1,7 @@
 package ua.com.foxminded.task.service.impl;
 
 import java.lang.invoke.MethodHandles;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -64,7 +65,7 @@ public class GroupServiceImpl implements GroupService {
     private Group retriveGroupFromDto(GroupDto groupDto) {
         Group group = (groupDto.getId() != 0) ? groupDao.findById(groupDto.getId()) : new Group();
         group.setTitle(groupDto.getTitle());
-        group.setYearEntry(groupDto.getYearEntry());
+        group.setYearEntry(LocalDateTime.of(groupDto.getYearEntry(), 01, 01, 00, 00));
         return group;
     }
 }

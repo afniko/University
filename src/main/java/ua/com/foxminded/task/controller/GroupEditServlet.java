@@ -4,7 +4,6 @@ import static org.apache.commons.lang3.StringUtils.isNotBlank;
 
 import java.io.IOException;
 import java.lang.invoke.MethodHandles;
-import java.sql.Date;
 import java.util.Set;
 
 import javax.servlet.ServletException;
@@ -93,7 +92,7 @@ public class GroupEditServlet extends HttpServlet {
             groupDto.setId(Integer.valueOf(id));
         }
         groupDto.setTitle(title);
-        groupDto.setYearEntry(Date.valueOf(yearEntry));
+        groupDto.setYearEntry(Integer.valueOf(yearEntry));
         return groupDto;
     }
 

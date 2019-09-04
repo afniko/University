@@ -4,7 +4,7 @@ import static org.apache.commons.lang3.StringUtils.isNotBlank;
 
 import java.io.IOException;
 import java.lang.invoke.MethodHandles;
-import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
 
@@ -110,7 +110,7 @@ public class StudentEditServlet extends HttpServlet {
         studentDto.setFirstName(firstName);
         studentDto.setMiddleName(middleName);
         studentDto.setLastName(lastName);
-        studentDto.setBirthday(Date.valueOf(birthday));
+        studentDto.setBirthday(LocalDate.parse(birthday));
         studentDto.setIdFees(Integer.valueOf(idFees));
         if (checkId(idGroup)) {
             studentDto.setIdGroup(idGroup);

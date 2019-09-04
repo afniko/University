@@ -20,7 +20,7 @@ public final class ConverterToDtoService {
         studentDto.setFirstName(student.getFirstName());
         studentDto.setMiddleName(student.getMiddleName());
         studentDto.setLastName(student.getLastName());
-        studentDto.setBirthday(student.getBirthday());
+        studentDto.setBirthday(student.getBirthday().toLocalDate());
         studentDto.setIdFees(student.getIdFees());
         if (Objects.nonNull(student.getGroup())) {
             int idGroup = student.getGroup().getId();
@@ -34,7 +34,7 @@ public final class ConverterToDtoService {
         GroupDto groupDto = new GroupDto();
         groupDto.setId(group.getId());
         groupDto.setTitle(group.getTitle());
-        groupDto.setYearEntry(group.getYearEntry());
+        groupDto.setYearEntry(group.getYearEntry().getYear());
         return groupDto;
     }
 }
