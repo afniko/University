@@ -4,6 +4,7 @@ import java.time.LocalDate;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Past;
 
 import org.hibernate.validator.constraints.Length;
 
@@ -21,6 +22,7 @@ public class StudentDto {
     @Length(max = 20, message = "Maximum length of last name is 20!")
     private String lastName;
 
+    @Past(message = "Birthday date must be in past!")
     private LocalDate birthday;
 
     @Max(value = 999999999, message = "Maximum value is 9 number!")

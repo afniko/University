@@ -1,5 +1,7 @@
 package ua.com.foxminded.task.domain.dto;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 
 import org.hibernate.validator.constraints.Length;
@@ -7,10 +9,13 @@ import org.hibernate.validator.constraints.Length;
 public class GroupDto {
 
     private int id;
+
     @NotBlank(message = "Title can`t be blank!")
     @Length(max = 20, message = "Maximum length is 20!")
     private String title;
 
+    @Max(value = 2100, message = "Years of entry is not correct!")
+    @Min(value = 2000, message = "Years of entry is not correct!")
     private int yearEntry;
 
     public void setId(int id) {
