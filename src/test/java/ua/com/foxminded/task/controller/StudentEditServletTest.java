@@ -24,12 +24,12 @@ import ua.com.foxminded.task.service.StudentService;
 
 @RunWith(JUnitPlatform.class)
 public class StudentEditServletTest {
-    HttpServletRequest request = mock(HttpServletRequest.class);
-    HttpServletResponse response = mock(HttpServletResponse.class);
-    RequestDispatcher mockDispatcher = mock(RequestDispatcher.class);
-    GroupService groupService = mock(GroupService.class);
-    StudentService studentService = mock(StudentService.class);
-    StudentEditServlet studentEditServlet = new StudentEditServlet(studentService, groupService);
+    private HttpServletRequest request = mock(HttpServletRequest.class);
+    private HttpServletResponse response = mock(HttpServletResponse.class);
+    private RequestDispatcher mockDispatcher = mock(RequestDispatcher.class);
+    private GroupService groupService = mock(GroupService.class);
+    private StudentService studentService = mock(StudentService.class);
+    private StudentEditServlet studentEditServlet = new StudentEditServlet(studentService, groupService);
 
     @Test
     public void whenPutAtRequestStudentWithoutId_thenCreateRecord() throws ServletException, IOException {

@@ -28,8 +28,9 @@ public class StudentServiceImpl implements StudentService {
     public StudentServiceImpl() {
     }
 
-    public StudentServiceImpl(StudentDao studentDao) {
+    public StudentServiceImpl(StudentDao studentDao, GroupDao groupDao) {
         this.studentDao = studentDao;
+        this.groupDao = groupDao;
     }
 
     @Override
@@ -71,7 +72,7 @@ public class StudentServiceImpl implements StudentService {
         student.setFirstName(studentDto.getFirstName());
         student.setMiddleName(studentDto.getMiddleName());
         student.setLastName(studentDto.getLastName());
-        student.setBirthday(LocalDateTime.parse(studentDto.getBirthday().toString()+"T00:00"));
+        student.setBirthday(LocalDateTime.parse(studentDto.getBirthday().toString() + "T00:00"));
         student.setIdFees(studentDto.getIdFees());
         return student;
     }

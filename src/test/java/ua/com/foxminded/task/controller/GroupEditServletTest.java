@@ -22,11 +22,11 @@ import ua.com.foxminded.task.service.GroupService;
 
 @RunWith(JUnitPlatform.class)
 public class GroupEditServletTest {
-    HttpServletRequest request = mock(HttpServletRequest.class);
-    HttpServletResponse response = mock(HttpServletResponse.class);
-    RequestDispatcher mockDispatcher = mock(RequestDispatcher.class);
-    GroupService groupService = mock(GroupService.class);
-    GroupEditServlet groupEditServlet = new GroupEditServlet(groupService);
+    private HttpServletRequest request = mock(HttpServletRequest.class);
+    private HttpServletResponse response = mock(HttpServletResponse.class);
+    private RequestDispatcher mockDispatcher = mock(RequestDispatcher.class);
+    private GroupService groupService = mock(GroupService.class);
+    private GroupEditServlet groupEditServlet = new GroupEditServlet(groupService);
 
     @Test
     public void whenPutAtRequestGroupWithoutId_thenCreateRecord() throws ServletException, IOException {

@@ -13,7 +13,9 @@ import org.junit.jupiter.api.Test;
 import org.junit.platform.runner.JUnitPlatform;
 import org.junit.runner.RunWith;
 
+import ua.com.foxminded.task.dao.GroupDao;
 import ua.com.foxminded.task.dao.StudentDao;
+import ua.com.foxminded.task.dao.impl.GroupDaoImpl;
 import ua.com.foxminded.task.dao.impl.StudentDaoImpl;
 import ua.com.foxminded.task.domain.Student;
 import ua.com.foxminded.task.domain.dto.StudentDto;
@@ -23,7 +25,8 @@ import ua.com.foxminded.task.domain.repository.dto.StudentDtoModelRepository;
 @RunWith(JUnitPlatform.class)
 public class StudentServiceImplTest {
     private StudentDao studentDao = mock(StudentDaoImpl.class);
-    private StudentServiceImpl studentService = new StudentServiceImpl(studentDao);
+    private GroupDao groupDao = mock(GroupDaoImpl.class);
+    private StudentServiceImpl studentService = new StudentServiceImpl(studentDao, groupDao);
 
     @Test
     void whenFindById_thenFindStudentAndConvertItToDto() {
@@ -49,27 +52,36 @@ public class StudentServiceImplTest {
         assertEquals(studentDtosExpected, studentDtosActually);
     }
 
-//    @Test
+    @Test
     void whenCreate_thenInvocCreateDaoClass() {
-        Student studentConverted = StudentModelRepository.getModel1();
-        Student studentExpected = StudentModelRepository.getModel2();
-        StudentDto studentInput = StudentDtoModelRepository.getModel1();
-        doReturn(studentExpected).when(studentDao).create(studentConverted);
+        Student student = StudentModelRepository.getModel1();
+        StudentDto studentDto = StudentDtoModelRepository.getModel1();
+        doReturn(student).when(studentDao).create(student);
+        doReturn(student.getGroup()).when(groupDao).findById(student.getGroup().getId());
 
-        studentService.create(studentInput);
+        StudentDto studentDtoActually = studentService.create(studentDto);
 
-        verify(studentDao, times(1)).create(studentConverted);
+        verify(studentDao, times(1)).create(student);
+        verify(groupDao, times(1)).findById(student.getGroup().getId());
+        assertEquals(studentDto, studentDtoActually);
     }
 
-//    @Test
+    @Test
     void whenUpdate_thenInvocUpdateDaoClass() {
         Student student = StudentModelRepository.getModel1();
         StudentDto studentDto = StudentDtoModelRepository.getModel1();
+        studentDto.setId(1);
+        student.setId(1);
         doReturn(student).when(studentDao).update(student);
+        doReturn(student).when(studentDao).findById(student.getId());
+        doReturn(student.getGroup()).when(groupDao).findById(student.getGroup().getId());
 
-         studentService.update(studentDto);
+        StudentDto studentDtoActually = studentService.update(studentDto);
 
         verify(studentDao, times(1)).update(student);
+        verify(studentDao, times(1)).findById(student.getId());
+        verify(groupDao, times(1)).findById(student.getGroup().getId());
+        assertEquals(studentDto, studentDtoActually);
     }
 
 }
