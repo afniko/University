@@ -67,9 +67,10 @@ public class GroupServiceImplTest {
 
         doReturn(groupExpected).when(groupDao).create(groupInput);
 
-        groupService.create(groupDto);
+        GroupDto groupDtoActually = groupService.create(groupDto);
 
         verify(groupDao, times(1)).create(groupInput);
+        assertEquals(groupDto, groupDtoActually);
     }
 
     @Test
@@ -79,8 +80,9 @@ public class GroupServiceImplTest {
         Group groupExpected = GroupModelRepository.getModel1();
         doReturn(groupExpected).when(groupDao).update(group);
 
-        groupService.update(groupDto);
+        GroupDto groupDtoActually = groupService.update(groupDto);
 
         verify(groupDao, times(1)).update(groupExpected);
+        assertEquals(groupDto, groupDtoActually);
     }
 }

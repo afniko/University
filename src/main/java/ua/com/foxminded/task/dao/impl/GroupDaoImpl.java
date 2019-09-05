@@ -22,6 +22,7 @@ import ua.com.foxminded.task.domain.Student;
 
 public class GroupDaoImpl implements GroupDao {
     private DaoFactory daoFactory = DaoFactory.getInstance();
+    private static StudentDaoImpl studentDao = new StudentDaoImpl();
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getSimpleName());
 
     @Override
@@ -88,7 +89,6 @@ public class GroupDaoImpl implements GroupDao {
     @Override
     public Group findById(int id) {
         LOGGER.debug("findById() [id:{}]", id);
-        StudentDaoImpl studentDao = new StudentDaoImpl();
         Group group = findByIdNoBidirectional(id);
         List<Student> students = studentDao.findByGroupIdNoBidirectional(group.getId());
         students.forEach(s -> s.setGroup(group));
