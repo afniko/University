@@ -8,9 +8,28 @@
     <packaging>war</packaging>
 
     <properties>
+        <postgresql>9.1-901-1.jdbc4</postgresql>
+        <junit.jupiter.api>5.4.2</junit.jupiter.api>
+        <junit.platform.runner>1.4.2</junit.platform.runner>
+        <junit.jupiter.engine>5.1.0</junit.jupiter.engine>
+        <mockito.junit.jupiter>2.25.1</mockito.junit.jupiter>
+        <commons.lang3>3.8.1</commons.lang3>
+        <org.flywaydb.flyway.core>5.2.4</org.flywaydb.flyway.core>
+        <slf4j.api>1.7.25</slf4j.api>
+        <slf4j.log4j12>1.7.25</slf4j.log4j12>
+        <javax.servlet.api>4.0.1</javax.servlet.api>
+        <javax.servlet.jsp.api>2.0</javax.servlet.jsp.api>
+        <jstl>1.2</jstl>
         <validation-api.version>2.0.1.Final</validation-api.version>
         <hibernate-validator.version>6.0.13.Final</hibernate-validator.version>
+        <hibernate.validator.annotation.processor>6.0.17.Final</hibernate.validator.annotation.processor>
         <javax.el.version>3.0.0</javax.el.version>
+
+        <org.flywaydb.flyway.plugin>5.2.4</org.flywaydb.flyway.plugin>
+        <maven.compiler.plugin>3.8.0</maven.compiler.plugin>
+        <maven.checkstyle.plugin>3.1.0</maven.checkstyle.plugin>
+        <maven.surefire.plugin>2.22.2</maven.surefire.plugin>
+        <properties.maven.plugin>1.0.0</properties.maven.plugin>
     </properties>
 
     <dependencies>
@@ -18,81 +37,81 @@
         <dependency>
             <groupId>postgresql</groupId>
             <artifactId>postgresql</artifactId>
-            <version>9.1-901-1.jdbc4</version>
+            <version>${postgresql}</version>
             <scope>runtime</scope>
         </dependency>
 
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-api</artifactId>
-            <version>5.4.2</version>
+            <version>${junit.jupiter.api}</version>
             <scope>test</scope>
         </dependency>
 
         <dependency>
             <groupId>org.junit.platform</groupId>
             <artifactId>junit-platform-runner</artifactId>
-            <version>1.4.2</version>
+            <version>${junit.platform.runner}</version>
             <scope>test</scope>
         </dependency>
 
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-engine</artifactId>
-            <version>5.1.0</version>
+            <version>${junit.jupiter.engine}</version>
             <scope>test</scope>
         </dependency>
 
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-junit-jupiter</artifactId>
-            <version>2.25.1</version>
+            <version>${mockito.junit.jupiter}</version>
             <scope>test</scope>
         </dependency>
 
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
-            <version>3.8.1</version>
+            <version>${commons.lang3}</version>
         </dependency>
 
         <dependency>
             <groupId>org.flywaydb</groupId>
             <artifactId>flyway-core</artifactId>
-            <version>5.2.4</version>
+            <version>${org.flywaydb.flyway.core}</version>
         </dependency>
 
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
-            <version>1.7.25</version>
+            <version>${slf4j.api}</version>
         </dependency>
 
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-log4j12</artifactId>
-            <version>1.7.25</version>
+            <version>${slf4j.log4j12}</version>
             <scope>runtime</scope>
         </dependency>
 
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>javax.servlet-api</artifactId>
-            <version>4.0.1</version>
+            <version>${javax.servlet.api}</version>
             <scope>provided</scope>
         </dependency>
 
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>jsp-api</artifactId>
-            <version>2.0</version>
+            <version>${javax.servlet.jsp.api}</version>
             <scope>provided</scope>
         </dependency>
 
         <dependency>
             <groupId>jstl</groupId>
             <artifactId>jstl</artifactId>
-            <version>1.2</version>
+            <version>${jstl}</version>
         </dependency>
 
         <!-- validation entity block -->
@@ -101,7 +120,7 @@
             <artifactId>validation-api</artifactId>
             <version>${validation-api.version}</version>
         </dependency>
-        
+
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-validator</artifactId>
@@ -111,7 +130,7 @@
         <dependency>
             <groupId>org.hibernate.validator</groupId>
             <artifactId>hibernate-validator-annotation-processor</artifactId>
-            <version>6.0.17.Final</version>
+            <version>${hibernate.validator.annotation.processor}</version>
         </dependency>
 
         <dependency>
@@ -127,12 +146,12 @@
             <plugin>
                 <groupId>org.flywaydb</groupId>
                 <artifactId>flyway-maven-plugin</artifactId>
-                <version>5.2.4</version>
+                <version>${org.flywaydb.flyway.plugin}</version>
                 <dependencies>
                     <dependency>
                         <groupId>org.flywaydb</groupId>
                         <artifactId>flyway-core</artifactId>
-                        <version>5.2.4</version>
+                        <version>${org.flywaydb.flyway.plugin}</version>
                     </dependency>
                 </dependencies>
                 <configuration>
@@ -160,7 +179,7 @@
 
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.8.0</version>
+                <version>${maven.compiler.plugin}</version>
                 <configuration>
                     <source>1.8</source>
                     <target>1.8</target>
@@ -170,7 +189,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-checkstyle-plugin</artifactId>
-                <version>3.1.0</version>
+                <version>${maven.checkstyle.plugin}</version>
                 <configuration>
                     <configLocation>src/test/resources/checkstyle.xml</configLocation>
                     <encoding>UTF-8</encoding>
@@ -194,7 +213,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>2.22.2</version>
+                <version>${maven.surefire.plugin}</version>
                 <configuration>
                     <excludes>
                         <exclude>**/IT*</exclude>
@@ -240,7 +259,7 @@
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>properties-maven-plugin</artifactId>
-                <version>1.0.0</version>
+                <version>${properties.maven.plugin}</version>
                 <executions>
                     <execution>
                         <phase>initialize</phase>
