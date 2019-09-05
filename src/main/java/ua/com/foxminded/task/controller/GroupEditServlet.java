@@ -50,9 +50,8 @@ public class GroupEditServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String errorMessage = null;
+        StringBuilder errorMessage = null;
         String successMessage = null;
-        String id = req.getParameter("id");
 
         GroupDto groupDto = retriveGroupDto(req);
         Set<ConstraintViolation<GroupDto>> violations = validateGroupDto(groupDto);
@@ -67,12 +66,14 @@ public class GroupEditServlet extends HttpServlet {
                     successMessage = "Record group was created!";
                 }
             } catch (NoExecuteQueryException e) {
-                errorMessage = "Record group was not edited!";
+
+                errorMessage = new StringBuilder("Record group was not edited!");
             }
         } else {
-            errorMessage = "You enter incorrect data! ";
+            errorMessage = new StringBuilder("You enter incorrect data! ");
             for (ConstraintViolation<GroupDto> violation : violations) {
-                errorMessage += " " + violation.getMessage();
+                errorMessage.append(" ");
+                errorMessage.append(violation.getMessage());
             }
         }
 
