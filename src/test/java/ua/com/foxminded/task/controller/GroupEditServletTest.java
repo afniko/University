@@ -22,15 +22,14 @@ import ua.com.foxminded.task.service.GroupService;
 
 @RunWith(JUnitPlatform.class)
 public class GroupEditServletTest {
+    HttpServletRequest request = mock(HttpServletRequest.class);
+    HttpServletResponse response = mock(HttpServletResponse.class);
+    RequestDispatcher mockDispatcher = mock(RequestDispatcher.class);
+    GroupService groupService = mock(GroupService.class);
+    GroupEditServlet groupEditServlet = new GroupEditServlet(groupService);
 
     @Test
     public void whenPutAtRequestGroupWithoutId_thenCreateRecord() throws ServletException, IOException {
-        HttpServletRequest request = mock(HttpServletRequest.class);
-        HttpServletResponse response = mock(HttpServletResponse.class);
-        RequestDispatcher mockDispatcher = mock(RequestDispatcher.class);
-        GroupService groupService = mock(GroupService.class);
-        GroupEditServlet groupEditServlet = new GroupEditServlet(groupService);
-
         GroupDto groupDto = GroupDtoModelRepository.getModel1();
         GroupDto groupDtoExpected = GroupDtoModelRepository.getModel1();
         String successMessageExpected = "Record group was created!";
@@ -48,12 +47,6 @@ public class GroupEditServletTest {
 
     @Test
     public void whenPutAtRequestGroupWithId_thenUpdateRecord() throws ServletException, IOException {
-        HttpServletRequest request = mock(HttpServletRequest.class);
-        HttpServletResponse response = mock(HttpServletResponse.class);
-        RequestDispatcher mockDispatcher = mock(RequestDispatcher.class);
-        GroupService groupService = mock(GroupService.class);
-        GroupEditServlet groupEditServlet = new GroupEditServlet(groupService);
-
         GroupDto groupDto = GroupDtoModelRepository.getModel1();
         groupDto.setId(1);
         GroupDto groupDtoExpected = GroupDtoModelRepository.getModel1();

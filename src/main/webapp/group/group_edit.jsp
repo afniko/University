@@ -35,7 +35,7 @@
 
                 <label for="text" class="col-sm-3 control-label">Year of entry</label>
                 <div class="col-sm-9">
-                    <input type="text" class="form-control" id="year_entry" name="year_entry" placeholder="YYYY-MM-DD" value="${group.yearEntry}">
+                    <input type="text" class="form-control" id="year_entry" name="year_entry" placeholder="YYYY" value="${group.yearEntry}">
                 </div>
             </div>
 

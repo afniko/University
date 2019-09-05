@@ -60,10 +60,11 @@ public class StudentEditServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        String errorMessage = null;
+        StringBuilder errorMessage = null;
         String successMessage = null;
         StudentDto studentDto = null;
         List<GroupDto> groups = null;
+        String path = "student.jsp";
 
         studentDto = retriveStudentDto(req);
         Set<ConstraintViolation<StudentDto>> violations = validateStudentDto(studentDto);
@@ -76,22 +77,24 @@ public class StudentEditServlet extends HttpServlet {
                     studentDto = studentService.create(studentDto);
                     successMessage = "Record student was created";
                 }
-
-                groups = groupService.findAllDto();
             } catch (NoExecuteQueryException e) {
-                errorMessage = "Record student was not edited!";
+                errorMessage = new StringBuilder("Record student was not edited!");
             }
         } else {
-            errorMessage = "You enter incorrect data!";
+            errorMessage = new StringBuilder("You enter incorrect data!");
             for (ConstraintViolation<StudentDto> violation : violations) {
-                errorMessage += " " + violation.getMessage();
+                errorMessage.append(" ");
+                errorMessage.append(violation.getMessage());
             }
+            path = "student_edit.jsp";
         }
+        groups = groupService.findAllDto();
+
         req.setAttribute("student", studentDto);
         req.setAttribute("groups", groups);
         req.setAttribute("errorMessage", errorMessage);
         req.setAttribute("successMessage", successMessage);
-        req.getRequestDispatcher("student.jsp").forward(req, resp);
+        req.getRequestDispatcher(path).forward(req, resp);
     }
 
     private StudentDto retriveStudentDto(HttpServletRequest req) {
@@ -103,6 +106,7 @@ public class StudentEditServlet extends HttpServlet {
         String birthday = req.getParameter("birthday");
         String idFees = req.getParameter("idFees");
         String idGroup = req.getParameter("id_group");
+        String groupTitle = req.getParameter("group_title");
         StudentDto studentDto = new StudentDto();
         if (checkId(id)) {
             studentDto.setId(Integer.valueOf(id));
@@ -114,6 +118,7 @@ public class StudentEditServlet extends HttpServlet {
         studentDto.setIdFees(Integer.valueOf(idFees));
         if (checkId(idGroup)) {
             studentDto.setIdGroup(idGroup);
+            studentDto.setGroupTitle(groupTitle);
         } else {
             studentDto.setIdGroup(null);
         }
@@ -129,6 +134,7 @@ public class StudentEditServlet extends HttpServlet {
         ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
         Validator validator = factory.getValidator();
         Set<ConstraintViolation<StudentDto>> violations = validator.validate(studentDto);
+        factory.close();
         return violations;
     }
 

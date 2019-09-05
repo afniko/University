@@ -66,7 +66,9 @@
             </div>
             <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">
-
+                    <c:if test="${!empty student.groupTitle}">
+                        <input type="hidden" name="group_title" value="${student.groupTitle}" />
+                    </c:if>
                     <c:if test="${empty student}">
                         <button type="submit" class="btn btn-default">Create</button>
                     </c:if>

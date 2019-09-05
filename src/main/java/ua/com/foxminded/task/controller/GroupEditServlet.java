@@ -52,6 +52,7 @@ public class GroupEditServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         StringBuilder errorMessage = null;
         String successMessage = null;
+        String path = "group.jsp";
 
         GroupDto groupDto = retriveGroupDto(req);
         Set<ConstraintViolation<GroupDto>> violations = validateGroupDto(groupDto);
@@ -75,12 +76,13 @@ public class GroupEditServlet extends HttpServlet {
                 errorMessage.append(" ");
                 errorMessage.append(violation.getMessage());
             }
+            path = "group_edit.jsp";
         }
 
         req.setAttribute("group", groupDto);
         req.setAttribute("errorMessage", errorMessage);
         req.setAttribute("successMessage", successMessage);
-        req.getRequestDispatcher("group.jsp").forward(req, resp);
+        req.getRequestDispatcher(path).forward(req, resp);
     }
 
     private GroupDto retriveGroupDto(HttpServletRequest req) {
@@ -102,6 +104,7 @@ public class GroupEditServlet extends HttpServlet {
         ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
         Validator validator = factory.getValidator();
         Set<ConstraintViolation<GroupDto>> violations = validator.validate(groupDto);
+        factory.close();
         return violations;
     }
 

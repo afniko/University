@@ -24,16 +24,15 @@ import ua.com.foxminded.task.service.StudentService;
 
 @RunWith(JUnitPlatform.class)
 public class StudentEditServletTest {
+    HttpServletRequest request = mock(HttpServletRequest.class);
+    HttpServletResponse response = mock(HttpServletResponse.class);
+    RequestDispatcher mockDispatcher = mock(RequestDispatcher.class);
+    GroupService groupService = mock(GroupService.class);
+    StudentService studentService = mock(StudentService.class);
+    StudentEditServlet studentEditServlet = new StudentEditServlet(studentService, groupService);
 
     @Test
     public void whenPutAtRequestStudentWithoutId_thenCreateRecord() throws ServletException, IOException {
-        HttpServletRequest request = mock(HttpServletRequest.class);
-        HttpServletResponse response = mock(HttpServletResponse.class);
-        RequestDispatcher mockDispatcher = mock(RequestDispatcher.class);
-        GroupService groupService = mock(GroupService.class);
-        StudentService studentService = mock(StudentService.class);
-        StudentEditServlet studentEditServlet = new StudentEditServlet(studentService, groupService);
-
         StudentDto studentDto = StudentDtoModelRepository.getModel1();
         StudentDto studentDtoExpected = StudentDtoModelRepository.getModel1();
         String successMessageExpected = "Record student was created";
@@ -57,13 +56,6 @@ public class StudentEditServletTest {
 
     @Test
     public void whenPutAtRequestStudentWithId_thenUpdateRecord() throws ServletException, IOException {
-        HttpServletRequest request = mock(HttpServletRequest.class);
-        HttpServletResponse response = mock(HttpServletResponse.class);
-        RequestDispatcher mockDispatcher = mock(RequestDispatcher.class);
-        GroupService groupService = mock(GroupService.class);
-        StudentService studentService = mock(StudentService.class);
-        StudentEditServlet studentEditServlet = new StudentEditServlet(studentService, groupService);
-
         StudentDto studentDto = StudentDtoModelRepository.getModel1();
         studentDto.setId(1);
         StudentDto studentDtoExpected = StudentDtoModelRepository.getModel1();
