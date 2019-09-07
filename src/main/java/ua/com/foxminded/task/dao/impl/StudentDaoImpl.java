@@ -47,7 +47,7 @@ public class StudentDaoImpl implements StudentDao {
             preparedStatement.setString(1, student.getFirstName());
             preparedStatement.setString(2, student.getLastName());
             preparedStatement.setString(3, student.getMiddleName());
-            preparedStatement.setTimestamp(4, Timestamp.valueOf(student.getBirthday()));
+            preparedStatement.setTimestamp(4, Timestamp.valueOf(student.getBirthday().atStartOfDay()));
             preparedStatement.setInt(5, student.getIdFees());
             preparedStatement.execute();
         } catch (SQLException e) {
@@ -148,7 +148,7 @@ public class StudentDaoImpl implements StudentDao {
                 student.setLastName(resultSet.getString("last_name"));
                 student.setMiddleName(resultSet.getString("middle_name"));
                 Timestamp birthday = resultSet.getTimestamp("birthday");
-                student.setBirthday(birthday.toLocalDateTime());
+                student.setBirthday(birthday.toLocalDateTime().toLocalDate());
                 student.setIdFees(resultSet.getInt("idfees"));
                 if (Objects.nonNull(resultSet.getObject("group_id"))) {
                     groupId = resultSet.getInt("group_id");
@@ -296,7 +296,7 @@ public class StudentDaoImpl implements StudentDao {
             preparedStatement.setString(1, student.getFirstName());
             preparedStatement.setString(2, student.getLastName());
             preparedStatement.setString(3, student.getMiddleName());
-            preparedStatement.setTimestamp(4, Timestamp.valueOf(student.getBirthday()));
+            preparedStatement.setTimestamp(4, Timestamp.valueOf(student.getBirthday().atStartOfDay()));
             preparedStatement.setInt(5, student.getIdFees());
             preparedStatement.setInt(6, student.getId());
             preparedStatement.executeUpdate();

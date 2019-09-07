@@ -20,7 +20,7 @@ public final class ConverterToDtoService {
         studentDto.setFirstName(student.getFirstName());
         studentDto.setMiddleName(student.getMiddleName());
         studentDto.setLastName(student.getLastName());
-        studentDto.setBirthday(student.getBirthday().toLocalDate());
+        studentDto.setBirthday(student.getBirthday());
         studentDto.setIdFees(student.getIdFees());
         if (Objects.nonNull(student.getGroup())) {
             int idGroup = student.getGroup().getId();

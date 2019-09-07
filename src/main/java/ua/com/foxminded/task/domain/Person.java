@@ -1,6 +1,6 @@
 package ua.com.foxminded.task.domain;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 public abstract class Person {
 
@@ -8,7 +8,7 @@ public abstract class Person {
     protected String firstName;
     protected String lastName;
     protected String middleName;
-    protected LocalDateTime birthday;
+    protected LocalDate birthday;
     protected int idFees;
 
     public int getId() {
@@ -43,11 +43,11 @@ public abstract class Person {
         this.middleName = middleName;
     }
 
-    public LocalDateTime getBirthday() {
+    public LocalDate getBirthday() {
         return birthday;
     }
 
-    public void setBirthday(LocalDateTime birthday) {
+    public void setBirthday(LocalDate birthday) {
         this.birthday = birthday;
     }
 
