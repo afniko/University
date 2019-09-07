@@ -20,6 +20,13 @@ public class StudentsServlet extends HttpServlet {
     private static final long serialVersionUID = -3291272855773910283L;
     private StudentService studentService = new StudentServiceImpl();
 
+    public StudentsServlet() {
+    }
+
+    public StudentsServlet(StudentService studentService) {
+        this.studentService = studentService;
+    }
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String errorMessage = null;

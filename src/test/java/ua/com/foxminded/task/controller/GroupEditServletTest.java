@@ -29,6 +29,19 @@ public class GroupEditServletTest {
     private GroupEditServlet groupEditServlet = new GroupEditServlet(groupService);
 
     @Test
+    public void whenPutAtRequestGetParametrId_thenOpenGroupEditPage() throws ServletException, IOException {
+        GroupDto groupDto = GroupDtoModelRepository.getModelWithId();
+
+        when(request.getParameter("id")).thenReturn(String.valueOf(groupDto.getId()));
+        when(groupService.findByIdDto(groupDto.getId())).thenReturn(groupDto);
+        when(request.getRequestDispatcher("group_edit.jsp")).thenReturn(mockDispatcher);
+
+        groupEditServlet.doGet(request, response);
+        verify(groupService, times(1)).findByIdDto(groupDto.getId());
+        verify(request, times(1)).setAttribute("group", groupDto);
+    }
+
+    @Test
     public void whenPutAtRequestGroupWithoutId_thenCreateRecord() throws ServletException, IOException {
         GroupDto groupDto = GroupDtoModelRepository.getModel1();
         GroupDto groupDtoExpected = GroupDtoModelRepository.getModel1();

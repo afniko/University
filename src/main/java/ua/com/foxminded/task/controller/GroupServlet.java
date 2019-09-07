@@ -22,6 +22,13 @@ public class GroupServlet extends HttpServlet {
     private static final long serialVersionUID = 4603484417851175285L;
     private GroupService groupService = new GroupServiceImpl();
 
+    public GroupServlet() {
+    }
+
+    public GroupServlet(GroupService groupService) {
+        this.groupService = groupService;
+    }
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String errorMessage = null;

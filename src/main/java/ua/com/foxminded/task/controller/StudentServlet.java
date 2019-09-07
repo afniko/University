@@ -27,6 +27,14 @@ public class StudentServlet extends HttpServlet {
     private StudentService studentService = new StudentServiceImpl();
     private GroupService groupService = new GroupServiceImpl();
 
+    public StudentServlet() {
+    }
+
+    public StudentServlet(StudentService studentService, GroupService groupService) {
+        this.studentService = studentService;
+        this.groupService = groupService;
+    }
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String errorMessage = null;
@@ -54,7 +62,7 @@ public class StudentServlet extends HttpServlet {
         req.setAttribute("errorMessage", errorMessage);
         req.getRequestDispatcher("student/student.jsp").forward(req, resp);
     }
-    
+
     private boolean checkId(String idString) {
         return StringUtils.isBlank(idString);
     }
