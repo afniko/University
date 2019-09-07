@@ -1,6 +1,5 @@
 package ua.com.foxminded.task.domain;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,7 +8,7 @@ public class Group {
     private int id;
     private String title;
     private Department department;
-    private LocalDateTime yearEntry;
+    private int yearEntry;
     private List<Student> students = new ArrayList<>();
 
     public void addStudent(Student student) {
@@ -46,6 +45,14 @@ public class Group {
         this.department = department;
     }
 
+    public int getYearEntry() {
+        return yearEntry;
+    }
+
+    public void setYearEntry(int yearEntry) {
+        this.yearEntry = yearEntry;
+    }
+
     public List<Student> getStudents() {
         return students;
     }
@@ -54,20 +61,12 @@ public class Group {
         this.students = students;
     }
 
-    public LocalDateTime getYearEntry() {
-        return yearEntry;
-    }
-
-    public void setYearEntry(LocalDateTime yearEntry) {
-        this.yearEntry = yearEntry;
-    }
-
     @Override
     public int hashCode() {
         final int prime = 31;
         int result = 1;
         result = prime * result + ((title == null) ? 0 : title.hashCode());
-        result = prime * result + ((yearEntry == null) ? 0 : yearEntry.hashCode());
+        result = prime * result + yearEntry;
         return result;
     }
 
@@ -85,10 +84,7 @@ public class Group {
                 return false;
         } else if (!title.equals(other.title))
             return false;
-        if (yearEntry == null) {
-            if (other.yearEntry != null)
-                return false;
-        } else if (!yearEntry.equals(other.yearEntry))
+        if (yearEntry != other.yearEntry)
             return false;
         return true;
     }

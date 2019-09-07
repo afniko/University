@@ -34,7 +34,7 @@ public final class ConverterToDtoService {
         GroupDto groupDto = new GroupDto();
         groupDto.setId(group.getId());
         groupDto.setTitle(group.getTitle());
-        groupDto.setYearEntry(group.getYearEntry().getYear());
+        groupDto.setYearEntry(group.getYearEntry());
         return groupDto;
     }
 }

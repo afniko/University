@@ -63,7 +63,7 @@ public class GroupServiceImplTest {
     void whenCreate_thenInvocCreateDaoClass() {
         GroupDto groupDto = GroupDtoModelRepository.getModel1();
         Group groupInput = GroupModelRepository.getModel1();
-        Group groupExpected = GroupModelRepository.getModel1();
+        Group groupExpected = GroupModelRepository.getModelWithId();
 
         doReturn(groupExpected).when(groupDao).create(groupInput);
 
@@ -75,14 +75,17 @@ public class GroupServiceImplTest {
 
     @Test
     void whenUpdate_thenInvocUpdateDaoClass() {
-        GroupDto groupDto = GroupDtoModelRepository.getModel1();
-        Group group = GroupModelRepository.getModel1();
-        Group groupExpected = GroupModelRepository.getModel1();
+        GroupDto groupDto = GroupDtoModelRepository.getModelWithId();
+        Group group = GroupModelRepository.getModelWithId();
+        Group groupExpected = GroupModelRepository.getModelWithId();
+        groupExpected.setId(1);
         doReturn(groupExpected).when(groupDao).update(group);
+        doReturn(group).when(groupDao).findById(groupDto.getId());
 
         GroupDto groupDtoActually = groupService.update(groupDto);
 
         verify(groupDao, times(1)).update(groupExpected);
+        verify(groupDao, times(1)).findById(groupDto.getId());
         assertEquals(groupDto, groupDtoActually);
     }
 }

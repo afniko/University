@@ -1,6 +1,5 @@
 package ua.com.foxminded.task.domain.repository;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -45,14 +44,23 @@ public class GroupModelRepository {
     public static Group getEmptyModel() {
         Group group = new Group();
         group.setTitle("group empty");
-        group.setYearEntry(LocalDateTime.of(2016, 01, 01, 00, 00));
+        group.setYearEntry(2016);
+        return group;
+    }
+
+    public static Group getModelWithId() {
+        Group group = new Group();
+        group.setId(1);
+        group.setTitle("group1");
+        group.setYearEntry(2016);
+        group.setStudents(StudentModelRepository.getModels1());
         return group;
     }
 
     public static Group getModel1() {
         Group group = new Group();
         group.setTitle("group1");
-        group.setYearEntry(LocalDateTime.of(2016, 01, 01, 00, 00));
+        group.setYearEntry(2016);
         group.setStudents(StudentModelRepository.getModels1());
         return group;
     }
@@ -60,7 +68,7 @@ public class GroupModelRepository {
     public static Group getModel2() {
         Group group = new Group();
         group.setTitle("group2");
-        group.setYearEntry(LocalDateTime.of(2018, 01, 01, 00, 00));
+        group.setYearEntry(2018);
         group.setStudents(StudentModelRepository.getModels2());
         return group;
     }
@@ -68,7 +76,7 @@ public class GroupModelRepository {
     public static Group getModel3() {
         Group group = new Group();
         group.setTitle("group3");
-        group.setYearEntry(LocalDateTime.of(2017, 01, 01, 00, 00));
+        group.setYearEntry(2017);
         group.setStudents(StudentModelRepository.getModels3());
         return group;
     }
@@ -76,7 +84,7 @@ public class GroupModelRepository {
     private static Group getModel4() {
         Group group = new Group();
         group.setTitle("group4");
-        group.setYearEntry(LocalDateTime.of(2016, 01, 01, 00, 00));
+        group.setYearEntry(2016);
         group.setStudents(StudentModelRepository.getModels());
         return group;
     }
@@ -84,7 +92,7 @@ public class GroupModelRepository {
     public static Group getModel5() {
         Group group = new Group();
         group.setTitle("group5");
-        group.setYearEntry(LocalDateTime.of(2010, 01, 01, 00, 00));
+        group.setYearEntry(2010);
         group.setStudents(StudentModelRepository.getModels());
         return group;
     }
@@ -92,7 +100,7 @@ public class GroupModelRepository {
     private static Group getModel6() {
         Group group = new Group();
         group.setTitle("group6");
-        group.setYearEntry(LocalDateTime.of(2019, 01, 01, 00, 00));
+        group.setYearEntry(2019);
         group.setStudents(StudentModelRepository.getModels());
         return group;
     }
@@ -100,7 +108,7 @@ public class GroupModelRepository {
     private static Group getModel7() {
         Group group = new Group();
         group.setTitle("group7");
-        group.setYearEntry(LocalDateTime.of(2017, 10, 01, 00, 00));
+        group.setYearEntry(2017);
         group.setStudents(StudentModelRepository.getModels());
         return group;
     }
@@ -108,7 +116,7 @@ public class GroupModelRepository {
     private static Group getModel8() {
         Group group = new Group();
         group.setTitle("group8");
-        group.setYearEntry(LocalDateTime.of(2013, 01, 01, 00, 00));
+        group.setYearEntry(2013);
         group.setStudents(StudentModelRepository.getModels());
         return group;
     }
@@ -116,21 +124,21 @@ public class GroupModelRepository {
     public static Group getModel11() {
         Group group = new Group();
         group.setTitle("group11");
-        group.setYearEntry(LocalDateTime.of(2016, 10, 01, 00, 00));
+        group.setYearEntry(2016);
         return group;
     }
 
     public static Group getModel12() {
         Group group = new Group();
         group.setTitle("group12");
-        group.setYearEntry(LocalDateTime.of(2018, 11, 01, 00, 00));
+        group.setYearEntry(2018);
         return group;
     }
 
     public static Group getModel13() {
         Group group = new Group();
         group.setTitle("group13");
-        group.setYearEntry(LocalDateTime.of(2017, 02, 01, 00, 00));
+        group.setYearEntry(2017);
         return group;
     }
 }

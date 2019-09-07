@@ -41,6 +41,14 @@ public class GroupDtoModelRepository {
         return new ArrayList<>(groups);
     }
 
+    public static GroupDto getModelWithId() {
+        GroupDto group = new GroupDto();
+        group.setId(1);
+        group.setTitle("group1");
+        group.setYearEntry(2016);
+        return group;
+    }
+
     public static GroupDto getModel1() {
         GroupDto group = new GroupDto();
         group.setTitle("group1");

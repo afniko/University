@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -50,7 +51,7 @@ public class GroupDaoImpl implements GroupDao {
             } else {
                 preparedStatement.setInt(2, departmentId);
             }
-            preparedStatement.setTimestamp(3, Timestamp.valueOf(group.getYearEntry()));
+            preparedStatement.setTimestamp(3, Timestamp.valueOf(LocalDateTime.of(group.getYearEntry(), 01, 01, 00, 00)));
             preparedStatement.execute();
         } catch (SQLException e) {
             LOGGER.error("insertGroupRecord() [group:{}] was not inserted. Sql query:{}. {}", group, preparedStatement, e);
@@ -119,7 +120,7 @@ public class GroupDaoImpl implements GroupDao {
                     departmentId = resultSet.getInt("department_id");
                 }
                 Timestamp yearEntry = resultSet.getTimestamp("yearEntry");
-                group.setYearEntry(yearEntry.toLocalDateTime());
+                group.setYearEntry(yearEntry.toLocalDateTime().getYear());
             } else {
                 LOGGER.warn("findByIdNoBidirectional() Group with id#{} not finded", id);
                 throw new NoEntityFoundException("Group by id#" + id + " not finded");
@@ -230,7 +231,7 @@ public class GroupDaoImpl implements GroupDao {
             } else {
                 preparedStatement.setInt(2, departmentId);
             }
-            preparedStatement.setTimestamp(3, Timestamp.valueOf(group.getYearEntry()));
+            preparedStatement.setTimestamp(3, Timestamp.valueOf(LocalDateTime.of(group.getYearEntry(), 01, 01, 00, 00)));
             preparedStatement.setInt(4, group.getId());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
