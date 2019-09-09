@@ -3,6 +3,7 @@ package ua.com.foxminded.task.domain.dto;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.Length;
 
@@ -14,9 +15,10 @@ public class GroupDto {
     @Length(max = 20, message = "Maximum length is 20!")
     private String title;
 
-    @Max(value = 2100, message = "Years of entry is not correct!")
-    @Min(value = 2000, message = "Years of entry is not correct!")
-    private int yearEntry;
+    @NotNull(message = "Year of entry can`t be blank or not numeric!")
+    @Max(value = 2100, message = "Year of entry is not correct!")
+    @Min(value = 2000, message = "Year of entry is not correct!")
+    private Integer yearEntry;
 
     public void setId(int id) {
         this.id = id;
@@ -26,7 +28,7 @@ public class GroupDto {
         this.title = title;
     }
 
-    public void setYearEntry(int yearEntry) {
+    public void setYearEntry(Integer yearEntry) {
         this.yearEntry = yearEntry;
     }
 
@@ -38,7 +40,7 @@ public class GroupDto {
         return title;
     }
 
-    public int getYearEntry() {
+    public Integer getYearEntry() {
         return yearEntry;
     }
 
@@ -47,7 +49,7 @@ public class GroupDto {
         final int prime = 31;
         int result = 1;
         result = prime * result + ((title == null) ? 0 : title.hashCode());
-        result = prime * result + yearEntry;
+        result = prime * result + ((yearEntry == null) ? 0 : yearEntry.hashCode());
         return result;
     }
 
@@ -65,9 +67,14 @@ public class GroupDto {
                 return false;
         } else if (!title.equals(other.title))
             return false;
-        if (yearEntry != other.yearEntry)
+        if (yearEntry == null) {
+            if (other.yearEntry != null)
+                return false;
+        } else if (!yearEntry.equals(other.yearEntry))
             return false;
         return true;
     }
+
+   
 
 }

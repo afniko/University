@@ -67,8 +67,8 @@ public class GroupEditServlet extends HttpServlet {
                     successMessage = "Record group was created!";
                 }
             } catch (NoExecuteQueryException e) {
-
                 errorMessage = new StringBuilder("Record group was not edited!");
+                path = "group_edit.jsp";
             }
         } else {
             errorMessage = new StringBuilder("You enter incorrect data! ");
@@ -95,7 +95,11 @@ public class GroupEditServlet extends HttpServlet {
             groupDto.setId(Integer.valueOf(id));
         }
         groupDto.setTitle(title);
-        groupDto.setYearEntry(Integer.valueOf(yearEntry));
+        if (yearEntry.matches("^\\d+$")) {
+            groupDto.setYearEntry(Integer.valueOf(yearEntry));
+        } else {
+            groupDto.setYearEntry(null);
+        }
         return groupDto;
     }
 

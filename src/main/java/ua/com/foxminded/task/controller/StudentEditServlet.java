@@ -79,6 +79,7 @@ public class StudentEditServlet extends HttpServlet {
                 }
             } catch (NoExecuteQueryException e) {
                 errorMessage = new StringBuilder("Record student was not edited!");
+                path = "student_edit.jsp";
             }
         } else {
             errorMessage = new StringBuilder("You enter incorrect data!");
