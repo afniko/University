@@ -9,4 +9,6 @@ public interface CRUDDao<T> {
     public T findById(int id);
 
     public List<T> findAll();
+
+    public T update(T t);
 }

@@ -20,17 +20,24 @@ public class GroupsServlet extends HttpServlet {
     private static final long serialVersionUID = -77541974969140801L;
     private GroupService groupService = new GroupServiceImpl();
 
+    public GroupsServlet() {
+    }
+
+    public GroupsServlet(GroupService groupService) {
+        this.groupService = groupService;
+    }
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String errorMessage = null;
         List<GroupDto> groups = null;
         try {
-            groups = groupService.findAll();
+            groups = groupService.findAllDto();
         } catch (NoExecuteQueryException e) {
             errorMessage = "Something with group goes wrong!";
         }
         req.setAttribute("groups", groups);
         req.setAttribute("errorMessage", errorMessage);
-        req.getRequestDispatcher("groups.jsp").forward(req, resp);
+        req.getRequestDispatcher("group/groups.jsp").forward(req, resp);
     }
 }

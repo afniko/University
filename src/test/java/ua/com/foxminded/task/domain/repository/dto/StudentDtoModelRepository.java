@@ -1,6 +1,6 @@
 package ua.com.foxminded.task.domain.repository.dto;
 
-import java.sql.Date;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -40,9 +40,11 @@ public class StudentDtoModelRepository {
         group.setId(1);
         student.setFirstName("firstName1");
         student.setMiddleName("middleName1");
-        student.setBirthday(Date.valueOf("1999-06-25"));
-        student.setIdFees(1111111111);
+        student.setLastName("lastName1");
+        student.setBirthday(LocalDate.parse("1999-06-25"));
+        student.setIdFees(111111111);
         student.setGroupTitle(group.getTitle());
+        student.setIdGroup(String.valueOf(group.getId()));
         return student;
     }
 
@@ -52,9 +54,11 @@ public class StudentDtoModelRepository {
         group.setId(1);
         student.setFirstName("firstName2");
         student.setMiddleName("middleName2");
-        student.setBirthday(Date.valueOf("1998-06-25"));
-        student.setIdFees(1222211111);
+        student.setLastName("lastName2");
+        student.setBirthday(LocalDate.parse("1998-06-25"));
+        student.setIdFees(222211111);
         student.setGroupTitle(group.getTitle());
+        student.setIdGroup(String.valueOf(group.getId()));
         return student;
     }
 
@@ -64,9 +68,11 @@ public class StudentDtoModelRepository {
         group.setId(2);
         student.setFirstName("firstName3");
         student.setMiddleName("middleName3");
-        student.setBirthday(Date.valueOf("2001-07-25"));
-        student.setIdFees(1111133331);
+        student.setLastName("lastName3");
+        student.setBirthday(LocalDate.parse("2001-07-25"));
+        student.setIdFees(111133331);
         student.setGroupTitle(group.getTitle());
+        student.setIdGroup(String.valueOf(group.getId()));
         return student;
     }
 
@@ -76,9 +82,11 @@ public class StudentDtoModelRepository {
         group.setId(2);
         student.setFirstName("firstName4");
         student.setMiddleName("middleName4");
-        student.setBirthday(Date.valueOf("1999-06-25"));
-        student.setIdFees(1411111141);
+        student.setLastName("lastName4");
+        student.setBirthday(LocalDate.parse("1999-06-25"));
+        student.setIdFees(411111141);
         student.setGroupTitle(group.getTitle());
+        student.setIdGroup(String.valueOf(group.getId()));
         return student;
     }
 
@@ -88,9 +96,11 @@ public class StudentDtoModelRepository {
         group.setId(2);
         student.setFirstName("firstName5");
         student.setMiddleName("middleName5");
-        student.setBirthday(Date.valueOf("1998-01-20"));
-        student.setIdFees(1111111551);
+        student.setLastName("lastName5");
+        student.setBirthday(LocalDate.parse("1998-01-20"));
+        student.setIdFees(111111551);
         student.setGroupTitle(group.getTitle());
+        student.setIdGroup(String.valueOf(group.getId()));
         return student;
     }
 
@@ -100,9 +110,11 @@ public class StudentDtoModelRepository {
         group.setId(3);
         student.setFirstName("firstName6");
         student.setMiddleName("middleName6");
-        student.setBirthday(Date.valueOf("1997-02-15"));
-        student.setIdFees(1111111661);
+        student.setLastName("lastName6");
+        student.setBirthday(LocalDate.parse("1997-02-15"));
+        student.setIdFees(111111661);
         student.setGroupTitle(group.getTitle());
+        student.setIdGroup(String.valueOf(group.getId()));
         return student;
     }
 

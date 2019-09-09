@@ -1,54 +1,84 @@
 package ua.com.foxminded.task.domain.dto;
 
-import java.sql.Date;
+import java.time.LocalDate;
+
+import javax.validation.constraints.Max;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Past;
+
+import org.hibernate.validator.constraints.Length;
 
 public class StudentDto {
 
-    protected int id;
-    protected String firstName;
-    protected String middleName;
-    protected Date birthday;
-    protected int idFees;
+    private int id;
+
+    @NotBlank(message = "First name can`t be blank!")
+    @Length(max = 20, message = "Maximum length of first name is 20!")
+    private String firstName;
+
+    @Length(max = 20, message = "Maximum length of middle name is 20!")
+    private String middleName;
+
+    @Length(max = 20, message = "Maximum length of last name is 20!")
+    private String lastName;
+
+    @Past(message = "Birthday date must be in past!")
+    private LocalDate birthday;
+
+    @Max(value = 999999999, message = "Maximum value is 9 number!")
+    private int idFees;
+
+    @Length(max = 20, message = "Maximum length of title group is 20!")
     private String groupTitle;
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public void setMiddleName(String middleName) {
-        this.middleName = middleName;
-    }
-
-    public void setBirthday(Date birthday) {
-        this.birthday = birthday;
-    }
-
-    public void setIdFees(int idFees) {
-        this.idFees = idFees;
-    }
+    private String idGroup;
 
     public int getId() {
         return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getFirstName() {
         return firstName;
     }
 
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
     public String getMiddleName() {
         return middleName;
     }
 
-    public Date getBirthday() {
+    public void setMiddleName(String middleName) {
+        this.middleName = middleName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public LocalDate getBirthday() {
         return birthday;
+    }
+
+    public void setBirthday(LocalDate birthday) {
+        this.birthday = birthday;
     }
 
     public int getIdFees() {
         return idFees;
+    }
+
+    public void setIdFees(int idFees) {
+        this.idFees = idFees;
     }
 
     public String getGroupTitle() {
@@ -59,14 +89,23 @@ public class StudentDto {
         this.groupTitle = groupTitle;
     }
 
+    public String getIdGroup() {
+        return idGroup;
+    }
+
+    public void setIdGroup(String idGroup) {
+        this.idGroup = idGroup;
+    }
+
     @Override
     public int hashCode() {
         final int prime = 31;
         int result = 1;
         result = prime * result + ((birthday == null) ? 0 : birthday.hashCode());
         result = prime * result + ((firstName == null) ? 0 : firstName.hashCode());
-        result = prime * result + ((groupTitle == null) ? 0 : groupTitle.hashCode());
         result = prime * result + idFees;
+        result = prime * result + ((idGroup == null) ? 0 : idGroup.hashCode());
+        result = prime * result + ((lastName == null) ? 0 : lastName.hashCode());
         result = prime * result + ((middleName == null) ? 0 : middleName.hashCode());
         return result;
     }
@@ -90,12 +129,17 @@ public class StudentDto {
                 return false;
         } else if (!firstName.equals(other.firstName))
             return false;
-        if (groupTitle == null) {
-            if (other.groupTitle != null)
-                return false;
-        } else if (!groupTitle.equals(other.groupTitle))
-            return false;
         if (idFees != other.idFees)
+            return false;
+        if (idGroup == null) {
+            if (other.idGroup != null)
+                return false;
+        } else if (!idGroup.equals(other.idGroup))
+            return false;
+        if (lastName == null) {
+            if (other.lastName != null)
+                return false;
+        } else if (!lastName.equals(other.lastName))
             return false;
         if (middleName == null) {
             if (other.middleName != null)
@@ -103,6 +147,12 @@ public class StudentDto {
         } else if (!middleName.equals(other.middleName))
             return false;
         return true;
+    }
+
+    @Override
+    public String toString() {
+        return "StudentDto [id=" + id + ", firstName=" + firstName + ", middleName=" + middleName + ", lastName=" + lastName + ", birthday=" + birthday + ", idFees=" + idFees + ", groupTitle="
+                + groupTitle + ", idGroup=" + idGroup + "]";
     }
 
 }

@@ -1,7 +1,6 @@
 <%@page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" 
 "http://www.w3.org/TR/html4/loose.dtd">
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <html>
 <head>
@@ -17,48 +16,33 @@
 
 <!-- Latest compiled and minified JavaScript -->
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
-
-<title>Groups page</title>
+<%
+    String title = request.getParameter("title");
+    String title_header = request.getParameter("title_header");
+%>
+<title><%=title%></title>
 </head>
 <body>
+
 
     <nav class="navbar navbar-default">
     <div class="container-fluid">
         <div class="navbar-header">
-            <a href="#" class="navbar-brand">Groups page</a>
+            <a href="#" class="navbar-brand"><%=title_header%></a>
         </div>
     </div>
 
     <div>
         <ul class="nav navbar-nav">
-            <li class="active"><a href="history.back()">previous page</a></li>
             <li><a href="${pageContext.request.contextPath}">main page</a></li>
             <li><a href="${pageContext.request.contextPath}/students">students page</a></li>
+            <li><a href="${pageContext.request.contextPath}/student/edit">student create page</a></li>
+            <li><a href="${pageContext.request.contextPath}/groups">groups page</a></li>
+            <li><a href="${pageContext.request.contextPath}/group/edit">group create page</a></li>
         </ul>
     </div>
 
     </nav>
 
-    <div class="container-fluid">
-        <c:if test="${!empty errorMessage}">
-            <div class="alert alert-danger">${errorMessage}</div>
-            <br />
-        </c:if>
-        <c:if test="${!empty groups}">
-            <table class="table table-hover">
-                <tr>
-                    <th>Title</th>
-                    <th>Year of entry</th>
-                </tr>
-                <c:forEach var="group" items="${groups}">
-                    <tr onclick="window.location='${pageContext.request.contextPath}/group?id=${group.id}'">
-                        <td>${group.title}</td>
-                        <td>${group.yearEntry}</td>
-                    </tr>
-                </c:forEach>
-            </table>
-        </c:if>
-    </div>
-    <br />
 </body>
 </html>

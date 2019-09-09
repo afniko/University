@@ -21,6 +21,7 @@ import ua.com.foxminded.task.domain.Student;
 
 public class GroupDaoImpl implements GroupDao {
     private DaoFactory daoFactory = DaoFactory.getInstance();
+    private static StudentDaoImpl studentDao = new StudentDaoImpl();
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getSimpleName());
 
     @Override
@@ -48,7 +49,7 @@ public class GroupDaoImpl implements GroupDao {
             } else {
                 preparedStatement.setInt(2, departmentId);
             }
-            preparedStatement.setDate(3, group.getYearEntry());
+            preparedStatement.setInt(3, group.getYearEntry());
             preparedStatement.execute();
         } catch (SQLException e) {
             LOGGER.error("insertGroupRecord() [group:{}] was not inserted. Sql query:{}. {}", group, preparedStatement, e);
@@ -88,7 +89,7 @@ public class GroupDaoImpl implements GroupDao {
     public Group findById(int id) {
         LOGGER.debug("findById() [id:{}]", id);
         Group group = findByIdNoBidirectional(id);
-        List<Student> students = new StudentDaoImpl().findByGroupIdNoBidirectional(group.getId());
+        List<Student> students = studentDao.findByGroupIdNoBidirectional(group.getId());
         students.forEach(s -> s.setGroup(group));
         group.setStudents(students);
         return group;
@@ -116,7 +117,7 @@ public class GroupDaoImpl implements GroupDao {
                 if (Objects.nonNull(resultSet.getObject("department_id"))) {
                     departmentId = resultSet.getInt("department_id");
                 }
-                group.setYearEntry(resultSet.getDate("yearEntry"));
+                group.setYearEntry(resultSet.getInt("yearEntry"));
             } else {
                 LOGGER.warn("findByIdNoBidirectional() Group with id#{} not finded", id);
                 throw new NoEntityFoundException("Group by id#" + id + " not finded");
@@ -204,4 +205,38 @@ public class GroupDaoImpl implements GroupDao {
         return groups;
     }
 
+    @Override
+    public Group update(Group group) {
+        LOGGER.debug("update() [group:{}]", group);
+        updateGroupRecord(group);
+        return findById(group.getId());
+    }
+
+    private void updateGroupRecord(Group group) {
+        LOGGER.debug("updateGroupRecord() [group:{}]", group);
+        String sql = "update groups set title=?, department_id=?, yearEntry=? where id=? ";
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        Integer departmentId = Objects.nonNull(group.getDepartment()) ? group.getDepartment().getId() : null;
+
+        try {
+            connection = daoFactory.getConnection();
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, group.getTitle());
+            if (Objects.isNull(departmentId)) {
+                preparedStatement.setNull(2, java.sql.Types.INTEGER);
+            } else {
+                preparedStatement.setInt(2, departmentId);
+            }
+            preparedStatement.setInt(3, group.getYearEntry());
+            preparedStatement.setInt(4, group.getId());
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            LOGGER.error("updateGroupRecord() [group:{}] was not updated. Sql query:{}. {}", group, preparedStatement, e);
+            throw new NoExecuteQueryException("updateGroupRecord() [group:" + group + "] was not updated. Sql query:" + preparedStatement, e);
+        } finally {
+            daoFactory.closePreparedStatement(preparedStatement);
+            daoFactory.closeConnection(connection);
+        }
+    }
 }

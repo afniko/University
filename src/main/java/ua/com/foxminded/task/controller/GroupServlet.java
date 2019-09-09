@@ -22,6 +22,13 @@ public class GroupServlet extends HttpServlet {
     private static final long serialVersionUID = 4603484417851175285L;
     private GroupService groupService = new GroupServiceImpl();
 
+    public GroupServlet() {
+    }
+
+    public GroupServlet(GroupService groupService) {
+        this.groupService = groupService;
+    }
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String errorMessage = null;
@@ -30,10 +37,10 @@ public class GroupServlet extends HttpServlet {
         int id = 0;
         try {
             id = Integer.valueOf(idString);
-            if (validate(idString)) {
+            if (checkId(idString)) {
                 errorMessage = "You id is blank";
             } else {
-                group = groupService.findById(id);
+                group = groupService.findByIdDto(id);
             }
         } catch (NoExecuteQueryException e) {
             errorMessage = "Something with group goes wrong!";
@@ -44,10 +51,10 @@ public class GroupServlet extends HttpServlet {
         }
         req.setAttribute("group", group);
         req.setAttribute("errorMessage", errorMessage);
-        req.getRequestDispatcher("group.jsp").forward(req, resp);
+        req.getRequestDispatcher("group/group.jsp").forward(req, resp);
     }
 
-    private boolean validate(String idString) {
+    private boolean checkId(String idString) {
         return StringUtils.isBlank(idString);
     }
 

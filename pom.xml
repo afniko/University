@@ -7,88 +7,138 @@
     <version>0.0.1-SNAPSHOT</version>
     <packaging>war</packaging>
 
+    <properties>
+        <postgresql.version>9.1-901-1.jdbc4</postgresql.version>
+        <junit.jupiter.api.version>5.4.2</junit.jupiter.api.version>
+        <junit.platform.runner.version>1.4.2</junit.platform.runner.version>
+        <junit.jupiter.engine.version>5.1.0</junit.jupiter.engine.version>
+        <mockito.junit.jupiter.version>2.25.1</mockito.junit.jupiter.version>
+        <commons.lang3.version>3.8.1</commons.lang3.version>
+        <org.flywaydb.flyway.core.version>5.2.4</org.flywaydb.flyway.core.version>
+        <slf4j.api.version>1.7.25</slf4j.api.version>
+        <slf4j.log4j12.version>1.7.25</slf4j.log4j12.version>
+        <javax.servlet.api.version>4.0.1</javax.servlet.api.version>
+        <javax.servlet.jsp.api.version>2.0</javax.servlet.jsp.api.version>
+        <jstl.version>1.2</jstl.version>
+        <validation-api.version>2.0.1.Final</validation-api.version>
+        <hibernate-validator.version>6.0.13.Final</hibernate-validator.version>
+        <hibernate.validator.annotation.processor.version>6.0.17.Final</hibernate.validator.annotation.processor.version>
+        <javax.el.version>3.0.0</javax.el.version>
+
+        <org.flywaydb.flyway.plugin.version>5.2.4</org.flywaydb.flyway.plugin.version>
+        <maven.compiler.plugin.version>3.8.0</maven.compiler.plugin.version>
+        <maven.checkstyle.plugin.version>3.1.0</maven.checkstyle.plugin.version>
+        <maven.surefire.plugin.version>2.22.2</maven.surefire.plugin.version>
+        <properties.maven.plugin.version>1.0.0</properties.maven.plugin.version>
+    </properties>
+
     <dependencies>
 
         <dependency>
             <groupId>postgresql</groupId>
             <artifactId>postgresql</artifactId>
-            <version>9.1-901-1.jdbc4</version>
+            <version>${postgresql.version}</version>
             <scope>runtime</scope>
         </dependency>
 
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-api</artifactId>
-            <version>5.4.2</version>
+            <version>${junit.jupiter.api.version}</version>
             <scope>test</scope>
         </dependency>
 
         <dependency>
             <groupId>org.junit.platform</groupId>
             <artifactId>junit-platform-runner</artifactId>
-            <version>1.4.2</version>
+            <version>${junit.platform.runner.version}</version>
             <scope>test</scope>
         </dependency>
 
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-engine</artifactId>
-            <version>5.1.0</version>
+            <version>${junit.jupiter.engine.version}</version>
             <scope>test</scope>
         </dependency>
 
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-junit-jupiter</artifactId>
-            <version>2.25.1</version>
+            <version>${mockito.junit.jupiter.version}</version>
             <scope>test</scope>
         </dependency>
 
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
-            <version>3.8.1</version>
+            <version>${commons.lang3.version}</version>
         </dependency>
 
         <dependency>
             <groupId>org.flywaydb</groupId>
             <artifactId>flyway-core</artifactId>
-            <version>5.2.4</version>
+            <version>${org.flywaydb.flyway.core.version}</version>
         </dependency>
 
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
-            <version>1.7.25</version>
+            <version>${slf4j.api.version}</version>
         </dependency>
 
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-log4j12</artifactId>
-            <version>1.7.25</version>
+            <version>${slf4j.log4j12.version}</version>
             <scope>runtime</scope>
         </dependency>
 
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>javax.servlet-api</artifactId>
-            <version>4.0.1</version>
+            <version>${javax.servlet.api.version}</version>
             <scope>provided</scope>
         </dependency>
 
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>jsp-api</artifactId>
-            <version>2.0</version>
+            <version>${javax.servlet.jsp.api.version}</version>
             <scope>provided</scope>
         </dependency>
 
         <dependency>
             <groupId>jstl</groupId>
             <artifactId>jstl</artifactId>
-            <version>1.2</version>
+            <version>${jstl.version}</version>
         </dependency>
 
+        <!-- validation entity block -->
+        <dependency>
+            <groupId>javax.validation</groupId>
+            <artifactId>validation-api</artifactId>
+            <version>${validation-api.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-validator</artifactId>
+            <version>${hibernate-validator.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.hibernate.validator</groupId>
+            <artifactId>hibernate-validator-annotation-processor</artifactId>
+            <version>${hibernate.validator.annotation.processor.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.glassfish</groupId>
+            <artifactId>javax.el</artifactId>
+            <version>${javax.el.version}</version>
+        </dependency>
+        <!--end of validation entity block -->
     </dependencies>
 
     <build>
@@ -96,12 +146,12 @@
             <plugin>
                 <groupId>org.flywaydb</groupId>
                 <artifactId>flyway-maven-plugin</artifactId>
-                <version>5.2.4</version>
+                <version>${org.flywaydb.flyway.plugin.version}</version>
                 <dependencies>
                     <dependency>
                         <groupId>org.flywaydb</groupId>
                         <artifactId>flyway-core</artifactId>
-                        <version>5.2.4</version>
+                        <version>${org.flywaydb.flyway.plugin.version}</version>
                     </dependency>
                 </dependencies>
                 <configuration>
@@ -129,7 +179,7 @@
 
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.8.0</version>
+                <version>${maven.compiler.plugin.version}</version>
                 <configuration>
                     <source>1.8</source>
                     <target>1.8</target>
@@ -139,7 +189,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-checkstyle-plugin</artifactId>
-                <version>3.1.0</version>
+                <version>${maven.checkstyle.plugin.version}</version>
                 <configuration>
                     <configLocation>src/test/resources/checkstyle.xml</configLocation>
                     <encoding>UTF-8</encoding>
@@ -163,7 +213,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>2.22.2</version>
+                <version>${maven.surefire.plugin.version}</version>
                 <configuration>
                     <excludes>
                         <exclude>**/IT*</exclude>
@@ -209,7 +259,7 @@
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>properties-maven-plugin</artifactId>
-                <version>1.0.0</version>
+                <version>${properties.maven.plugin.version}</version>
                 <executions>
                     <execution>
                         <phase>initialize</phase>
