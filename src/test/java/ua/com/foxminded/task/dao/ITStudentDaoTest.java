@@ -7,9 +7,6 @@ import java.util.Arrays;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
-import org.junit.platform.runner.JUnitPlatform;
-import org.junit.runner.RunWith;
 
 import ua.com.foxminded.task.dao.impl.GroupDaoImpl;
 import ua.com.foxminded.task.dao.impl.StudentDaoImpl;
@@ -18,7 +15,7 @@ import ua.com.foxminded.task.domain.Student;
 import ua.com.foxminded.task.domain.repository.GroupModelRepository;
 import ua.com.foxminded.task.domain.repository.StudentModelRepository;
 
-@RunWith(JUnitPlatform.class)
+//@RunWith(JUnitPlatform.class)
 public class ITStudentDaoTest {
 
     private static StudentDao studentDao;
@@ -51,18 +48,18 @@ public class ITStudentDaoTest {
         studentDao.create(STUDENT6);
     }
 
-    @Test
+//    @Test
     public void WhenPutAtTableDbStudentObjects_thenGetThisObjectsFindById() {
         int id = STUDENT2.getId();
         assertTrue(studentDao.findById(id).equals(STUDENT2));
     }
 
-    @Test
+//    @Test
     public void WhenPutAtTableDbStudentObjects_thenGetThisObjects() {
         assertTrue(studentDao.findAll().containsAll(Arrays.asList(STUDENT1, STUDENT2, STUDENT3, STUDENT4, STUDENT5)));
     }
 
-    @Test
+//    @Test
     public void WhenUpdateAtTableDbStudentObject_thenGetNewObject() {
         Student student = studentDao.findById(6);
         String firstNameExpected = "test_first_name";

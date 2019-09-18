@@ -5,12 +5,15 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.lang.invoke.MethodHandles;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Properties;
+
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.sql.DataSource;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,20 +23,24 @@ public class DaoFactory {
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getSimpleName());
     private static DaoFactory instance;
     private Properties properties;
+    private InitialContext initialContext;
+    private DataSource dataSource;
 
     private DaoFactory() {
         properties = getProperties(APPLICATION_PROPERTIES_FILE);
 
         try {
-            Class.forName(properties.getProperty("db.driver"));
-            LOGGER.debug("Driver database {} registered", properties.getProperty("db.driver"));
-        } catch (ClassNotFoundException e) {
-            LOGGER.error("Driver database {} not found : {}", properties.getProperty("db.driver"), e);
+            initialContext = new InitialContext();
+            dataSource = (DataSource) initialContext.lookup("java:/comp/env/jdbc/univer");
+            LOGGER.debug("Get datasource: {}", dataSource);
+        } catch (NamingException e) {
+            LOGGER.error("DataSource connection {} not found : {}", dataSource, e);
         }
+
     }
 
     public Connection getConnection() throws SQLException {
-        Connection connection = DriverManager.getConnection(properties.getProperty("db.url"), properties.getProperty("db.user"), properties.getProperty("db.password"));
+        Connection connection = dataSource.getConnection();
         LOGGER.debug("Get connection: {}", connection);
         return connection;
     }

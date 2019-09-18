@@ -18,6 +18,11 @@ mvn clean install
 ```
 
 ###Starting project:
+
+#### Configure apache tomcat 9 server:
+Add to $Catalina/lib folder library for postgresql (postgresql-42.2.8.jar)
+
+#### Starting progect
 For starting project deploy war file on web-server. And follow 
 to web link: http://{ip address web-server:port}/{name of war file}
 ```
