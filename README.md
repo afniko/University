@@ -17,12 +17,11 @@ For create execute war file and type in the following command and hit "Enter"
 mvn clean install
 ```
 
-###Starting project:
 
 #### Configure apache tomcat 9 server:
 Add to $Catalina/lib folder library for postgresql (postgresql-42.2.8.jar)
 
-#### Starting progect
+###Starting project:
 For starting project deploy war file on web-server. And follow 
 to web link: http://{ip address web-server:port}/{name of war file}
 ```
@@ -49,6 +48,35 @@ mvn verify
 
 ##Libraries
 Use libraries from pom.xml file
+
+##History
+####Task 8 - Decompose university
+Decomposit university: student, teacher, group, auditory, schedule for student and teacher. UML diagram.
+Branch dev, src/main/java/resources/uml_structure_university.png 
+####Task 9 - Domain layer
+Created JAVA project based on University UML class diagram from the previous task.
+Implemented domain logic for University.
+Writed JUnit tests for the created application.
+Branch dev
+####Task 10 - DAO layer
+Created plain JDBC based DAO for decomposed domain objects using DriverManager.
+Created sql_scheme.png. Created DAO layer. 
+Branch: task10
+####Task 11 - Exceptions and Logging
+Added custom exceptions and logging.
+Branch: task10
+####Task 12 - Maven
+Converted current project to Maven format. Added checkstyle plugin
+Branch: taskMaven
+####Task 13 - User Interface-1
+Created status pages (read data from dao - show it in JSP). Added servlets for show objects. Added flyway plugin.
+Branch: task13
+####Task 14 - User Interface-2
+Created CRUD pages for decomposed domain objects (servlets + JSP). Added validator for objects.
+Branch: task14
+####Task 15 - Data Source
+Created DataSource in web-project configuration files. Switch DAO layer to lookup DataSource by JNDI name and use it instead of simple JDBC connection.
+Branch: task15
 
 
 ##Author
