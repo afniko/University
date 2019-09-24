@@ -139,6 +139,14 @@
             <version>${javax.el.version}</version>
         </dependency>
         <!--end of validation entity block -->
+        <!-- <dependency> <groupId>com.github.h-thurow</groupId> <artifactId>simple-jndi</artifactId> 
+            <version>0.19.0</version> <scope>test</scope> </dependency> -->
+        <dependency>
+            <groupId>com.github.h-thurow</groupId>
+            <artifactId>tomcat8jndi</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+
     </dependencies>
 
     <build>
