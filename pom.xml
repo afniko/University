@@ -24,6 +24,7 @@
         <hibernate-validator.version>6.0.13.Final</hibernate-validator.version>
         <hibernate.validator.annotation.processor.version>6.0.17.Final</hibernate.validator.annotation.processor.version>
         <javax.el.version>3.0.0</javax.el.version>
+        <tomcat.catalina.version>9.0.26</tomcat.catalina.version>
 
         <org.flywaydb.flyway.plugin.version>5.2.4</org.flywaydb.flyway.plugin.version>
         <maven.compiler.plugin.version>3.8.0</maven.compiler.plugin.version>
@@ -138,13 +139,12 @@
             <artifactId>javax.el</artifactId>
             <version>${javax.el.version}</version>
         </dependency>
-        <!--end of validation entity block -->
-        <!-- <dependency> <groupId>com.github.h-thurow</groupId> <artifactId>simple-jndi</artifactId> 
-            <version>0.19.0</version> <scope>test</scope> </dependency> -->
+
         <dependency>
-            <groupId>com.github.h-thurow</groupId>
-            <artifactId>tomcat8jndi</artifactId>
-            <version>1.0.0</version>
+            <groupId>org.apache.tomcat</groupId>
+            <artifactId>tomcat-catalina</artifactId>
+            <version>${tomcat.catalina.version}</version>
+            <scope>test</scope>
         </dependency>
 
     </dependencies>
