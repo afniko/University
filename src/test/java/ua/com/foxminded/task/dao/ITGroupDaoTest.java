@@ -8,8 +8,6 @@ import java.util.Arrays;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.junit.platform.runner.JUnitPlatform;
-import org.junit.runner.RunWith;
 
 import ua.com.foxminded.task.dao.impl.GroupDaoImpl;
 import ua.com.foxminded.task.dao.impl.StudentDaoImpl;
@@ -18,7 +16,6 @@ import ua.com.foxminded.task.domain.Student;
 import ua.com.foxminded.task.domain.repository.GroupModelRepository;
 import ua.com.foxminded.task.domain.repository.StudentModelRepository;
 
-@RunWith(JUnitPlatform.class)
 public class ITGroupDaoTest {
 
     private static GroupDao groupDao;

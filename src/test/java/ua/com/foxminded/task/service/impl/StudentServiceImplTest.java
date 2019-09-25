@@ -10,8 +10,6 @@ import static org.mockito.Mockito.verify;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
-import org.junit.platform.runner.JUnitPlatform;
-import org.junit.runner.RunWith;
 
 import ua.com.foxminded.task.dao.GroupDao;
 import ua.com.foxminded.task.dao.StudentDao;
@@ -22,7 +20,6 @@ import ua.com.foxminded.task.domain.dto.StudentDto;
 import ua.com.foxminded.task.domain.repository.StudentModelRepository;
 import ua.com.foxminded.task.domain.repository.dto.StudentDtoModelRepository;
 
-@RunWith(JUnitPlatform.class)
 public class StudentServiceImplTest {
     private StudentDao studentDao = mock(StudentDaoImpl.class);
     private GroupDao groupDao = mock(GroupDaoImpl.class);

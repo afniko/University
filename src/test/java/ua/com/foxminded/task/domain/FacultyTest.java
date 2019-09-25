@@ -4,13 +4,10 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
-import org.junit.platform.runner.JUnitPlatform;
-import org.junit.runner.RunWith;
 
 import ua.com.foxminded.task.domain.repository.DepartmentModelRepository;
 import ua.com.foxminded.task.domain.repository.FacultyModelRepository;
 
-@RunWith(JUnitPlatform.class)
 public class FacultyTest {
 
     @Test

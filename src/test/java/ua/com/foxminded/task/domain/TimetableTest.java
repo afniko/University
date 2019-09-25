@@ -7,15 +7,12 @@ import java.sql.Date;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
-import org.junit.platform.runner.JUnitPlatform;
-import org.junit.runner.RunWith;
 
 import ua.com.foxminded.task.domain.repository.StudentModelRepository;
 import ua.com.foxminded.task.domain.repository.TeacherModelRepository;
 import ua.com.foxminded.task.domain.repository.TimetableItemModelRepository;
 import ua.com.foxminded.task.domain.repository.TimetableModelRepository;
 
-@RunWith(JUnitPlatform.class)
 public class TimetableTest {
     @Test
     public void whenAddTimetableItemToTimetable_thenTimetableContainsTimetableItem() {

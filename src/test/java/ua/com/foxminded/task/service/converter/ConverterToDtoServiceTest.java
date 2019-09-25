@@ -3,8 +3,6 @@ package ua.com.foxminded.task.service.converter;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;
-import org.junit.platform.runner.JUnitPlatform;
-import org.junit.runner.RunWith;
 
 import ua.com.foxminded.task.domain.Group;
 import ua.com.foxminded.task.domain.Student;
@@ -15,7 +13,6 @@ import ua.com.foxminded.task.domain.repository.StudentModelRepository;
 import ua.com.foxminded.task.domain.repository.dto.GroupDtoModelRepository;
 import ua.com.foxminded.task.domain.repository.dto.StudentDtoModelRepository;
 
-@RunWith(JUnitPlatform.class)
 public class ConverterToDtoServiceTest {
 
     @Test

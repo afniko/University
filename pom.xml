@@ -139,7 +139,9 @@
             <artifactId>javax.el</artifactId>
             <version>${javax.el.version}</version>
         </dependency>
+        <!--end of validation entity block -->
 
+        <!-- library for datasource initial context tests -->
         <dependency>
             <groupId>org.apache.tomcat</groupId>
             <artifactId>tomcat-catalina</artifactId>
@@ -224,12 +226,10 @@
                 <version>${maven.surefire.plugin.version}</version>
                 <configuration>
                     <excludes>
-                        <exclude>**/IT*</exclude>
-                        <exclude>**/domain/*</exclude>
+                        <exclude>**/*</exclude>
                     </excludes>
                 </configuration>
                 <executions>
-
                     <execution>
                         <id>test</id>
                         <goals>
