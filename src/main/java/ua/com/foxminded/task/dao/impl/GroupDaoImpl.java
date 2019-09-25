@@ -98,13 +98,12 @@ public class GroupDaoImpl implements GroupDao {
     Group findByIdNoBidirectional(int id) {
         LOGGER.debug("findByIdNoBidirectional() [id:{}]", id);
         String sql = "select * from groups where id=?";
-        Integer departmentId = null;
 
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
-        Group group = new Group();
 
+        Group group = null;
         try {
             connection = daoFactory.getConnection();
 
@@ -112,12 +111,7 @@ public class GroupDaoImpl implements GroupDao {
             preparedStatement.setInt(1, id);
             resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
-                group.setId(resultSet.getInt("id"));
-                group.setTitle(resultSet.getString("title"));
-                if (Objects.nonNull(resultSet.getObject("department_id"))) {
-                    departmentId = resultSet.getInt("department_id");
-                }
-                group.setYearEntry(resultSet.getInt("yearEntry"));
+                group = getGroupFromResultSet(resultSet);
             } else {
                 LOGGER.warn("findByIdNoBidirectional() Group with id#{} not finded", id);
                 throw new NoEntityFoundException("Group by id#" + id + " not finded");
@@ -136,8 +130,7 @@ public class GroupDaoImpl implements GroupDao {
     @Override
     public List<Group> findAll() {
         LOGGER.debug("findAll()");
-        String sql = "select id from groups";
-        List<Integer> groupsId = new ArrayList<>();
+        String sql = "select * from groups";
         List<Group> groups = null;
 
         Connection connection = null;
@@ -149,8 +142,10 @@ public class GroupDaoImpl implements GroupDao {
 
             preparedStatement = connection.prepareStatement(sql);
             resultSet = preparedStatement.executeQuery();
+            groups = new ArrayList<Group>();
             while (resultSet.next()) {
-                groupsId.add(resultSet.getInt("id"));
+                Group group = getGroupFromResultSet(resultSet);
+                groups.add(group);
             }
         } catch (SQLException e) {
             LOGGER.error("findAll() Select all groups query was crashed. Sql query:{}, {}", preparedStatement, e);
@@ -160,9 +155,39 @@ public class GroupDaoImpl implements GroupDao {
             daoFactory.closePreparedStatement(preparedStatement);
             daoFactory.closeConnection(connection);
         }
-        groups = getGroupsById(groupsId);
         return groups;
     }
+
+//    @Override
+//    public List<Group> findAll() {
+//        LOGGER.debug("findAll()");
+//        String sql = "select id from groups";
+//        List<Integer> groupsId = new ArrayList<>();
+//        List<Group> groups = null;
+//
+//        Connection connection = null;
+//        PreparedStatement preparedStatement = null;
+//        ResultSet resultSet = null;
+//
+//        try {
+//            connection = daoFactory.getConnection();
+//
+//            preparedStatement = connection.prepareStatement(sql);
+//            resultSet = preparedStatement.executeQuery();
+//            while (resultSet.next()) {
+//                groupsId.add(resultSet.getInt("id"));
+//            }
+//        } catch (SQLException e) {
+//            LOGGER.error("findAll() Select all groups query was crashed. Sql query:{}, {}", preparedStatement, e);
+//            throw new NoExecuteQueryException("findAll() Select all groups query was crashed. Sql query:" + preparedStatement, e);
+//        } finally {
+//            daoFactory.closeResultSet(resultSet);
+//            daoFactory.closePreparedStatement(preparedStatement);
+//            daoFactory.closeConnection(connection);
+//        }
+//        groups = getGroupsById(groupsId);
+//        return groups;
+//    }
 
     @Override
     public List<Group> findByDepartmentId(int id) {
@@ -210,6 +235,14 @@ public class GroupDaoImpl implements GroupDao {
         LOGGER.debug("update() [group:{}]", group);
         updateGroupRecord(group);
         return findById(group.getId());
+    }
+
+    private Group getGroupFromResultSet(ResultSet resultSet) throws SQLException {
+        Group group = new Group();
+        group.setId(resultSet.getInt("id"));
+        group.setTitle(resultSet.getString("title"));
+        group.setYearEntry(resultSet.getInt("yearEntry"));
+        return group;
     }
 
     private void updateGroupRecord(Group group) {
