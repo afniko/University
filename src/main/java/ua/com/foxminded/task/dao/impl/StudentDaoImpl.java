@@ -22,7 +22,6 @@ import ua.com.foxminded.task.domain.Student;
 
 public class StudentDaoImpl implements StudentDao {
     private DaoFactory daoFactory = DaoFactory.getInstance();
-    private static GroupDaoImpl groupDao = new GroupDaoImpl();
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getSimpleName());
 
     @Override
@@ -117,22 +116,12 @@ public class StudentDaoImpl implements StudentDao {
     @Override
     public Student findById(int id) {
         LOGGER.debug("findById() [student id:{}]", id);
-        Student student = findByIdWithoutGroup(id);
-        int groupId = student.getGroup().getId();
-        if (groupId != 0) {
-            student.setGroup(groupDao.findByIdNoBidirectional(groupId));
-        }
-        return student;
-    }
-
-    private Student findByIdWithoutGroup(int id) {
-        LOGGER.debug("findByIdWithoutGroup() [id:{}]", id);
-        String sql = "select * from persons p inner join students s on p.id = s.person_id where p.id=?";
+        String sql = "select * from persons p inner join students s on p.id = s.person_id " 
+        + "left join groups g on s.group_id=g.id where p.id=?";
 
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
-        Integer groupId = null;
         Student student = null;
 
         try {
@@ -141,44 +130,53 @@ public class StudentDaoImpl implements StudentDao {
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setInt(1, id);
             resultSet = preparedStatement.executeQuery();
-            student = new Student();
+
             if (resultSet.next()) {
-                student.setId(resultSet.getInt("id"));
-                student.setFirstName(resultSet.getString("first_name"));
-                student.setLastName(resultSet.getString("last_name"));
-                student.setMiddleName(resultSet.getString("middle_name"));
-                Timestamp birthday = resultSet.getTimestamp("birthday");
-                student.setBirthday(birthday.toLocalDateTime().toLocalDate());
-                student.setIdFees(resultSet.getInt("idfees"));
-                if (Objects.nonNull(resultSet.getObject("group_id"))) {
-                    groupId = resultSet.getInt("group_id");
-                }
+                student = getStudentFromResultSet(resultSet);
+
             } else {
-                LOGGER.warn("findByIdWithoutGroup() Student with id#{} not finded", id);
+                LOGGER.warn("findById() Student with id#{} not finded", id);
                 throw new NoEntityFoundException("Student id#" + id + "not found");
             }
         } catch (SQLException e) {
-            LOGGER.error("findByIdWithoutGroup() Select Student with id#{} was crashed. Sql query:{}, {}", id, preparedStatement, e);
-            throw new NoExecuteQueryException("findByIdWithoutGroup() Select Student with id#" + id + " was crashed. Sql query:" + preparedStatement, e);
+            LOGGER.error("findById() Select Student with id#{} was crashed. Sql query:{}, {}", id, preparedStatement, e);
+            throw new NoExecuteQueryException("findById() Select Student with id#" + id + " was crashed. Sql query:" + preparedStatement, e);
         } finally {
             daoFactory.closeResultSet(resultSet);
             daoFactory.closePreparedStatement(preparedStatement);
             daoFactory.closeConnection(connection);
         }
-        Group group = new Group();
-        if (Objects.nonNull(groupId)) {
-            group.setId(groupId);
+        return student;
+    }
+
+    private Student getStudentFromResultSet(ResultSet resultSet) throws SQLException {
+        Student student = new Student();
+        student.setId(resultSet.getInt("id"));
+        student.setFirstName(resultSet.getString("first_name"));
+        student.setLastName(resultSet.getString("last_name"));
+        student.setMiddleName(resultSet.getString("middle_name"));
+        Timestamp birthday = resultSet.getTimestamp("birthday");
+        student.setBirthday(birthday.toLocalDateTime().toLocalDate());
+        student.setIdFees(resultSet.getInt("idfees"));
+        if (Objects.nonNull(resultSet.getObject("title"))) {
+            Group group = new Group();
+            int idGroup = resultSet.getInt("group_id");
+            String titleGroup = resultSet.getString("title");
+            int yearEntry = resultSet.getInt("yearentry");
+            group.setId(idGroup);
+            group.setTitle(titleGroup);
+            group.setYearEntry(yearEntry);
+            student.setGroup(group);
         }
-        student.setGroup(group);
         return student;
     }
 
     @Override
     public List<Student> findAll() {
         LOGGER.debug("findAll()");
-        String sql = "select person_id from students";
-        List<Integer> studentsId = new ArrayList<>();
-        List<Student> students = null;
+        String sql = "select * from persons p inner join students s on p.id = s.person_id " 
+        + "left join groups g on s.group_id=g.id";
+        List<Student> students = new ArrayList<>();
 
         Connection connection = null;
         PreparedStatement preparedStatement = null;
@@ -190,7 +188,7 @@ public class StudentDaoImpl implements StudentDao {
             preparedStatement = connection.prepareStatement(sql);
             resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                studentsId.add(resultSet.getInt("person_id"));
+                students.add(getStudentFromResultSet(resultSet));
             }
         } catch (SQLException e) {
             LOGGER.error("findAll() Select all Students query was crashed. Sql query:{}, {}", preparedStatement, e);
@@ -200,16 +198,15 @@ public class StudentDaoImpl implements StudentDao {
             daoFactory.closePreparedStatement(preparedStatement);
             daoFactory.closeConnection(connection);
         }
-        students = getStudentsById(studentsId);
         return students;
     }
 
     @Override
     public List<Student> findByGroupId(int id) {
         LOGGER.debug("findByGroupId() [id:{}]", id);
-        String sql = "select person_id from students where group_id=?";
-        List<Integer> studentsId = new ArrayList<>();
-        List<Student> students;
+        String sql = "select * from persons p inner join students s on p.id = s.person_id " 
+        + "left join groups g on s.group_id=g.id where group_id=?";
+        List<Student> students = new ArrayList<>();
 
         Connection connection = null;
         PreparedStatement preparedStatement = null;
@@ -222,57 +219,16 @@ public class StudentDaoImpl implements StudentDao {
             preparedStatement.setInt(1, id);
             resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                studentsId.add(resultSet.getInt("person_id"));
+                students.add(getStudentFromResultSet(resultSet));
             }
         } catch (SQLException e) {
             LOGGER.error("findByGroupId() Select Students query by group id#{} was crashed. Sql query:{}, {}", id, preparedStatement, e);
-            throw new NoExecuteQueryException("findByGroupId() Select Students query by group id#" + id + " was crashed. Sql query:" + preparedStatement, e);
+            throw new NoExecuteQueryException("findAll() Select all Students query was crashed. Sql query:" + preparedStatement, e);
         } finally {
             daoFactory.closeResultSet(resultSet);
             daoFactory.closePreparedStatement(preparedStatement);
             daoFactory.closeConnection(connection);
         }
-        students = getStudentsById(studentsId);
-        return students;
-    }
-
-    List<Student> findByGroupIdNoBidirectional(int id) {
-        LOGGER.debug("findByGroupIdNoBidirectional() [id:{}]", id);
-        String sql = "select person_id from students where group_id=?";
-        List<Integer> studentsId = new ArrayList<>();
-        List<Student> students = new ArrayList<Student>();
-
-        Connection connection = null;
-        PreparedStatement preparedStatement = null;
-        ResultSet resultSet = null;
-
-        try {
-            connection = daoFactory.getConnection();
-
-            preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setInt(1, id);
-            resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()) {
-                studentsId.add(resultSet.getInt("person_id"));
-            }
-        } catch (SQLException e) {
-            LOGGER.error("findByGroupIdNoBidirectional() Select Students query by group id#{} was crashed. Sql query:{}, {}", id, preparedStatement, e);
-            throw new NoExecuteQueryException("findByGroupIdNoBidirectional() Select Students query by group id#" + id + " was crashed. Sql query:" + preparedStatement, e);
-        } finally {
-            daoFactory.closeResultSet(resultSet);
-            daoFactory.closePreparedStatement(preparedStatement);
-            daoFactory.closeConnection(connection);
-        }
-
-        studentsId.forEach(i -> students.add(findByIdWithoutGroup(i)));
-
-        return students;
-    }
-
-    private List<Student> getStudentsById(List<Integer> studentsId) {
-        LOGGER.debug("getStudentsById() [studentsId:{}]", studentsId);
-        List<Student> students = new ArrayList<Student>();
-        studentsId.forEach(id -> students.add(findById(id)));
         return students;
     }
 

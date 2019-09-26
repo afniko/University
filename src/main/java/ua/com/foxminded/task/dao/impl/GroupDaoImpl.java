@@ -89,7 +89,7 @@ public class GroupDaoImpl implements GroupDao {
     public Group findById(int id) {
         LOGGER.debug("findById() [id:{}]", id);
         Group group = findByIdNoBidirectional(id);
-        List<Student> students = studentDao.findByGroupIdNoBidirectional(group.getId());
+        List<Student> students = studentDao.findByGroupId(group.getId());
         students.forEach(s -> s.setGroup(group));
         group.setStudents(students);
         return group;
@@ -142,7 +142,7 @@ public class GroupDaoImpl implements GroupDao {
 
             preparedStatement = connection.prepareStatement(sql);
             resultSet = preparedStatement.executeQuery();
-            groups = new ArrayList<Group>();
+            groups = new ArrayList<>();
             while (resultSet.next()) {
                 Group group = getGroupFromResultSet(resultSet);
                 groups.add(group);
@@ -158,43 +158,12 @@ public class GroupDaoImpl implements GroupDao {
         return groups;
     }
 
-//    @Override
-//    public List<Group> findAll() {
-//        LOGGER.debug("findAll()");
-//        String sql = "select id from groups";
-//        List<Integer> groupsId = new ArrayList<>();
-//        List<Group> groups = null;
-//
-//        Connection connection = null;
-//        PreparedStatement preparedStatement = null;
-//        ResultSet resultSet = null;
-//
-//        try {
-//            connection = daoFactory.getConnection();
-//
-//            preparedStatement = connection.prepareStatement(sql);
-//            resultSet = preparedStatement.executeQuery();
-//            while (resultSet.next()) {
-//                groupsId.add(resultSet.getInt("id"));
-//            }
-//        } catch (SQLException e) {
-//            LOGGER.error("findAll() Select all groups query was crashed. Sql query:{}, {}", preparedStatement, e);
-//            throw new NoExecuteQueryException("findAll() Select all groups query was crashed. Sql query:" + preparedStatement, e);
-//        } finally {
-//            daoFactory.closeResultSet(resultSet);
-//            daoFactory.closePreparedStatement(preparedStatement);
-//            daoFactory.closeConnection(connection);
-//        }
-//        groups = getGroupsById(groupsId);
-//        return groups;
-//    }
-
     @Override
     public List<Group> findByDepartmentId(int id) {
         LOGGER.debug("findByDepartmentId() [id:{}]", id);
         String sql = "select id from groups where department_id=?";
         List<Integer> groupsId = new ArrayList<>();
-        List<Group> groups = new ArrayList<Group>();
+        List<Group> groups = new ArrayList<>();
 
         Connection connection = null;
         PreparedStatement preparedStatement = null;
