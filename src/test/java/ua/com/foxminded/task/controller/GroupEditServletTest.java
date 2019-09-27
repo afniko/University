@@ -27,6 +27,7 @@ public class GroupEditServletTest {
     private RequestDispatcher mockDispatcher = mock(RequestDispatcher.class);
     private GroupService groupService = mock(GroupService.class);
     private GroupEditServlet groupEditServlet = new GroupEditServlet(groupService);
+
     private static DataSourceCreater dataSourceCreater;
 
     @BeforeAll

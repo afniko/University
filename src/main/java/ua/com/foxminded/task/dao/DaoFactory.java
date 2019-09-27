@@ -14,25 +14,46 @@ import javax.sql.DataSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import ua.com.foxminded.task.dao.exception.NoConnectionDatabaseException;
+
 public class DaoFactory {
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getSimpleName());
+    private final static String NAME_CONTEXT = "java:/comp/env/jdbc/univer";
     private static DaoFactory instance;
-    private InitialContext initialContext;
-    private DataSource dataSource;
+    private static InitialContext initialContext;
+    private static DataSource dataSource;
 
     private DaoFactory() {
+    }
+
+    private static void setInitialContext() {
         try {
             initialContext = new InitialContext();
-            dataSource = (DataSource) initialContext.lookup("java:/comp/env/jdbc/univer");
+            dataSource = (DataSource) initialContext.lookup(NAME_CONTEXT);
             LOGGER.debug("Get datasource: {}", dataSource);
         } catch (NamingException e) {
             LOGGER.error("DataSource connection {} not found : {}", dataSource, e);
+            throw new NoConnectionDatabaseException("DaoFactory() was not get data source.", e);
         }
     }
 
-    public Connection getConnection() throws SQLException {
-        Connection connection = dataSource.getConnection();
-        LOGGER.debug("Get connection: {}", connection);
+    public synchronized static DaoFactory getInstance() {
+        if (instance == null) {
+            setInitialContext();
+            instance = new DaoFactory();
+        }
+        return instance;
+    }
+
+    public Connection getConnection() {
+        LOGGER.debug("getConnection() ");
+        Connection connection;
+        try {
+            connection = dataSource.getConnection();
+        } catch (SQLException e) {
+            LOGGER.error("getConnection() connection not found : {}", e);
+            throw new NoConnectionDatabaseException("getConnection() was not get data source.", e);
+        }
         return connection;
     }
 
@@ -78,13 +99,6 @@ public class DaoFactory {
                 LOGGER.error("Statement {} cannot close {}", statement, e);
             }
         }
-    }
-
-    public synchronized static DaoFactory getInstance() {
-        if (instance == null) {
-            instance = new DaoFactory();
-        }
-        return instance;
     }
 
 }
