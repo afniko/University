@@ -31,11 +31,10 @@ public class ITGroupDaoTest {
     private static final Group GROUP13 = GroupModelRepository.getModel13();
 
     private static FlywayConnection flywayConnection = new FlywayConnection();
-    private static DataSourceCreater dataSourceCreater;
+    private static DataSourceCreater dataSourceCreater = DataSourceCreater.getInstance();
 
     @BeforeAll
     public static void createRecords() {
-        dataSourceCreater = DataSourceCreater.getInstance();
         dataSourceCreater.setInitialContext();
         flywayConnection.createTables();
         groupDao = new GroupDaoImpl();
