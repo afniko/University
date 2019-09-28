@@ -28,10 +28,11 @@ import ua.com.foxminded.task.service.impl.GroupServiceImpl;
 public class GroupEditServlet extends HttpServlet {
 
     private static final long serialVersionUID = -5656956490382779313L;
-    private GroupService groupService = new GroupServiceImpl();
+    private GroupService groupService;
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getSimpleName());
 
     public GroupEditServlet() {
+        groupService = new GroupServiceImpl();
     }
 
     public GroupEditServlet(GroupService groupService) {

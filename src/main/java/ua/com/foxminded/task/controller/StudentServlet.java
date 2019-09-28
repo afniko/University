@@ -24,10 +24,12 @@ import ua.com.foxminded.task.service.impl.StudentServiceImpl;
 public class StudentServlet extends HttpServlet {
 
     private static final long serialVersionUID = -8107642356833737724L;
-    private StudentService studentService = new StudentServiceImpl();
-    private GroupService groupService = new GroupServiceImpl();
+    private StudentService studentService;
+    private GroupService groupService;
 
     public StudentServlet() {
+        studentService = new StudentServiceImpl();
+        groupService = new GroupServiceImpl();
     }
 
     public StudentServlet(StudentService studentService, GroupService groupService) {

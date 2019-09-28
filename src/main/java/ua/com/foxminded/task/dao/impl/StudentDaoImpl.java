@@ -21,8 +21,12 @@ import ua.com.foxminded.task.domain.Group;
 import ua.com.foxminded.task.domain.Student;
 
 public class StudentDaoImpl implements StudentDao {
-    private DaoFactory daoFactory = DaoFactory.getInstance();
+    private DaoFactory daoFactory;
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getSimpleName());
+
+    public StudentDaoImpl() {
+        daoFactory = DaoFactory.getInstance();
+    }
 
     @Override
     public Student create(Student student) {
@@ -116,8 +120,7 @@ public class StudentDaoImpl implements StudentDao {
     @Override
     public Student findById(int id) {
         LOGGER.debug("findById() [student id:{}]", id);
-        String sql = "select * from persons p inner join students s on p.id = s.person_id " 
-        + "left join groups g on s.group_id=g.id where p.id=?";
+        String sql = "select * from persons p inner join students s on p.id = s.person_id " + "left join groups g on s.group_id=g.id where p.id=?";
 
         Connection connection = null;
         PreparedStatement preparedStatement = null;
@@ -174,8 +177,7 @@ public class StudentDaoImpl implements StudentDao {
     @Override
     public List<Student> findAll() {
         LOGGER.debug("findAll()");
-        String sql = "select * from persons p inner join students s on p.id = s.person_id " 
-        + "left join groups g on s.group_id=g.id";
+        String sql = "select * from persons p inner join students s on p.id = s.person_id " + "left join groups g on s.group_id=g.id";
         List<Student> students = new ArrayList<>();
 
         Connection connection = null;
@@ -204,8 +206,7 @@ public class StudentDaoImpl implements StudentDao {
     @Override
     public List<Student> findByGroupId(int id) {
         LOGGER.debug("findByGroupId() [id:{}]", id);
-        String sql = "select * from persons p inner join students s on p.id = s.person_id " 
-        + "left join groups g on s.group_id=g.id where group_id=?";
+        String sql = "select * from persons p inner join students s on p.id = s.person_id " + "left join groups g on s.group_id=g.id where group_id=?";
         List<Student> students = new ArrayList<>();
 
         Connection connection = null;

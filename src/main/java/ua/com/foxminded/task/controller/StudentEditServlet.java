@@ -34,10 +34,12 @@ public class StudentEditServlet extends HttpServlet {
 
     private static final long serialVersionUID = -3975386213249523426L;
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getSimpleName());
-    private StudentService studentService = new StudentServiceImpl();
-    private GroupService groupService = new GroupServiceImpl();
+    private StudentService studentService;
+    private GroupService groupService;
 
     public StudentEditServlet() {
+        studentService = new StudentServiceImpl();
+        groupService = new GroupServiceImpl();
     }
 
     public StudentEditServlet(StudentService studentService, GroupService groupService) {

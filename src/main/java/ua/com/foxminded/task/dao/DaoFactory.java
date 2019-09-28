@@ -20,13 +20,14 @@ public class DaoFactory {
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getSimpleName());
     private final static String NAME_CONTEXT = "java:/comp/env/jdbc/univer";
     private static DaoFactory instance;
-    private static InitialContext initialContext;
-    private static DataSource dataSource;
+    private InitialContext initialContext;
+    private DataSource dataSource;
 
     private DaoFactory() {
+        setInitialContext();
     }
 
-    private static void setInitialContext() {
+    private void setInitialContext() {
         try {
             initialContext = new InitialContext();
             dataSource = (DataSource) initialContext.lookup(NAME_CONTEXT);
@@ -39,7 +40,6 @@ public class DaoFactory {
 
     public synchronized static DaoFactory getInstance() {
         if (instance == null) {
-            setInitialContext();
             instance = new DaoFactory();
         }
         return instance;

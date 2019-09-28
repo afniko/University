@@ -13,11 +13,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import ua.com.foxminded.task.dao.DataSourceCreater;
 import ua.com.foxminded.task.domain.dto.GroupDto;
 import ua.com.foxminded.task.domain.dto.StudentDto;
 import ua.com.foxminded.task.domain.repository.dto.GroupDtoModelRepository;
@@ -32,18 +29,6 @@ public class StudentServletTest {
     private GroupService groupService = mock(GroupService.class);
     private StudentService studentService = mock(StudentService.class);
     private StudentServlet studentServlet = new StudentServlet(studentService, groupService);
-    private static DataSourceCreater dataSourceCreater;
-
-    @BeforeAll
-    public static void setDataSource() {
-        dataSourceCreater = DataSourceCreater.getInstance();
-        dataSourceCreater.setInitialContext();
-    }
-
-    @AfterAll
-    public static void closeDataSource() {
-        dataSourceCreater.closeInitialContext();
-    }
 
     @Test
     public void whenPutAtRequestGetPatametrId_thenOpenStudentViewPage() throws ServletException, IOException {

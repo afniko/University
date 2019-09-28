@@ -18,9 +18,10 @@ import ua.com.foxminded.task.service.impl.GroupServiceImpl;
 public class GroupsServlet extends HttpServlet {
 
     private static final long serialVersionUID = -77541974969140801L;
-    private GroupService groupService = new GroupServiceImpl();
+    private GroupService groupService;
 
     public GroupsServlet() {
+        groupService = new GroupServiceImpl();
     }
 
     public GroupsServlet(GroupService groupService) {

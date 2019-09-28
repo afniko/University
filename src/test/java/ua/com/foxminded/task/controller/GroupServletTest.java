@@ -24,18 +24,6 @@ public class GroupServletTest {
     private RequestDispatcher mockDispatcher = mock(RequestDispatcher.class);
     private GroupService groupService = mock(GroupService.class);
     private GroupServlet groupServlet = new GroupServlet(groupService);
-//    private static DataSourceCreater dataSourceCreater;
-//
-//    @BeforeAll
-//    public static void setDataSource() {
-//        dataSourceCreater = DataSourceCreater.getInstance();
-//        dataSourceCreater.setInitialContext();
-//    }
-//
-//    @AfterAll
-//    public static void closeDataSource() {
-//        dataSourceCreater.closeInitialContext();
-//    }
 
     @Test
     public void whenPutAtRequestGetParametrId_thenOpenGroupViewPage() throws ServletException, IOException {
@@ -49,5 +37,4 @@ public class GroupServletTest {
         verify(groupService, times(1)).findByIdDto(groupDto.getId());
         verify(request, times(1)).setAttribute("group", groupDto);
     }
-
 }

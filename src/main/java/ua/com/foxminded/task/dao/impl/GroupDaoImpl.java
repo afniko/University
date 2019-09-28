@@ -20,9 +20,14 @@ import ua.com.foxminded.task.domain.Group;
 import ua.com.foxminded.task.domain.Student;
 
 public class GroupDaoImpl implements GroupDao {
-    private DaoFactory daoFactory = DaoFactory.getInstance();
-    private static StudentDaoImpl studentDao = new StudentDaoImpl();
+    private DaoFactory daoFactory;
+    private static StudentDaoImpl studentDao;
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getSimpleName());
+
+    public GroupDaoImpl() {
+        studentDao = new StudentDaoImpl();
+        daoFactory = DaoFactory.getInstance();
+    }
 
     @Override
     public Group create(Group group) {
