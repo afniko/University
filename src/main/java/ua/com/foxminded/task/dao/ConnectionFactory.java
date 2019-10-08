@@ -20,14 +20,14 @@ import org.slf4j.LoggerFactory;
 
 import ua.com.foxminded.task.dao.exception.NoDatabaseConnectionException;
 
-public class DaoFactory {
+public class ConnectionFactory {
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getSimpleName());
     private static final String APPLICATION_PROPERTIES_FILE = "application.properties";
-    private static DaoFactory instance;
+    private static ConnectionFactory instance;
     private static Properties properties;
     private DataSource dataSource;
 
-    private DaoFactory() {
+    private ConnectionFactory() {
         properties = getProperties(APPLICATION_PROPERTIES_FILE);
         retriveDataSourceFromInitialContext();
     }
@@ -43,9 +43,9 @@ public class DaoFactory {
         }
     }
 
-    public synchronized static DaoFactory getInstance() {
+    public synchronized static ConnectionFactory getInstance() {
         if (instance == null) {
-            instance = new DaoFactory();
+            instance = new ConnectionFactory();
         }
         return instance;
     }

@@ -53,7 +53,6 @@ public class GroupModelRepository {
         group.setId(1);
         group.setTitle("group1");
         group.setYearEntry(2016);
-        group.setStudents(StudentModelRepository.getModels1());
         return group;
     }
 
@@ -61,7 +60,6 @@ public class GroupModelRepository {
         Group group = new Group();
         group.setTitle("group1");
         group.setYearEntry(2016);
-        group.setStudents(StudentModelRepository.getModels1());
         return group;
     }
 
@@ -69,7 +67,6 @@ public class GroupModelRepository {
         Group group = new Group();
         group.setTitle("group2");
         group.setYearEntry(2018);
-        group.setStudents(StudentModelRepository.getModels2());
         return group;
     }
 
@@ -77,7 +74,6 @@ public class GroupModelRepository {
         Group group = new Group();
         group.setTitle("group3");
         group.setYearEntry(2017);
-        group.setStudents(StudentModelRepository.getModels3());
         return group;
     }
 
@@ -85,7 +81,6 @@ public class GroupModelRepository {
         Group group = new Group();
         group.setTitle("group4");
         group.setYearEntry(2016);
-        group.setStudents(StudentModelRepository.getModels());
         return group;
     }
 
@@ -93,7 +88,6 @@ public class GroupModelRepository {
         Group group = new Group();
         group.setTitle("group5");
         group.setYearEntry(2010);
-        group.setStudents(StudentModelRepository.getModels());
         return group;
     }
 
@@ -101,7 +95,6 @@ public class GroupModelRepository {
         Group group = new Group();
         group.setTitle("group6");
         group.setYearEntry(2019);
-        group.setStudents(StudentModelRepository.getModels());
         return group;
     }
 
@@ -109,7 +102,6 @@ public class GroupModelRepository {
         Group group = new Group();
         group.setTitle("group7");
         group.setYearEntry(2017);
-        group.setStudents(StudentModelRepository.getModels());
         return group;
     }
 
@@ -117,7 +109,6 @@ public class GroupModelRepository {
         Group group = new Group();
         group.setTitle("group8");
         group.setYearEntry(2013);
-        group.setStudents(StudentModelRepository.getModels());
         return group;
     }
 
