@@ -15,16 +15,16 @@ import org.postgresql.ds.PGSimpleDataSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class DataSourceCreater {
+public class InitialContextBinder {
 
-    private static DataSourceCreater instance;
+    private static InitialContextBinder instance;
     private static final String APPLICATION_PROPERTIES_FILE = "application.properties";
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getSimpleName());
     private static Properties properties;
     private InitialContext initialContext = null;
     private PGSimpleDataSource dataSource;
 
-    private DataSourceCreater() {
+    private InitialContextBinder() {
     };
 
     public void setInitialContext() {
@@ -34,7 +34,7 @@ public class DataSourceCreater {
         System.setProperty(Context.INITIAL_CONTEXT_FACTORY, "org.apache.naming.java.javaURLContextFactory");
         System.setProperty(Context.URL_PKG_PREFIXES, "org.apache.naming");
 
-        bindingInitialContext(dataSource);
+        bindingDataSource(dataSource);
     }
 
     public void closeInitialContext() {
@@ -52,7 +52,7 @@ public class DataSourceCreater {
         }
     }
 
-    private void bindingInitialContext(DataSource dataSource) {
+    private void bindingDataSource(DataSource dataSource) {
         try {
             initialContext = new InitialContext();
             initialContext.createSubcontext("java:");
@@ -65,9 +65,9 @@ public class DataSourceCreater {
         }
     }
 
-    public synchronized static DataSourceCreater getInstance() {
+    public synchronized static InitialContextBinder getInstance() {
         if (instance == null) {
-            instance = new DataSourceCreater();
+            instance = new InitialContextBinder();
         }
         return instance;
     }

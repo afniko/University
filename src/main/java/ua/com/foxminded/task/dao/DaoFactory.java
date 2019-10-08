@@ -1,11 +1,15 @@
 package ua.com.foxminded.task.dao;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.lang.invoke.MethodHandles;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Properties;
 
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
@@ -14,27 +18,28 @@ import javax.sql.DataSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import ua.com.foxminded.task.dao.exception.NoConnectionDatabaseException;
+import ua.com.foxminded.task.dao.exception.NoDatabaseConnectionException;
 
 public class DaoFactory {
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getSimpleName());
-    private final static String NAME_CONTEXT = "java:/comp/env/jdbc/univer";
+    private static final String APPLICATION_PROPERTIES_FILE = "application.properties";
     private static DaoFactory instance;
-    private InitialContext initialContext;
+    private static Properties properties;
     private DataSource dataSource;
 
     private DaoFactory() {
-        setInitialContext();
+        properties = getProperties(APPLICATION_PROPERTIES_FILE);
+        retriveDataSourceFromInitialContext();
     }
 
-    private void setInitialContext() {
+    private void retriveDataSourceFromInitialContext() {
         try {
-            initialContext = new InitialContext();
-            dataSource = (DataSource) initialContext.lookup(NAME_CONTEXT);
+            InitialContext initialContext = new InitialContext();
+            dataSource = (DataSource) initialContext.lookup(properties.getProperty("ds.name.context"));
             LOGGER.debug("Get datasource: {}", dataSource);
         } catch (NamingException e) {
             LOGGER.error("DataSource connection {} not found : {}", dataSource, e);
-            throw new NoConnectionDatabaseException("DaoFactory() was not get data source.", e);
+            throw new NoDatabaseConnectionException("DaoFactory() was not get data source.", e);
         }
     }
 
@@ -52,7 +57,7 @@ public class DaoFactory {
             connection = dataSource.getConnection();
         } catch (SQLException e) {
             LOGGER.error("getConnection() connection not found : {}", e);
-            throw new NoConnectionDatabaseException("getConnection() was not get data source.", e);
+            throw new NoDatabaseConnectionException("getConnection() was not get data source.", e);
         }
         return connection;
     }
@@ -101,4 +106,18 @@ public class DaoFactory {
         }
     }
 
+    private Properties getProperties(String namePropertiesFile) {
+        String rootResoursePath = Thread.currentThread().getContextClassLoader().getResource("").getPath();
+        String propertiesFilePath = rootResoursePath + namePropertiesFile;
+        Properties properties = new Properties();
+        try {
+            properties.load(new FileInputStream(propertiesFilePath));
+            LOGGER.debug("Properties load: {}", properties);
+        } catch (FileNotFoundException e) {
+            LOGGER.error("File properties {} not found. {}", propertiesFilePath, e);
+        } catch (IOException e) {
+            LOGGER.error("Input file properties {} had problem. {}", propertiesFilePath, e);
+        }
+        return properties;
+    }
 }

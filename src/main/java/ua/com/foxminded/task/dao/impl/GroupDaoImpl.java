@@ -136,7 +136,7 @@ public class GroupDaoImpl implements GroupDao {
     public List<Group> findAll() {
         LOGGER.debug("findAll()");
         String sql = "select * from groups";
-        List<Group> groups = null;
+        List<Group> groups = new ArrayList<>();
 
         Connection connection = null;
         PreparedStatement preparedStatement = null;
@@ -147,7 +147,6 @@ public class GroupDaoImpl implements GroupDao {
 
             preparedStatement = connection.prepareStatement(sql);
             resultSet = preparedStatement.executeQuery();
-            groups = new ArrayList<>();
             while (resultSet.next()) {
                 Group group = getGroupFromResultSet(resultSet);
                 groups.add(group);

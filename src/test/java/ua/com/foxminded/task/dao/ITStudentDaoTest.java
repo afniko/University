@@ -31,11 +31,11 @@ public class ITStudentDaoTest {
     private static final Group GROUP13 = GroupModelRepository.getModel13();
 
     private static FlywayConnection flywayConnection = new FlywayConnection();
-    private static DataSourceCreater dataSourceCreater = DataSourceCreater.getInstance();
+    private static InitialContextBinder initialContextBinder = InitialContextBinder.getInstance();
 
     @BeforeAll
     public static void createRecords() {
-        dataSourceCreater.setInitialContext();
+        initialContextBinder.setInitialContext();
         flywayConnection.createTables();
         studentDao = new StudentDaoImpl();
         groupDao = new GroupDaoImpl();
@@ -79,6 +79,6 @@ public class ITStudentDaoTest {
     @AfterAll
     public static void removeCreatedTables() {
         flywayConnection.removeTables();
-        dataSourceCreater.closeInitialContext();
+        initialContextBinder.closeInitialContext();
     }
 }
