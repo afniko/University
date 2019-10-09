@@ -17,15 +17,12 @@ import ua.com.foxminded.task.dao.GroupDao;
 import ua.com.foxminded.task.dao.exception.NoEntityFoundException;
 import ua.com.foxminded.task.dao.exception.NoExecuteQueryException;
 import ua.com.foxminded.task.domain.Group;
-import ua.com.foxminded.task.domain.Student;
 
 public class GroupDaoImpl implements GroupDao {
     private ConnectionFactory connectionFactory;
-    private static StudentDaoImpl studentDao;
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getSimpleName());
 
     public GroupDaoImpl() {
-        studentDao = new StudentDaoImpl();
         connectionFactory = ConnectionFactory.getInstance();
     }
 
@@ -93,14 +90,6 @@ public class GroupDaoImpl implements GroupDao {
     @Override
     public Group findById(int id) {
         LOGGER.debug("findById() [id:{}]", id);
-        Group group = findByIdNoBidirectional(id);
-        List<Student> students = studentDao.findByGroupId(group.getId());
-        students.forEach(s -> s.setGroup(group));
-        return group;
-    }
-
-    Group findByIdNoBidirectional(int id) {
-        LOGGER.debug("findByIdNoBidirectional() [id:{}]", id);
         String sql = "select * from groups where id=?";
 
         Connection connection = null;
