@@ -94,7 +94,6 @@ Person
 -title:String
 -department:Department
 -yearEntry:Date
--students:List&lt;Student&gt;
 --
 
 --</panel_attributes>
