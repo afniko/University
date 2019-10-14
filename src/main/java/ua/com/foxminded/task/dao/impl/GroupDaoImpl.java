@@ -29,7 +29,11 @@ public class GroupDaoImpl implements GroupDao {
     @Override
     public Group create(Group group) {
         LOGGER.debug("create() [group:{}]", group);
-        String sql = "insert into groups (title, department_id, yearEntry) values (?, ?, ?) returning id";
+        String sql = 
+                "insert into groups (title, department_id, yearEntry) "
+              + "values (?, ?, ?) "
+              + "returning id";
+        
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;

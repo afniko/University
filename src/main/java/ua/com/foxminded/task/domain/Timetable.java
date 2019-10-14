@@ -17,11 +17,13 @@ public class Timetable {
     }
 
     public Timetable findSchedule(Teacher teacher, Date startPeriod, Date endPeriod) {
-        List<TimetableItem> timetableItemsFiltered = timetableItems.stream().filter(t -> t.getTeacher().equals(teacher))
-                .filter(d -> (d.getDate().compareTo(startPeriod) >= 0 && d.getDate().compareTo(endPeriod) <= 0)).collect(Collectors.toList());
+        List<TimetableItem> timetableItemsFiltered = timetableItems.stream()
+                .filter(t -> t.getTeacher().equals(teacher))
+                .filter(d -> (d.getDate().compareTo(startPeriod) >= 0 && d.getDate().compareTo(endPeriod) <= 0))
+                .collect(Collectors.toList());
         return new Timetable(timetableItemsFiltered);
     }
-    
+
     public Timetable findSchedule(Student student, Date startPeriod, Date endPeriod) {
         List<TimetableItem> timetableItemsFiltered = timetableItems.stream()
                 .filter(timetableItems -> timetableItems.getGroups().contains(student.getGroup()))
