@@ -29,18 +29,10 @@ public class GroupDaoImpl implements GroupDao {
     @Override
     public Group create(Group group) {
         LOGGER.debug("create() [group:{}]", group);
-        insertGroupRecord(group);
-        int id = getTheLastRecordId();
-        group.setId(id);
-        return group;
-    }
-
-    private void insertGroupRecord(Group group) {
-        LOGGER.debug("insertGroupRecord() [group:{}]", group);
-        String sql = "insert into groups (title, department_id, yearEntry) values (?, ?, ?)";
+        String sql = "insert into groups (title, department_id, yearEntry) values (?, ?, ?) returning id";
         Connection connection = null;
         PreparedStatement preparedStatement = null;
-
+        ResultSet resultSet = null;
         Integer departmentId = Objects.nonNull(group.getDepartment()) ? group.getDepartment().getId() : null;
         try {
             connection = connectionFactory.getConnection();
@@ -52,39 +44,20 @@ public class GroupDaoImpl implements GroupDao {
                 preparedStatement.setInt(2, departmentId);
             }
             preparedStatement.setInt(3, group.getYearEntry());
-            preparedStatement.execute();
+            resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                int id = resultSet.getInt("id");
+                group.setId(id);
+            }
         } catch (SQLException e) {
             LOGGER.error("insertGroupRecord() [group:{}] was not inserted. Sql query:{}. {}", group, preparedStatement, e);
             throw new NoExecuteQueryException("insertGroupRecord() [group:" + group + "] was not inserted. Sql query:" + preparedStatement, e);
-        } finally {
-            connectionFactory.closePreparedStatement(preparedStatement);
-            connectionFactory.closeConnection(connection);
-        }
-    }
-
-    private int getTheLastRecordId() {
-        LOGGER.debug("getTheLastRecordId()");
-        String sql = "select id from groups where id = (select max(id) from groups)";
-        Connection connection = null;
-        PreparedStatement preparedStatement = null;
-        ResultSet resultSet = null;
-        int groupId = 0;
-        try {
-            connection = connectionFactory.getConnection();
-            preparedStatement = connection.prepareStatement(sql);
-            resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()) {
-                groupId = resultSet.getInt("id");
-            }
-        } catch (SQLException e) {
-            LOGGER.error("getTheLastRecordId() Crached request for finding the last record id in table groups. Sql query:{}. {}", preparedStatement, e);
-            throw new NoExecuteQueryException("getTheLastRecordId() Group entity was not created", e);
         } finally {
             connectionFactory.closeResultSet(resultSet);
             connectionFactory.closePreparedStatement(preparedStatement);
             connectionFactory.closeConnection(connection);
         }
-        return groupId;
+        return group;
     }
 
     @Override

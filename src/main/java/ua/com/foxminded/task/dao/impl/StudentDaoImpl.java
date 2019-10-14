@@ -31,19 +31,18 @@ public class StudentDaoImpl implements StudentDao {
     @Override
     public Student create(Student student) {
         LOGGER.debug("create() [student:{}]", student);
-        insertPersonRecord(student);
-        int id = getTheLastRecordId();
-        student.setId(id);
+        student = insertPersonRecord(student);
         insertStudentRecord(student);
-        return findById(id);
+        return findById(student.getId());
     }
 
-    private void insertPersonRecord(Student student) {
+    private Student insertPersonRecord(Student student) {
         LOGGER.debug("insertPersonRecord() [student:{}]", student);
-        String sql = "insert into persons (first_name, last_name, middle_name, birthday, idfees) values (?, ?, ?, ?, ?)";
+        String sql = "insert into persons (first_name, last_name, middle_name, birthday, idfees)" 
+        + " values (?, ?, ?, ?, ?) returning id";
         Connection connection = null;
         PreparedStatement preparedStatement = null;
-
+        ResultSet resultSet = null;
         try {
             connection = connectionFactory.getConnection();
             preparedStatement = connection.prepareStatement(sql);
@@ -52,41 +51,20 @@ public class StudentDaoImpl implements StudentDao {
             preparedStatement.setString(3, student.getMiddleName());
             preparedStatement.setTimestamp(4, Timestamp.valueOf(student.getBirthday().atStartOfDay()));
             preparedStatement.setInt(5, student.getIdFees());
-            preparedStatement.execute();
+            resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                int id = resultSet.getInt("id");
+                student.setId(id);
+            }
         } catch (SQLException e) {
             LOGGER.error("insertPersonRecord() [student:{}] was not inserted. Sql query:{}. {}", student, preparedStatement, e);
             throw new NoExecuteQueryException("insertPersonRecord() Student entity was not created", e);
-        } finally {
-            connectionFactory.closePreparedStatement(preparedStatement);
-            connectionFactory.closeConnection(connection);
-        }
-    }
-
-    private int getTheLastRecordId() {
-        LOGGER.debug("getTheLastRecordId()");
-        String sql = "select id from persons where id = (select max(id) from persons)";
-        Connection connection = null;
-        PreparedStatement preparedStatement = null;
-        ResultSet resultSet = null;
-        int personId = 0;
-        try {
-            connection = connectionFactory.getConnection();
-            preparedStatement = connection.prepareStatement(sql);
-            resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()) {
-                personId = resultSet.getInt("id");
-            } else {
-                LOGGER.warn("getTheLastRecordId() Don`t find the last record id in table persons. Sql query:{}.", preparedStatement);
-            }
-        } catch (SQLException e) {
-            LOGGER.error("getTheLastRecordId() Crached request for finding  the last record id in table persons. Sql query:{}. {}", preparedStatement, e);
-            throw new NoExecuteQueryException("getTheLastRecordId() Crached request for finding  the last record id in table persons. Sql query:" + preparedStatement, e);
         } finally {
             connectionFactory.closeResultSet(resultSet);
             connectionFactory.closePreparedStatement(preparedStatement);
             connectionFactory.closeConnection(connection);
         }
-        return personId;
+        return student;
     }
 
     private void insertStudentRecord(Student student) {
@@ -120,8 +98,7 @@ public class StudentDaoImpl implements StudentDao {
     @Override
     public Student findById(int id) {
         LOGGER.debug("findById() [student id:{}]", id);
-        String sql = "select * from persons p inner join students s on p.id = s.person_id " 
-        + "left join groups g on s.group_id=g.id where p.id=?";
+        String sql = "select * from persons p inner join students s on p.id = s.person_id " + "left join groups g on s.group_id=g.id where p.id=?";
 
         Connection connection = null;
         PreparedStatement preparedStatement = null;
@@ -178,8 +155,7 @@ public class StudentDaoImpl implements StudentDao {
     @Override
     public List<Student> findAll() {
         LOGGER.debug("findAll()");
-        String sql = "select * from persons p inner join students s on p.id = s.person_id " 
-        + "left join groups g on s.group_id=g.id";
+        String sql = "select * from persons p inner join students s on p.id = s.person_id " + "left join groups g on s.group_id=g.id";
         List<Student> students = new ArrayList<>();
 
         Connection connection = null;
@@ -208,8 +184,7 @@ public class StudentDaoImpl implements StudentDao {
     @Override
     public List<Student> findByGroupId(int id) {
         LOGGER.debug("findByGroupId() [id:{}]", id);
-        String sql = "select * from persons p inner join students s on p.id = s.person_id " 
-        + "left join groups g on s.group_id=g.id where group_id=?";
+        String sql = "select * from persons p inner join students s on p.id = s.person_id " + "left join groups g on s.group_id=g.id where group_id=?";
         List<Student> students = new ArrayList<>();
 
         Connection connection = null;
