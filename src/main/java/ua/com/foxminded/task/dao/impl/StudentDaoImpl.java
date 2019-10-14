@@ -39,8 +39,9 @@ public class StudentDaoImpl implements StudentDao {
     private Student insertPersonRecord(Student student) {
         LOGGER.debug("insertPersonRecord() [student:{}]", student);
         String sql = 
-                "insert into persons (first_name, last_name, middle_name, birthday, idfees)" 
-              + " values (?, ?, ?, ?, ?) returning id";
+                "insert into persons (first_name, last_name, middle_name, birthday, idfees) " 
+              + "values (?, ?, ?, ?, ?) "
+              + "returning id";
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
@@ -143,7 +144,7 @@ public class StudentDaoImpl implements StudentDao {
         Timestamp birthday = resultSet.getTimestamp("birthday");
         student.setBirthday(birthday.toLocalDateTime().toLocalDate());
         student.setIdFees(resultSet.getInt("idfees"));
-        if (Objects.nonNull(resultSet.getObject("title"))) {
+        if (Objects.nonNull(resultSet.getObject("group_id"))) {
             Group group = new Group();
             int idGroup = resultSet.getInt("group_id");
             String titleGroup = resultSet.getString("title");
