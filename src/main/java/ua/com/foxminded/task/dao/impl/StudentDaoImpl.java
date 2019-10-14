@@ -121,7 +121,7 @@ public class StudentDaoImpl implements StudentDao {
                 student = getStudentFromResultSet(resultSet);
 
             } else {
-                LOGGER.warn("findById() Student with id#{} not finded", id);
+                LOGGER.warn("findById() Student with id#{} not found", id);
                 throw new NoEntityFoundException("Student id#" + id + "not found");
             }
         } catch (SQLException e) {
@@ -215,7 +215,7 @@ public class StudentDaoImpl implements StudentDao {
             }
         } catch (SQLException e) {
             LOGGER.error("findByGroupId() Select Students query by group id#{} was crashed. Sql query:{}, {}", id, preparedStatement, e);
-            throw new NoExecuteQueryException("findAll() Select all Students query was crashed. Sql query:" + preparedStatement, e);
+            throw new NoExecuteQueryException("findByGroupId()  Select Students query by group id#" + id + " was crashed. Sql query:" + preparedStatement, e);
         } finally {
             connectionFactory.closeResultSet(resultSet);
             connectionFactory.closePreparedStatement(preparedStatement);

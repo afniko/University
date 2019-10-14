@@ -54,8 +54,8 @@ public class GroupDaoImpl implements GroupDao {
                 group.setId(id);
             }
         } catch (SQLException e) {
-            LOGGER.error("insertGroupRecord() [group:{}] was not inserted. Sql query:{}. {}", group, preparedStatement, e);
-            throw new NoExecuteQueryException("insertGroupRecord() [group:" + group + "] was not inserted. Sql query:" + preparedStatement, e);
+            LOGGER.error("create() [group:{}] was not inserted. Sql query:{}. {}", group, preparedStatement, e);
+            throw new NoExecuteQueryException("create() [group:" + group + "] was not inserted. Sql query:" + preparedStatement, e);
         } finally {
             connectionFactory.closeResultSet(resultSet);
             connectionFactory.closePreparedStatement(preparedStatement);
@@ -83,12 +83,12 @@ public class GroupDaoImpl implements GroupDao {
             if (resultSet.next()) {
                 group = getGroupFromResultSet(resultSet);
             } else {
-                LOGGER.warn("findByIdNoBidirectional() Group with id#{} not finded", id);
-                throw new NoEntityFoundException("Group by id#" + id + " not finded");
+                LOGGER.warn("findById() Group with id#{} not found", id);
+                throw new NoEntityFoundException("findById() Group by id#" + id + " not found");
             }
         } catch (SQLException e) {
-            LOGGER.error("findByIdNoBidirectional() Select Group with id#{} was crashed. Sql query:{}, {}", id, preparedStatement, e);
-            throw new NoExecuteQueryException("findByIdNoBidirectional() Select Group with id#" + id + " was crashed. Sql query:" + preparedStatement, e);
+            LOGGER.error("findById() Select Group with id#{} was crashed. Sql query:{}, {}", id, preparedStatement, e);
+            throw new NoExecuteQueryException("findById() Select Group with id#" + id + " was crashed. Sql query:" + preparedStatement, e);
         } finally {
             connectionFactory.closeResultSet(resultSet);
             connectionFactory.closePreparedStatement(preparedStatement);
