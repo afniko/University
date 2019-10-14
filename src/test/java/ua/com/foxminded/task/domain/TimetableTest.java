@@ -34,14 +34,12 @@ public class TimetableTest {
     @Test
     public void whenSetPeriodForStudent_thenGetFindSchedule() {
         Timetable timetable = TimetableModelRepository.getModel();
-        Student student = StudentModelRepository.getModel1();
+        Student student = StudentModelRepository.getModel7();
         Date startPeriod = Date.valueOf("2019-01-25");
         Date endPeriod = Date.valueOf("2019-03-25");
         List<TimetableItem> timetableItemsExpected = TimetableItemModelRepository.getTimetableItemsStudentsExpected();
         List<TimetableItem> timetableItemsUnexpected = TimetableItemModelRepository.getTimetableItemsStudentUnexpected();
         Timetable timetableActual = timetable.findSchedule(student, startPeriod, endPeriod);
-        System.out.println("actually: "+timetableActual.getTimetableItems());
-        System.out.println("expected: "+timetableItemsExpected);
         assertTrue(timetableActual.getTimetableItems().containsAll(timetableItemsExpected));
         assertFalse(timetableActual.getTimetableItems().containsAll(timetableItemsUnexpected));
     }

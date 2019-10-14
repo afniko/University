@@ -126,7 +126,7 @@ public class TimetableItem {
 
     @Override
     public String toString() {
-        return "TimetableItem [id=" + id + ", subject=" + subject + ", auditory=" + auditory + ", lecture=" + lecture + ", date=" + date + "]";
+        return "TimetableItem [id=" + id + ", subject=" + subject + ", groups=" + groups + ", date=" + date + "]";
     }
-
+   
 }
