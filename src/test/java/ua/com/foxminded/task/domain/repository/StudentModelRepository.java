@@ -32,7 +32,7 @@ public class StudentModelRepository {
         List<Student> students = Arrays.asList(getModel5(), getModel6());
         return new ArrayList<>(students);
     }
-
+    
     public static Student getModel1() {
         Student student = new Student();
         Group group = GroupModelRepository.getModel11();
@@ -111,4 +111,16 @@ public class StudentModelRepository {
         return student;
     }
 
+    public static Student getModel7() {
+        Student student = new Student();
+        Group group = GroupModelRepository.getModel1();
+        group.setId(1);
+        student.setFirstName("firstName1");
+        student.setMiddleName("middleName1");
+        student.setLastName("lastName1");
+        student.setBirthday(LocalDate.of(1999, 06, 25));
+        student.setIdFees(111111111);
+        student.setGroup(group);
+        return student;
+    }
 }

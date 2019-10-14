@@ -13,14 +13,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.junit.jupiter.api.Test;
-import org.junit.platform.runner.JUnitPlatform;
-import org.junit.runner.RunWith;
 
 import ua.com.foxminded.task.domain.dto.GroupDto;
 import ua.com.foxminded.task.domain.repository.dto.GroupDtoModelRepository;
 import ua.com.foxminded.task.service.GroupService;
 
-@RunWith(JUnitPlatform.class)
 public class GroupServletTest {
     private HttpServletRequest request = mock(HttpServletRequest.class);
     private HttpServletResponse response = mock(HttpServletResponse.class);
@@ -40,5 +37,4 @@ public class GroupServletTest {
         verify(groupService, times(1)).findByIdDto(groupDto.getId());
         verify(request, times(1)).setAttribute("group", groupDto);
     }
-    
 }

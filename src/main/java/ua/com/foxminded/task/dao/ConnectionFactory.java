@@ -5,36 +5,60 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.lang.invoke.MethodHandles;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Properties;
 
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.sql.DataSource;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class DaoFactory {
-    private static final String APPLICATION_PROPERTIES_FILE = "application.properties";
+import ua.com.foxminded.task.dao.exception.NoDatabaseConnectionException;
+
+public class ConnectionFactory {
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getSimpleName());
-    private static DaoFactory instance;
-    private Properties properties;
+    private static final String APPLICATION_PROPERTIES_FILE = "application.properties";
+    private static ConnectionFactory instance;
+    private static Properties properties;
+    private DataSource dataSource;
 
-    private DaoFactory() {
+    private ConnectionFactory() {
         properties = getProperties(APPLICATION_PROPERTIES_FILE);
+        retriveDataSourceFromInitialContext();
+    }
 
+    private void retriveDataSourceFromInitialContext() {
         try {
-            Class.forName(properties.getProperty("db.driver"));
-            LOGGER.debug("Driver database {} registered", properties.getProperty("db.driver"));
-        } catch (ClassNotFoundException e) {
-            LOGGER.error("Driver database {} not found : {}", properties.getProperty("db.driver"), e);
+            InitialContext initialContext = new InitialContext();
+            dataSource = (DataSource) initialContext.lookup(properties.getProperty("ds.name.context"));
+            LOGGER.debug("Get datasource: {}", dataSource);
+        } catch (NamingException e) {
+            LOGGER.error("DataSource connection {} not found : {}", dataSource, e);
+            throw new NoDatabaseConnectionException("DaoFactory() was not get data source.", e);
         }
     }
 
-    public Connection getConnection() throws SQLException {
-        Connection connection = DriverManager.getConnection(properties.getProperty("db.url"), properties.getProperty("db.user"), properties.getProperty("db.password"));
-        LOGGER.debug("Get connection: {}", connection);
+    public synchronized static ConnectionFactory getInstance() {
+        if (instance == null) {
+            instance = new ConnectionFactory();
+        }
+        return instance;
+    }
+
+    public Connection getConnection() {
+        LOGGER.debug("getConnection() ");
+        Connection connection;
+        try {
+            connection = dataSource.getConnection();
+        } catch (SQLException e) {
+            LOGGER.error("getConnection() connection not found : {}", e);
+            throw new NoDatabaseConnectionException("getConnection() was not get data source.", e);
+        }
         return connection;
     }
 
@@ -80,13 +104,6 @@ public class DaoFactory {
                 LOGGER.error("Statement {} cannot close {}", statement, e);
             }
         }
-    }
-
-    public synchronized static DaoFactory getInstance() {
-        if (instance == null) {
-            instance = new DaoFactory();
-        }
-        return instance;
     }
 
     private Properties getProperties(String namePropertiesFile) {

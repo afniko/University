@@ -20,11 +20,13 @@ import ua.com.foxminded.task.service.StudentService;
 import ua.com.foxminded.task.service.converter.ConverterToDtoService;
 
 public class StudentServiceImpl implements StudentService {
-    private StudentDao studentDao = new StudentDaoImpl();
-    private GroupDao groupDao = new GroupDaoImpl();
+    private StudentDao studentDao;
+    private GroupDao groupDao;
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getSimpleName());
 
     public StudentServiceImpl() {
+        studentDao = new StudentDaoImpl();
+        groupDao = new GroupDaoImpl();
     }
 
     public StudentServiceImpl(StudentDao studentDao, GroupDao groupDao) {

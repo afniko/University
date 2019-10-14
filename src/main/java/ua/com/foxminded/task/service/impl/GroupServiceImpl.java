@@ -16,10 +16,11 @@ import ua.com.foxminded.task.service.converter.ConverterToDtoService;
 
 public class GroupServiceImpl implements GroupService {
 
-    private GroupDao groupDao = new GroupDaoImpl();
+    private GroupDao groupDao;
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getSimpleName());
 
     public GroupServiceImpl() {
+        groupDao = new GroupDaoImpl();
     }
 
     public GroupServiceImpl(GroupDao groupDao) {

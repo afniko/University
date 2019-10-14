@@ -14,14 +14,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.junit.jupiter.api.Test;
-import org.junit.platform.runner.JUnitPlatform;
-import org.junit.runner.RunWith;
 
 import ua.com.foxminded.task.domain.dto.StudentDto;
 import ua.com.foxminded.task.domain.repository.dto.StudentDtoModelRepository;
 import ua.com.foxminded.task.service.StudentService;
 
-@RunWith(JUnitPlatform.class)
 public class StudentsServletTest {
     private HttpServletRequest request = mock(HttpServletRequest.class);
     private HttpServletResponse response = mock(HttpServletResponse.class);
@@ -39,5 +36,4 @@ public class StudentsServletTest {
         verify(studentService, times(1)).findAllDto();
         verify(request, times(1)).setAttribute("students", students);
     }
-
 }

@@ -14,8 +14,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.junit.jupiter.api.Test;
-import org.junit.platform.runner.JUnitPlatform;
-import org.junit.runner.RunWith;
 
 import ua.com.foxminded.task.domain.dto.GroupDto;
 import ua.com.foxminded.task.domain.dto.StudentDto;
@@ -24,7 +22,6 @@ import ua.com.foxminded.task.domain.repository.dto.StudentDtoModelRepository;
 import ua.com.foxminded.task.service.GroupService;
 import ua.com.foxminded.task.service.StudentService;
 
-@RunWith(JUnitPlatform.class)
 public class StudentServletTest {
     private HttpServletRequest request = mock(HttpServletRequest.class);
     private HttpServletResponse response = mock(HttpServletResponse.class);

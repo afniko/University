@@ -1,25 +1,11 @@
 package ua.com.foxminded.task.domain;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Group {
 
     private int id;
     private String title;
     private Department department;
     private int yearEntry;
-    private List<Student> students = new ArrayList<>();
-
-    public void addStudent(Student student) {
-        students.add(student);
-        student.setGroup(this);
-    }
-
-    public void removeStudent(Student student) {
-        students.remove(student);
-        student.setGroup(null);
-    }
 
     public int getId() {
         return id;
@@ -51,14 +37,6 @@ public class Group {
 
     public void setYearEntry(int yearEntry) {
         this.yearEntry = yearEntry;
-    }
-
-    public List<Student> getStudents() {
-        return students;
-    }
-
-    public void setStudents(List<Student> students) {
-        this.students = students;
     }
 
     @Override
