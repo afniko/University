@@ -12,28 +12,27 @@ import java.util.Objects;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import ua.com.foxminded.task.dao.ConnectionFactory;
+import ua.com.foxminded.task.dao.ConnectionFactoryImpl;
 import ua.com.foxminded.task.dao.GroupDao;
 import ua.com.foxminded.task.dao.exception.NoEntityFoundException;
 import ua.com.foxminded.task.dao.exception.NoExecuteQueryException;
 import ua.com.foxminded.task.domain.Group;
 
 public class GroupDaoImpl implements GroupDao {
-    private ConnectionFactory connectionFactory;
+    
+    private ConnectionFactoryImpl connectionFactory;
+
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getSimpleName());
 
     public GroupDaoImpl() {
-        connectionFactory = ConnectionFactory.getInstance();
+        connectionFactory = ConnectionFactoryImpl.getInstance();
     }
 
     @Override
     public Group create(Group group) {
         LOGGER.debug("create() [group:{}]", group);
-        String sql = 
-                "insert into groups (title, department_id, yearEntry) "
-              + "values (?, ?, ?) "
-              + "returning id";
-        
+        String sql = "insert into groups (title, department_id, yearEntry) " + "values (?, ?, ?) " + "returning id";
+
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;

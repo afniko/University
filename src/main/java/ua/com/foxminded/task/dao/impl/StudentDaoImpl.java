@@ -12,6 +12,8 @@ import java.util.Objects;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import ua.com.foxminded.task.dao.ConnectionFactory;
 import ua.com.foxminded.task.dao.StudentDao;
@@ -25,7 +27,10 @@ public class StudentDaoImpl implements StudentDao {
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getSimpleName());
 
     public StudentDaoImpl() {
-        connectionFactory = ConnectionFactory.getInstance();
+        ApplicationContext context = new AnnotationConfigApplicationContext(ConnectionFactory.class);
+        connectionFactory = context.getBean(ConnectionFactory.class);
+
+//        connectionFactoryImpl = ConnectionFactoryImpl.getInstance();
     }
 
     @Override
@@ -38,10 +43,7 @@ public class StudentDaoImpl implements StudentDao {
 
     private Student insertPersonRecord(Student student) {
         LOGGER.debug("insertPersonRecord() [student:{}]", student);
-        String sql = 
-                "insert into persons (first_name, last_name, middle_name, birthday, idfees) " 
-              + "values (?, ?, ?, ?, ?) "
-              + "returning id";
+        String sql = "insert into persons (first_name, last_name, middle_name, birthday, idfees) " + "values (?, ?, ?, ?, ?) " + "returning id";
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
@@ -100,10 +102,7 @@ public class StudentDaoImpl implements StudentDao {
     @Override
     public Student findById(int id) {
         LOGGER.debug("findById() [student id:{}]", id);
-        String sql = 
-                "select * from persons p "
-              + "inner join students s on p.id = s.person_id " 
-              + "left join groups g on s.group_id=g.id where p.id=?";
+        String sql = "select * from persons p " + "inner join students s on p.id = s.person_id " + "left join groups g on s.group_id=g.id where p.id=?";
 
         Connection connection = null;
         PreparedStatement preparedStatement = null;
@@ -160,11 +159,8 @@ public class StudentDaoImpl implements StudentDao {
     @Override
     public List<Student> findAll() {
         LOGGER.debug("findAll()");
-        String sql = 
-                "select * from persons p "
-              + "inner join students s on p.id = s.person_id " 
-              + "left join groups g on s.group_id=g.id";
-        
+        String sql = "select * from persons p " + "inner join students s on p.id = s.person_id " + "left join groups g on s.group_id=g.id";
+
         List<Student> students = new ArrayList<>();
 
         Connection connection = null;
@@ -193,11 +189,8 @@ public class StudentDaoImpl implements StudentDao {
     @Override
     public List<Student> findByGroupId(int id) {
         LOGGER.debug("findByGroupId() [id:{}]", id);
-        String sql = 
-                "select * from persons p "
-              + "inner join students s on p.id = s.person_id " 
-              + "left join groups g on s.group_id=g.id where group_id=?";
-        
+        String sql = "select * from persons p " + "inner join students s on p.id = s.person_id " + "left join groups g on s.group_id=g.id where group_id=?";
+
         List<Student> students = new ArrayList<>();
 
         Connection connection = null;
