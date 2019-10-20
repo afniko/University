@@ -15,6 +15,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
+import ua.com.foxminded.task.dao.ConfigurationConnection;
 import ua.com.foxminded.task.dao.ConnectionFactory;
 import ua.com.foxminded.task.dao.StudentDao;
 import ua.com.foxminded.task.dao.exception.NoEntityFoundException;
@@ -23,14 +24,13 @@ import ua.com.foxminded.task.domain.Group;
 import ua.com.foxminded.task.domain.Student;
 
 public class StudentDaoImpl implements StudentDao {
+
     private ConnectionFactory connectionFactory;
+    private ApplicationContext context = new AnnotationConfigApplicationContext(ConfigurationConnection.class);
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getSimpleName());
 
     public StudentDaoImpl() {
-        ApplicationContext context = new AnnotationConfigApplicationContext(ConnectionFactory.class);
         connectionFactory = context.getBean(ConnectionFactory.class);
-
-//        connectionFactoryImpl = ConnectionFactoryImpl.getInstance();
     }
 
     @Override
@@ -48,7 +48,7 @@ public class StudentDaoImpl implements StudentDao {
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
         try {
-            connection = connectionFactory.getConnection();
+            connection = context.getBean(Connection.class);
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1, student.getFirstName());
             preparedStatement.setString(2, student.getLastName());
@@ -81,7 +81,7 @@ public class StudentDaoImpl implements StudentDao {
             groupId = student.getGroup().getId() == 0 ? null : student.getGroup().getId();
         }
         try {
-            connection = connectionFactory.getConnection();
+            connection = context.getBean(Connection.class);
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setInt(1, student.getId());
             if (Objects.isNull(groupId)) {
@@ -110,7 +110,7 @@ public class StudentDaoImpl implements StudentDao {
         Student student = null;
 
         try {
-            connection = connectionFactory.getConnection();
+            connection = context.getBean(Connection.class);
 
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setInt(1, id);
@@ -168,7 +168,7 @@ public class StudentDaoImpl implements StudentDao {
         ResultSet resultSet = null;
 
         try {
-            connection = connectionFactory.getConnection();
+            connection = context.getBean(Connection.class);
 
             preparedStatement = connection.prepareStatement(sql);
             resultSet = preparedStatement.executeQuery();
@@ -198,7 +198,7 @@ public class StudentDaoImpl implements StudentDao {
         ResultSet resultSet = null;
 
         try {
-            connection = connectionFactory.getConnection();
+            connection = context.getBean(Connection.class);
 
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setInt(1, id);
@@ -232,7 +232,7 @@ public class StudentDaoImpl implements StudentDao {
         PreparedStatement preparedStatement = null;
 
         try {
-            connection = connectionFactory.getConnection();
+            connection = context.getBean(Connection.class);
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1, student.getFirstName());
             preparedStatement.setString(2, student.getLastName());
@@ -257,7 +257,7 @@ public class StudentDaoImpl implements StudentDao {
         PreparedStatement preparedStatement = null;
         Integer groupId = Objects.isNull(student.getGroup()) ? null : student.getGroup().getId();
         try {
-            connection = connectionFactory.getConnection();
+            connection = context.getBean(Connection.class);
             preparedStatement = connection.prepareStatement(sql);
             if (Objects.isNull(groupId)) {
                 preparedStatement.setNull(1, java.sql.Types.INTEGER);

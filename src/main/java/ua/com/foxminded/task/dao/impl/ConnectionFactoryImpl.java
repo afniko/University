@@ -1,4 +1,4 @@
-package ua.com.foxminded.task.dao;
+package ua.com.foxminded.task.dao.impl;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -18,6 +18,7 @@ import javax.sql.DataSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import ua.com.foxminded.task.dao.ConnectionFactory;
 import ua.com.foxminded.task.dao.exception.NoDatabaseConnectionException;
 
 public class ConnectionFactoryImpl implements ConnectionFactory {
