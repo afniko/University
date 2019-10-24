@@ -10,28 +10,23 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import javax.sql.DataSource;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Repository;
 
+import ua.com.foxminded.task.dao.ConnectionFactory;
 import ua.com.foxminded.task.dao.StudentDao;
 import ua.com.foxminded.task.dao.exception.NoEntityFoundException;
 import ua.com.foxminded.task.dao.exception.NoExecuteQueryException;
 import ua.com.foxminded.task.domain.Group;
 import ua.com.foxminded.task.domain.Student;
 
-@Repository
 public class StudentDaoImpl implements StudentDao {
-
-    @Autowired
-    private DataSource dataSource;
+    
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getSimpleName());
+    private ConnectionFactory connectionFactory;
 
     public StudentDaoImpl() {
+        connectionFactory = ConnectionFactoryImpl.getInstance();
     }
 
     @Override
@@ -48,7 +43,7 @@ public class StudentDaoImpl implements StudentDao {
                 "insert into persons (first_name, last_name, middle_name, birthday, idfees) " 
               + "values (?, ?, ?, ?, ?) " 
               + "returning id";
-        try (Connection connection = dataSource.getConnection(); 
+        try (Connection connection = connectionFactory.getConnection(); 
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setString(1, student.getFirstName());
             preparedStatement.setString(2, student.getLastName());
@@ -75,7 +70,7 @@ public class StudentDaoImpl implements StudentDao {
         if (Objects.nonNull(student.getGroup())) {
             groupId = student.getGroup().getId() == 0 ? null : student.getGroup().getId();
         }
-        try (Connection connection = dataSource.getConnection(); 
+        try (Connection connection = connectionFactory.getConnection(); 
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setInt(1, student.getId());
             if (Objects.isNull(groupId)) {
@@ -99,7 +94,7 @@ public class StudentDaoImpl implements StudentDao {
               + "left join groups g on s.group_id=g.id where p.id=?";
         Student student = null;
 
-        try (Connection connection = dataSource.getConnection(); 
+        try (Connection connection = connectionFactory.getConnection(); 
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setInt(1, id);
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
@@ -148,7 +143,7 @@ public class StudentDaoImpl implements StudentDao {
               + "left join groups g on s.group_id=g.id";
         List<Student> students = new ArrayList<>();
 
-        try (Connection connection = dataSource.getConnection(); 
+        try (Connection connection = connectionFactory.getConnection(); 
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 while (resultSet.next()) {
@@ -172,7 +167,7 @@ public class StudentDaoImpl implements StudentDao {
 
         List<Student> students = new ArrayList<>();
 
-        try (Connection connection = dataSource.getConnection(); 
+        try (Connection connection = connectionFactory.getConnection(); 
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setInt(1, id);
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
@@ -199,7 +194,7 @@ public class StudentDaoImpl implements StudentDao {
         LOGGER.debug("updatePersonRecord() [student:{}]", student);
         String sql = "update persons set first_name=?, last_name=?, middle_name=?, birthday=?, idfees=? where id=?";
 
-        try (Connection connection = dataSource.getConnection(); 
+        try (Connection connection = connectionFactory.getConnection(); 
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setString(1, student.getFirstName());
             preparedStatement.setString(2, student.getLastName());
@@ -218,7 +213,7 @@ public class StudentDaoImpl implements StudentDao {
         LOGGER.debug("updateStudentRecord() [student:{}]", student);
         String sql = "update students set group_id=? where person_id=? ";
         Integer groupId = Objects.isNull(student.getGroup()) ? null : student.getGroup().getId();
-        try (Connection connection = dataSource.getConnection(); 
+        try (Connection connection = connectionFactory.getConnection(); 
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             if (Objects.isNull(groupId)) {
                 preparedStatement.setNull(1, java.sql.Types.INTEGER);

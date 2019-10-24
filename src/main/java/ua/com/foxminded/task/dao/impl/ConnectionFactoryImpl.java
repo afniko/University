@@ -1,47 +1,37 @@
 package ua.com.foxminded.task.dao.impl;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.lang.invoke.MethodHandles;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Properties;
 
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
 import javax.sql.DataSource;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
+import ua.com.foxminded.task.dao.ConfigurationConnection;
 import ua.com.foxminded.task.dao.ConnectionFactory;
 import ua.com.foxminded.task.dao.exception.NoDatabaseConnectionException;
 
 public class ConnectionFactoryImpl implements ConnectionFactory {
+    
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getSimpleName());
-    private static final String APPLICATION_PROPERTIES_FILE = "application.properties";
     private static ConnectionFactoryImpl instance;
-    private static Properties properties;
     private DataSource dataSource;
 
     private ConnectionFactoryImpl() {
-        properties = getProperties(APPLICATION_PROPERTIES_FILE);
         retriveDataSourceFromInitialContext();
     }
 
     private void retriveDataSourceFromInitialContext() {
-        try {
-            InitialContext initialContext = new InitialContext();
-            dataSource = (DataSource) initialContext.lookup(properties.getProperty("ds.name.context"));
-            LOGGER.debug("Get datasource: {}", dataSource);
-        } catch (NamingException e) {
-            LOGGER.error("DataSource connection {} not found : {}", dataSource, e);
-            throw new NoDatabaseConnectionException("DaoFactory() was not get data source.", e);
-        }
+         ApplicationContext ctx = new AnnotationConfigApplicationContext(ConfigurationConnection.class);
+         dataSource = ctx.getBean(DataSource.class);
+         LOGGER.debug("Get datasource: {}", dataSource);
     }
 
     public synchronized static ConnectionFactoryImpl getInstance() {
@@ -110,20 +100,5 @@ public class ConnectionFactoryImpl implements ConnectionFactory {
                 LOGGER.error("Statement {} cannot close {}", statement, e);
             }
         }
-    }
-
-    private Properties getProperties(String namePropertiesFile) {
-        String rootResoursePath = Thread.currentThread().getContextClassLoader().getResource("").getPath();
-        String propertiesFilePath = rootResoursePath + namePropertiesFile;
-        Properties properties = new Properties();
-        try {
-            properties.load(new FileInputStream(propertiesFilePath));
-            LOGGER.debug("Properties load: {}", properties);
-        } catch (FileNotFoundException e) {
-            LOGGER.error("File properties {} not found. {}", propertiesFilePath, e);
-        } catch (IOException e) {
-            LOGGER.error("Input file properties {} had problem. {}", propertiesFilePath, e);
-        }
-        return properties;
     }
 }
