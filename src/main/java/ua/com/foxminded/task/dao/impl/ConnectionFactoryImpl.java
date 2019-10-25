@@ -2,10 +2,7 @@ package ua.com.foxminded.task.dao.impl;
 
 import java.lang.invoke.MethodHandles;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 
 import javax.sql.DataSource;
 
@@ -19,7 +16,7 @@ import ua.com.foxminded.task.dao.ConnectionFactory;
 import ua.com.foxminded.task.dao.exception.NoDatabaseConnectionException;
 
 public class ConnectionFactoryImpl implements ConnectionFactory {
-    
+
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getSimpleName());
     private static ConnectionFactoryImpl instance;
     private DataSource dataSource;
@@ -29,9 +26,9 @@ public class ConnectionFactoryImpl implements ConnectionFactory {
     }
 
     private void retriveDataSourceFromInitialContext() {
-         ApplicationContext ctx = new AnnotationConfigApplicationContext(ConfigurationConnection.class);
-         dataSource = ctx.getBean(DataSource.class);
-         LOGGER.debug("Get datasource: {}", dataSource);
+        ApplicationContext ctx = new AnnotationConfigApplicationContext(ConfigurationConnection.class);
+        dataSource = ctx.getBean(DataSource.class);
+        LOGGER.debug("Get datasource: {}", dataSource);
     }
 
     public synchronized static ConnectionFactoryImpl getInstance() {
@@ -54,51 +51,4 @@ public class ConnectionFactoryImpl implements ConnectionFactory {
         return connection;
     }
 
-    @Override
-    public void closeConnection(Connection connection) {
-        if (connection != null) {
-            try {
-                connection.close();
-                LOGGER.debug("Close connection: {}", connection);
-            } catch (SQLException e) {
-                LOGGER.error("Connection {} cannot close {}", connection, e);
-            }
-        }
-    }
-
-    @Override
-    public void closeResultSet(ResultSet resultSet) {
-        if (resultSet != null) {
-            try {
-                resultSet.close();
-                LOGGER.debug("Close ResultSet: {}", resultSet);
-            } catch (SQLException e) {
-                LOGGER.error("ResultSet {} cannot close {}", resultSet, e);
-            }
-        }
-    }
-
-    @Override
-    public void closePreparedStatement(PreparedStatement preparedStatement) {
-        if (preparedStatement != null) {
-            try {
-                preparedStatement.close();
-                LOGGER.debug("Close PreparedStatement: {}", preparedStatement);
-            } catch (SQLException e) {
-                LOGGER.error("PreparedStatement {} cannot close {}", preparedStatement, e);
-            }
-        }
-    }
-
-    @Override
-    public void closeStatement(Statement statement) {
-        if (statement != null) {
-            try {
-                statement.close();
-                LOGGER.debug("Close Statement: {}", statement);
-            } catch (SQLException e) {
-                LOGGER.error("Statement {} cannot close {}", statement, e);
-            }
-        }
-    }
 }
