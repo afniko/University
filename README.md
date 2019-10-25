@@ -77,6 +77,9 @@ Branch: task14
 ####Task 15 - Data Source
 Created DataSource in web-project configuration files. Switch DAO layer to lookup DataSource by JNDI name and use it instead of simple JDBC connection.
 Branch: task15
+####Task 16 - Spring IoC
+Rewrite DAO code to inject DataSource to all DAO objects using Spring IoC framework.
+Branch: task16
 
 
 ##Author

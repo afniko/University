@@ -25,6 +25,7 @@
         <hibernate.validator.annotation.processor.version>6.0.17.Final</hibernate.validator.annotation.processor.version>
         <javax.el.version>3.0.0</javax.el.version>
         <tomcat.catalina.version>9.0.26</tomcat.catalina.version>
+        <org.springframework.version>5.2.0.RELEASE</org.springframework.version>
 
         <org.flywaydb.flyway.plugin.version>5.2.4</org.flywaydb.flyway.plugin.version>
         <maven.compiler.plugin.version>3.8.0</maven.compiler.plugin.version>
@@ -147,6 +148,13 @@
             <artifactId>tomcat-catalina</artifactId>
             <version>${tomcat.catalina.version}</version>
             <scope>test</scope>
+        </dependency>
+
+        <!-- spring -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+            <version>${org.springframework.version}</version>
         </dependency>
 
     </dependencies>

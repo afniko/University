@@ -19,28 +19,25 @@ import ua.com.foxminded.task.dao.exception.NoExecuteQueryException;
 import ua.com.foxminded.task.domain.Group;
 
 public class GroupDaoImpl implements GroupDao {
+
     private ConnectionFactory connectionFactory;
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getSimpleName());
 
     public GroupDaoImpl() {
-        connectionFactory = ConnectionFactory.getInstance();
+        connectionFactory = ConnectionFactoryImpl.getInstance();
     }
 
     @Override
     public Group create(Group group) {
         LOGGER.debug("create() [group:{}]", group);
         String sql = 
-                "insert into groups (title, department_id, yearEntry) "
-              + "values (?, ?, ?) "
+                "insert into groups (title, department_id, yearEntry) " 
+              + "values (?, ?, ?) " 
               + "returning id";
-        
-        Connection connection = null;
-        PreparedStatement preparedStatement = null;
-        ResultSet resultSet = null;
+
         Integer departmentId = Objects.nonNull(group.getDepartment()) ? group.getDepartment().getId() : null;
-        try {
-            connection = connectionFactory.getConnection();
-            preparedStatement = connection.prepareStatement(sql);
+        try (Connection connection = connectionFactory.getConnection(); 
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setString(1, group.getTitle());
             if (Objects.isNull(departmentId)) {
                 preparedStatement.setNull(2, java.sql.Types.INTEGER);
@@ -48,18 +45,15 @@ public class GroupDaoImpl implements GroupDao {
                 preparedStatement.setInt(2, departmentId);
             }
             preparedStatement.setInt(3, group.getYearEntry());
-            resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()) {
-                int id = resultSet.getInt("id");
-                group.setId(id);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    int id = resultSet.getInt("id");
+                    group.setId(id);
+                }
             }
         } catch (SQLException e) {
-            LOGGER.error("create() [group:{}] was not inserted. Sql query:{}. {}", group, preparedStatement, e);
-            throw new NoExecuteQueryException("create() [group:" + group + "] was not inserted. Sql query:" + preparedStatement, e);
-        } finally {
-            connectionFactory.closeResultSet(resultSet);
-            connectionFactory.closePreparedStatement(preparedStatement);
-            connectionFactory.closeConnection(connection);
+            LOGGER.error("create() [group:{}] was not inserted. Sql query:{}. {}", group, sql, e);
+            throw new NoExecuteQueryException("create() [group:" + group + "] was not inserted. Sql query:" + sql, e);
         }
         return group;
     }
@@ -69,30 +63,21 @@ public class GroupDaoImpl implements GroupDao {
         LOGGER.debug("findById() [id:{}]", id);
         String sql = "select * from groups where id=?";
 
-        Connection connection = null;
-        PreparedStatement preparedStatement = null;
-        ResultSet resultSet = null;
-
         Group group = null;
-        try {
-            connection = connectionFactory.getConnection();
-
-            preparedStatement = connection.prepareStatement(sql);
+        try (Connection connection = connectionFactory.getConnection(); 
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setInt(1, id);
-            resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()) {
-                group = getGroupFromResultSet(resultSet);
-            } else {
-                LOGGER.warn("findById() Group with id#{} not found", id);
-                throw new NoEntityFoundException("findById() Group by id#" + id + " not found");
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    group = getGroupFromResultSet(resultSet);
+                } else {
+                    LOGGER.warn("findById() Group with id#{} not found", id);
+                    throw new NoEntityFoundException("findById() Group by id#" + id + " not found");
+                }
             }
         } catch (SQLException e) {
-            LOGGER.error("findById() Select Group with id#{} was crashed. Sql query:{}, {}", id, preparedStatement, e);
-            throw new NoExecuteQueryException("findById() Select Group with id#" + id + " was crashed. Sql query:" + preparedStatement, e);
-        } finally {
-            connectionFactory.closeResultSet(resultSet);
-            connectionFactory.closePreparedStatement(preparedStatement);
-            connectionFactory.closeConnection(connection);
+            LOGGER.error("findById() Select Group with id#{} was crashed. Sql query:{}, {}", id, sql, e);
+            throw new NoExecuteQueryException("findById() Select Group with id#" + id + " was crashed. Sql query:" + sql, e);
         }
         return group;
     }
@@ -103,26 +88,16 @@ public class GroupDaoImpl implements GroupDao {
         String sql = "select * from groups";
         List<Group> groups = new ArrayList<>();
 
-        Connection connection = null;
-        PreparedStatement preparedStatement = null;
-        ResultSet resultSet = null;
-
-        try {
-            connection = connectionFactory.getConnection();
-
-            preparedStatement = connection.prepareStatement(sql);
-            resultSet = preparedStatement.executeQuery();
+        try (Connection connection = connectionFactory.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql);
+             ResultSet resultSet = preparedStatement.executeQuery()) {
             while (resultSet.next()) {
                 Group group = getGroupFromResultSet(resultSet);
                 groups.add(group);
             }
         } catch (SQLException e) {
-            LOGGER.error("findAll() Select all groups query was crashed. Sql query:{}, {}", preparedStatement, e);
-            throw new NoExecuteQueryException("findAll() Select all groups query was crashed. Sql query:" + preparedStatement, e);
-        } finally {
-            connectionFactory.closeResultSet(resultSet);
-            connectionFactory.closePreparedStatement(preparedStatement);
-            connectionFactory.closeConnection(connection);
+            LOGGER.error("findAll() Select all groups query was crashed. Sql query:{}, {}", sql, e);
+            throw new NoExecuteQueryException("findAll() Select all groups query was crashed. Sql query:" + sql, e);
         }
         return groups;
     }
@@ -134,26 +109,17 @@ public class GroupDaoImpl implements GroupDao {
         List<Integer> groupsId = new ArrayList<>();
         List<Group> groups = new ArrayList<>();
 
-        Connection connection = null;
-        PreparedStatement preparedStatement = null;
-        ResultSet resultSet = null;
-
-        try {
-            connection = connectionFactory.getConnection();
-
-            preparedStatement = connection.prepareStatement(sql);
+        try (Connection connection = connectionFactory.getConnection(); 
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setInt(1, id);
-            resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()) {
-                groupsId.add(resultSet.getInt("id"));
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                while (resultSet.next()) {
+                    groupsId.add(resultSet.getInt("id"));
+                }
             }
         } catch (SQLException e) {
-            LOGGER.error("findByDepartmentId() Select Groups query by department id#{} was crashed. Sql query:{}, {}", id, preparedStatement, e);
-            throw new NoExecuteQueryException("findByDepartmentId() Select Groups query by department id#" + id + " was crashed. Sql query:" + preparedStatement, e);
-        } finally {
-            connectionFactory.closeResultSet(resultSet);
-            connectionFactory.closePreparedStatement(preparedStatement);
-            connectionFactory.closeConnection(connection);
+            LOGGER.error("findByDepartmentId() Select Groups query by department id#{} was crashed. Sql query:{}, {}", id, sql, e);
+            throw new NoExecuteQueryException("findByDepartmentId() Select Groups query by department id#" + id + " was crashed. Sql query:" + sql, e);
         }
         if (!groupsId.isEmpty()) {
             groups.addAll(getGroupsById(groupsId));
@@ -186,13 +152,10 @@ public class GroupDaoImpl implements GroupDao {
     private void updateGroupRecord(Group group) {
         LOGGER.debug("updateGroupRecord() [group:{}]", group);
         String sql = "update groups set title=?, department_id=?, yearEntry=? where id=? ";
-        Connection connection = null;
-        PreparedStatement preparedStatement = null;
         Integer departmentId = Objects.nonNull(group.getDepartment()) ? group.getDepartment().getId() : null;
 
-        try {
-            connection = connectionFactory.getConnection();
-            preparedStatement = connection.prepareStatement(sql);
+        try (Connection connection = connectionFactory.getConnection(); 
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setString(1, group.getTitle());
             if (Objects.isNull(departmentId)) {
                 preparedStatement.setNull(2, java.sql.Types.INTEGER);
@@ -203,11 +166,8 @@ public class GroupDaoImpl implements GroupDao {
             preparedStatement.setInt(4, group.getId());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            LOGGER.error("updateGroupRecord() [group:{}] was not updated. Sql query:{}. {}", group, preparedStatement, e);
-            throw new NoExecuteQueryException("updateGroupRecord() [group:" + group + "] was not updated. Sql query:" + preparedStatement, e);
-        } finally {
-            connectionFactory.closePreparedStatement(preparedStatement);
-            connectionFactory.closeConnection(connection);
+            LOGGER.error("updateGroupRecord() [group:{}] was not updated. Sql query:{}. {}", group, sql, e);
+            throw new NoExecuteQueryException("updateGroupRecord() [group:" + group + "] was not updated. Sql query:" + sql, e);
         }
     }
 }
