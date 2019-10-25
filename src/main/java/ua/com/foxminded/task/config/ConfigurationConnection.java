@@ -1,4 +1,4 @@
-package ua.com.foxminded.task.dao;
+package ua.com.foxminded.task.config;
 
 import java.lang.invoke.MethodHandles;
 
