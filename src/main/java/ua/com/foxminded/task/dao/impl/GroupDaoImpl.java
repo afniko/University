@@ -36,7 +36,8 @@ public class GroupDaoImpl implements GroupDao {
               + "returning id";
 
         Integer departmentId = Objects.nonNull(group.getDepartment()) ? group.getDepartment().getId() : null;
-        try (Connection connection = connectionFactory.getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+        try (Connection connection = connectionFactory.getConnection(); 
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setString(1, group.getTitle());
             if (Objects.isNull(departmentId)) {
                 preparedStatement.setNull(2, java.sql.Types.INTEGER);
@@ -63,7 +64,8 @@ public class GroupDaoImpl implements GroupDao {
         String sql = "select * from groups where id=?";
 
         Group group = null;
-        try (Connection connection = connectionFactory.getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+        try (Connection connection = connectionFactory.getConnection(); 
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setInt(1, id);
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 if (resultSet.next()) {
@@ -87,8 +89,8 @@ public class GroupDaoImpl implements GroupDao {
         List<Group> groups = new ArrayList<>();
 
         try (Connection connection = connectionFactory.getConnection();
-                PreparedStatement preparedStatement = connection.prepareStatement(sql);
-                ResultSet resultSet = preparedStatement.executeQuery()) {
+             PreparedStatement preparedStatement = connection.prepareStatement(sql);
+             ResultSet resultSet = preparedStatement.executeQuery()) {
             while (resultSet.next()) {
                 Group group = getGroupFromResultSet(resultSet);
                 groups.add(group);
@@ -107,7 +109,8 @@ public class GroupDaoImpl implements GroupDao {
         List<Integer> groupsId = new ArrayList<>();
         List<Group> groups = new ArrayList<>();
 
-        try (Connection connection = connectionFactory.getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+        try (Connection connection = connectionFactory.getConnection(); 
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setInt(1, id);
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 while (resultSet.next()) {
@@ -151,7 +154,8 @@ public class GroupDaoImpl implements GroupDao {
         String sql = "update groups set title=?, department_id=?, yearEntry=? where id=? ";
         Integer departmentId = Objects.nonNull(group.getDepartment()) ? group.getDepartment().getId() : null;
 
-        try (Connection connection = connectionFactory.getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+        try (Connection connection = connectionFactory.getConnection(); 
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setString(1, group.getTitle());
             if (Objects.isNull(departmentId)) {
                 preparedStatement.setNull(2, java.sql.Types.INTEGER);
