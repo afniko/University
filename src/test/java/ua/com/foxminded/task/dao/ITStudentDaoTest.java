@@ -9,8 +9,8 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import ua.com.foxminded.task.dao.impl.GroupDaoImpl;
 import ua.com.foxminded.task.dao.impl.StudentDaoImpl;
+import ua.com.foxminded.task.dao.impl.jdbc.GroupDaoImpl;
 import ua.com.foxminded.task.domain.Group;
 import ua.com.foxminded.task.domain.Student;
 import ua.com.foxminded.task.domain.repository.GroupModelRepository;

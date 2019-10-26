@@ -26,6 +26,7 @@
         <javax.el.version>3.0.0</javax.el.version>
         <tomcat.catalina.version>9.0.26</tomcat.catalina.version>
         <org.springframework.version>5.2.0.RELEASE</org.springframework.version>
+        <hibernate.core.version>5.4.7.Final</hibernate.core.version>
 
         <org.flywaydb.flyway.plugin.version>5.2.4</org.flywaydb.flyway.plugin.version>
         <maven.compiler.plugin.version>3.8.0</maven.compiler.plugin.version>
@@ -156,6 +157,14 @@
             <artifactId>spring-context</artifactId>
             <version>${org.springframework.version}</version>
         </dependency>
+
+        <!-- hibernate for ORM -->
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-core</artifactId>
+            <version>${hibernate.core.version}</version>
+        </dependency>
+
 
     </dependencies>
 

@@ -1,4 +1,4 @@
-package ua.com.foxminded.task.dao.impl;
+package ua.com.foxminded.task.dao.impl.jdbc;
 
 import java.lang.invoke.MethodHandles;
 import java.sql.Connection;
@@ -16,6 +16,7 @@ import ua.com.foxminded.task.dao.ConnectionFactory;
 import ua.com.foxminded.task.dao.GroupDao;
 import ua.com.foxminded.task.dao.exception.NoEntityFoundException;
 import ua.com.foxminded.task.dao.exception.NoExecuteQueryException;
+import ua.com.foxminded.task.dao.impl.ConnectionFactoryImpl;
 import ua.com.foxminded.task.domain.Group;
 
 public class GroupDaoImpl implements GroupDao {

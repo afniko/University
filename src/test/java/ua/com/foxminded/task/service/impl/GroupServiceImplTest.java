@@ -12,7 +12,7 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 
 import ua.com.foxminded.task.dao.GroupDao;
-import ua.com.foxminded.task.dao.impl.GroupDaoImpl;
+import ua.com.foxminded.task.dao.impl.jdbc.GroupDaoImpl;
 import ua.com.foxminded.task.domain.Group;
 import ua.com.foxminded.task.domain.dto.GroupDto;
 import ua.com.foxminded.task.domain.repository.GroupModelRepository;
