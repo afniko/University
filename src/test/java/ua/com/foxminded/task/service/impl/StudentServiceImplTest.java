@@ -13,8 +13,8 @@ import org.junit.jupiter.api.Test;
 
 import ua.com.foxminded.task.dao.GroupDao;
 import ua.com.foxminded.task.dao.StudentDao;
-import ua.com.foxminded.task.dao.impl.StudentDaoImpl;
 import ua.com.foxminded.task.dao.impl.jdbc.GroupDaoImpl;
+import ua.com.foxminded.task.dao.impl.jdbc.StudentDaoImpl;
 import ua.com.foxminded.task.domain.Student;
 import ua.com.foxminded.task.domain.dto.StudentDto;
 import ua.com.foxminded.task.domain.repository.StudentModelRepository;

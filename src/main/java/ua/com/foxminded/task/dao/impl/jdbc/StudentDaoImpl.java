@@ -1,4 +1,4 @@
-package ua.com.foxminded.task.dao.impl;
+package ua.com.foxminded.task.dao.impl.jdbc;
 
 import java.lang.invoke.MethodHandles;
 import java.sql.Connection;
