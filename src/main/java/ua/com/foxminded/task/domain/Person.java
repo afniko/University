@@ -2,13 +2,22 @@ package ua.com.foxminded.task.domain;
 
 import java.time.LocalDate;
 
+//@Entity
+//@Table(name = "persons")
 public abstract class Person {
 
+//    @Id
+//    @Column(name = "id")
     protected int id;
+//    @Column(name = "first_name")
     protected String firstName;
+//    @Column(name = "last_name")
     protected String lastName;
+//    @Column(name = "middle_name")
     protected String middleName;
+//    @Column(name = "birthday")
     protected LocalDate birthday;
+//    @Column(name = "idfees")
     protected int idFees;
 
     public int getId() {

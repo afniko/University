@@ -1,7 +1,10 @@
 package ua.com.foxminded.task.domain;
 
+//@Entity
+//@Table(name = "students")
 public class Student extends Person {
 
+//    @Column(name = "group_id")
     private Group group;
 
     public Student() {

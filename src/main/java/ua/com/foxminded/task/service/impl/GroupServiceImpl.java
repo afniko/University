@@ -8,7 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import ua.com.foxminded.task.dao.GroupDao;
-import ua.com.foxminded.task.dao.impl.jdbc.GroupDaoImpl;
+import ua.com.foxminded.task.dao.impl.hibernate.GroupDaoImpl;
 import ua.com.foxminded.task.domain.Group;
 import ua.com.foxminded.task.domain.dto.GroupDto;
 import ua.com.foxminded.task.service.GroupService;

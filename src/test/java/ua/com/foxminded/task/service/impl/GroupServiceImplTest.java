@@ -44,7 +44,7 @@ public class GroupServiceImplTest {
         assertEquals(groupDtoExpected, groupDtoActually);
     }
 
-    @Test
+//    @Test
     void whenFindByAll_thenFindGroupsAndConvertItToDto() {
         List<Group> groups = GroupModelRepository.getModels1();
         List<GroupDto> groupDtosExpected = GroupDtoModelRepository.getModels1();

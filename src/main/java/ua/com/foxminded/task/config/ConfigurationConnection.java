@@ -16,7 +16,7 @@ import org.springframework.core.env.Environment;
 import org.springframework.jndi.JndiTemplate;
 
 @Configuration
-@ComponentScan
+@ComponentScan("ua.com.foxminded.task")
 @PropertySource("classpath:application.properties")
 public class ConfigurationConnection {
 
