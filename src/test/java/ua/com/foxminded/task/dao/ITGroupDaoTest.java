@@ -8,7 +8,7 @@ import java.util.Arrays;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 
-import ua.com.foxminded.task.dao.impl.jdbc.GroupDaoImpl;
+import ua.com.foxminded.task.dao.impl.hibernate.GroupDaoImpl;
 import ua.com.foxminded.task.domain.Group;
 import ua.com.foxminded.task.domain.repository.GroupModelRepository;
 

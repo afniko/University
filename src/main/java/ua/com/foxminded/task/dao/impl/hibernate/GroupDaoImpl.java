@@ -3,33 +3,34 @@ package ua.com.foxminded.task.dao.impl.hibernate;
 import java.lang.invoke.MethodHandles;
 import java.util.List;
 
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import ua.com.foxminded.task.dao.EntitiesManager;
 import ua.com.foxminded.task.dao.GroupDao;
-import ua.com.foxminded.task.dao.SessionsFactory;
 import ua.com.foxminded.task.domain.Group;
 
 public class GroupDaoImpl implements GroupDao {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getSimpleName());
-    private SessionFactory sessionFactory;
+    private EntityManagerFactory entityManagerFactory;
 
     public GroupDaoImpl() {
-        SessionsFactory sessionsFactory = SessionsFactoryImpl.getInstance();
-        sessionFactory = sessionsFactory.getSessionFactory();
+        EntitiesManager entitiesManager = EntitiesManagerImpl.getInstance();
+        entityManagerFactory = entitiesManager.getEntityManagerFactory();
     }
 
     @Override
     public Group create(Group group) {
         LOGGER.debug("create() [group:{}]", group);
-        try (Session session = sessionFactory.openSession()) {
-            session.getTransaction().begin();
-            session.save(group);
-            session.getTransaction().commit();
-        }
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        entityManager.getTransaction().begin();
+        entityManager.persist(group);
+        entityManager.getTransaction().commit();
+        entityManager.clear();
         return group;
     }
 
@@ -37,9 +38,11 @@ public class GroupDaoImpl implements GroupDao {
     public Group findById(int id) {
         LOGGER.debug("findById() [id:{}]", id);
         Group group = null;
-        try (Session session = sessionFactory.openSession()) {
-            group = session.createQuery("from Group as group where group.id = " + id, Group.class).uniqueResult();
-        }
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        entityManager.getTransaction().begin();
+        group = entityManager.find(Group.class, id);
+        entityManager.getTransaction().commit();
+        entityManager.clear();
         return group;
     }
 
@@ -47,20 +50,22 @@ public class GroupDaoImpl implements GroupDao {
     public List<Group> findAll() {
         LOGGER.debug("findAll()");
         List<Group> groups = null;
-        try (Session session = sessionFactory.openSession()) {
-            groups = session.createQuery("from Group", Group.class).list();
-        }
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        entityManager.getTransaction().begin();
+        groups = entityManager.createQuery("from Group", Group.class).getResultList();
+        entityManager.getTransaction().commit();
+        entityManager.clear();
         return groups;
     }
 
     @Override
     public Group update(Group group) {
         LOGGER.debug("update() [group:{}]", group);
-        try (Session session = sessionFactory.openSession()) {
-            session.getTransaction().begin();
-            session.update(group);
-            session.getTransaction().commit();
-        }
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        entityManager.getTransaction().begin();
+        entityManager.merge(group);
+        entityManager.getTransaction().commit();
+        entityManager.clear();
         return group;
     }
 

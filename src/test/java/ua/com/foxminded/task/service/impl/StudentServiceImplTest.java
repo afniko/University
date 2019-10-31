@@ -13,12 +13,13 @@ import org.junit.jupiter.api.Test;
 
 import ua.com.foxminded.task.dao.GroupDao;
 import ua.com.foxminded.task.dao.StudentDao;
-import ua.com.foxminded.task.dao.impl.jdbc.GroupDaoImpl;
-import ua.com.foxminded.task.dao.impl.jdbc.StudentDaoImpl;
+import ua.com.foxminded.task.dao.impl.hibernate.GroupDaoImpl;
+import ua.com.foxminded.task.dao.impl.hibernate.StudentDaoImpl;
 import ua.com.foxminded.task.domain.Student;
 import ua.com.foxminded.task.domain.dto.StudentDto;
 import ua.com.foxminded.task.domain.repository.StudentModelRepository;
 import ua.com.foxminded.task.domain.repository.dto.StudentDtoModelRepository;
+import ua.com.foxminded.task.service.impl.StudentServiceImpl;
 
 public class StudentServiceImplTest {
     private StudentDao studentDao = mock(StudentDaoImpl.class);
