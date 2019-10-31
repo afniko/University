@@ -1,10 +1,18 @@
 package ua.com.foxminded.task.domain;
 
-//@Entity
-//@Table(name = "students")
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "students")
+@PrimaryKeyJoinColumn(name = "person_id")
 public class Student extends Person {
 
-//    @Column(name = "group_id")
+    @OneToOne
+    @JoinColumn(name = "group_id")
     private Group group;
 
     public Student() {
