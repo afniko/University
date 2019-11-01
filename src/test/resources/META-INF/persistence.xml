@@ -3,8 +3,10 @@
     xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd"
     version="2.0">
     <persistence-unit name="persistenceUniversity" transaction-type="RESOURCE_LOCAL">
-        <jta-data-source>java:comp/env/jdbc/univer</jta-data-source>
+        <jta-data-source>java:/comp/env/jdbc/univer</jta-data-source>
         <class>ua.com.foxminded.task.domain.Group</class>
+        <class>ua.com.foxminded.task.domain.Student</class>
+        <class>ua.com.foxminded.task.domain.Person</class>
         <properties>
             <property name="show_sql" value="false" />
         </properties>

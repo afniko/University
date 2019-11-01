@@ -7,6 +7,7 @@ import java.util.Arrays;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 import ua.com.foxminded.task.dao.impl.hibernate.GroupDaoImpl;
 import ua.com.foxminded.task.domain.Group;
@@ -32,18 +33,18 @@ public class ITGroupDaoTest {
         groupDao.create(GROUP13);
     }
 
-//    @Test
+    @Test
     public void WhenPutAtTableDbGroupObjects_thenGetThisObjectsFindById() {
         int id = GROUP12.getId();
         assertTrue(groupDao.findById(id).equals(GROUP12));
     }
 
-//    @Test
+    @Test
     public void WhenPutAtTableDbGroupObjects_thenGetThisObjects() {
         assertTrue(groupDao.findAll().containsAll(Arrays.asList(GROUP12, GROUP13)));
     }
 
-//    @Test
+    @Test
     public void WhenUpdateAtTableDbGroupObject_thenGetNewObject() {
         String titleExpected = "test_title_text";
         Group group = groupDao.findById(1);
