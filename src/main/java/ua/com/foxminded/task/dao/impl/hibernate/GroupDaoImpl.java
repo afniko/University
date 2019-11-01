@@ -2,14 +2,15 @@ package ua.com.foxminded.task.dao.impl.hibernate;
 
 import java.lang.invoke.MethodHandles;
 import java.util.List;
+import java.util.Objects;
 
 import javax.persistence.EntityManager;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import ua.com.foxminded.task.dao.EntitiesManagerFactory;
 import ua.com.foxminded.task.dao.GroupDao;
+import ua.com.foxminded.task.dao.exception.NoEntityFoundException;
 import ua.com.foxminded.task.domain.Group;
 
 public class GroupDaoImpl implements GroupDao {
@@ -39,6 +40,10 @@ public class GroupDaoImpl implements GroupDao {
         group = entityManager.find(Group.class, id);
         entityManager.getTransaction().commit();
         entityManager.clear();
+        if (Objects.isNull(group)) {
+            LOGGER.warn("findById() Group with id#{} not found", id);
+            throw new NoEntityFoundException("findById() Group by id#" + id + " not found");
+        }
         return group;
     }
 

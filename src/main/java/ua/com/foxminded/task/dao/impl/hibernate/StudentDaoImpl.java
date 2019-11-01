@@ -2,14 +2,15 @@ package ua.com.foxminded.task.dao.impl.hibernate;
 
 import java.lang.invoke.MethodHandles;
 import java.util.List;
+import java.util.Objects;
 
 import javax.persistence.EntityManager;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import ua.com.foxminded.task.dao.EntitiesManagerFactory;
 import ua.com.foxminded.task.dao.StudentDao;
+import ua.com.foxminded.task.dao.exception.NoEntityFoundException;
 import ua.com.foxminded.task.domain.Student;
 
 public class StudentDaoImpl implements StudentDao {
@@ -39,6 +40,10 @@ public class StudentDaoImpl implements StudentDao {
         student = entityManager.find(Student.class, id);
         entityManager.getTransaction().commit();
         entityManager.clear();
+        if (Objects.isNull(student)) {
+            LOGGER.warn("findById() Student with id#{} not found", id);
+            throw new NoEntityFoundException("findById() Student by id#" + id + " not found");
+        }
         return student;
     }
 
