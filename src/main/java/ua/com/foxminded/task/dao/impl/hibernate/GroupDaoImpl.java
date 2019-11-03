@@ -5,6 +5,9 @@ import java.util.List;
 import java.util.Objects;
 
 import javax.persistence.EntityManager;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -52,7 +55,11 @@ public class GroupDaoImpl implements GroupDao {
         LOGGER.debug("findAll()");
         List<Group> groups = null;
         entityManager.getTransaction().begin();
-        groups = entityManager.createQuery("from Group", Group.class).getResultList();
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Group> groupCriteriaQuery = criteriaBuilder.createQuery(Group.class);
+        Root<Group> groupRoot= groupCriteriaQuery.from(Group.class);
+        groupCriteriaQuery.select(groupRoot);
+        groups = entityManager.createQuery(groupCriteriaQuery).getResultList();
         entityManager.getTransaction().commit();
         entityManager.clear();
         return groups;
@@ -71,7 +78,7 @@ public class GroupDaoImpl implements GroupDao {
     @Override
     public List<Group> findByDepartmentId(int id) {
         LOGGER.debug("findByDepartmentId() [id:{}]", id);
-        //TODO method not use
+        //TODO method don`t use
         return null;
     }
 
