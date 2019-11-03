@@ -6,9 +6,11 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.util.Arrays;
 
 import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+import ua.com.foxminded.task.dao.exception.NoEntityFoundException;
 import ua.com.foxminded.task.dao.impl.hibernate.GroupDaoImpl;
 import ua.com.foxminded.task.dao.impl.hibernate.StudentDaoImpl;
 import ua.com.foxminded.task.domain.Group;
@@ -74,6 +76,11 @@ public class ITStudentDaoTest {
         Group groupActually = studentActually.getGroup();
         assertEquals(firstNameExpected, firstNameActually);
         assertEquals(GROUP11, groupActually);
+    }
+
+    @Test
+    public void WhenFindByIdNotExistinRecord_thenGetException() {
+        Assertions.assertThrows(NoEntityFoundException.class, () -> studentDao.findById(9999));
     }
 
     @AfterAll
