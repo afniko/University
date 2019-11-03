@@ -71,6 +71,7 @@ public class GroupDaoImpl implements GroupDao {
     @Override
     public List<Group> findByDepartmentId(int id) {
         LOGGER.debug("findByDepartmentId() [id:{}]", id);
+        //TODO method not use
         return null;
     }
 
