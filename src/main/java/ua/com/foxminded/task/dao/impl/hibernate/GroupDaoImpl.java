@@ -57,7 +57,7 @@ public class GroupDaoImpl implements GroupDao {
         entityManager.getTransaction().begin();
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
         CriteriaQuery<Group> groupCriteriaQuery = criteriaBuilder.createQuery(Group.class);
-        Root<Group> groupRoot= groupCriteriaQuery.from(Group.class);
+        Root<Group> groupRoot = groupCriteriaQuery.from(Group.class);
         groupCriteriaQuery.select(groupRoot);
         groups = entityManager.createQuery(groupCriteriaQuery).getResultList();
         entityManager.getTransaction().commit();
@@ -78,8 +78,16 @@ public class GroupDaoImpl implements GroupDao {
     @Override
     public List<Group> findByDepartmentId(int id) {
         LOGGER.debug("findByDepartmentId() [id:{}]", id);
-        //TODO method don`t use
-        return null;
+        List<Group> groups = null;
+        entityManager.getTransaction().begin();
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Group> groupCriteriaQuery = criteriaBuilder.createQuery(Group.class);
+        Root<Group> groupRoot = groupCriteriaQuery.from(Group.class);
+        groupCriteriaQuery.select(groupRoot).where(criteriaBuilder.equal(groupRoot.get("department").get("id"), id));
+        groups = entityManager.createQuery(groupCriteriaQuery).getResultList();
+        entityManager.getTransaction().commit();
+        entityManager.clear();
+        return groups;
     }
 
 }
