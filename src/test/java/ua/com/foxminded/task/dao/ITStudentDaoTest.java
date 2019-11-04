@@ -1,12 +1,13 @@
 package ua.com.foxminded.task.dao;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Arrays;
+import java.util.List;
 
 import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
@@ -80,7 +81,14 @@ public class ITStudentDaoTest {
 
     @Test
     public void WhenFindByIdNotExistinRecord_thenGetException() {
-        Assertions.assertThrows(NoEntityFoundException.class, () -> studentDao.findById(9999));
+        assertThrows(NoEntityFoundException.class, () -> studentDao.findById(9999));
+    }
+
+    @Test
+    public void WhenFindByIdGroup_thenReturnGroupWithSetId() {
+        int groupId = GROUP12.getId();
+        List<Student> students = studentDao.findByGroupId(groupId);
+        assertTrue(students.containsAll(Arrays.asList(STUDENT3, STUDENT4, STUDENT5)));
     }
 
     @AfterAll
