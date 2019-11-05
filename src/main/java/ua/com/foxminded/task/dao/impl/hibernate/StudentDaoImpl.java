@@ -7,6 +7,8 @@ import java.util.Objects;
 import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Join;
+import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Root;
 
 import org.slf4j.Logger;
@@ -14,6 +16,7 @@ import org.slf4j.LoggerFactory;
 
 import ua.com.foxminded.task.dao.StudentDao;
 import ua.com.foxminded.task.dao.exception.NoEntityFoundException;
+import ua.com.foxminded.task.domain.Group;
 import ua.com.foxminded.task.domain.Student;
 
 public class StudentDaoImpl implements StudentDao {
@@ -69,7 +72,8 @@ public class StudentDaoImpl implements StudentDao {
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
         CriteriaQuery<Student> studentCriteriaQuery = criteriaBuilder.createQuery(Student.class);
         Root<Student> studentRoot = studentCriteriaQuery.from(Student.class);
-        studentCriteriaQuery.select(studentRoot).where(criteriaBuilder.equal(studentRoot.get("group").get("id"), id));
+        Join<Student, Group> groupJoin = studentRoot.join("student.group", JoinType.LEFT);
+        studentCriteriaQuery.select(studentRoot).where(criteriaBuilder.equal(groupJoin.get("group").get("id"), id));
         students = entityManager.createQuery(studentCriteriaQuery).getResultList();
         entityManager.getTransaction().commit();
         entityManager.clear();
