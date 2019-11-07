@@ -26,6 +26,8 @@
         <javax.el.version>3.0.0</javax.el.version>
         <tomcat.catalina.version>9.0.26</tomcat.catalina.version>
         <org.springframework.version>5.2.0.RELEASE</org.springframework.version>
+        <hibernate.core.version>5.4.7.Final</hibernate.core.version>
+        <hibernate.jpamodelgen.version>5.4.7.Final</hibernate.jpamodelgen.version>
 
         <org.flywaydb.flyway.plugin.version>5.2.4</org.flywaydb.flyway.plugin.version>
         <maven.compiler.plugin.version>3.8.0</maven.compiler.plugin.version>
@@ -157,6 +159,20 @@
             <version>${org.springframework.version}</version>
         </dependency>
 
+        <!-- hibernate for ORM -->
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-core</artifactId>
+            <version>${hibernate.core.version}</version>
+        </dependency>
+        <!-- for generate metamodel for criteria queries -->
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-jpamodelgen</artifactId>
+            <version>${hibernate.jpamodelgen.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
     </dependencies>
 
     <build>
@@ -201,6 +217,11 @@
                 <configuration>
                     <source>1.8</source>
                     <target>1.8</target>
+                    <encoding>UTF-8</encoding>
+                    <!-- for generate metamodel for criteria queries -->
+                    <compilerArguments>
+                        <processor>org.hibernate.jpamodelgen.JPAMetaModelEntityProcessor</processor>
+                    </compilerArguments>
                 </configuration>
             </plugin>
 
@@ -292,5 +313,6 @@
             </plugin>
 
         </plugins>
+
     </build>
 </project>

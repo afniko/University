@@ -11,8 +11,8 @@ import org.slf4j.LoggerFactory;
 
 import ua.com.foxminded.task.dao.GroupDao;
 import ua.com.foxminded.task.dao.StudentDao;
-import ua.com.foxminded.task.dao.impl.GroupDaoImpl;
-import ua.com.foxminded.task.dao.impl.StudentDaoImpl;
+import ua.com.foxminded.task.dao.impl.hibernate.GroupDaoImpl;
+import ua.com.foxminded.task.dao.impl.hibernate.StudentDaoImpl;
 import ua.com.foxminded.task.domain.Group;
 import ua.com.foxminded.task.domain.Student;
 import ua.com.foxminded.task.domain.dto.StudentDto;

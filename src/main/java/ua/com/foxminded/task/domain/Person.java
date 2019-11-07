@@ -2,13 +2,33 @@ package ua.com.foxminded.task.domain;
 
 import java.time.LocalDate;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "persons")
+@Inheritance(strategy = InheritanceType.JOINED)
 public abstract class Person {
 
+    @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @Column(name = "id")
     protected int id;
+    @Column(name = "first_name")
     protected String firstName;
+    @Column(name = "last_name")
     protected String lastName;
+    @Column(name = "middle_name")
     protected String middleName;
+    @Column(name = "birthday")
     protected LocalDate birthday;
+    @Column(name = "idfees")
     protected int idFees;
 
     public int getId() {

@@ -11,3 +11,4 @@ build/
 /.apt_generated_tests/
 **/log/*
 *.log
+.attach*

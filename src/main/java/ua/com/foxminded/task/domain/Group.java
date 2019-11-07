@@ -1,10 +1,26 @@
 package ua.com.foxminded.task.domain;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+
+@Entity
+@Table(name = "groups")
 public class Group {
 
+    @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @Column(name = "id")
     private int id;
+    @Column(name = "title")
     private String title;
+    @Transient
     private Department department;
+    @Column(name = "yearEntry")
     private int yearEntry;
 
     public int getId() {

@@ -12,11 +12,12 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 
 import ua.com.foxminded.task.dao.GroupDao;
-import ua.com.foxminded.task.dao.impl.GroupDaoImpl;
+import ua.com.foxminded.task.dao.impl.hibernate.GroupDaoImpl;
 import ua.com.foxminded.task.domain.Group;
 import ua.com.foxminded.task.domain.dto.GroupDto;
 import ua.com.foxminded.task.domain.repository.GroupModelRepository;
 import ua.com.foxminded.task.domain.repository.dto.GroupDtoModelRepository;
+import ua.com.foxminded.task.service.impl.GroupServiceImpl;
 
 public class GroupServiceImplTest {
     private GroupDao groupDao = mock(GroupDaoImpl.class);

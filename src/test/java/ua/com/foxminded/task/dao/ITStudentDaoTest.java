@@ -1,16 +1,19 @@
 package ua.com.foxminded.task.dao;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Arrays;
+import java.util.List;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import ua.com.foxminded.task.dao.impl.GroupDaoImpl;
-import ua.com.foxminded.task.dao.impl.StudentDaoImpl;
+import ua.com.foxminded.task.dao.exception.NoEntityFoundException;
+import ua.com.foxminded.task.dao.impl.hibernate.GroupDaoImpl;
+import ua.com.foxminded.task.dao.impl.hibernate.StudentDaoImpl;
 import ua.com.foxminded.task.domain.Group;
 import ua.com.foxminded.task.domain.Student;
 import ua.com.foxminded.task.domain.repository.GroupModelRepository;
@@ -74,6 +77,18 @@ public class ITStudentDaoTest {
         Group groupActually = studentActually.getGroup();
         assertEquals(firstNameExpected, firstNameActually);
         assertEquals(GROUP11, groupActually);
+    }
+
+    @Test
+    public void WhenFindByIdNotExistinRecord_thenGetException() {
+        assertThrows(NoEntityFoundException.class, () -> studentDao.findById(9999));
+    }
+
+    @Test
+    public void WhenFindByIdGroup_thenReturnGroupWithSetId() {
+        int groupId = GROUP12.getId();
+        List<Student> students = studentDao.findByGroupId(groupId);
+        assertTrue(students.containsAll(Arrays.asList(STUDENT3, STUDENT4, STUDENT5)));
     }
 
     @AfterAll
