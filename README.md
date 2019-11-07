@@ -80,6 +80,10 @@ Branch: task15
 ####Task 16 - Spring IoC
 Rewrite DAO code to inject DataSource to all DAO objects using Spring IoC framework.
 Branch: task16
+####Task 17 - Hibernate
+Rewrite the DAO layer. Use Hibernate instead of Spring JDBC.
+Add for JPA Criteria query metamodel generator. 
+Also for work with IDE need to add as source Build Path folder target/generated-sources/annotation
 
 
 ##Author

@@ -17,7 +17,9 @@ import org.slf4j.LoggerFactory;
 import ua.com.foxminded.task.dao.StudentDao;
 import ua.com.foxminded.task.dao.exception.NoEntityFoundException;
 import ua.com.foxminded.task.domain.Group;
+import ua.com.foxminded.task.domain.Group_;
 import ua.com.foxminded.task.domain.Student;
+import ua.com.foxminded.task.domain.Student_;
 
 public class StudentDaoImpl implements StudentDao {
 
@@ -72,8 +74,10 @@ public class StudentDaoImpl implements StudentDao {
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
         CriteriaQuery<Student> studentCriteriaQuery = criteriaBuilder.createQuery(Student.class);
         Root<Student> studentRoot = studentCriteriaQuery.from(Student.class);
-        Join<Student, Group> groupJoin = studentRoot.join("student.group", JoinType.LEFT);
-        studentCriteriaQuery.select(studentRoot).where(criteriaBuilder.equal(groupJoin.get("group").get("id"), id));
+        Join<Student, Group> groupJoin = studentRoot.join(Student_.group, JoinType.LEFT);
+        studentCriteriaQuery
+                            .select(studentRoot)
+                            .where(criteriaBuilder.equal(groupJoin.get(Group_.id), id));
         students = entityManager.createQuery(studentCriteriaQuery).getResultList();
         entityManager.getTransaction().commit();
         entityManager.clear();
