@@ -84,7 +84,12 @@ Branch: task16
 Rewrite the DAO layer. Use Hibernate instead of Spring JDBC.
 Add for JPA Criteria query metamodel generator. 
 Also for work with IDE need to add as source Build Path folder target/generated-sources/annotation
-
+Branch: task17
+####Task 17 additions
+Add Sonar Lint plugin to eclipse
+Add Spring MVC
+Add Thymeleaf
+Branch: task17.2
 
 ##Author
 With best regards, Mykola Afanasiev!

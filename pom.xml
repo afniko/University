@@ -28,6 +28,7 @@
         <org.springframework.version>5.2.0.RELEASE</org.springframework.version>
         <hibernate.core.version>5.4.7.Final</hibernate.core.version>
         <hibernate.jpamodelgen.version>5.4.7.Final</hibernate.jpamodelgen.version>
+        <org.springframework.spring.webmvc.version>5.2.1.RELEASE</org.springframework.spring.webmvc.version>
 
         <org.flywaydb.flyway.plugin.version>5.2.4</org.flywaydb.flyway.plugin.version>
         <maven.compiler.plugin.version>3.8.0</maven.compiler.plugin.version>
@@ -172,6 +173,14 @@
             <version>${hibernate.jpamodelgen.version}</version>
             <scope>provided</scope>
         </dependency>
+
+        <!-- spring-webmvc -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-webmvc</artifactId>
+            <version>${org.springframework.spring.webmvc.version}</version>
+        </dependency>
+
 
     </dependencies>
 
