@@ -6,12 +6,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/group")
-public class GroupController {
-
+@RequestMapping("/")
+public class MainController {
     @GetMapping("/")
     public String tindex(Model model) {
-        model.addAttribute("title", "Group");
+        model.addAttribute("title", "Main");
         model.addAttribute("name", "Thymeleaf group");
         return "tindex";
     }

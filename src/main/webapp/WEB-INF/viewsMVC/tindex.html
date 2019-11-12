@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="ISO-8859-1">
 
-<title>Spring MVC 5 + Thymeleaf</title>
+<title th:text="${title}">Groups</title>
 </head>
+
 <body>
-   <h2 th:text="${name}"></h2>
+    <div th:replace="fragments/header">test header</div>
+    <div th:replace="fragments/footer">test footer</div>
 </body>
 </html>
