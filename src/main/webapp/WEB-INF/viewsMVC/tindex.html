@@ -1,12 +1,8 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-
-<title th:text="${title}">Groups</title>
-</head>
 
 <body>
     <div th:replace="fragments/header">test header</div>
-    <div th:replace="fragments/footer">test footer</div>
+    <div th:insert="fragments/footer">&copy; 2019 University project</div>
 </body>
 </html>
