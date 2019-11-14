@@ -17,16 +17,16 @@
     <br />
 
     <div class="container-fluid">
-        <form class="form-horizontal" th:action="@{/univer/group/edit}" method="post">
+        <form class="form-horizontal" th:action="@{/univer/group/edit}" method="post" modelAttribute="groupDto">
             <div class="form-group">
                 <label for="text" class="col-sm-3 control-label">Title</label>
                 <div class="col-sm-9">
-                    <input type="text" class="form-control" id="title" name="title" placeholder="Enter title" th:value="${group.title}">
+                    <input type="text" class="form-control"  id="title" name="title" placeholder="Enter title" th:value="${group.title}">
                 </div>
 
                 <label for="text" class="col-sm-3 control-label">Year of entry</label>
                 <div class="col-sm-9">
-                    <input type="text" class="form-control" id="year_entry" name="year_entry" placeholder="YYYY" th:value="${group.yearEntry}">
+                    <input type="text" class="form-control" id="yearEntry" name="yearEntry" placeholder="YYYY" th:value="${group.yearEntry}">
                 </div>
             </div>
 

@@ -2,7 +2,6 @@ package ua.com.foxminded.task.controller;
 
 import java.lang.invoke.MethodHandles;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import javax.validation.ConstraintViolation;
@@ -16,8 +15,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -44,6 +43,7 @@ public class GroupController {
 
     @GetMapping("/groups")
     public String groups(Model model) {
+        LOGGER.debug("groups()");
         String errorMessage = null;
         List<GroupDto> groups = null;
         try {
@@ -60,6 +60,7 @@ public class GroupController {
 
     @GetMapping("/group")
     public String group(@RequestParam("id") String idString, Model model) {
+        LOGGER.debug("group()");
         String errorMessage = null;
         GroupDto group = null;
 
@@ -87,6 +88,7 @@ public class GroupController {
 
     @GetMapping("/edit")
     public String editGet(@RequestParam("id") String id, Model model) {
+        LOGGER.debug("editGet(), id: {}", id);
         GroupDto group = new GroupDto();
         if (checkId(id)) {
             group = groupService.findByIdDto(Integer.valueOf(id));
@@ -97,14 +99,14 @@ public class GroupController {
     }
 
     @PostMapping("/edit")
-    public String editPost(@RequestBody Map<String, String> body, Model model) {
+    public String editPost(@ModelAttribute("groupDto") GroupDto groupDto, Model model) {
+        LOGGER.debug("editPost()");
         StringBuilder errorMessage = null;
         String successMessage = null;
         String path = "group";
 
-        GroupDto groupDto = retriveGroupDto(body);
         Set<ConstraintViolation<GroupDto>> violations = validateGroupDto(groupDto);
-        if (violations.size() == 0) {
+        if (violations.isEmpty()) {
 
             try {
                 if (groupDto.getId() != 0) {
@@ -132,24 +134,6 @@ public class GroupController {
         model.addAttribute("errorMessage", errorMessage);
         model.addAttribute("successMessage", successMessage);
         return path;
-    }
-
-    private GroupDto retriveGroupDto(Map<String, String> body) {
-        LOGGER.debug("retriveGroupDto()");
-        String id = body.get("id");
-        String title = body.get("title");
-        String yearEntry = body.get("year_entry");
-        GroupDto groupDto = new GroupDto();
-        if (checkId(id)) {
-            groupDto.setId(Integer.valueOf(id));
-        }
-        groupDto.setTitle(title);
-        if (yearEntry.matches("^\\d+$")) {
-            groupDto.setYearEntry(Integer.valueOf(yearEntry));
-        } else {
-            groupDto.setYearEntry(null);
-        }
-        return groupDto;
     }
 
     private Set<ConstraintViolation<GroupDto>> validateGroupDto(GroupDto groupDto) {
