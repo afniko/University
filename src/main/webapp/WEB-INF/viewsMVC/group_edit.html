@@ -33,12 +33,12 @@
             <div class="form-group">
                 <div class="col-sm-offset-3 col-sm-9">
                     <th:block th:if="${group.id==0}">
-                        <button type="submit" class="btn btn-default">Create</button>
+                        <button type="submit" class="btn btn-success">Create</button>
                     </th:block>
 
                     <th:block th:if="${group.id!=0}">
                         <input type="hidden" name="id" th:value="${group.id}" />
-                        <button type="submit" class="btn btn-default">Update</button>
+                        <button type="submit" class="btn btn-danger">Update</button>
                     </th:block>
 
                 </div>

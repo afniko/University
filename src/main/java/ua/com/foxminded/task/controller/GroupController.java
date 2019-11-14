@@ -87,7 +87,7 @@ public class GroupController {
     }
 
     @GetMapping("/edit")
-    public String editGet(@RequestParam("id") String id, Model model) {
+    public String editGet(@RequestParam(name = "id", required = false) String id, Model model) {
         LOGGER.debug("editGet(), id: {}", id);
         GroupDto group = new GroupDto();
         if (checkId(id)) {

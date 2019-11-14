@@ -1,8 +1,15 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-
+<head>
+<script>
+    function rowClicked(value) {
+        location.href = "edit?id=" + value;
+    }
+</script>
+</head>
 <body>
     <div th:replace="fragments/header">groups header</div>
+
     <div class="container-fluid">
         <th:block th:if="${errorMessage != null}">
             <div class="alert alert-danger" th:text="${errorMessage}">Error!!</div>
@@ -25,7 +32,7 @@
                 </tr>
             </table>
             <button type="button" class="btn btn-info"
-                onclick="window.location='${pageContext.request.contextPath}/group/edit?id=${group.id}'">Edit
+                th:onclick="'javascript:rowClicked(\'' + ${group.id} + '\');'">Edit
                 record</button>
         </th:block>
     </div>
