@@ -65,11 +65,11 @@ public class GroupController {
 
         int id = 0;
         try {
-            id = Integer.valueOf(idString);
             if (checkId(idString)) {
-                errorMessage = "You id is blank";
-            } else {
+                id = Integer.valueOf(idString);
                 group = groupService.findByIdDto(id);
+            } else {
+                errorMessage = "You id is blank";
             }
         } catch (NoExecuteQueryException e) {
             errorMessage = "Something with group goes wrong!";
@@ -87,11 +87,11 @@ public class GroupController {
 
     @GetMapping("/edit")
     public String editGet(@RequestParam("id") String id, Model model) {
+        GroupDto group = new GroupDto();
         if (checkId(id)) {
-            GroupDto group = groupService.findByIdDto(Integer.valueOf(id));
-            model.addAttribute("group", group);
+            group = groupService.findByIdDto(Integer.valueOf(id));
         }
-
+        model.addAttribute("group", group);
         model.addAttribute("title", "Group edit");
         return "group_edit";
     }
@@ -100,7 +100,7 @@ public class GroupController {
     public String editPost(@RequestBody Map<String, String> body, Model model) {
         StringBuilder errorMessage = null;
         String successMessage = null;
-        String path = "group.jsp";
+        String path = "group";
 
         GroupDto groupDto = retriveGroupDto(body);
         Set<ConstraintViolation<GroupDto>> violations = validateGroupDto(groupDto);
@@ -116,7 +116,7 @@ public class GroupController {
                 }
             } catch (NoExecuteQueryException e) {
                 errorMessage = new StringBuilder("Record group was not edited!");
-                path = "group_edit.jsp";
+                path = "group_edit";
             }
         } else {
             errorMessage = new StringBuilder("You enter incorrect data! ");
@@ -124,7 +124,7 @@ public class GroupController {
                 errorMessage.append(" ");
                 errorMessage.append(violation.getMessage());
             }
-            path = "group_edit.jsp";
+            path = "group_edit";
         }
 
         model.addAttribute("title", "Group edit");
@@ -161,8 +161,8 @@ public class GroupController {
         return violations;
     }
 
-    private boolean checkId(String idString) {
-        return StringUtils.isBlank(idString);
+    private boolean checkId(String id) {
+        return StringUtils.isNoneBlank(id);
     }
 
 }
