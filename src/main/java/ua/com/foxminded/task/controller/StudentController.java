@@ -86,6 +86,7 @@ public class StudentController {
         } catch (NumberFormatException e) {
             errorMessage = "Student id# must be numeric!";
         }
+        model.addAttribute("title", "Student");
         model.addAttribute("student", student);
         model.addAttribute("groups", groups);
         model.addAttribute("errorMessage", errorMessage);
@@ -101,6 +102,9 @@ public class StudentController {
             model.addAttribute("student", student);
         }
         List<GroupDto> groups = groupService.findAllDto();
+        
+        model.addAttribute("title", "Student");
+        model.addAttribute("student", student);
         model.addAttribute("groups", groups);
         return "student_edit";
     }
@@ -111,7 +115,7 @@ public class StudentController {
         StringBuilder errorMessage = null;
         String successMessage = null;
         List<GroupDto> groups = null;
-        String path = "student.jsp";
+        String path = "student";
 
         Set<ConstraintViolation<StudentDto>> violations = validateStudentDto(studentDto);
         if (violations.isEmpty()) {
@@ -125,7 +129,7 @@ public class StudentController {
                 }
             } catch (NoExecuteQueryException e) {
                 errorMessage = new StringBuilder("Record student was not edited!");
-                path = "student_edit.jsp";
+                path = "student_edit";
             }
         } else {
             errorMessage = new StringBuilder("You enter incorrect data!");
@@ -133,7 +137,7 @@ public class StudentController {
                 errorMessage.append(" ");
                 errorMessage.append(violation.getMessage());
             }
-            path = "student_edit.jsp";
+            path = "student_edit";
         }
         groups = groupService.findAllDto();
 

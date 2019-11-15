@@ -1,6 +1,12 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-
+<head>
+<script>
+    function rowClicked(value) {
+        location.href = "student?id=" + value;
+    }
+</script>
+</head>
 <body>
     <div th:replace="fragments/header">groups header</div>
 
@@ -19,12 +25,12 @@
                     <td>Group title</td>
                 </tr>
                 <tr th:each="student : ${students}"
-                    th:href="@{'/univer/student/student?id='+${student.id}}">
-                    <td th:text="${student.firstName}"></td>
-                    <td th:text="${student.middleName}"></td>
-                    <td th:text="${student.birthday}"></td>
-                    <td th:text="${student.idFees}"></td>
-                    <td th:text="${student.groupTitle}"></td>
+                    th:onclick="'javascript:rowClicked(\'' + ${student.id} + '\');'">
+                    <td th:text="${student.firstName}">First name</td>
+                    <td th:text="${student.middleName}">Middle name</td>
+                    <td th:text="${student.birthday}">Birthday</td>
+                    <td th:text="${student.idFees}">Id fees</td>
+                    <td th:text="${student.groupTitle}">Group title</td>
                 </tr>
             </table>
         </th:block>
