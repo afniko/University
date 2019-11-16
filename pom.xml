@@ -18,8 +18,6 @@
         <slf4j.api.version>1.7.25</slf4j.api.version>
         <slf4j.log4j12.version>1.7.25</slf4j.log4j12.version>
         <javax.servlet.api.version>4.0.1</javax.servlet.api.version>
-        <javax.servlet.jsp.api.version>2.0</javax.servlet.jsp.api.version>
-        <jstl.version>1.2</jstl.version>
         <validation-api.version>2.0.1.Final</validation-api.version>
         <hibernate-validator.version>6.0.13.Final</hibernate-validator.version>
         <hibernate.validator.annotation.processor.version>6.0.17.Final</hibernate.validator.annotation.processor.version>
@@ -105,19 +103,6 @@
             <artifactId>javax.servlet-api</artifactId>
             <version>${javax.servlet.api.version}</version>
             <scope>provided</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>jsp-api</artifactId>
-            <version>${javax.servlet.jsp.api.version}</version>
-            <scope>provided</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>jstl</groupId>
-            <artifactId>jstl</artifactId>
-            <version>${jstl.version}</version>
         </dependency>
 
         <!-- validation entity block -->

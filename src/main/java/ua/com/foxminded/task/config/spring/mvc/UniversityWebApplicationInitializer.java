@@ -21,7 +21,7 @@ public class UniversityWebApplicationInitializer implements WebApplicationInitia
         DispatcherServlet dispatcherServlet = new DispatcherServlet(annotationConfig);
         ServletRegistration.Dynamic appServlet = servletContext.addServlet("dispatcher", dispatcherServlet);
         appServlet.setLoadOnStartup(1);
-        appServlet.addMapping("/univer/*");
+        appServlet.addMapping("/*");
 
     }
 
