@@ -62,7 +62,7 @@ public class StudentController {
         model.addAttribute("title", "Students");
         model.addAttribute("students", students);
         model.addAttribute("errorMessage", errorMessage);
-        return "students";
+        return "student/students";
     }
 
     @GetMapping("/student")
@@ -91,7 +91,7 @@ public class StudentController {
         model.addAttribute("student", student);
         model.addAttribute("groups", groups);
         model.addAttribute("errorMessage", errorMessage);
-        return "student";
+        return "student/student";
     }
 
     @GetMapping("/edit")
@@ -107,7 +107,7 @@ public class StudentController {
         model.addAttribute("title", "Student");
         model.addAttribute("student", student);
         model.addAttribute("groups", groups);
-        return "student_edit";
+        return "student/student_edit";
     }
 
     @PostMapping("/edit")
@@ -116,7 +116,7 @@ public class StudentController {
         StringBuilder errorMessage = null;
         String successMessage = null;
         List<GroupDto> groups = null;
-        String path = "student";
+        String path = "student/student";
         Set<ConstraintViolation<StudentDto>> violations = validateStudentDto(studentDto);
         if (violations.isEmpty()) {
             try {
@@ -129,7 +129,7 @@ public class StudentController {
                 }
             } catch (NoExecuteQueryException e) {
                 errorMessage = new StringBuilder("Record student was not edited!");
-                path = "student_edit";
+                path = "student/student_edit";
                 groups = groupService.findAllDto();
             }
         } else {
@@ -138,7 +138,7 @@ public class StudentController {
                 errorMessage.append(" ");
                 errorMessage.append(violation.getMessage());
             }
-            path = "student_edit";
+            path = "student/student_edit";
             groups = groupService.findAllDto();
         }
 

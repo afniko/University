@@ -55,7 +55,7 @@ public class GroupController {
         model.addAttribute("title", "Groups");
         model.addAttribute("groups", groups);
         model.addAttribute("errorMessage", errorMessage);
-        return "groups";
+        return "group/groups";
     }
 
     @GetMapping("/group")
@@ -83,7 +83,7 @@ public class GroupController {
         model.addAttribute("title", "Group");
         model.addAttribute("group", group);
         model.addAttribute("errorMessage", errorMessage);
-        return "group";
+        return "group/group";
     }
 
     @GetMapping("/edit")
@@ -95,7 +95,7 @@ public class GroupController {
         }
         model.addAttribute("group", group);
         model.addAttribute("title", "Group edit");
-        return "group_edit";
+        return "group/group_edit";
     }
 
     @PostMapping("/edit")
@@ -103,7 +103,7 @@ public class GroupController {
         LOGGER.debug("editPost()");
         StringBuilder errorMessage = null;
         String successMessage = null;
-        String path = "group";
+        String path = "group/group";
 
         Set<ConstraintViolation<GroupDto>> violations = validateGroupDto(groupDto);
         if (violations.isEmpty()) {
@@ -118,7 +118,7 @@ public class GroupController {
                 }
             } catch (NoExecuteQueryException e) {
                 errorMessage = new StringBuilder("Record group was not edited!");
-                path = "group_edit";
+                path = "group/group_edit";
             }
         } else {
             errorMessage = new StringBuilder("You enter incorrect data! ");
@@ -126,7 +126,7 @@ public class GroupController {
                 errorMessage.append(" ");
                 errorMessage.append(violation.getMessage());
             }
-            path = "group_edit";
+            path = "group/group_edit";
         }
 
         model.addAttribute("title", "Group edit");
