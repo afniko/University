@@ -7,6 +7,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Past;
 
 import org.hibernate.validator.constraints.Length;
+import org.springframework.format.annotation.DateTimeFormat;
 
 public class StudentDto {
 
@@ -22,6 +23,7 @@ public class StudentDto {
     @Length(max = 20, message = "Maximum length of last name is 20!")
     private String lastName;
 
+    @DateTimeFormat(pattern="yyyy-MM-dd")
     @Past(message = "Birthday date must be in past!")
     private LocalDate birthday;
 

@@ -189,7 +189,6 @@
             <version>${org.thymeleaf.spring5}</version>
         </dependency>
 
-
     </dependencies>
 
     <build>

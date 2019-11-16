@@ -1,6 +1,7 @@
 package ua.com.foxminded.task.service.impl;
 
 import static java.util.Objects.nonNull;
+import static org.apache.commons.lang3.StringUtils.isNoneBlank;
 
 import java.lang.invoke.MethodHandles;
 import java.util.List;
@@ -67,7 +68,7 @@ public class StudentServiceImpl implements StudentService {
     private Student retriveStudentFromDto(StudentDto studentDto) {
         Student student = (studentDto.getId() != 0) ? studentDao.findById(studentDto.getId()) : new Student();
 
-        Group group = nonNull(studentDto.getIdGroup()) ? groupDao.findById(Integer.valueOf(studentDto.getIdGroup())) : null;
+        Group group = nonNull(studentDto.getIdGroup())&&isNoneBlank(studentDto.getIdGroup()) ? groupDao.findById(Integer.valueOf(studentDto.getIdGroup())) : null;
         student.setGroup(group);
 
         student.setFirstName(studentDto.getFirstName());

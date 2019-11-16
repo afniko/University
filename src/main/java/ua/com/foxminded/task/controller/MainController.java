@@ -8,11 +8,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/")
 public class MainController {
-    
+
     @GetMapping
     public String tindex(Model model) {
-        model.addAttribute("title", "Main");
-        model.addAttribute("name", "Thymeleaf group");
-        return "tindex";
+        model.addAttribute("title", "Thymeleaf+SpringMVC University");
+        return "main";
     }
 }

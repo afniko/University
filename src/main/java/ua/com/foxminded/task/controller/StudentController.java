@@ -14,6 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -102,7 +103,7 @@ public class StudentController {
             model.addAttribute("student", student);
         }
         List<GroupDto> groups = groupService.findAllDto();
-        
+
         model.addAttribute("title", "Student");
         model.addAttribute("student", student);
         model.addAttribute("groups", groups);
@@ -110,13 +111,12 @@ public class StudentController {
     }
 
     @PostMapping("/edit")
-    public String editPost(@ModelAttribute("studentDto") StudentDto studentDto, Model model) {
+    public String editPost(@ModelAttribute("studentDto") StudentDto studentDto, BindingResult bindingResult, Model model) {
         LOGGER.debug("editPost()");
         StringBuilder errorMessage = null;
         String successMessage = null;
         List<GroupDto> groups = null;
         String path = "student";
-
         Set<ConstraintViolation<StudentDto>> violations = validateStudentDto(studentDto);
         if (violations.isEmpty()) {
             try {
@@ -130,6 +130,7 @@ public class StudentController {
             } catch (NoExecuteQueryException e) {
                 errorMessage = new StringBuilder("Record student was not edited!");
                 path = "student_edit";
+                groups = groupService.findAllDto();
             }
         } else {
             errorMessage = new StringBuilder("You enter incorrect data!");
@@ -138,9 +139,10 @@ public class StudentController {
                 errorMessage.append(violation.getMessage());
             }
             path = "student_edit";
+            groups = groupService.findAllDto();
         }
-        groups = groupService.findAllDto();
 
+        model.addAttribute("title", "Student edit");
         model.addAttribute("student", studentDto);
         model.addAttribute("groups", groups);
         model.addAttribute("errorMessage", errorMessage);

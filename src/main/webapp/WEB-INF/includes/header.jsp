@@ -39,6 +39,7 @@
             <li><a href="${pageContext.request.contextPath}/student/edit">student create page</a></li>
             <li><a href="${pageContext.request.contextPath}/groups">groups page</a></li>
             <li><a href="${pageContext.request.contextPath}/group/edit">group create page</a></li>
+            <li><a href="${pageContext.request.contextPath}/univer/">Spring MVC</a></li>
         </ul>
     </div>
 
