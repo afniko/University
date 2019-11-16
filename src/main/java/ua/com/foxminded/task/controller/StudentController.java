@@ -12,6 +12,7 @@ import javax.validation.ValidatorFactory;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -27,8 +28,6 @@ import ua.com.foxminded.task.domain.dto.GroupDto;
 import ua.com.foxminded.task.domain.dto.StudentDto;
 import ua.com.foxminded.task.service.GroupService;
 import ua.com.foxminded.task.service.StudentService;
-import ua.com.foxminded.task.service.impl.GroupServiceImpl;
-import ua.com.foxminded.task.service.impl.StudentServiceImpl;
 
 @Controller
 @RequestMapping("/student")
@@ -38,11 +37,7 @@ public class StudentController {
     private static StudentService studentService;
     private static GroupService groupService;
 
-    public StudentController() {
-        studentService = new StudentServiceImpl();
-        groupService = new GroupServiceImpl();
-    }
-
+    @Autowired
     public StudentController(StudentService studentService, GroupService groupService) {
         this.studentService = studentService;
         this.groupService = groupService;

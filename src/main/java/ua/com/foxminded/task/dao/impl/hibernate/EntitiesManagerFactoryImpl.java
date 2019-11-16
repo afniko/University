@@ -8,25 +8,19 @@ import javax.persistence.Persistence;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Repository;
 
 import ua.com.foxminded.task.dao.EntitiesManagerFactory;
 
+@Repository
 public class EntitiesManagerFactoryImpl implements EntitiesManagerFactory {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getSimpleName());
     private static final String PERSISTENCE_UNIT_NAME = "persistenceUniversity";
-    private static EntitiesManagerFactoryImpl instance;
     private EntityManagerFactory entityManagerFactory;
 
-    private EntitiesManagerFactoryImpl() {
+    public EntitiesManagerFactoryImpl() {
         entityManagerFactory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
-    }
-
-    public synchronized static EntitiesManagerFactoryImpl getInstance() {
-        if (instance == null) {
-            instance = new EntitiesManagerFactoryImpl();
-        }
-        return instance;
     }
 
     @Override

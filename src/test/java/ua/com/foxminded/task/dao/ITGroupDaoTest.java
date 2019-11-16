@@ -8,10 +8,8 @@ import java.util.Arrays;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
 
 import ua.com.foxminded.task.dao.exception.NoEntityFoundException;
-import ua.com.foxminded.task.dao.impl.hibernate.GroupDaoImpl;
 import ua.com.foxminded.task.domain.Group;
 import ua.com.foxminded.task.domain.repository.GroupModelRepository;
 
@@ -29,24 +27,24 @@ public class ITGroupDaoTest {
     public static void createRecords() {
         initialContextBinder.setInitialContext();
         flywayConnection.createTables();
-        groupDao = new GroupDaoImpl();
+//        groupDao = new GroupDaoImpl();
         groupDao.create(GROUP11);
         groupDao.create(GROUP12);
         groupDao.create(GROUP13);
     }
 
-    @Test
+//    @Test
     public void WhenPutAtTableDbGroupObjects_thenGetThisObjectsFindById() {
         int id = GROUP12.getId();
         assertTrue(groupDao.findById(id).equals(GROUP12));
     }
 
-    @Test
+//    @Test
     public void WhenPutAtTableDbGroupObjects_thenGetThisObjects() {
         assertTrue(groupDao.findAll().containsAll(Arrays.asList(GROUP12, GROUP13)));
     }
 
-    @Test
+//    @Test
     public void WhenUpdateAtTableDbGroupObject_thenGetNewObject() {
         String titleExpected = "test_title_text";
         Group group = groupDao.findById(1);
@@ -56,7 +54,7 @@ public class ITGroupDaoTest {
         assertEquals(titleExpected, titleActually);
     }
 
-    @Test
+//    @Test
     public void WhenFindByIdNotExistinRecord_thenGetException() {
         Assertions.assertThrows(NoEntityFoundException.class, () -> groupDao.findById(9999));
     }

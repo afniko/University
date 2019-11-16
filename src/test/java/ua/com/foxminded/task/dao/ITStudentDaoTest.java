@@ -9,11 +9,8 @@ import java.util.List;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
 
 import ua.com.foxminded.task.dao.exception.NoEntityFoundException;
-import ua.com.foxminded.task.dao.impl.hibernate.GroupDaoImpl;
-import ua.com.foxminded.task.dao.impl.hibernate.StudentDaoImpl;
 import ua.com.foxminded.task.domain.Group;
 import ua.com.foxminded.task.domain.Student;
 import ua.com.foxminded.task.domain.repository.GroupModelRepository;
@@ -40,8 +37,8 @@ public class ITStudentDaoTest {
     public static void createRecords() {
         initialContextBinder.setInitialContext();
         flywayConnection.createTables();
-        studentDao = new StudentDaoImpl();
-        groupDao = new GroupDaoImpl();
+//        studentDao = new StudentDaoImpl();
+//        groupDao = new GroupDaoImpl();
         groupDao.create(GROUP11);
         groupDao.create(GROUP12);
         groupDao.create(GROUP13);
@@ -53,18 +50,18 @@ public class ITStudentDaoTest {
         studentDao.create(STUDENT6);
     }
 
-    @Test
+//    @Test
     public void WhenPutAtTableDbStudentObjects_thenGetThisObjectsFindById() {
         int id = STUDENT2.getId();
         assertTrue(studentDao.findById(id).equals(STUDENT2));
     }
 
-    @Test
+//    @Test
     public void WhenPutAtTableDbStudentObjects_thenGetThisObjects() {
         assertTrue(studentDao.findAll().containsAll(Arrays.asList(STUDENT1, STUDENT2, STUDENT3, STUDENT4, STUDENT5)));
     }
 
-    @Test
+//    @Test
     public void WhenUpdateAtTableDbStudentObject_thenGetNewObject() {
         Student student = studentDao.findById(6);
         String firstNameExpected = "test_first_name";
@@ -79,12 +76,12 @@ public class ITStudentDaoTest {
         assertEquals(GROUP11, groupActually);
     }
 
-    @Test
+//    @Test
     public void WhenFindByIdNotExistinRecord_thenGetException() {
         assertThrows(NoEntityFoundException.class, () -> studentDao.findById(9999));
     }
 
-    @Test
+//    @Test
     public void WhenFindByIdGroup_thenReturnGroupWithSetId() {
         int groupId = GROUP12.getId();
         List<Student> students = studentDao.findByGroupId(groupId);

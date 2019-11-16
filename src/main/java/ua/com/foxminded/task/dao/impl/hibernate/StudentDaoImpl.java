@@ -13,7 +13,10 @@ import javax.persistence.criteria.Root;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
+import ua.com.foxminded.task.dao.EntitiesManagerFactory;
 import ua.com.foxminded.task.dao.StudentDao;
 import ua.com.foxminded.task.dao.exception.NoEntityFoundException;
 import ua.com.foxminded.task.domain.Group;
@@ -21,13 +24,15 @@ import ua.com.foxminded.task.domain.Group_;
 import ua.com.foxminded.task.domain.Student;
 import ua.com.foxminded.task.domain.Student_;
 
+@Repository
 public class StudentDaoImpl implements StudentDao {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getSimpleName());
     private EntityManager entityManager;
 
-    public StudentDaoImpl() {
-        entityManager = EntitiesManagerFactoryImpl.getInstance().getEntityManager();
+    @Autowired
+    public StudentDaoImpl(EntitiesManagerFactory entitiesManagerFactory) {
+        entityManager = entitiesManagerFactory.getEntityManager();
     }
 
     @Override
@@ -75,9 +80,7 @@ public class StudentDaoImpl implements StudentDao {
         CriteriaQuery<Student> studentCriteriaQuery = criteriaBuilder.createQuery(Student.class);
         Root<Student> studentRoot = studentCriteriaQuery.from(Student.class);
         Join<Student, Group> groupJoin = studentRoot.join(Student_.group, JoinType.LEFT);
-        studentCriteriaQuery
-                            .select(studentRoot)
-                            .where(criteriaBuilder.equal(groupJoin.get(Group_.id), id));
+        studentCriteriaQuery.select(studentRoot).where(criteriaBuilder.equal(groupJoin.get(Group_.id), id));
         students = entityManager.createQuery(studentCriteriaQuery).getResultList();
         entityManager.getTransaction().commit();
         entityManager.clear();

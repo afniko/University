@@ -9,27 +9,24 @@ import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import ua.com.foxminded.task.dao.GroupDao;
 import ua.com.foxminded.task.dao.StudentDao;
-import ua.com.foxminded.task.dao.impl.hibernate.GroupDaoImpl;
-import ua.com.foxminded.task.dao.impl.hibernate.StudentDaoImpl;
 import ua.com.foxminded.task.domain.Group;
 import ua.com.foxminded.task.domain.Student;
 import ua.com.foxminded.task.domain.dto.StudentDto;
 import ua.com.foxminded.task.service.StudentService;
 import ua.com.foxminded.task.service.converter.ConverterToDtoService;
 
+@Service
 public class StudentServiceImpl implements StudentService {
     private StudentDao studentDao;
     private GroupDao groupDao;
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getSimpleName());
 
-    public StudentServiceImpl() {
-        studentDao = new StudentDaoImpl();
-        groupDao = new GroupDaoImpl();
-    }
-
+    @Autowired
     public StudentServiceImpl(StudentDao studentDao, GroupDao groupDao) {
         this.studentDao = studentDao;
         this.groupDao = groupDao;
@@ -68,7 +65,7 @@ public class StudentServiceImpl implements StudentService {
     private Student retriveStudentFromDto(StudentDto studentDto) {
         Student student = (studentDto.getId() != 0) ? studentDao.findById(studentDto.getId()) : new Student();
 
-        Group group = nonNull(studentDto.getIdGroup())&&isNoneBlank(studentDto.getIdGroup()) ? groupDao.findById(Integer.valueOf(studentDto.getIdGroup())) : null;
+        Group group = nonNull(studentDto.getIdGroup()) && isNoneBlank(studentDto.getIdGroup()) ? groupDao.findById(Integer.valueOf(studentDto.getIdGroup())) : null;
         student.setGroup(group);
 
         student.setFirstName(studentDto.getFirstName());

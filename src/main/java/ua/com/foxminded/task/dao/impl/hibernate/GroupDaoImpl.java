@@ -11,18 +11,23 @@ import javax.persistence.criteria.Root;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
+import ua.com.foxminded.task.dao.EntitiesManagerFactory;
 import ua.com.foxminded.task.dao.GroupDao;
 import ua.com.foxminded.task.dao.exception.NoEntityFoundException;
 import ua.com.foxminded.task.domain.Group;
 
+@Repository
 public class GroupDaoImpl implements GroupDao {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getSimpleName());
     private EntityManager entityManager;
 
-    public GroupDaoImpl() {
-        entityManager = EntitiesManagerFactoryImpl.getInstance().getEntityManager();
+    @Autowired
+    public GroupDaoImpl(EntitiesManagerFactory entitiesManagerFactory) {
+        entityManager = entitiesManagerFactory.getEntityManager();
     }
 
     @Override

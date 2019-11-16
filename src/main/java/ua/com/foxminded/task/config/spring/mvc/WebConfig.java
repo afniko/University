@@ -14,7 +14,7 @@ import org.thymeleaf.spring5.view.ThymeleafViewResolver;
 
 @EnableWebMvc
 @Configuration
-@ComponentScan(basePackages = { "ua.com.foxminded.task.controller" })
+@ComponentScan(basePackages = { "ua.com.foxminded.task" })
 public class WebConfig implements WebMvcConfigurer {
 
     @Autowired

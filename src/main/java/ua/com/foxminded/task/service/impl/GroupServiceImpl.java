@@ -6,23 +6,22 @@ import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import ua.com.foxminded.task.dao.GroupDao;
-import ua.com.foxminded.task.dao.impl.hibernate.GroupDaoImpl;
 import ua.com.foxminded.task.domain.Group;
 import ua.com.foxminded.task.domain.dto.GroupDto;
 import ua.com.foxminded.task.service.GroupService;
 import ua.com.foxminded.task.service.converter.ConverterToDtoService;
 
+@Service
 public class GroupServiceImpl implements GroupService {
 
     private GroupDao groupDao;
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getSimpleName());
 
-    public GroupServiceImpl() {
-        groupDao = new GroupDaoImpl();
-    }
-
+    @Autowired
     public GroupServiceImpl(GroupDao groupDao) {
         this.groupDao = groupDao;
     }

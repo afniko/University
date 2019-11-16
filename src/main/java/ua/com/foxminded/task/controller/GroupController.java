@@ -12,6 +12,7 @@ import javax.validation.ValidatorFactory;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,7 +25,6 @@ import ua.com.foxminded.task.dao.exception.NoEntityFoundException;
 import ua.com.foxminded.task.dao.exception.NoExecuteQueryException;
 import ua.com.foxminded.task.domain.dto.GroupDto;
 import ua.com.foxminded.task.service.GroupService;
-import ua.com.foxminded.task.service.impl.GroupServiceImpl;
 
 @Controller
 @RequestMapping("/group")
@@ -33,10 +33,7 @@ public class GroupController {
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getSimpleName());
     private GroupService groupService;
 
-    public GroupController() {
-        groupService = new GroupServiceImpl();
-    }
-
+    @Autowired
     public GroupController(GroupService groupService) {
         this.groupService = groupService;
     }
