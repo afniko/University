@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import ua.com.foxminded.task.dao.exception.EntityAlreadyExistsException;
 import ua.com.foxminded.task.dao.exception.NoEntityFoundException;
 import ua.com.foxminded.task.dao.exception.NoExecuteQueryException;
 import ua.com.foxminded.task.domain.dto.GroupDto;
@@ -47,6 +48,8 @@ public class GroupController {
             groups = groupService.findAllDto();
         } catch (NoExecuteQueryException e) {
             errorMessage = "Something with group goes wrong!";
+        } catch (NoEntityFoundException e) {
+            errorMessage = "Problem with finding group";
         }
 
         model.addAttribute("title", "Groups");
@@ -86,12 +89,18 @@ public class GroupController {
     @GetMapping("/edit")
     public String editGet(@RequestParam(name = "id", required = false) String id, Model model) {
         LOGGER.debug("editGet(), id: {}", id);
+        String errorMessage = null;
         GroupDto group = new GroupDto();
-        if (checkId(id)) {
-            group = groupService.findByIdDto(Integer.valueOf(id));
+        try {
+            if (checkId(id)) {
+                group = groupService.findByIdDto(Integer.valueOf(id));
+            }
+        } catch (NoEntityFoundException e) {
+            errorMessage = "Problem with finding group";
         }
-        model.addAttribute("group", group);
         model.addAttribute("title", "Group edit");
+        model.addAttribute("group", group);
+        model.addAttribute("errorMessage", errorMessage);
         return "group/group_edit";
     }
 
@@ -101,6 +110,7 @@ public class GroupController {
         StringBuilder errorMessage = null;
         String successMessage = null;
         String path = "group/group";
+        String pathEdit = "group/group_edit";
 
         Set<ConstraintViolation<GroupDto>> violations = validateGroupDto(groupDto);
         if (violations.isEmpty()) {
@@ -115,7 +125,10 @@ public class GroupController {
                 }
             } catch (NoExecuteQueryException e) {
                 errorMessage = new StringBuilder("Record group was not edited!");
-                path = "group/group_edit";
+                path = pathEdit;
+            } catch (EntityAlreadyExistsException e) {
+                errorMessage = new StringBuilder("Record group was not created/updated! The record already exists!");
+                path = pathEdit;
             }
         } else {
             errorMessage = new StringBuilder("You enter incorrect data! ");
@@ -123,7 +136,7 @@ public class GroupController {
                 errorMessage.append(" ");
                 errorMessage.append(violation.getMessage());
             }
-            path = "group/group_edit";
+            path = pathEdit;
         }
 
         model.addAttribute("title", "Group edit");

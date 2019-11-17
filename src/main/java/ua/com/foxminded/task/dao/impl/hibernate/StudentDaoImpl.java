@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Objects;
 
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceException;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Join;
@@ -18,6 +19,7 @@ import org.springframework.stereotype.Repository;
 
 import ua.com.foxminded.task.dao.EntitiesManagerFactory;
 import ua.com.foxminded.task.dao.StudentDao;
+import ua.com.foxminded.task.dao.exception.EntityAlreadyExistsException;
 import ua.com.foxminded.task.dao.exception.NoEntityFoundException;
 import ua.com.foxminded.task.domain.Group;
 import ua.com.foxminded.task.domain.Group_;
@@ -38,9 +40,14 @@ public class StudentDaoImpl implements StudentDao {
     @Override
     public Student create(Student student) {
         LOGGER.debug("create() [student:{}]", student);
-        entityManager.getTransaction().begin();
-        entityManager.persist(student);
-        entityManager.getTransaction().commit();
+        try {
+            entityManager.getTransaction().begin();
+            entityManager.persist(student);
+            entityManager.getTransaction().commit();
+        } catch (PersistenceException e) {
+            entityManager.getTransaction().rollback();
+            throw new EntityAlreadyExistsException("create() student: " + student, e);
+        }
         entityManager.clear();
         return student;
     }
@@ -48,14 +55,20 @@ public class StudentDaoImpl implements StudentDao {
     @Override
     public Student findById(int id) {
         LOGGER.debug("findById() [student id:{}]", id);
+        String exceptionMessage = "findById() Student by id#" + id + " not found";
         Student student = null;
-        entityManager.getTransaction().begin();
-        student = entityManager.find(Student.class, id);
-        entityManager.getTransaction().commit();
+        try {
+            entityManager.getTransaction().begin();
+            student = entityManager.find(Student.class, id);
+            entityManager.getTransaction().commit();
+        } catch (PersistenceException e) {
+            entityManager.getTransaction().rollback();
+            throw new NoEntityFoundException(exceptionMessage, e);
+        }
         entityManager.clear();
         if (Objects.isNull(student)) {
             LOGGER.warn("findById() Student with id#{} not found", id);
-            throw new NoEntityFoundException("findById() Student by id#" + id + " not found");
+            throw new NoEntityFoundException(exceptionMessage);
         }
         return student;
     }
@@ -90,9 +103,14 @@ public class StudentDaoImpl implements StudentDao {
     @Override
     public Student update(Student student) {
         LOGGER.debug("update() [student:{}]", student);
-        entityManager.getTransaction().begin();
-        entityManager.merge(student);
-        entityManager.getTransaction().commit();
+        try {
+            entityManager.getTransaction().begin();
+            entityManager.merge(student);
+            entityManager.getTransaction().commit();
+        } catch (PersistenceException e) {
+            entityManager.getTransaction().rollback();
+            throw new EntityAlreadyExistsException("update() student: " + student, e);
+        }
         entityManager.clear();
         return student;
     }

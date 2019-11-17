@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import ua.com.foxminded.task.dao.exception.EntityAlreadyExistsException;
 import ua.com.foxminded.task.dao.exception.NoEntityFoundException;
 import ua.com.foxminded.task.dao.exception.NoExecuteQueryException;
 import ua.com.foxminded.task.domain.dto.GroupDto;
@@ -92,16 +93,21 @@ public class StudentController {
     @GetMapping("/edit")
     public String editGet(@RequestParam(name = "id", required = false) String id, Model model) {
         LOGGER.debug("editGet(), id: {}", id);
+        String errorMessage = null;
         StudentDto student = new StudentDto();
-        if (checkId(id)) {
-            student = studentService.findByIdDto(Integer.valueOf(id));
-            model.addAttribute("student", student);
+        try {
+            if (checkId(id)) {
+                student = studentService.findByIdDto(Integer.valueOf(id));
+            }
+        } catch (NoEntityFoundException e) {
+            errorMessage = "Problem with finding group";
         }
         List<GroupDto> groups = groupService.findAllDto();
 
-        model.addAttribute("title", "Student");
+        model.addAttribute("title", "Student edit");
         model.addAttribute("student", student);
         model.addAttribute("groups", groups);
+        model.addAttribute("errorMessage", errorMessage);
         return "student/student_edit";
     }
 
@@ -112,6 +118,7 @@ public class StudentController {
         String successMessage = null;
         List<GroupDto> groups = null;
         String path = "student/student";
+        String pathEdit = "student/student_edit";
         Set<ConstraintViolation<StudentDto>> violations = validateStudentDto(studentDto);
         if (violations.isEmpty()) {
             try {
@@ -124,8 +131,11 @@ public class StudentController {
                 }
             } catch (NoExecuteQueryException e) {
                 errorMessage = new StringBuilder("Record student was not edited!");
-                path = "student/student_edit";
+                path = pathEdit;
                 groups = groupService.findAllDto();
+            } catch (EntityAlreadyExistsException e) {
+                errorMessage = new StringBuilder("Record sudent was not created/updated! The record already exists!");
+                path = pathEdit;
             }
         } else {
             errorMessage = new StringBuilder("You enter incorrect data!");
@@ -133,7 +143,7 @@ public class StudentController {
                 errorMessage.append(" ");
                 errorMessage.append(violation.getMessage());
             }
-            path = "student/student_edit";
+            path = pathEdit;
             groups = groupService.findAllDto();
         }
 

@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Objects;
 
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceException;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Repository;
 
 import ua.com.foxminded.task.dao.EntitiesManagerFactory;
 import ua.com.foxminded.task.dao.GroupDao;
+import ua.com.foxminded.task.dao.exception.EntityAlreadyExistsException;
 import ua.com.foxminded.task.dao.exception.NoEntityFoundException;
 import ua.com.foxminded.task.domain.Group;
 
@@ -33,9 +35,14 @@ public class GroupDaoImpl implements GroupDao {
     @Override
     public Group create(Group group) {
         LOGGER.debug("create() [group:{}]", group);
-        entityManager.getTransaction().begin();
-        entityManager.persist(group);
-        entityManager.getTransaction().commit();
+        try {
+            entityManager.getTransaction().begin();
+            entityManager.persist(group);
+            entityManager.getTransaction().commit();
+        } catch (PersistenceException e) {
+            entityManager.getTransaction().rollback();
+            throw new EntityAlreadyExistsException("create() group: " + group, e);
+        }
         entityManager.clear();
         return group;
     }
@@ -43,14 +50,20 @@ public class GroupDaoImpl implements GroupDao {
     @Override
     public Group findById(int id) {
         LOGGER.debug("findById() [id:{}]", id);
+        String exceptionMessage = "findById() Group by id#" + id + " not found";
         Group group = null;
-        entityManager.getTransaction().begin();
-        group = entityManager.find(Group.class, id);
-        entityManager.getTransaction().commit();
+        try {
+            entityManager.getTransaction().begin();
+            group = entityManager.find(Group.class, id);
+            entityManager.getTransaction().commit();
+        } catch (PersistenceException e) {
+            entityManager.getTransaction().rollback();
+            throw new NoEntityFoundException(exceptionMessage, e);
+        }
         entityManager.clear();
         if (Objects.isNull(group)) {
             LOGGER.warn("findById() Group with id#{} not found", id);
-            throw new NoEntityFoundException("findById() Group by id#" + id + " not found");
+            throw new NoEntityFoundException(exceptionMessage);
         }
         return group;
     }
@@ -73,9 +86,14 @@ public class GroupDaoImpl implements GroupDao {
     @Override
     public Group update(Group group) {
         LOGGER.debug("update() [group:{}]", group);
-        entityManager.getTransaction().begin();
-        entityManager.merge(group);
-        entityManager.getTransaction().commit();
+        try {
+            entityManager.getTransaction().begin();
+            entityManager.merge(group);
+            entityManager.getTransaction().commit();
+        } catch (PersistenceException e) {
+            entityManager.getTransaction().rollback();
+            throw new EntityAlreadyExistsException("update() group: " + group, e);
+        }
         entityManager.clear();
         return group;
     }
