@@ -35,8 +35,17 @@ import ua.com.foxminded.task.service.StudentService;
 public class StudentController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getSimpleName());
-    private static StudentService studentService;
-    private static GroupService groupService;
+    private static final String PATH_HTML_STUDENT = "student/student";
+    private static final String PATH_HTML_STUDENTS = "student/students";
+    private static final String PATH_HTML_STUDENT_EDIT = "student/student_edit";
+    private static final String ATTRIBUTE_HTML_TITLE = "title";
+    private static final String ATTRIBUTE_HTML_STUDENT = "student";
+    private static final String ATTRIBUTE_HTML_STUDENTS = "students";
+    private static final String ATTRIBUTE_HTML_GROUPS = "groups";
+    private static final String ATTRIBUTE_HTML_ERROR_MESSAGE = "errorMessage";
+    private static final String ATTRIBUTE_HTML_SUCCESS_MESSAGE = "successMessage";
+    private StudentService studentService;
+    private GroupService groupService;
 
     @Autowired
     public StudentController(StudentService studentService, GroupService groupService) {
@@ -55,10 +64,10 @@ public class StudentController {
             errorMessage = "Something with student goes wrong!";
         }
 
-        model.addAttribute("title", "Students");
-        model.addAttribute("students", students);
-        model.addAttribute("errorMessage", errorMessage);
-        return "student/students";
+        model.addAttribute(ATTRIBUTE_HTML_TITLE, "Students");
+        model.addAttribute(ATTRIBUTE_HTML_STUDENTS, students);
+        model.addAttribute(ATTRIBUTE_HTML_ERROR_MESSAGE, errorMessage);
+        return PATH_HTML_STUDENTS;
     }
 
     @GetMapping("/student")
@@ -83,11 +92,11 @@ public class StudentController {
         } catch (NumberFormatException e) {
             errorMessage = "Student id# must be numeric!";
         }
-        model.addAttribute("title", "Student");
-        model.addAttribute("student", student);
-        model.addAttribute("groups", groups);
-        model.addAttribute("errorMessage", errorMessage);
-        return "student/student";
+        model.addAttribute(ATTRIBUTE_HTML_TITLE, "Student");
+        model.addAttribute(ATTRIBUTE_HTML_STUDENT, student);
+        model.addAttribute(ATTRIBUTE_HTML_GROUPS, groups);
+        model.addAttribute(ATTRIBUTE_HTML_ERROR_MESSAGE, errorMessage);
+        return PATH_HTML_STUDENT;
     }
 
     @GetMapping("/edit")
@@ -104,11 +113,11 @@ public class StudentController {
         }
         List<GroupDto> groups = groupService.findAllDto();
 
-        model.addAttribute("title", "Student edit");
-        model.addAttribute("student", student);
-        model.addAttribute("groups", groups);
-        model.addAttribute("errorMessage", errorMessage);
-        return "student/student_edit";
+        model.addAttribute(ATTRIBUTE_HTML_TITLE, "Student edit");
+        model.addAttribute(ATTRIBUTE_HTML_STUDENT, student);
+        model.addAttribute(ATTRIBUTE_HTML_GROUPS, groups);
+        model.addAttribute(ATTRIBUTE_HTML_ERROR_MESSAGE, errorMessage);
+        return PATH_HTML_STUDENT_EDIT;
     }
 
     @PostMapping("/edit")
@@ -117,8 +126,8 @@ public class StudentController {
         StringBuilder errorMessage = null;
         String successMessage = null;
         List<GroupDto> groups = null;
-        String path = "student/student";
-        String pathEdit = "student/student_edit";
+        String path = PATH_HTML_STUDENT;
+        String pathEdit = PATH_HTML_STUDENT_EDIT;
         Set<ConstraintViolation<StudentDto>> violations = validateStudentDto(studentDto);
         if (violations.isEmpty()) {
             try {
@@ -147,11 +156,11 @@ public class StudentController {
             groups = groupService.findAllDto();
         }
 
-        model.addAttribute("title", "Student edit");
-        model.addAttribute("student", studentDto);
-        model.addAttribute("groups", groups);
-        model.addAttribute("errorMessage", errorMessage);
-        model.addAttribute("successMessage", successMessage);
+        model.addAttribute(ATTRIBUTE_HTML_TITLE, "Student edit");
+        model.addAttribute(ATTRIBUTE_HTML_STUDENT, studentDto);
+        model.addAttribute(ATTRIBUTE_HTML_GROUPS, groups);
+        model.addAttribute(ATTRIBUTE_HTML_ERROR_MESSAGE, errorMessage);
+        model.addAttribute(ATTRIBUTE_HTML_SUCCESS_MESSAGE, successMessage);
         return path;
     }
 

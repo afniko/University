@@ -32,6 +32,14 @@ import ua.com.foxminded.task.service.GroupService;
 public class GroupController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getSimpleName());
+    private static final String PATH_HTML_GROUP = "group/group";
+    private static final String PATH_HTML_GROUPS = "group/groups";
+    private static final String PATH_HTML_GROUP_EDIT = "group/group_edit";
+    private static final String ATTRIBUTE_HTML_TITLE = "title";
+    private static final String ATTRIBUTE_HTML_GROUP = "group";
+    private static final String ATTRIBUTE_HTML_GROUPS = "groups";
+    private static final String ATTRIBUTE_HTML_ERROR_MESSAGE = "errorMessage";
+    private static final String ATTRIBUTE_HTML_SUCCESS_MESSAGE = "successMessage";
     private GroupService groupService;
 
     @Autowired
@@ -52,10 +60,10 @@ public class GroupController {
             errorMessage = "Problem with finding group";
         }
 
-        model.addAttribute("title", "Groups");
-        model.addAttribute("groups", groups);
-        model.addAttribute("errorMessage", errorMessage);
-        return "group/groups";
+        model.addAttribute(ATTRIBUTE_HTML_TITLE, "Groups");
+        model.addAttribute(ATTRIBUTE_HTML_GROUPS, groups);
+        model.addAttribute(ATTRIBUTE_HTML_ERROR_MESSAGE, errorMessage);
+        return PATH_HTML_GROUPS;
     }
 
     @GetMapping("/group")
@@ -80,10 +88,10 @@ public class GroupController {
             errorMessage = "Group id# must be numeric!";
         }
 
-        model.addAttribute("title", "Group");
-        model.addAttribute("group", group);
-        model.addAttribute("errorMessage", errorMessage);
-        return "group/group";
+        model.addAttribute(ATTRIBUTE_HTML_TITLE, "Group");
+        model.addAttribute(ATTRIBUTE_HTML_GROUP, group);
+        model.addAttribute(ATTRIBUTE_HTML_ERROR_MESSAGE, errorMessage);
+        return PATH_HTML_GROUP;
     }
 
     @GetMapping("/edit")
@@ -98,10 +106,10 @@ public class GroupController {
         } catch (NoEntityFoundException e) {
             errorMessage = "Problem with finding group";
         }
-        model.addAttribute("title", "Group edit");
-        model.addAttribute("group", group);
-        model.addAttribute("errorMessage", errorMessage);
-        return "group/group_edit";
+        model.addAttribute(ATTRIBUTE_HTML_TITLE, "Group edit");
+        model.addAttribute(ATTRIBUTE_HTML_GROUP, group);
+        model.addAttribute(ATTRIBUTE_HTML_ERROR_MESSAGE, errorMessage);
+        return PATH_HTML_GROUP_EDIT;
     }
 
     @PostMapping("/edit")
@@ -109,8 +117,8 @@ public class GroupController {
         LOGGER.debug("editPost()");
         StringBuilder errorMessage = null;
         String successMessage = null;
-        String path = "group/group";
-        String pathEdit = "group/group_edit";
+        String path = PATH_HTML_GROUP;
+        String pathEdit = PATH_HTML_GROUP_EDIT;
 
         Set<ConstraintViolation<GroupDto>> violations = validateGroupDto(groupDto);
         if (violations.isEmpty()) {
@@ -139,10 +147,10 @@ public class GroupController {
             path = pathEdit;
         }
 
-        model.addAttribute("title", "Group edit");
-        model.addAttribute("group", groupDto);
-        model.addAttribute("errorMessage", errorMessage);
-        model.addAttribute("successMessage", successMessage);
+        model.addAttribute(ATTRIBUTE_HTML_TITLE, "Group edit");
+        model.addAttribute(ATTRIBUTE_HTML_GROUP, groupDto);
+        model.addAttribute(ATTRIBUTE_HTML_ERROR_MESSAGE, errorMessage);
+        model.addAttribute(ATTRIBUTE_HTML_SUCCESS_MESSAGE, successMessage);
         return path;
     }
 
