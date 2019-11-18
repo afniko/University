@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Objects;
 
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceException;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -14,10 +15,8 @@ import javax.persistence.criteria.Root;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import ua.com.foxminded.task.dao.EntitiesManagerFactory;
 import ua.com.foxminded.task.dao.StudentDao;
 import ua.com.foxminded.task.dao.exception.EntityAlreadyExistsException;
 import ua.com.foxminded.task.dao.exception.NoEntityFoundException;
@@ -30,12 +29,14 @@ import ua.com.foxminded.task.domain.Student_;
 public class StudentDaoImpl implements StudentDao {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getSimpleName());
+    
+    @PersistenceContext
     private EntityManager entityManager;
 
-    @Autowired
-    public StudentDaoImpl(EntitiesManagerFactory entitiesManagerFactory) {
-        entityManager = entitiesManagerFactory.getEntityManager();
-    }
+//    @Autowired
+//    public StudentDaoImpl(EntitiesManagerFactory entitiesManagerFactory) {
+//        entityManager = entitiesManagerFactory.getEntityManager();
+//    }
 
     @Override
     public Student create(Student student) {

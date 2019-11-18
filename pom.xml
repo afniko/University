@@ -1,5 +1,4 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>ua.com.foxminded</groupId>
@@ -27,6 +26,7 @@
         <hibernate.core.version>5.4.7.Final</hibernate.core.version>
         <hibernate.jpamodelgen.version>5.4.7.Final</hibernate.jpamodelgen.version>
         <org.springframework.spring.webmvc.version>5.2.1.RELEASE</org.springframework.spring.webmvc.version>
+        <org.springframework.spring.orm>5.2.1.RELEASE</org.springframework.spring.orm>
         <org.thymeleaf.spring5>3.0.11.RELEASE</org.thymeleaf.spring5>
 
         <org.flywaydb.flyway.plugin.version>5.2.4</org.flywaydb.flyway.plugin.version>
@@ -165,6 +165,13 @@
             <groupId>org.springframework</groupId>
             <artifactId>spring-webmvc</artifactId>
             <version>${org.springframework.spring.webmvc.version}</version>
+        </dependency>
+
+        <!-- for spring persistence and entity manager factory -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-orm</artifactId>
+            <version>${org.springframework.spring.orm}</version>
         </dependency>
 
         <!-- thymeleaf-spring5 -->

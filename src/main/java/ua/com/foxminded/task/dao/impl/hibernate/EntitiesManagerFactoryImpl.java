@@ -8,11 +8,10 @@ import javax.persistence.Persistence;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Repository;
 
 import ua.com.foxminded.task.dao.EntitiesManagerFactory;
 
-@Repository
+
 public class EntitiesManagerFactoryImpl implements EntitiesManagerFactory {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getSimpleName());
