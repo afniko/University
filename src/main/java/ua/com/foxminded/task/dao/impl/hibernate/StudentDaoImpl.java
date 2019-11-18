@@ -16,6 +16,7 @@ import javax.persistence.criteria.Root;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import ua.com.foxminded.task.dao.StudentDao;
 import ua.com.foxminded.task.dao.exception.EntityAlreadyExistsException;
@@ -29,7 +30,7 @@ import ua.com.foxminded.task.domain.Student_;
 public class StudentDaoImpl implements StudentDao {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getSimpleName());
-    
+
     @PersistenceContext
     private EntityManager entityManager;
 
@@ -38,35 +39,37 @@ public class StudentDaoImpl implements StudentDao {
 //        entityManager = entitiesManagerFactory.getEntityManager();
 //    }
 
+    @Transactional
     @Override
     public Student create(Student student) {
         LOGGER.debug("create() [student:{}]", student);
         try {
-            entityManager.getTransaction().begin();
+//            entityManager.getTransaction().begin();
             entityManager.persist(student);
-            entityManager.getTransaction().commit();
+//            entityManager.getTransaction().commit();
         } catch (PersistenceException e) {
-            entityManager.getTransaction().rollback();
+//            entityManager.getTransaction().rollback();
             throw new EntityAlreadyExistsException("create() student: " + student, e);
         }
-        entityManager.clear();
+//        entityManager.clear();
         return student;
     }
 
+    @Transactional
     @Override
     public Student findById(int id) {
         LOGGER.debug("findById() [student id:{}]", id);
         String exceptionMessage = "findById() Student by id#" + id + " not found";
         Student student = null;
         try {
-            entityManager.getTransaction().begin();
+//            entityManager.getTransaction().begin();
             student = entityManager.find(Student.class, id);
-            entityManager.getTransaction().commit();
+//            entityManager.getTransaction().commit();
         } catch (PersistenceException e) {
-            entityManager.getTransaction().rollback();
+//            entityManager.getTransaction().rollback();
             throw new NoEntityFoundException(exceptionMessage, e);
         }
-        entityManager.clear();
+//        entityManager.clear();
         if (Objects.isNull(student)) {
             LOGGER.warn("findById() Student with id#{} not found", id);
             throw new NoEntityFoundException(exceptionMessage);
@@ -74,45 +77,48 @@ public class StudentDaoImpl implements StudentDao {
         return student;
     }
 
+    @Transactional
     @Override
     public List<Student> findAll() {
         LOGGER.debug("findAll()");
         List<Student> students = null;
-        entityManager.getTransaction().begin();
+//        entityManager.getTransaction().begin();
         students = entityManager.createQuery("from Student", Student.class).getResultList();
-        entityManager.getTransaction().commit();
-        entityManager.clear();
+//        entityManager.getTransaction().commit();
+//        entityManager.clear();
         return students;
     }
 
+    @Transactional
     @Override
     public List<Student> findByGroupId(int id) {
         LOGGER.debug("findByGroupId() [id:{}]", id);
         List<Student> students = null;
-        entityManager.getTransaction().begin();
+//        entityManager.getTransaction().begin();
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
         CriteriaQuery<Student> studentCriteriaQuery = criteriaBuilder.createQuery(Student.class);
         Root<Student> studentRoot = studentCriteriaQuery.from(Student.class);
         Join<Student, Group> groupJoin = studentRoot.join(Student_.group, JoinType.LEFT);
         studentCriteriaQuery.select(studentRoot).where(criteriaBuilder.equal(groupJoin.get(Group_.id), id));
         students = entityManager.createQuery(studentCriteriaQuery).getResultList();
-        entityManager.getTransaction().commit();
-        entityManager.clear();
+//        entityManager.getTransaction().commit();
+//        entityManager.clear();
         return students;
     }
 
+    @Transactional
     @Override
     public Student update(Student student) {
         LOGGER.debug("update() [student:{}]", student);
         try {
-            entityManager.getTransaction().begin();
+//            entityManager.getTransaction().begin();
             entityManager.merge(student);
-            entityManager.getTransaction().commit();
+//            entityManager.getTransaction().commit();
         } catch (PersistenceException e) {
-            entityManager.getTransaction().rollback();
+//            entityManager.getTransaction().rollback();
             throw new EntityAlreadyExistsException("update() student: " + student, e);
         }
-        entityManager.clear();
+//        entityManager.clear();
         return student;
     }
 }

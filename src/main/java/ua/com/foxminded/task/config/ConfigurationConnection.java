@@ -5,6 +5,7 @@ import java.util.Properties;
 
 import javax.annotation.Resource;
 import javax.naming.NamingException;
+import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 
 import org.hibernate.jpa.HibernatePersistenceProvider;
@@ -16,11 +17,15 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.jndi.JndiTemplate;
+import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.JpaVendorAdapter;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
+@EnableTransactionManagement
 @ComponentScan("ua.com.foxminded.task")
 @PropertySource("classpath:application.properties")
 public class ConfigurationConnection {
@@ -33,7 +38,7 @@ public class ConfigurationConnection {
     @Bean
     public DataSource dataSource() throws NamingException {
         LOGGER.info("ConfigurationConnection getDataSource()");
-        return (DataSource) new JndiTemplate().lookup(env.getProperty("ds.name.context"));
+        return (DataSource) new JndiTemplate().lookup(env.getRequiredProperty("ds.name.context"));
     }
 
     @Bean
@@ -47,18 +52,18 @@ public class ConfigurationConnection {
 
         return entityManagerFactoryBean;
     }
-    
+
     @Bean
     public JpaVendorAdapter jpaVendorAdapter() {
         return new HibernateJpaVendorAdapter();
     }
-    
-//    @Bean
-//    public PlatformTransactionManager transactionManager(EntityManagerFactory emf) {
-//        JpaTransactionManager transactionManager = new JpaTransactionManager();
-//        transactionManager.setEntityManagerFactory(emf);
-//        return transactionManager;
-//    }
+
+    @Bean
+    public PlatformTransactionManager transactionManager(EntityManagerFactory emf) {
+        JpaTransactionManager transactionManager = new JpaTransactionManager();
+        transactionManager.setEntityManagerFactory(emf);
+        return transactionManager;
+    }
 
     private Properties getHibernateProperties() {
         Properties properties = new Properties();
