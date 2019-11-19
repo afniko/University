@@ -19,7 +19,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import ua.com.foxminded.task.dao.exception.EntityAlreadyExistsException;
@@ -31,7 +30,6 @@ import ua.com.foxminded.task.service.GroupService;
 import ua.com.foxminded.task.service.StudentService;
 
 @Controller
-@RequestMapping("/student")
 public class StudentController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getSimpleName());
@@ -99,7 +97,7 @@ public class StudentController {
         return PATH_HTML_STUDENT;
     }
 
-    @GetMapping("/edit")
+    @GetMapping("/student/edit")
     public String editGet(@RequestParam(name = "id", required = false) String id, Model model) {
         LOGGER.debug("editGet(), id: {}", id);
         String errorMessage = null;
@@ -120,7 +118,7 @@ public class StudentController {
         return PATH_HTML_STUDENT_EDIT;
     }
 
-    @PostMapping("/edit")
+    @PostMapping("/student/edit")
     public String editPost(@ModelAttribute("studentDto") StudentDto studentDto, BindingResult bindingResult, Model model) {
         LOGGER.debug("editPost()");
         StringBuilder errorMessage = null;

@@ -18,7 +18,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import ua.com.foxminded.task.dao.exception.EntityAlreadyExistsException;
@@ -28,7 +27,6 @@ import ua.com.foxminded.task.domain.dto.GroupDto;
 import ua.com.foxminded.task.service.GroupService;
 
 @Controller
-@RequestMapping("/group")
 public class GroupController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getSimpleName());
@@ -94,7 +92,7 @@ public class GroupController {
         return PATH_HTML_GROUP;
     }
 
-    @GetMapping("/edit")
+    @GetMapping("/group/edit")
     public String editGet(@RequestParam(name = "id", required = false) String id, Model model) {
         LOGGER.debug("editGet(), id: {}", id);
         String errorMessage = null;
@@ -112,7 +110,7 @@ public class GroupController {
         return PATH_HTML_GROUP_EDIT;
     }
 
-    @PostMapping("/edit")
+    @PostMapping("/group/edit")
     public String editPost(@ModelAttribute("groupDto") GroupDto groupDto, Model model) {
         LOGGER.debug("editPost()");
         StringBuilder errorMessage = null;
