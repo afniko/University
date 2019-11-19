@@ -38,7 +38,6 @@ public class StudentDaoImpl implements StudentDao {
 //    public StudentDaoImpl(EntitiesManagerFactory entitiesManagerFactory) {
 //        entityManager = entitiesManagerFactory.getEntityManager();
 //    }
-
     @Transactional
     @Override
     public Student create(Student student) {
