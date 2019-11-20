@@ -91,8 +91,9 @@ public class StudentDaoImpl implements StudentDao {
     @Override
     public Student update(Student student) {
         LOGGER.debug("update() [student:{}]", student);
+        entityManager.merge(student);
         try {
-            entityManager.merge(student);
+            entityManager.flush();
         } catch (PersistenceException e) {
             throw new EntityAlreadyExistsException("update() student: " + student, e);
         }

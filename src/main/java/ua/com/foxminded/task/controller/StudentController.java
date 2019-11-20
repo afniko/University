@@ -97,7 +97,7 @@ public class StudentController {
         return PATH_HTML_STUDENT;
     }
 
-    @GetMapping("/student/edit")
+    @GetMapping("/student_edit")
     public String editGet(@RequestParam(name = "id", required = false) String id, Model model) {
         LOGGER.debug("editGet(), id: {}", id);
         String errorMessage = null;
@@ -118,7 +118,7 @@ public class StudentController {
         return PATH_HTML_STUDENT_EDIT;
     }
 
-    @PostMapping("/student/edit")
+    @PostMapping("/student_edit")
     public String editPost(@ModelAttribute("studentDto") StudentDto studentDto, BindingResult bindingResult, Model model) {
         LOGGER.debug("editPost()");
         StringBuilder errorMessage = null;

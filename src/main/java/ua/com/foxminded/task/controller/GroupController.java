@@ -92,7 +92,7 @@ public class GroupController {
         return PATH_HTML_GROUP;
     }
 
-    @GetMapping("/group/edit")
+    @GetMapping("/group_edit")
     public String editGet(@RequestParam(name = "id", required = false) String id, Model model) {
         LOGGER.debug("editGet(), id: {}", id);
         String errorMessage = null;
@@ -110,7 +110,7 @@ public class GroupController {
         return PATH_HTML_GROUP_EDIT;
     }
 
-    @PostMapping("/group/edit")
+    @PostMapping("/group_edit")
     public String editPost(@ModelAttribute("groupDto") GroupDto groupDto, Model model) {
         LOGGER.debug("editPost()");
         StringBuilder errorMessage = null;

@@ -2,9 +2,9 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <script>
-    function rowClicked(value) {
-        location.href = "group/edit?id=" + value;
-    }
+	function buttonClicked(value) {
+		location.href = "group_edit?id=" + value;
+	}
 </script>
 </head>
 <body>
@@ -17,8 +17,7 @@
         </th:block>
         <th:block th:if="${group != null}">
             <th:block th:if="${successMessage != null}">
-                <div class="alert alert-success"
-                    th:text="${successMessage}">Success</div>
+                <div class="alert alert-success" th:text="${successMessage}">Success</div>
                 <br />
             </th:block>
             <table class="table table-bordered">
@@ -31,14 +30,11 @@
                     <td th:text="${group.yearEntry}">Year of entry</td>
                 </tr>
             </table>
-            <button type="button" class="btn btn-info"
-                th:onclick="'javascript:rowClicked(\'' + ${group.id} + '\');'">Edit
-                record</button>
+            <button type="button" class="btn btn-info" th:onclick="'javascript:buttonClicked(\'' + ${group.id} + '\');'">Edit record</button>
         </th:block>
     </div>
     <br />
 
-    <div th:insert="fragments/footer">&copy;2019 University
-        project</div>
+    <div th:insert="fragments/footer">&copy;2019 University project</div>
 </body>
 </html>

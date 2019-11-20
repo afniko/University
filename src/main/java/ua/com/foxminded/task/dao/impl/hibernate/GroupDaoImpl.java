@@ -11,7 +11,6 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
-import org.hibernate.JDBCException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
@@ -77,9 +76,10 @@ public class GroupDaoImpl implements GroupDao {
     @Override
     public Group update(Group group) {
         LOGGER.debug("update() [group:{}]", group);
+        entityManager.merge(group);
         try {
-            entityManager.merge(group);
-        } catch (JDBCException e) {
+            entityManager.flush();
+        } catch (PersistenceException e) {
             throw new EntityAlreadyExistsException("update() group: " + group, e);
         }
         return group;

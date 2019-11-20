@@ -2,8 +2,8 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <script>
-	function rowClicked(value) {
-		location.href = "student/edit?id=" + value;
+	function buttonClicked(value) {
+		location.href = "student_edit?id=" + value;
 	}
 </script>
 </head>
@@ -46,7 +46,7 @@
                     <td th:text=${student.groupTitle}></td>
                 </tr>
             </table>
-            <button type="button" class="btn btn-info" th:onclick="'javascript:rowClicked(\'' + ${student.id} + '\');'">Edit record</button>
+            <button type="button" class="btn btn-info" th:onclick="'javascript:buttonClicked(\'' + ${student.id} + '\');'">Edit record</button>
         </th:block>
     </div>
 
