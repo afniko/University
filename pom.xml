@@ -12,6 +12,7 @@
         <junit.platform.runner.version>1.4.2</junit.platform.runner.version>
         <junit.jupiter.engine.version>5.1.0</junit.jupiter.engine.version>
         <mockito.junit.jupiter.version>2.25.1</mockito.junit.jupiter.version>
+        <org.springframework.spring.test>5.2.1.RELEASE</org.springframework.spring.test>
         <commons.lang3.version>3.8.1</commons.lang3.version>
         <org.flywaydb.flyway.core.version>5.2.4</org.flywaydb.flyway.core.version>
         <slf4j.api.version>1.7.25</slf4j.api.version>
@@ -70,6 +71,14 @@
             <groupId>org.mockito</groupId>
             <artifactId>mockito-junit-jupiter</artifactId>
             <version>${mockito.junit.jupiter.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- spring-test -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+            <version>${org.springframework.spring.test}</version>
             <scope>test</scope>
         </dependency>
 
