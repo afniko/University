@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class MainController {
 
     @GetMapping
-    public String tindex(Model model) {
+    public String main(Model model) {
         model.addAttribute("title", "Thymeleaf+SpringMVC University");
         return "main";
     }

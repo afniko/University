@@ -28,11 +28,16 @@ public class MainControllerTest {
     }
 
     @Test
-    void getAccount() throws Exception {
-        MvcResult result = this.mockMvc.perform(get("/")).andExpect(status().isOk()).andDo(print()).andExpect(view().name("main")).andReturn();
+    void whenRetriveHttpRequestSlash_thenExpectViewNameMainWithAttribute() throws Exception {
+        String expectedViewName = "main";
+        MvcResult mvcResult = this.mockMvc.perform(get("/"))
+                .andExpect(status().isOk())
+                .andDo(print())
+                .andExpect(view().name(expectedViewName))
+                .andReturn();
         String expectedTitle = "Thymeleaf+SpringMVC University";
-        String actuallyTitle = result.getRequest().getAttribute("title").toString();
-        Assert.assertEquals(actuallyTitle, expectedTitle);
+        String actuallyTitle = mvcResult.getRequest().getAttribute("title").toString();
+        Assert.assertEquals(expectedTitle, actuallyTitle);
     }
 
 }
