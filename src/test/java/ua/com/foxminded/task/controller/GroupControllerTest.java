@@ -1,6 +1,7 @@
 package ua.com.foxminded.task.controller;
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -12,7 +13,6 @@ import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit.jupiter.web.SpringJUnitWebConfig;
 import org.springframework.test.web.servlet.MockMvc;
@@ -37,10 +37,9 @@ public class GroupControllerTest {
     private static final String ATTRIBUTE_HTML_TITLE = "title";
     private static final String ATTRIBUTE_HTML_GROUP = "group";
     private static final String ATTRIBUTE_HTML_GROUPS = "groups";
-    private static final String ATTRIBUTE_HTML_ERROR_MESSAGE = "errorMessage";
     private static final String ATTRIBUTE_HTML_SUCCESS_MESSAGE = "successMessage";
 
-    private GroupService groupService = Mockito.mock(GroupServiceImpl.class);
+    private GroupService groupService = mock(GroupServiceImpl.class);
     private GroupController groupController = new GroupController(groupService);
 
     @BeforeEach
