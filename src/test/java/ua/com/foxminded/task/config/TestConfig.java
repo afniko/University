@@ -28,10 +28,10 @@ public class TestConfig {
     @Bean
     public DataSource dataSource() throws NamingException {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
-        dataSource.setDriverClassName(env.getProperty("ds.db.driver"));
-        dataSource.setUrl(env.getProperty("ds.db.url"));
-        dataSource.setUsername(env.getProperty("ds.db.user"));
-        dataSource.setPassword(env.getProperty("ds.db.password"));
+        dataSource.setDriverClassName(env.getProperty("db.driver"));
+        dataSource.setUrl(env.getProperty("db.url"));
+        dataSource.setUsername(env.getProperty("db.user"));
+        dataSource.setPassword(env.getProperty("db.password"));
         return dataSource;
     }
     

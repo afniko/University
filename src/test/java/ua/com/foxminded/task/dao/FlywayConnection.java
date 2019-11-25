@@ -11,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class FlywayConnection {
+
     private static final String APPLICATION_PROPERTIES_FILE = "application.properties";
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getSimpleName());
     private Properties properties;
