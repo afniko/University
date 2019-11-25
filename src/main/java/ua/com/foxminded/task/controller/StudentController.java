@@ -1,6 +1,5 @@
 package ua.com.foxminded.task.controller;
 
-import java.lang.invoke.MethodHandles;
 import java.util.List;
 import java.util.Set;
 
@@ -11,7 +10,6 @@ import javax.validation.ValidatorFactory;
 
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -32,7 +30,8 @@ import ua.com.foxminded.task.service.StudentService;
 @Controller
 public class StudentController {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getSimpleName());
+    @Autowired
+    private Logger logger;
     private static final String PATH_HTML_STUDENT = "student/student";
     private static final String PATH_HTML_STUDENTS = "student/students";
     private static final String PATH_HTML_STUDENT_EDIT = "student/student_edit";
@@ -53,7 +52,7 @@ public class StudentController {
 
     @GetMapping("/students")
     public String students(Model model) {
-        LOGGER.debug("students()");
+        logger.debug("students()");
         String errorMessage = null;
         List<StudentDto> students = null;
         try {
@@ -70,7 +69,7 @@ public class StudentController {
 
     @GetMapping("/student")
     public String student(@RequestParam("id") String idString, Model model) {
-        LOGGER.debug("student()");
+        logger.debug("student()");
         String errorMessage = null;
         StudentDto student = null;
         List<GroupDto> groups = null;
@@ -99,7 +98,7 @@ public class StudentController {
 
     @GetMapping("/student_edit")
     public String editGet(@RequestParam(name = "id", required = false) String id, Model model) {
-        LOGGER.debug("editGet(), id: {}", id);
+        logger.debug("editGet(), id: {}", id);
         String errorMessage = null;
         StudentDto student = new StudentDto();
         try {
@@ -120,7 +119,7 @@ public class StudentController {
 
     @PostMapping("/student_edit")
     public String editPost(@ModelAttribute("studentDto") StudentDto studentDto, BindingResult bindingResult, Model model) {
-        LOGGER.debug("editPost()");
+        logger.debug("editPost()");
         StringBuilder errorMessage = null;
         String successMessage = null;
         List<GroupDto> groups = null;
@@ -163,7 +162,7 @@ public class StudentController {
     }
 
     private Set<ConstraintViolation<StudentDto>> validateStudentDto(StudentDto studentDto) {
-        LOGGER.debug("validateStudentDto()");
+        logger.debug("validateStudentDto()");
         ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
         Validator validator = factory.getValidator();
         Set<ConstraintViolation<StudentDto>> violations = validator.validate(studentDto);

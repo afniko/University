@@ -1,6 +1,5 @@
 package ua.com.foxminded.task.config;
 
-import java.lang.invoke.MethodHandles;
 import java.util.Properties;
 
 import javax.annotation.Resource;
@@ -10,7 +9,7 @@ import javax.sql.DataSource;
 
 import org.hibernate.jpa.HibernatePersistenceProvider;
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -30,14 +29,15 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @PropertySource("classpath:application.properties")
 public class DataConfig {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getSimpleName());
+    @Autowired
+    private Logger logger;
 
     @Resource
     private Environment env;
 
     @Bean
     public DataSource dataSource() throws NamingException {
-        LOGGER.info("ConfigurationConnection getDataSource()");
+        logger.info("ConfigurationConnection getDataSource()");
         return (DataSource) new JndiTemplate().lookup(env.getRequiredProperty("ds.name.context"));
     }
 
@@ -78,5 +78,10 @@ public class DataConfig {
 
         return properties;
     }
-
+//  @Bean
+//  @Scope("prototype")
+//  public Logger produceLogger(InjectionPoint injectionPoint) {
+//      Class<?> classOnWired = injectionPoint.getMember().getDeclaringClass();
+//      return LoggerFactory.getLogger(classOnWired);
+//  }
 }

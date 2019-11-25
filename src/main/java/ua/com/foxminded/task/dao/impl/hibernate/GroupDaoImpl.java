@@ -1,6 +1,5 @@
 package ua.com.foxminded.task.dao.impl.hibernate;
 
-import java.lang.invoke.MethodHandles;
 import java.util.List;
 import java.util.Objects;
 
@@ -12,7 +11,7 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,7 +23,8 @@ import ua.com.foxminded.task.domain.Group;
 @Repository
 public class GroupDaoImpl implements GroupDao {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getSimpleName());
+    @Autowired
+    private Logger logger;
 
     @PersistenceContext
     private EntityManager entityManager;
@@ -32,7 +32,7 @@ public class GroupDaoImpl implements GroupDao {
     @Transactional
     @Override
     public Group create(Group group) {
-        LOGGER.debug("create() [group:{}]", group);
+        logger.debug("create() [group:{}]", group);
         try {
             entityManager.persist(group);
         } catch (PersistenceException e) {
@@ -44,7 +44,7 @@ public class GroupDaoImpl implements GroupDao {
     @Transactional
     @Override
     public Group findById(int id) {
-        LOGGER.debug("findById() [id:{}]", id);
+        logger.debug("findById() [id:{}]", id);
         String exceptionMessage = "findById() Group by id#" + id + " not found";
         Group group = null;
         try {
@@ -53,7 +53,7 @@ public class GroupDaoImpl implements GroupDao {
             throw new NoEntityFoundException(exceptionMessage, e);
         }
         if (Objects.isNull(group)) {
-            LOGGER.warn("findById() Group with id#{} not found", id);
+            logger.warn("findById() Group with id#{} not found", id);
             throw new NoEntityFoundException(exceptionMessage);
         }
         return group;
@@ -62,7 +62,7 @@ public class GroupDaoImpl implements GroupDao {
     @Transactional
     @Override
     public List<Group> findAll() {
-        LOGGER.debug("findAll()");
+        logger.debug("findAll()");
         List<Group> groups = null;
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
         CriteriaQuery<Group> groupCriteriaQuery = criteriaBuilder.createQuery(Group.class);
@@ -75,7 +75,7 @@ public class GroupDaoImpl implements GroupDao {
     @Transactional
     @Override
     public Group update(Group group) {
-        LOGGER.debug("update() [group:{}]", group);
+        logger.debug("update() [group:{}]", group);
         entityManager.merge(group);
         try {
             entityManager.flush();
@@ -83,13 +83,6 @@ public class GroupDaoImpl implements GroupDao {
             throw new EntityAlreadyExistsException("update() group: " + group, e);
         }
         return group;
-    }
-
-    @Override
-    public List<Group> findByDepartmentId(int id) {
-        LOGGER.debug("findByDepartmentId() [id:{}]", id);
-        // TODO
-        return null;
     }
 
 }

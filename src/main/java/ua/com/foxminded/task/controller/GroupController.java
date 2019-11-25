@@ -1,6 +1,5 @@
 package ua.com.foxminded.task.controller;
 
-import java.lang.invoke.MethodHandles;
 import java.util.List;
 import java.util.Set;
 
@@ -11,7 +10,6 @@ import javax.validation.ValidatorFactory;
 
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -29,7 +27,9 @@ import ua.com.foxminded.task.service.GroupService;
 @Controller
 public class GroupController {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getSimpleName());
+    @Autowired
+    private Logger logger;
+    
     private static final String PATH_HTML_GROUP = "group/group";
     private static final String PATH_HTML_GROUPS = "group/groups";
     private static final String PATH_HTML_GROUP_EDIT = "group/group_edit";
@@ -45,9 +45,15 @@ public class GroupController {
         this.groupService = groupService;
     }
 
+    private GroupController(Logger logger, GroupService groupService) {
+        this.logger = logger;
+        this.groupService = groupService;
+    }
+
+
     @GetMapping("/groups")
     public String groups(Model model) {
-        LOGGER.debug("groups()");
+        logger.debug("groups()");
         String errorMessage = null;
         List<GroupDto> groups = null;
         try {
@@ -66,7 +72,7 @@ public class GroupController {
 
     @GetMapping("/group")
     public String group(@RequestParam("id") String idString, Model model) {
-        LOGGER.debug("group()");
+        logger.debug("group()");
         String errorMessage = null;
         GroupDto group = null;
 
@@ -94,7 +100,7 @@ public class GroupController {
 
     @GetMapping("/group_edit")
     public String editGet(@RequestParam(name = "id", required = false) String id, Model model) {
-        LOGGER.debug("editGet(), id: {}", id);
+        logger.debug("editGet(), id: {}", id);
         String errorMessage = null;
         GroupDto group = new GroupDto();
         try {
@@ -112,7 +118,7 @@ public class GroupController {
 
     @PostMapping("/group_edit")
     public String editPost(@ModelAttribute("groupDto") GroupDto groupDto, Model model) {
-        LOGGER.debug("editPost()");
+        logger.debug("editPost()");
         StringBuilder errorMessage = null;
         String successMessage = null;
         String path = PATH_HTML_GROUP;
@@ -153,7 +159,7 @@ public class GroupController {
     }
 
     private Set<ConstraintViolation<GroupDto>> validateGroupDto(GroupDto groupDto) {
-        LOGGER.debug("validateGroupDto()");
+        logger.debug("validateGroupDto()");
         ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
         Validator validator = factory.getValidator();
         Set<ConstraintViolation<GroupDto>> violations = validator.validate(groupDto);

@@ -3,12 +3,10 @@ package ua.com.foxminded.task.service.impl;
 import static java.util.Objects.nonNull;
 import static org.apache.commons.lang3.StringUtils.isNoneBlank;
 
-import java.lang.invoke.MethodHandles;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,9 +20,12 @@ import ua.com.foxminded.task.service.converter.ConverterToDtoService;
 
 @Service
 public class StudentServiceImpl implements StudentService {
+
     private StudentDao studentDao;
     private GroupDao groupDao;
-    private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getSimpleName());
+
+    @Autowired
+    private Logger logger;
 
     @Autowired
     public StudentServiceImpl(StudentDao studentDao, GroupDao groupDao) {
@@ -34,20 +35,20 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public StudentDto findByIdDto(int id) {
-        LOGGER.debug("findByIdDto() [id:{}]", id);
+        logger.debug("findByIdDto() [id:{}]", id);
         Student student = studentDao.findById(id);
         return ConverterToDtoService.convert(student);
     }
 
     @Override
     public List<StudentDto> findAllDto() {
-        LOGGER.debug("findAllDto()");
+        logger.debug("findAllDto()");
         return studentDao.findAll().stream().map(ConverterToDtoService::convert).collect(Collectors.toList());
     }
 
     @Override
     public StudentDto create(StudentDto studentDto) {
-        LOGGER.debug("create() [studentDto:{}]", studentDto);
+        logger.debug("create() [studentDto:{}]", studentDto);
         Student student = retriveStudentFromDto(studentDto);
         Student studentResult = studentDao.create(student);
         return ConverterToDtoService.convert(studentResult);
@@ -55,7 +56,7 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public StudentDto update(StudentDto studentDto) {
-        LOGGER.debug("update() [studentDto:{}]", studentDto);
+        logger.debug("update() [studentDto:{}]", studentDto);
         Student student = retriveStudentFromDto(studentDto);
 
         Student studenUpdated = studentDao.update(student);

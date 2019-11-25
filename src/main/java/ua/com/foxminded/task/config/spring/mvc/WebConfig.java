@@ -1,10 +1,14 @@
 package ua.com.foxminded.task.config.spring.mvc;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.InjectionPoint;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Scope;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -43,4 +47,17 @@ public class WebConfig implements WebMvcConfigurer {
         return viewResolver;
     }
 
+    @Bean
+    @Scope("prototype")
+    public Logger produceLogger(InjectionPoint injectionPoint) {
+        Class<?> classOnWired = injectionPoint.getMember().getDeclaringClass();
+        return LoggerFactory.getLogger(classOnWired);
+    }
+    
+//    @Bean
+//    @Scope("prototype")
+//    public Logger produceLogger() {
+////        Class<?> classOnWired = injectionPoint.getMember().getDeclaringClass();
+//        return LoggerFactory.getLogger(GroupController.class);
+//    }
 }

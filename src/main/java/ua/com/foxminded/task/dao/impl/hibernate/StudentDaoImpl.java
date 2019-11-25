@@ -1,6 +1,5 @@
 package ua.com.foxminded.task.dao.impl.hibernate;
 
-import java.lang.invoke.MethodHandles;
 import java.util.List;
 import java.util.Objects;
 
@@ -14,7 +13,7 @@ import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Root;
 
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -29,7 +28,8 @@ import ua.com.foxminded.task.domain.Student_;
 @Repository
 public class StudentDaoImpl implements StudentDao {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getSimpleName());
+    @Autowired
+    private Logger logger;
 
     @PersistenceContext
     private EntityManager entityManager;
@@ -37,7 +37,7 @@ public class StudentDaoImpl implements StudentDao {
     @Transactional
     @Override
     public Student create(Student student) {
-        LOGGER.debug("create() [student:{}]", student);
+        logger.debug("create() [student:{}]", student);
         try {
             entityManager.persist(student);
         } catch (PersistenceException e) {
@@ -49,7 +49,7 @@ public class StudentDaoImpl implements StudentDao {
     @Transactional
     @Override
     public Student findById(int id) {
-        LOGGER.debug("findById() [student id:{}]", id);
+        logger.debug("findById() [student id:{}]", id);
         String exceptionMessage = "findById() Student by id#" + id + " not found";
         Student student = null;
         try {
@@ -58,7 +58,7 @@ public class StudentDaoImpl implements StudentDao {
             throw new NoEntityFoundException(exceptionMessage, e);
         }
         if (Objects.isNull(student)) {
-            LOGGER.warn("findById() Student with id#{} not found", id);
+            logger.warn("findById() Student with id#{} not found", id);
             throw new NoEntityFoundException(exceptionMessage);
         }
         return student;
@@ -67,7 +67,7 @@ public class StudentDaoImpl implements StudentDao {
     @Transactional
     @Override
     public List<Student> findAll() {
-        LOGGER.debug("findAll()");
+        logger.debug("findAll()");
         List<Student> students = null;
         students = entityManager.createQuery("from Student", Student.class).getResultList();
         return students;
@@ -76,7 +76,7 @@ public class StudentDaoImpl implements StudentDao {
     @Transactional
     @Override
     public List<Student> findByGroupId(int id) {
-        LOGGER.debug("findByGroupId() [id:{}]", id);
+        logger.debug("findByGroupId() [id:{}]", id);
         List<Student> students = null;
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
         CriteriaQuery<Student> studentCriteriaQuery = criteriaBuilder.createQuery(Student.class);
@@ -90,7 +90,7 @@ public class StudentDaoImpl implements StudentDao {
     @Transactional
     @Override
     public Student update(Student student) {
-        LOGGER.debug("update() [student:{}]", student);
+        logger.debug("update() [student:{}]", student);
         entityManager.merge(student);
         try {
             entityManager.flush();
