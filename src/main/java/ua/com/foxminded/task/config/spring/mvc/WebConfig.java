@@ -53,11 +53,4 @@ public class WebConfig implements WebMvcConfigurer {
         Class<?> classOnWired = injectionPoint.getMember().getDeclaringClass();
         return LoggerFactory.getLogger(classOnWired);
     }
-    
-//    @Bean
-//    @Scope("prototype")
-//    public Logger produceLogger() {
-////        Class<?> classOnWired = injectionPoint.getMember().getDeclaringClass();
-//        return LoggerFactory.getLogger(GroupController.class);
-//    }
 }

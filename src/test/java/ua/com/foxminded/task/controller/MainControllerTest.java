@@ -7,11 +7,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import org.junit.Assert;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.test.context.junit.jupiter.web.SpringJUnitWebConfig;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.web.context.WebApplicationContext;
 
 import ua.com.foxminded.task.config.TestConfig;
 import ua.com.foxminded.task.config.spring.mvc.WebConfig;
@@ -20,13 +22,15 @@ import ua.com.foxminded.task.config.spring.mvc.WebConfig;
 public class MainControllerTest {
 
     private MockMvc mockMvc;
+    private Logger logger = LoggerFactory.getLogger(StudentController.class);
+    private MainController mainController = new MainController(logger);
 
     @BeforeEach
-    public void setup(WebApplicationContext wac) {
-        this.mockMvc = MockMvcBuilders.webAppContextSetup(wac).build();
+    public void setup() {
+        this.mockMvc = MockMvcBuilders.standaloneSetup(mainController).build();
     }
 
-//    @Test
+    @Test
     void whenRetriveHttpRequestSlash_thenExpectViewNameMainWithAttribute() throws Exception {
         String expectedViewName = "main";
         MvcResult mvcResult = this.mockMvc.perform(get("/"))

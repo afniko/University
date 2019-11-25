@@ -23,12 +23,11 @@ public class StudentServiceImpl implements StudentService {
 
     private StudentDao studentDao;
     private GroupDao groupDao;
-
-    @Autowired
     private Logger logger;
 
     @Autowired
-    public StudentServiceImpl(StudentDao studentDao, GroupDao groupDao) {
+    public StudentServiceImpl(Logger logger, StudentDao studentDao, GroupDao groupDao) {
+        this.logger = logger;
         this.studentDao = studentDao;
         this.groupDao = groupDao;
     }

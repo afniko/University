@@ -12,6 +12,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit.jupiter.web.SpringJUnitWebConfig;
 import org.springframework.test.web.servlet.MockMvc;
@@ -43,16 +46,17 @@ public class StudentControllerTest {
     private static final String ATTRIBUTE_HTML_GROUPS = "groups";
     private static final String ATTRIBUTE_HTML_SUCCESS_MESSAGE = "successMessage";
 
+    private Logger logger = LoggerFactory.getLogger(StudentController.class);
     private StudentService studentService = mock(StudentServiceImpl.class);
     private GroupService groupService = mock(GroupServiceImpl.class);
-    private StudentController studentController = new StudentController(studentService, groupService);
+    private StudentController studentController = new StudentController(logger, studentService, groupService);
 
     @BeforeEach
     public void setup() {
         this.mockMvc = MockMvcBuilders.standaloneSetup(studentController).build();
     }
 
-//    @Test
+    @Test
     void whenRetriveHttpGetRequestStudents_thenExpectViewNameStudentsWithAttribute() throws Exception {
         List<StudentDto> students = StudentDtoModelRepository.getModels();
         when(studentService.findAllDto()).thenReturn(students);
@@ -69,7 +73,7 @@ public class StudentControllerTest {
         assertEquals(students, actuallyStudents);
     }
     
-//    @Test
+    @Test
     void whenRetriveHttpGetRequestStudent_thenExpectViewNameStudentWithAttribute() throws Exception {
         StudentDto studentDto = StudentDtoModelRepository.getModel1();
         List<GroupDto> groups = GroupDtoModelRepository.getModels();
@@ -90,7 +94,7 @@ public class StudentControllerTest {
         assertEquals(studentDto, actuallyStudent);
     }
     
-//    @Test
+    @Test
     void whenRetriveHttpGetRequestStudentEdit_thenExpectViewNameStudenteditWithAttribute() throws Exception {
         StudentDto studentDto = StudentDtoModelRepository.getModel1();
         List<GroupDto> groups = GroupDtoModelRepository.getModels();
@@ -113,7 +117,7 @@ public class StudentControllerTest {
         assertEquals(groups, actuallyGroups);
     }
     
-//    @Test
+    @Test
     void whenRetriveHttpPostRequestStudentEditAndStudentWithId_thenExpectViewNameStudenteditWithAttribute() throws Exception {
         StudentDto studentDto = StudentDtoModelRepository.getModel1();
         studentDto.setId(1);
@@ -134,7 +138,7 @@ public class StudentControllerTest {
         assertEquals(actuallySuccessMessage, expectedSuccessMessage);
     }
     
-//    @Test
+    @Test
     void whenRetriveHttpPostRequestStudentEditAndStudentWithoutId_thenExpectViewNameStudenteditWithAttribute() throws Exception {
         StudentDto studentDto = StudentDtoModelRepository.getModel1();
         String httpRequest = "/student_edit";

@@ -30,8 +30,6 @@ import ua.com.foxminded.task.service.StudentService;
 @Controller
 public class StudentController {
 
-    @Autowired
-    private Logger logger;
     private static final String PATH_HTML_STUDENT = "student/student";
     private static final String PATH_HTML_STUDENTS = "student/students";
     private static final String PATH_HTML_STUDENT_EDIT = "student/student_edit";
@@ -41,11 +39,13 @@ public class StudentController {
     private static final String ATTRIBUTE_HTML_GROUPS = "groups";
     private static final String ATTRIBUTE_HTML_ERROR_MESSAGE = "errorMessage";
     private static final String ATTRIBUTE_HTML_SUCCESS_MESSAGE = "successMessage";
+    private Logger logger;
     private StudentService studentService;
     private GroupService groupService;
 
     @Autowired
-    public StudentController(StudentService studentService, GroupService groupService) {
+    public StudentController(Logger logger, StudentService studentService, GroupService groupService) {
+        this.logger = logger;
         this.studentService = studentService;
         this.groupService = groupService;
     }

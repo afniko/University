@@ -11,8 +11,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/")
 public class MainController {
 
-    @Autowired
     private Logger logger;
+
+    @Autowired
+    public MainController(Logger logger) {
+        this.logger = logger;
+    }
 
     @GetMapping
     public String main(Model model) {

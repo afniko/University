@@ -27,9 +27,6 @@ import ua.com.foxminded.task.service.GroupService;
 @Controller
 public class GroupController {
 
-    @Autowired
-    private Logger logger;
-    
     private static final String PATH_HTML_GROUP = "group/group";
     private static final String PATH_HTML_GROUPS = "group/groups";
     private static final String PATH_HTML_GROUP_EDIT = "group/group_edit";
@@ -39,17 +36,13 @@ public class GroupController {
     private static final String ATTRIBUTE_HTML_ERROR_MESSAGE = "errorMessage";
     private static final String ATTRIBUTE_HTML_SUCCESS_MESSAGE = "successMessage";
     private GroupService groupService;
+    private Logger logger;
 
     @Autowired
-    public GroupController(GroupService groupService) {
-        this.groupService = groupService;
-    }
-
-    private GroupController(Logger logger, GroupService groupService) {
+    public GroupController(Logger logger, GroupService groupService) {
         this.logger = logger;
         this.groupService = groupService;
     }
-
 
     @GetMapping("/groups")
     public String groups(Model model) {

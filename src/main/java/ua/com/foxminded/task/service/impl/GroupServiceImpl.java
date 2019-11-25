@@ -17,12 +17,11 @@ import ua.com.foxminded.task.service.converter.ConverterToDtoService;
 public class GroupServiceImpl implements GroupService {
 
     private GroupDao groupDao;
-
-    @Autowired
     private Logger logger;
 
     @Autowired
-    public GroupServiceImpl(GroupDao groupDao) {
+    public GroupServiceImpl(Logger logger, GroupDao groupDao) {
+        this.logger = logger;
         this.groupDao = groupDao;
     }
 

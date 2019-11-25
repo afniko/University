@@ -78,10 +78,4 @@ public class DataConfig {
 
         return properties;
     }
-//  @Bean
-//  @Scope("prototype")
-//  public Logger produceLogger(InjectionPoint injectionPoint) {
-//      Class<?> classOnWired = injectionPoint.getMember().getDeclaringClass();
-//      return LoggerFactory.getLogger(classOnWired);
-//  }
 }
