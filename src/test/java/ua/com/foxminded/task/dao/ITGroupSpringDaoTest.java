@@ -44,8 +44,11 @@ public class ITGroupSpringDaoTest {
     }
 
     @Test
-    void getAccount() throws Exception {
-        this.mockMvc.perform(get("/groups").accept(MediaType.APPLICATION_JSON)).andExpect(status().isOk()).andDo(print());
+    void whenRetriveHttpGetRequestGroups_thenExpectViewNameGroupsAndAllGroupsFromDataBase() throws Exception {
+        this.mockMvc.perform(get("/groups")
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andDo(print());
     }
 
     @AfterAll
