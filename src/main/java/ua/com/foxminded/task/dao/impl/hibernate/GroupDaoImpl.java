@@ -1,85 +1,88 @@
 package ua.com.foxminded.task.dao.impl.hibernate;
 
-import java.lang.invoke.MethodHandles;
 import java.util.List;
 import java.util.Objects;
 
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.PersistenceException;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import ua.com.foxminded.task.dao.GroupDao;
+import ua.com.foxminded.task.dao.exception.EntityAlreadyExistsException;
 import ua.com.foxminded.task.dao.exception.NoEntityFoundException;
 import ua.com.foxminded.task.domain.Group;
 
+@Repository
 public class GroupDaoImpl implements GroupDao {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getSimpleName());
+    @Autowired
+    private Logger logger;
+
+    @PersistenceContext
     private EntityManager entityManager;
 
-    public GroupDaoImpl() {
-        entityManager = EntitiesManagerFactoryImpl.getInstance().getEntityManager();
-    }
-
+    @Transactional
     @Override
     public Group create(Group group) {
-        LOGGER.debug("create() [group:{}]", group);
-        entityManager.getTransaction().begin();
-        entityManager.persist(group);
-        entityManager.getTransaction().commit();
-        entityManager.clear();
-        return group;
-    }
-
-    @Override
-    public Group findById(int id) {
-        LOGGER.debug("findById() [id:{}]", id);
-        Group group = null;
-        entityManager.getTransaction().begin();
-        group = entityManager.find(Group.class, id);
-        entityManager.getTransaction().commit();
-        entityManager.clear();
-        if (Objects.isNull(group)) {
-            LOGGER.warn("findById() Group with id#{} not found", id);
-            throw new NoEntityFoundException("findById() Group by id#" + id + " not found");
+        logger.debug("create() [group:{}]", group);
+        try {
+            entityManager.persist(group);
+        } catch (PersistenceException e) {
+            throw new EntityAlreadyExistsException("create() group: " + group, e);
         }
         return group;
     }
 
+    @Transactional
+    @Override
+    public Group findById(int id) {
+        logger.debug("findById() [id:{}]", id);
+        String exceptionMessage = "findById() Group by id#" + id + " not found";
+        Group group = null;
+        try {
+            group = entityManager.find(Group.class, id);
+        } catch (PersistenceException e) {
+            throw new NoEntityFoundException(exceptionMessage, e);
+        }
+        if (Objects.isNull(group)) {
+            logger.warn("findById() Group with id#{} not found", id);
+            throw new NoEntityFoundException(exceptionMessage);
+        }
+        return group;
+    }
+
+    @Transactional
     @Override
     public List<Group> findAll() {
-        LOGGER.debug("findAll()");
+        logger.debug("findAll()");
         List<Group> groups = null;
-        entityManager.getTransaction().begin();
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
         CriteriaQuery<Group> groupCriteriaQuery = criteriaBuilder.createQuery(Group.class);
         Root<Group> groupRoot = groupCriteriaQuery.from(Group.class);
         groupCriteriaQuery.select(groupRoot);
         groups = entityManager.createQuery(groupCriteriaQuery).getResultList();
-        entityManager.getTransaction().commit();
-        entityManager.clear();
         return groups;
     }
 
+    @Transactional
     @Override
     public Group update(Group group) {
-        LOGGER.debug("update() [group:{}]", group);
-        entityManager.getTransaction().begin();
+        logger.debug("update() [group:{}]", group);
         entityManager.merge(group);
-        entityManager.getTransaction().commit();
-        entityManager.clear();
+        try {
+            entityManager.flush();
+        } catch (PersistenceException e) {
+            throw new EntityAlreadyExistsException("update() group: " + group, e);
+        }
         return group;
-    }
-
-    @Override
-    public List<Group> findByDepartmentId(int id) {
-        LOGGER.debug("findByDepartmentId() [id:{}]", id);
-        // TODO
-        return null;
     }
 
 }

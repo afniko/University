@@ -10,6 +10,8 @@ import static org.mockito.Mockito.verify;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import ua.com.foxminded.task.dao.GroupDao;
 import ua.com.foxminded.task.dao.StudentDao;
@@ -19,12 +21,13 @@ import ua.com.foxminded.task.domain.Student;
 import ua.com.foxminded.task.domain.dto.StudentDto;
 import ua.com.foxminded.task.domain.repository.StudentModelRepository;
 import ua.com.foxminded.task.domain.repository.dto.StudentDtoModelRepository;
-import ua.com.foxminded.task.service.impl.StudentServiceImpl;
 
 public class StudentServiceImplTest {
+
+    private Logger logger = LoggerFactory.getLogger(StudentServiceImpl.class);
     private StudentDao studentDao = mock(StudentDaoImpl.class);
     private GroupDao groupDao = mock(GroupDaoImpl.class);
-    private StudentServiceImpl studentService = new StudentServiceImpl(studentDao, groupDao);
+    private StudentServiceImpl studentService = new StudentServiceImpl(logger, studentDao, groupDao);
 
     @Test
     void whenFindById_thenFindStudentAndConvertItToDto() {
