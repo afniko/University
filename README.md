@@ -90,6 +90,10 @@ Add Sonar Lint plugin to eclipse
 Add Spring MVC
 Add Thymeleaf
 Branch: task17.2
+####Task 18 - Spring Boot
+Convert application to Spring Boot
+Branch: task18
+
 
 ##Author
 With best regards, Mykola Afanasiev!
