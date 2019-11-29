@@ -39,35 +39,35 @@ public class DataConfig {
     @Resource
     private Environment env;
 
-    @Bean
-    public DataSource dataSource() throws NamingException {
-        logger.info("ConfigurationConnection getDataSource()");
-        return (DataSource) new JndiTemplate().lookup(env.getRequiredProperty("ds.name.context"));
-    }
+//    @Bean
+//    public DataSource dataSource() throws NamingException {
+//        logger.info("ConfigurationConnection getDataSource()");
+//        return (DataSource) new JndiTemplate().lookup(env.getRequiredProperty("ds.name.context"));
+//    }
 
-    @Bean
-    public LocalContainerEntityManagerFactoryBean entityManagerFactory() throws NamingException {
-        final LocalContainerEntityManagerFactoryBean entityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean();
-        entityManagerFactoryBean.setDataSource(dataSource());
-        entityManagerFactoryBean.setPersistenceProviderClass(HibernatePersistenceProvider.class);
-        entityManagerFactoryBean.setJpaVendorAdapter(jpaVendorAdapter());
-        entityManagerFactoryBean.setPackagesToScan(env.getRequiredProperty("db.entitymanager.packages.to.scan"));
-        entityManagerFactoryBean.setJpaProperties(getHibernateProperties());
+//    @Bean
+//    public LocalContainerEntityManagerFactoryBean entityManagerFactory() throws NamingException {
+//        final LocalContainerEntityManagerFactoryBean entityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean();
+//        entityManagerFactoryBean.setDataSource(dataSource());
+//        entityManagerFactoryBean.setPersistenceProviderClass(HibernatePersistenceProvider.class);
+//        entityManagerFactoryBean.setJpaVendorAdapter(jpaVendorAdapter());
+//        entityManagerFactoryBean.setPackagesToScan(env.getRequiredProperty("db.entitymanager.packages.to.scan"));
+//        entityManagerFactoryBean.setJpaProperties(getHibernateProperties());
+//
+//        return entityManagerFactoryBean;
+//    }
 
-        return entityManagerFactoryBean;
-    }
+//    @Bean
+//    public JpaVendorAdapter jpaVendorAdapter() {
+//        return new HibernateJpaVendorAdapter();
+//    }
 
-    @Bean
-    public JpaVendorAdapter jpaVendorAdapter() {
-        return new HibernateJpaVendorAdapter();
-    }
-
-    @Bean
-    public PlatformTransactionManager transactionManager(EntityManagerFactory entityManagerFactory) {
-        JpaTransactionManager transactionManager = new JpaTransactionManager();
-        transactionManager.setEntityManagerFactory(entityManagerFactory);
-        return transactionManager;
-    }
+//    @Bean
+//    public PlatformTransactionManager transactionManager(EntityManagerFactory entityManagerFactory) {
+//        JpaTransactionManager transactionManager = new JpaTransactionManager();
+//        transactionManager.setEntityManagerFactory(entityManagerFactory);
+//        return transactionManager;
+//    }
 
     @Bean(initMethod = "migrate")
     Flyway flyway() throws NamingException {
