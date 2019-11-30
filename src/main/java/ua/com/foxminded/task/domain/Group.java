@@ -20,7 +20,7 @@ public class Group {
     private String title;
     @Transient
     private Department department;
-    @Column(name = "yearEntry")
+    @Column(name = "yearentry")
     private int yearEntry;
 
     public int getId() {
