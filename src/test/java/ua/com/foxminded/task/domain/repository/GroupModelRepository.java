@@ -77,7 +77,7 @@ public class GroupModelRepository {
         return group;
     }
 
-    private static Group getModel4() {
+    public static Group getModel4() {
         Group group = new Group();
         group.setTitle("group4");
         group.setYearEntry(2016);

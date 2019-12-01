@@ -16,6 +16,7 @@
 
     <properties>
         <java.version>1.8</java.version>
+        <org.flywaydb.extensions.flyway-spring-test>6.0.0</org.flywaydb.extensions.flyway-spring-test>
         <org.postgresql.version>42.2.8</org.postgresql.version>
         <mockito.junit.jupiter.version>2.25.1</mockito.junit.jupiter.version>
         <commons.lang3.version>3.8.1</commons.lang3.version>
@@ -55,6 +56,13 @@
         </dependency>
 
         <dependency>
+            <groupId>org.flywaydb.flyway-test-extensions</groupId>
+            <artifactId>flyway-spring-test</artifactId>
+            <version>${org.flywaydb.extensions.flyway-spring-test}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
             <version>${org.postgresql.version}</version>
@@ -85,10 +93,13 @@
             <version>${hibernate-validator.version}</version>
         </dependency>
 
- <!-- for generate metamodel for criteria queries -->
-        <dependency> <groupId>org.hibernate</groupId> <artifactId>hibernate-jpamodelgen</artifactId> 
-           <version>${hibernate.jpamodelgen.version}</version> <scope>provided</scope> 
-            </dependency>
+        <!-- for generate metamodel for criteria queries -->
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-jpamodelgen</artifactId>
+            <version>${hibernate.jpamodelgen.version}</version>
+            <scope>provided</scope>
+        </dependency>
 
     </dependencies>
 
@@ -96,36 +107,22 @@
         <plugins>
 
             <plugin>
-                <groupId>org.flywaydb</groupId>
-                <artifactId>flyway-maven-plugin</artifactId>
-                <version>${org.flywaydb.flyway.plugin.version}</version>
-                <dependencies>
-                    <dependency>
-                        <groupId>org.flywaydb</groupId>
-                        <artifactId>flyway-core</artifactId>
-                        <version>${org.flywaydb.flyway.plugin.version}</version>
-                    </dependency>
-                </dependencies>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
                 <configuration>
-                    <schemas>
-                        <schema>public</schema>
-                    </schemas>
-                    <user>${flyway.user}</user>
-                    <password>${flyway.password}</password>
-                    <url>${flyway.url}</url>
-                    <driver>${flyway.driver}</driver>
-                    <locations>
-                        <location>db/migrations</location>
-                    </locations>
+                    <systemPropertyVariables>
+                        <flyway.driver>${spring.datasource.driver-class-name}</flyway.driver>
+                        <flyway.url>${spring.datasource.url}</flyway.url>
+                        <flyway.user>${spring.datasource.username}</flyway.user>
+                        <flyway.password>${spring.datasource.password}</flyway.password>
+                        <flyway.locations>${flyway.locations}</flyway.locations>
+                    </systemPropertyVariables>
+                    <threadCount>1</threadCount>
                 </configuration>
+                <goals>
+                    <goal>test</goal>
+                </goals>
                 <executions>
-                    <execution>
-                        <id>create-database</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>migrate</goal>
-                        </goals>
-                    </execution>
                 </executions>
             </plugin>
 

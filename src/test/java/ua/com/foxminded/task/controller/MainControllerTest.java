@@ -10,15 +10,12 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.test.context.junit.jupiter.web.SpringJUnitWebConfig;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import ua.com.foxminded.task.config.TestConfig;
-import ua.com.foxminded.task.config.spring.mvc.WebConfig;
-
-@SpringJUnitWebConfig(classes = { WebConfig.class, TestConfig.class })
+@WebMvcTest(controllers=MainController.class)
 public class MainControllerTest {
 
     private MockMvc mockMvc;
