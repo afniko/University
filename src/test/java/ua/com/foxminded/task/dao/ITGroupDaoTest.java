@@ -7,6 +7,7 @@ import java.util.Arrays;
 
 import org.flywaydb.test.annotation.FlywayTest;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -18,23 +19,24 @@ import ua.com.foxminded.task.domain.repository.GroupModelRepository;
 @FlywayTest
 public class ITGroupDaoTest {
 
+    @Autowired
     private  GroupDao groupDao;
 
     private static final Group GROUP11 = GroupModelRepository.getModel11();
     private static final Group GROUP12 = GroupModelRepository.getModel12();
     private static final Group GROUP13 = GroupModelRepository.getModel13();
 
-    @Autowired
-    public ITGroupDaoTest(GroupDao groupDao) {
-        this.groupDao = groupDao;
+//    @Autowired
+//    public ITGroupDaoTest(GroupDao groupDao) {
+//        this.groupDao = groupDao;
+//    }
+
+    @BeforeAll
+    public static void createRecords(@Autowired GroupDao groupDao) {
         groupDao.create(GROUP11);
         groupDao.create(GROUP12);
         groupDao.create(GROUP13);
     }
-
-//    @BeforeAll
-//    public static void createRecords() {
-//    }
 
 //    @Test
     public void WhenPutAtTableDbGroupObjects_thenGetThisObjectsFindById() {

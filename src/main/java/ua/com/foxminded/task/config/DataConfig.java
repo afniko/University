@@ -29,53 +29,10 @@ public class DataConfig {
     @Resource
     private Environment env;
 
-//    @Bean
-//    @Primary
-//    public DataSource dataSource() {
-//        return DataSourceBuilder.create().build();
-//    }
-
-//    @Bean
-//    @Primary
-////    @ConfigurationProperties("spring.datasource")
-//    public DataSourceProperties dataSourceProperties() {
-//        return new DataSourceProperties();
-//    }
-
     @Bean
     public HikariDataSource dataSource(DataSourceProperties properties) {
         return properties.initializeDataSourceBuilder().type(HikariDataSource.class).build();
     }
-
-//    @Bean
-//    public DataSource dataSource() throws NamingException {
-//        logger.info("ConfigurationConnection getDataSource()");
-//        return (DataSource) new JndiTemplate().lookup(env.getRequiredProperty("ds.name.context"));
-//    }
-
-//    @Bean
-//    public LocalContainerEntityManagerFactoryBean entityManagerFactory() throws NamingException {
-//        final LocalContainerEntityManagerFactoryBean entityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean();
-//        entityManagerFactoryBean.setDataSource(dataSource());
-//        entityManagerFactoryBean.setPersistenceProviderClass(HibernatePersistenceProvider.class);
-//        entityManagerFactoryBean.setJpaVendorAdapter(jpaVendorAdapter());
-//        entityManagerFactoryBean.setPackagesToScan(env.getRequiredProperty("db.entitymanager.packages.to.scan"));
-//        entityManagerFactoryBean.setJpaProperties(getHibernateProperties());
-//
-//        return entityManagerFactoryBean;
-//    }
-
-//    @Bean
-//    public JpaVendorAdapter jpaVendorAdapter() {
-//        return new HibernateJpaVendorAdapter();
-//    }
-
-//    @Bean
-//    public PlatformTransactionManager transactionManager(EntityManagerFactory entityManagerFactory) {
-//        JpaTransactionManager transactionManager = new JpaTransactionManager();
-//        transactionManager.setEntityManagerFactory(entityManagerFactory);
-//        return transactionManager;
-//    }
 
     @Bean(initMethod = "migrate")
     public Flyway flyway() {
@@ -83,7 +40,6 @@ public class DataConfig {
         Flyway flyway = Flyway.configure().configuration(getFlywayProperties()).load();
         return flyway;
     }
-
 
     private Properties getFlywayProperties() {
         Properties properties = new Properties();
