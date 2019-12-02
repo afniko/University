@@ -77,8 +77,8 @@ public class ITGroupSpringDaoTest {
 
     }
 
-    @AfterEach
-    public void removeCreatedTables(@Autowired Flyway flyway) {
-        flyway.clean();
-    }
+//    @AfterEach
+//    public void removeCreatedTables(@Autowired Flyway flyway) {
+//        flyway.clean();
+//    }
 }
