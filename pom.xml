@@ -20,7 +20,6 @@
         <mockito.junit.jupiter.version>2.25.1</mockito.junit.jupiter.version>
         <commons.lang3.version>3.8.1</commons.lang3.version>
         <org.flywaydb.flyway.core.version>5.2.4</org.flywaydb.flyway.core.version>
-        <validation-api.version>2.0.1.Final</validation-api.version>
         <hibernate.jpamodelgen.version>5.4.7.Final</hibernate.jpamodelgen.version>
 
         <org.flywaydb.flyway.plugin.version>5.2.4</org.flywaydb.flyway.plugin.version>
@@ -34,10 +33,6 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-jdbc</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -86,12 +81,6 @@
             <version>${org.flywaydb.flyway.core.version}</version>
         </dependency>
 
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-validator</artifactId>
-            <version>${hibernate-validator.version}</version>
-        </dependency>
-
         <!-- for generate metamodel for criteria queries -->
         <dependency>
             <groupId>org.hibernate</groupId>
@@ -100,30 +89,11 @@
             <scope>provided</scope>
         </dependency>
 
+        
     </dependencies>
 
     <build>
         <plugins>
-
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <configuration>
-                    <systemPropertyVariables>
-                        <flyway.driver>${spring.datasource.driver-class-name}</flyway.driver>
-                        <flyway.url>${spring.datasource.url}</flyway.url>
-                        <flyway.user>${spring.datasource.username}</flyway.user>
-                        <flyway.password>${spring.datasource.password}</flyway.password>
-                        <flyway.locations>${flyway.locations}</flyway.locations>
-                    </systemPropertyVariables>
-                    <threadCount>1</threadCount>
-                </configuration>
-                <goals>
-                    <goal>test</goal>
-                </goals>
-                <executions>
-                </executions>
-            </plugin>
 
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -210,7 +180,7 @@
                         </configuration>
                     </execution>
                 </executions>
-            </plugin> 
+            </plugin>
 
         </plugins>
 
