@@ -12,7 +12,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @Configuration
 @EnableTransactionManagement
 @ComponentScan("ua.com.foxminded.task")
-public class DataConfig {
+public class ConfigBean {
 
     @Bean
     @Scope("prototype")

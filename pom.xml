@@ -17,7 +17,7 @@
         <java.version>1.8</java.version>
         <org.flywaydb.extensions.flyway-spring-test>6.0.0</org.flywaydb.extensions.flyway-spring-test>
         <org.postgresql.version>42.2.8</org.postgresql.version>
-        <mockito.junit.jupiter.version>2.25.1</mockito.junit.jupiter.version>
+        <mockito.version>2.25.1</mockito.version>
         <commons.lang3.version>3.8.1</commons.lang3.version>
         <org.flywaydb.flyway.core.version>5.2.4</org.flywaydb.flyway.core.version>
         <hibernate.jpamodelgen.version>5.4.7.Final</hibernate.jpamodelgen.version>
@@ -65,7 +65,7 @@
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-junit-jupiter</artifactId>
-            <version>${mockito.junit.jupiter.version}</version>
+            <version>${mockito.version}</version>
             <scope>test</scope>
         </dependency>
 
