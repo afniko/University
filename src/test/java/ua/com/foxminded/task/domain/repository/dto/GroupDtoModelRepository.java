@@ -70,7 +70,7 @@ public class GroupDtoModelRepository {
         return group;
     }
 
-    private static GroupDto getModel4() {
+    public static GroupDto getModel4() {
         GroupDto group = new GroupDto();
         group.setTitle("group4");
         group.setYearEntry(2016);

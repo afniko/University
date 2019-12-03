@@ -15,20 +15,18 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.junit.jupiter.web.SpringJUnitWebConfig;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import ua.com.foxminded.task.config.TestConfig;
-import ua.com.foxminded.task.config.spring.mvc.WebConfig;
 import ua.com.foxminded.task.domain.dto.GroupDto;
 import ua.com.foxminded.task.domain.repository.dto.GroupDtoModelRepository;
 import ua.com.foxminded.task.service.GroupService;
 import ua.com.foxminded.task.service.impl.GroupServiceImpl;
 
-@SpringJUnitWebConfig(classes = { WebConfig.class, TestConfig.class })
+@WebMvcTest(controllers = GroupController.class)
 public class GroupControllerTest {
 
     private MockMvc mockMvc;
@@ -66,14 +64,14 @@ public class GroupControllerTest {
         List<GroupDto> actuallyGroups = (List<GroupDto>) mvcResult.getRequest().getAttribute(ATTRIBUTE_HTML_GROUPS);
         assertEquals(groups, actuallyGroups);
     }
-    
+
     @Test
     void whenRetriveHttpGetRequestGroup_thenExpectViewNameGroupWithAttribute() throws Exception {
         GroupDto groupDto = GroupDtoModelRepository.getModelWithId();
         int id = groupDto.getId();
         String httpRequest = "/group?id=" + id;
         when(groupService.findByIdDto(groupDto.getId())).thenReturn(groupDto);
-        
+
         MvcResult mvcResult = this.mockMvc.perform(get(httpRequest).accept(MediaType.TEXT_HTML_VALUE))
                 .andExpect(status().isOk())
                 .andExpect(view().name(PATH_HTML_GROUP))
@@ -85,14 +83,14 @@ public class GroupControllerTest {
         GroupDto actuallyGroup = (GroupDto) mvcResult.getRequest().getAttribute(ATTRIBUTE_HTML_GROUP);
         assertEquals(groupDto, actuallyGroup);
     }
-    
+
     @Test
     void whenRetriveHttpGetRequestGroupEdit_thenExpectViewNameGroupeditWithAttribute() throws Exception {
         GroupDto groupDto = GroupDtoModelRepository.getModelWithId();
         int id = groupDto.getId();
         String httpRequest = "/group_edit?id=" + id;
         when(groupService.findByIdDto(groupDto.getId())).thenReturn(groupDto);
-        
+
         MvcResult mvcResult = this.mockMvc.perform(get(httpRequest).accept(MediaType.TEXT_HTML_VALUE))
                 .andExpect(status().isOk())
                 .andExpect(view().name(PATH_HTML_GROUP_EDIT))
@@ -104,7 +102,7 @@ public class GroupControllerTest {
         GroupDto actuallyGroup = (GroupDto) mvcResult.getRequest().getAttribute(ATTRIBUTE_HTML_GROUP);
         assertEquals(groupDto, actuallyGroup);
     }
-    
+
     @Test
     void whenRetriveHttpPostRequestGroupEditAndGroupWithId_thenExpectViewNameGroupeditWithAttribute() throws Exception {
         GroupDto groupDto = GroupDtoModelRepository.getModelWithId();
@@ -124,7 +122,7 @@ public class GroupControllerTest {
         String actuallySuccessMessage = mvcResult.getRequest().getAttribute(ATTRIBUTE_HTML_SUCCESS_MESSAGE).toString();
         assertEquals(actuallySuccessMessage, expectedSuccessMessage);
     }
-    
+
     @Test
     void whenRetriveHttpPostRequestGroupEditAndGroupWithoutId_thenExpectViewNameGroupeditWithAttribute() throws Exception {
         GroupDto groupDto = GroupDtoModelRepository.getModel1();

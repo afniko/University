@@ -15,14 +15,12 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.junit.jupiter.web.SpringJUnitWebConfig;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import ua.com.foxminded.task.config.TestConfig;
-import ua.com.foxminded.task.config.spring.mvc.WebConfig;
 import ua.com.foxminded.task.domain.dto.GroupDto;
 import ua.com.foxminded.task.domain.dto.StudentDto;
 import ua.com.foxminded.task.domain.repository.dto.GroupDtoModelRepository;
@@ -32,7 +30,7 @@ import ua.com.foxminded.task.service.StudentService;
 import ua.com.foxminded.task.service.impl.GroupServiceImpl;
 import ua.com.foxminded.task.service.impl.StudentServiceImpl;
 
-@SpringJUnitWebConfig(classes = { WebConfig.class, TestConfig.class })
+@WebMvcTest(controllers=StudentController.class)
 public class StudentControllerTest {
 
     private MockMvc mockMvc;

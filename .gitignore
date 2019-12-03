@@ -1,4 +1,4 @@
-output/
+﻿output/
 output\
 /bin/
 /.apt_generated/
@@ -9,6 +9,6 @@ output\
 build/
 /target/
 /.apt_generated_tests/
-**/log/*
+**/logs/*
 *.log
 .attach*

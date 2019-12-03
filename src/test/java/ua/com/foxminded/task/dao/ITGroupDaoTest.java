@@ -5,29 +5,34 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Arrays;
 
-import org.junit.jupiter.api.AfterAll;
+import org.flywaydb.test.annotation.FlywayTest;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import ua.com.foxminded.task.dao.exception.NoEntityFoundException;
 import ua.com.foxminded.task.domain.Group;
 import ua.com.foxminded.task.domain.repository.GroupModelRepository;
 
+@SpringBootTest
+@FlywayTest
 public class ITGroupDaoTest {
 
-    private static GroupDao groupDao;
+    @Autowired
+    private  GroupDao groupDao;
+
     private static final Group GROUP11 = GroupModelRepository.getModel11();
     private static final Group GROUP12 = GroupModelRepository.getModel12();
     private static final Group GROUP13 = GroupModelRepository.getModel13();
 
-    private static FlywayConnection flywayConnection = new FlywayConnection();
-    private static InitialContextBinder initialContextBinder = InitialContextBinder.getInstance();
+//    @Autowired
+//    public ITGroupDaoTest(GroupDao groupDao) {
+//        this.groupDao = groupDao;
+//    }
 
     @BeforeAll
-    public static void createRecords() {
-        initialContextBinder.setInitialContext();
-        flywayConnection.createTables();
-//        groupDao = new GroupDaoImpl();
+    public static void createRecords(@Autowired GroupDao groupDao) {
         groupDao.create(GROUP11);
         groupDao.create(GROUP12);
         groupDao.create(GROUP13);
@@ -59,9 +64,8 @@ public class ITGroupDaoTest {
         Assertions.assertThrows(NoEntityFoundException.class, () -> groupDao.findById(9999));
     }
 
-    @AfterAll
-    public static void removeCreatedTables() {
-        flywayConnection.removeTables();
-        initialContextBinder.closeInitialContext();
-    }
+//    @AfterAll
+//    public static void removeCreatedTables(@Autowired Flyway flyway) {
+//        flyway.clean();
+//    }
 }

@@ -1,37 +1,28 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.2.1.RELEASE</version>
+    </parent>
+
     <groupId>ua.com.foxminded</groupId>
     <artifactId>task-university-java8-api</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <packaging>war</packaging>
+    <packaging>jar</packaging>
 
     <properties>
-        <postgresql.version>9.1-901-1.jdbc4</postgresql.version>
-        <junit.jupiter.api.version>5.4.2</junit.jupiter.api.version>
-        <junit.platform.runner.version>1.4.2</junit.platform.runner.version>
-        <junit.jupiter.engine.version>5.1.0</junit.jupiter.engine.version>
-        <mockito.junit.jupiter.version>2.25.1</mockito.junit.jupiter.version>
-        <org.springframework.spring.test>5.2.1.RELEASE</org.springframework.spring.test>
+        <java.version>1.8</java.version>
+        <org.flywaydb.extensions.flyway-spring-test>6.0.0</org.flywaydb.extensions.flyway-spring-test>
+        <org.postgresql.version>42.2.8</org.postgresql.version>
+        <mockito.version>2.25.1</mockito.version>
         <commons.lang3.version>3.8.1</commons.lang3.version>
         <org.flywaydb.flyway.core.version>5.2.4</org.flywaydb.flyway.core.version>
-        <slf4j.api.version>1.7.25</slf4j.api.version>
-        <slf4j.log4j12.version>1.7.25</slf4j.log4j12.version>
-        <javax.servlet.api.version>4.0.1</javax.servlet.api.version>
-        <validation-api.version>2.0.1.Final</validation-api.version>
-        <hibernate-validator.version>6.0.13.Final</hibernate-validator.version>
-        <hibernate.validator.annotation.processor.version>6.0.17.Final</hibernate.validator.annotation.processor.version>
-        <javax.el.version>3.0.0</javax.el.version>
-        <tomcat.catalina.version>9.0.26</tomcat.catalina.version>
-        <org.springframework.version>5.2.0.RELEASE</org.springframework.version>
-        <hibernate.core.version>5.4.7.Final</hibernate.core.version>
         <hibernate.jpamodelgen.version>5.4.7.Final</hibernate.jpamodelgen.version>
-        <org.springframework.spring.webmvc.version>5.2.1.RELEASE</org.springframework.spring.webmvc.version>
-        <org.springframework.spring.orm>5.2.1.RELEASE</org.springframework.spring.orm>
-        <org.thymeleaf.spring5>3.0.11.RELEASE</org.thymeleaf.spring5>
 
         <org.flywaydb.flyway.plugin.version>5.2.4</org.flywaydb.flyway.plugin.version>
-        <maven.compiler.plugin.version>3.8.0</maven.compiler.plugin.version>
         <maven.checkstyle.plugin.version>3.1.0</maven.checkstyle.plugin.version>
         <maven.surefire.plugin.version>2.22.2</maven.surefire.plugin.version>
         <properties.maven.plugin.version>1.0.0</properties.maven.plugin.version>
@@ -40,56 +31,43 @@
     <dependencies>
 
         <dependency>
-            <groupId>postgresql</groupId>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.flywaydb.flyway-test-extensions</groupId>
+            <artifactId>flyway-spring-test</artifactId>
+            <version>${org.flywaydb.extensions.flyway-spring-test}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
-            <version>${postgresql.version}</version>
-            <scope>runtime</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-api</artifactId>
-            <version>${junit.jupiter.api.version}</version>
-            <scope>test</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>org.junit.platform</groupId>
-            <artifactId>junit-platform-runner</artifactId>
-            <version>${junit.platform.runner.version}</version>
-            <scope>test</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-engine</artifactId>
-            <version>${junit.jupiter.engine.version}</version>
-            <scope>test</scope>
+            <version>${org.postgresql.version}</version>
         </dependency>
 
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-junit-jupiter</artifactId>
-            <version>${mockito.junit.jupiter.version}</version>
+            <version>${mockito.version}</version>
             <scope>test</scope>
         </dependency>
-
-        <!-- spring-test -->
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-test</artifactId>
-            <version>${org.springframework.spring.test}</version>
-            <scope>test</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-aspects</artifactId>
-            <version>${org.springframework.spring.orm}</version>
-            <scope>test</scope>
-        </dependency>
-        <!-- end block for spring test -->
-
 
         <dependency>
             <groupId>org.apache.commons</groupId>
@@ -103,73 +81,6 @@
             <version>${org.flywaydb.flyway.core.version}</version>
         </dependency>
 
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
-            <version>${slf4j.api.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-log4j12</artifactId>
-            <version>${slf4j.log4j12.version}</version>
-            <scope>runtime</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>javax.servlet-api</artifactId>
-            <version>${javax.servlet.api.version}</version>
-            <scope>provided</scope>
-        </dependency>
-
-        <!-- validation entity block -->
-        <dependency>
-            <groupId>javax.validation</groupId>
-            <artifactId>validation-api</artifactId>
-            <version>${validation-api.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-validator</artifactId>
-            <version>${hibernate-validator.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.hibernate.validator</groupId>
-            <artifactId>hibernate-validator-annotation-processor</artifactId>
-            <version>${hibernate.validator.annotation.processor.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.glassfish</groupId>
-            <artifactId>javax.el</artifactId>
-            <version>${javax.el.version}</version>
-        </dependency>
-        <!--end of validation entity block -->
-
-        <!-- library for datasource initial context tests -->
-        <dependency>
-            <groupId>org.apache.tomcat</groupId>
-            <artifactId>tomcat-catalina</artifactId>
-            <version>${tomcat.catalina.version}</version>
-            <scope>test</scope>
-        </dependency>
-
-        <!-- spring -->
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-context</artifactId>
-            <version>${org.springframework.version}</version>
-        </dependency>
-
-        <!-- hibernate for ORM -->
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-core</artifactId>
-            <version>${hibernate.core.version}</version>
-        </dependency>
         <!-- for generate metamodel for criteria queries -->
         <dependency>
             <groupId>org.hibernate</groupId>
@@ -178,78 +89,11 @@
             <scope>provided</scope>
         </dependency>
 
-        <!-- spring-webmvc -->
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-webmvc</artifactId>
-            <version>${org.springframework.spring.webmvc.version}</version>
-        </dependency>
-
-        <!-- for spring persistence and entity manager factory -->
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-orm</artifactId>
-            <version>${org.springframework.spring.orm}</version>
-        </dependency>
-
-        <!-- thymeleaf-spring5 -->
-        <dependency>
-            <groupId>org.thymeleaf</groupId>
-            <artifactId>thymeleaf-spring5</artifactId>
-            <version>${org.thymeleaf.spring5}</version>
-        </dependency>
-
+        
     </dependencies>
 
     <build>
         <plugins>
-            <plugin>
-                <groupId>org.flywaydb</groupId>
-                <artifactId>flyway-maven-plugin</artifactId>
-                <version>${org.flywaydb.flyway.plugin.version}</version>
-                <dependencies>
-                    <dependency>
-                        <groupId>org.flywaydb</groupId>
-                        <artifactId>flyway-core</artifactId>
-                        <version>${org.flywaydb.flyway.plugin.version}</version>
-                    </dependency>
-                </dependencies>
-                <configuration>
-                    <schemas>
-                        <schema>public</schema>
-                    </schemas>
-                    <user>${flyway.user}</user>
-                    <password>${flyway.password}</password>
-                    <url>${flyway.url}</url>
-                    <driver>${flyway.driver}</driver>
-                    <locations>
-                        <location>db/migrations</location>
-                    </locations>
-                </configuration>
-                <executions>
-                    <execution>
-                        <id>create-database</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>migrate</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-
-            <plugin>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>${maven.compiler.plugin.version}</version>
-                <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
-                    <encoding>UTF-8</encoding>
-                    <!-- for generate metamodel for criteria queries -->
-                    <compilerArguments>
-                        <processor>org.hibernate.jpamodelgen.JPAMetaModelEntityProcessor</processor>
-                    </compilerArguments>
-                </configuration>
-            </plugin>
 
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
