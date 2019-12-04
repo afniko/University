@@ -12,7 +12,6 @@ import java.util.List;
 import org.flywaydb.test.annotation.FlywayTest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
@@ -44,13 +43,13 @@ public class ITGroupSpringDaoTest {
 
     private MockMvc mockMvc;
 
-    @BeforeEach
-    public void createRecords(@Autowired GroupDao groupDao) {
-        groupDao.create(GROUP1);
-        groupDao.create(GROUP2);
-        groupDao.create(GROUP3);
-        groupDao.create(GROUP4);
-    }
+//    @BeforeEach
+//    public void createRecords(@Autowired GroupDao groupDao) {
+//        groupDao.create(GROUP1);
+//        groupDao.create(GROUP2);
+//        groupDao.create(GROUP3);
+//        groupDao.create(GROUP4);
+//    }
 
     @BeforeEach
     public void setup(WebApplicationContext wac) {
