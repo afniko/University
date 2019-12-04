@@ -24,7 +24,8 @@ public class GroupServiceImplTest {
 
     private Logger logger = LoggerFactory.getLogger(GroupServiceImpl.class);
     private GroupDao groupDao = mock(GroupDaoImpl.class);
-    private GroupServiceImpl groupService = new GroupServiceImpl(logger, groupDao);
+//    private GroupServiceImpl groupService = new GroupServiceImpl(logger, groupDao);
+    private GroupServiceImpl groupService;
 
     @Test
     void whenFindById_thenFindGroup() {

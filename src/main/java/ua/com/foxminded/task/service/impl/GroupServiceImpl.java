@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ua.com.foxminded.task.dao.GroupDao;
+import ua.com.foxminded.task.dao.GroupRepo;
 import ua.com.foxminded.task.domain.Group;
 import ua.com.foxminded.task.domain.dto.GroupDto;
 import ua.com.foxminded.task.service.GroupService;
@@ -16,19 +17,22 @@ import ua.com.foxminded.task.service.converter.ConverterToDtoService;
 @Service
 public class GroupServiceImpl implements GroupService {
 
+    private GroupRepo groupRepo;
     private GroupDao groupDao;
     private Logger logger;
 
     @Autowired
-    public GroupServiceImpl(Logger logger, GroupDao groupDao) {
+    public GroupServiceImpl(Logger logger, GroupDao groupDao, GroupRepo groupRepo) {
         this.logger = logger;
         this.groupDao = groupDao;
+        this.groupRepo = groupRepo;
     }
 
     @Override
     public Group findById(int id) {
         logger.debug("findById() [id:{}]", id);
-        return groupDao.findById(id);
+//        return groupDao.findById(id);
+        return groupRepo.findById(id);
     }
 
     @Override
@@ -41,6 +45,8 @@ public class GroupServiceImpl implements GroupService {
     @Override
     public List<GroupDto> findAllDto() {
         logger.debug("findAllDto()");
+//        return groupRepo.findGroups().stream().map(ConverterToDtoService::convert).collect(Collectors.toList());
+
         return groupDao.findAll().stream().map(ConverterToDtoService::convert).collect(Collectors.toList());
     }
 
