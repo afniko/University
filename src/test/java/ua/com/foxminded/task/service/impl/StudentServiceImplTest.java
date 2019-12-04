@@ -27,7 +27,8 @@ public class StudentServiceImplTest {
     private Logger logger = LoggerFactory.getLogger(StudentServiceImpl.class);
     private StudentDao studentDao = mock(StudentDaoImpl.class);
     private GroupDao groupDao = mock(GroupDaoImpl.class);
-    private StudentServiceImpl studentService = new StudentServiceImpl(logger, studentDao, groupDao);
+//    private StudentServiceImpl studentService = new StudentServiceImpl(logger, studentDao, groupDao);
+    private StudentServiceImpl studentService;
 
     @Test
     void whenFindById_thenFindStudentAndConvertItToDto() {

@@ -10,8 +10,8 @@ import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import ua.com.foxminded.task.dao.GroupDao;
-import ua.com.foxminded.task.dao.StudentDao;
+import ua.com.foxminded.task.dao.GroupRepo;
+import ua.com.foxminded.task.dao.StudentRepo;
 import ua.com.foxminded.task.domain.Group;
 import ua.com.foxminded.task.domain.Student;
 import ua.com.foxminded.task.domain.dto.StudentDto;
@@ -21,35 +21,35 @@ import ua.com.foxminded.task.service.converter.ConverterToDtoService;
 @Service
 public class StudentServiceImpl implements StudentService {
 
-    private StudentDao studentDao;
-    private GroupDao groupDao;
+    private StudentRepo studentRepo;
+    private GroupRepo groupRepo;
     private Logger logger;
 
     @Autowired
-    public StudentServiceImpl(Logger logger, StudentDao studentDao, GroupDao groupDao) {
+    public StudentServiceImpl(Logger logger, StudentRepo studentDao, GroupRepo groupDao) {
         this.logger = logger;
-        this.studentDao = studentDao;
-        this.groupDao = groupDao;
+        this.studentRepo = studentDao;
+        this.groupRepo = groupDao;
     }
 
     @Override
     public StudentDto findByIdDto(int id) {
         logger.debug("findByIdDto() [id:{}]", id);
-        Student student = studentDao.findById(id);
+        Student student = studentRepo.getOne(id);
         return ConverterToDtoService.convert(student);
     }
 
     @Override
     public List<StudentDto> findAllDto() {
         logger.debug("findAllDto()");
-        return studentDao.findAll().stream().map(ConverterToDtoService::convert).collect(Collectors.toList());
+        return studentRepo.findAll().stream().map(ConverterToDtoService::convert).collect(Collectors.toList());
     }
 
     @Override
     public StudentDto create(StudentDto studentDto) {
         logger.debug("create() [studentDto:{}]", studentDto);
         Student student = retriveStudentFromDto(studentDto);
-        Student studentResult = studentDao.create(student);
+        Student studentResult = studentRepo.save(student);
         return ConverterToDtoService.convert(studentResult);
     }
 
@@ -58,14 +58,14 @@ public class StudentServiceImpl implements StudentService {
         logger.debug("update() [studentDto:{}]", studentDto);
         Student student = retriveStudentFromDto(studentDto);
 
-        Student studenUpdated = studentDao.update(student);
+        Student studenUpdated = studentRepo.save(student);
         return ConverterToDtoService.convert(studenUpdated);
     }
 
     private Student retriveStudentFromDto(StudentDto studentDto) {
-        Student student = (studentDto.getId() != 0) ? studentDao.findById(studentDto.getId()) : new Student();
+        Student student = (studentDto.getId() != 0) ? studentRepo.getOne(studentDto.getId()) : new Student();
 
-        Group group = nonNull(studentDto.getIdGroup()) && isNoneBlank(studentDto.getIdGroup()) ? groupDao.findById(Integer.valueOf(studentDto.getIdGroup())) : null;
+        Group group = nonNull(studentDto.getIdGroup()) && isNoneBlank(studentDto.getIdGroup()) ? groupRepo.getOne(Integer.valueOf(studentDto.getIdGroup())) : null;
         student.setGroup(group);
 
         student.setFirstName(studentDto.getFirstName());
