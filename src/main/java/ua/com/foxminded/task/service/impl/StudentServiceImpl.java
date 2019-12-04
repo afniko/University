@@ -8,10 +8,12 @@ import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import ua.com.foxminded.task.dao.GroupRepository;
 import ua.com.foxminded.task.dao.StudentRepository;
+import ua.com.foxminded.task.dao.exception.EntityAlreadyExistsException;
 import ua.com.foxminded.task.domain.Group;
 import ua.com.foxminded.task.domain.Student;
 import ua.com.foxminded.task.domain.dto.StudentDto;
@@ -49,7 +51,13 @@ public class StudentServiceImpl implements StudentService {
     public StudentDto create(StudentDto studentDto) {
         logger.debug("create() [studentDto:{}]", studentDto);
         Student student = retriveStudentFromDto(studentDto);
-        Student studentResult = studentRepository.save(student);
+        Student studentResult = null;
+        try {
+            studentResult = studentRepository.save(student);
+        } catch (DataIntegrityViolationException e) {
+            logger.warn("create() [student:{}], exception:{}", student, e);
+            throw new EntityAlreadyExistsException("create() student: " + student, e);
+        }
         return ConverterToDtoService.convert(studentResult);
     }
 
@@ -57,8 +65,13 @@ public class StudentServiceImpl implements StudentService {
     public StudentDto update(StudentDto studentDto) {
         logger.debug("update() [studentDto:{}]", studentDto);
         Student student = retriveStudentFromDto(studentDto);
-
-        Student studenUpdated = studentRepository.save(student);
+        Student studenUpdated = null;
+        try {
+            studenUpdated = studentRepository.save(student);
+        } catch (DataIntegrityViolationException e) {
+            logger.warn("update() [student:{}], exception:{}", student, e);
+            throw new EntityAlreadyExistsException("update() student: " + student, e);
+        }
         return ConverterToDtoService.convert(studenUpdated);
     }
 

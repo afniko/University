@@ -5,9 +5,11 @@ import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import ua.com.foxminded.task.dao.GroupRepository;
+import ua.com.foxminded.task.dao.exception.EntityAlreadyExistsException;
 import ua.com.foxminded.task.domain.Group;
 import ua.com.foxminded.task.domain.dto.GroupDto;
 import ua.com.foxminded.task.service.GroupService;
@@ -48,7 +50,13 @@ public class GroupServiceImpl implements GroupService {
     public GroupDto create(GroupDto groupDto) {
         logger.debug("create() [groupDto:{}]", groupDto);
         Group group = retriveGroupFromDto(groupDto);
-        Group groupResult = groupRepository.save(group);
+        Group groupResult = null;
+        try {
+            groupResult = groupRepository.save(group);
+        } catch (DataIntegrityViolationException e) {
+            logger.warn("create() [group:{}], exception:{}", group, e);
+            throw new EntityAlreadyExistsException("create() group: " + group, e);
+        }
         return ConverterToDtoService.convert(groupResult);
     }
 
@@ -56,7 +64,13 @@ public class GroupServiceImpl implements GroupService {
     public GroupDto update(GroupDto groupDto) {
         logger.debug("update() [groupDto:{}]", groupDto);
         Group group = retriveGroupFromDto(groupDto);
-        Group groupUpdated = groupRepository.save(group);
+        Group groupUpdated = null;
+        try {
+            groupUpdated = groupRepository.save(group);
+        } catch (DataIntegrityViolationException e) {
+            logger.warn("update() [group:{}], exception:{}", group, e);
+            throw new EntityAlreadyExistsException("update() group: " + group, e);
+        }
         return ConverterToDtoService.convert(groupUpdated);
     }
 
