@@ -1,12 +1,8 @@
 package ua.com.foxminded.task.controller;
 
 import java.util.List;
-import java.util.Set;
 
-import javax.validation.ConstraintViolation;
-import javax.validation.Validation;
-import javax.validation.Validator;
-import javax.validation.ValidatorFactory;
+import javax.validation.Valid;
 
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -14,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -118,15 +116,17 @@ public class StudentController {
     }
 
     @PostMapping("/student_edit")
-    public String editPost(@ModelAttribute("studentDto") StudentDto studentDto, BindingResult bindingResult, Model model) {
+    public String editPost(@Valid @ModelAttribute("studentDto") StudentDto studentDto, 
+                           BindingResult bindingResult, 
+                           Model model) {
         logger.debug("editPost()");
         StringBuilder errorMessage = null;
         String successMessage = null;
         List<GroupDto> groups = null;
         String path = PATH_HTML_STUDENT;
         String pathEdit = PATH_HTML_STUDENT_EDIT;
-        Set<ConstraintViolation<StudentDto>> violations = validateStudentDto(studentDto);
-        if (violations.isEmpty()) {
+
+        if (!bindingResult.hasErrors()) {
             try {
                 if (studentDto.getId() != 0) {
                     studentDto = studentService.update(studentDto);
@@ -145,9 +145,12 @@ public class StudentController {
             }
         } else {
             errorMessage = new StringBuilder("You enter incorrect data!");
-            for (ConstraintViolation<StudentDto> violation : violations) {
+            List<ObjectError> errors = bindingResult.getAllErrors();
+            for (ObjectError error : errors) {
+                String fieldName = ((FieldError) error).getField();
+                String message = error.getDefaultMessage();
                 errorMessage.append(" ");
-                errorMessage.append(violation.getMessage());
+                errorMessage.append("field " + fieldName + " has error:" + message);
             }
             path = pathEdit;
             groups = groupService.findAllDto();
@@ -159,15 +162,6 @@ public class StudentController {
         model.addAttribute(ATTRIBUTE_HTML_ERROR_MESSAGE, errorMessage);
         model.addAttribute(ATTRIBUTE_HTML_SUCCESS_MESSAGE, successMessage);
         return path;
-    }
-
-    private Set<ConstraintViolation<StudentDto>> validateStudentDto(StudentDto studentDto) {
-        logger.debug("validateStudentDto()");
-        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
-        Validator validator = factory.getValidator();
-        Set<ConstraintViolation<StudentDto>> violations = validator.validate(studentDto);
-        factory.close();
-        return violations;
     }
 
     private boolean checkId(String id) {
