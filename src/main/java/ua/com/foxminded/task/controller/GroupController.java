@@ -134,6 +134,9 @@ public class GroupController {
             } catch (EntityAlreadyExistsException e) {
                 errorMessage = new StringBuilder("Record group was not created/updated! The record already exists!");
                 path = pathEdit;
+            } catch (NoEntityFoundException e) {
+                errorMessage = new StringBuilder("Group " + groupDto + " not found!");
+                path = pathEdit;
             }
         } else {
             errorMessage = new StringBuilder("You enter incorrect data! ");

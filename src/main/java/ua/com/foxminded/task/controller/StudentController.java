@@ -142,6 +142,8 @@ public class StudentController {
             } catch (EntityAlreadyExistsException e) {
                 errorMessage = new StringBuilder("Record sudent was not created/updated! The record already exists!");
                 path = pathEdit;
+            } catch (NoEntityFoundException e) {
+                errorMessage = new StringBuilder("Student " + studentDto + " not found!");
             }
         } else {
             errorMessage = new StringBuilder("You enter incorrect data!");
