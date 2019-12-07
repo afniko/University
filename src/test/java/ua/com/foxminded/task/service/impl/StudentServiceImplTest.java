@@ -72,6 +72,7 @@ public class StudentServiceImplTest {
         studentDto.setId(1);
         student.setId(1);
         doReturn(student).when(studentRepository).saveAndFlush(student);
+        doReturn(true).when(studentRepository).existsById(studentDto.getId());
         doReturn(student).when(studentRepository).getOne(student.getId());
         doReturn(student.getGroup()).when(groupRepository).getOne(student.getGroup().getId());
 

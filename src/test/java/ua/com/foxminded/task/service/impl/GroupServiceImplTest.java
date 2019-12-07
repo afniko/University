@@ -79,6 +79,7 @@ public class GroupServiceImplTest {
         Group groupExpected = GroupModelRepository.getModelWithId();
         groupExpected.setId(1);
         doReturn(groupExpected).when(groupRepository).saveAndFlush(group);
+        doReturn(true).when(groupRepository).existsById(groupDto.getId());
         doReturn(group).when(groupRepository).getOne(groupDto.getId());
 
         GroupDto groupDtoActually = groupService.update(groupDto);
