@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import ua.com.foxminded.task.dao.GroupRepository;
 import ua.com.foxminded.task.dao.StudentRepository;
 import ua.com.foxminded.task.dao.exception.EntityAlreadyExistsException;
+import ua.com.foxminded.task.dao.exception.NoEntityFoundException;
 import ua.com.foxminded.task.domain.Group;
 import ua.com.foxminded.task.domain.Student;
 import ua.com.foxminded.task.domain.dto.StudentDto;
@@ -28,10 +29,10 @@ public class StudentServiceImpl implements StudentService {
     private Logger logger;
 
     @Autowired
-    public StudentServiceImpl(Logger logger, StudentRepository studentDao, GroupRepository groupDao) {
+    public StudentServiceImpl(Logger logger, StudentRepository studentRepository, GroupRepository groupRepository) {
         this.logger = logger;
-        this.studentRepository = studentDao;
-        this.groupRepository = groupDao;
+        this.studentRepository = studentRepository;
+        this.groupRepository = groupRepository;
     }
 
     @Override
@@ -64,6 +65,10 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public StudentDto update(StudentDto studentDto) {
         logger.debug("update() [studentDto:{}]", studentDto);
+        int studentId = studentDto.getId();
+        if (!studentRepository.existsById(studentId)) {
+            throw new NoEntityFoundException("Student not exist!");
+        }
         Student student = retriveStudentFromDto(studentDto);
         Student studenUpdated = null;
         try {

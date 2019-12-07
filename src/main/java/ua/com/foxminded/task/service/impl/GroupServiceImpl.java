@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import ua.com.foxminded.task.dao.GroupRepository;
 import ua.com.foxminded.task.dao.exception.EntityAlreadyExistsException;
+import ua.com.foxminded.task.dao.exception.NoEntityFoundException;
 import ua.com.foxminded.task.domain.Group;
 import ua.com.foxminded.task.domain.dto.GroupDto;
 import ua.com.foxminded.task.service.GroupService;
@@ -63,6 +64,10 @@ public class GroupServiceImpl implements GroupService {
     @Override
     public GroupDto update(GroupDto groupDto) {
         logger.debug("update() [groupDto:{}]", groupDto);
+        int groupId = groupDto.getId();
+        if (!groupRepository.existsById(groupId)) {
+            throw new NoEntityFoundException("Group not exist!");
+        }
         Group group = retriveGroupFromDto(groupDto);
         Group groupUpdated = null;
         try {
