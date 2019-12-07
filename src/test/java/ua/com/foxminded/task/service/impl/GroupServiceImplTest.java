@@ -3,29 +3,37 @@ package ua.com.foxminded.task.service.impl;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 import java.util.List;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import ua.com.foxminded.task.dao.GroupRepository;
 import ua.com.foxminded.task.domain.Group;
 import ua.com.foxminded.task.domain.dto.GroupDto;
 import ua.com.foxminded.task.domain.repository.GroupModelRepository;
 import ua.com.foxminded.task.domain.repository.dto.GroupDtoModelRepository;
+
 public class GroupServiceImplTest {
 
-    private Logger logger = LoggerFactory.getLogger(GroupServiceImpl.class);
-    private GroupRepository groupRepository = mock(GroupRepository.class);
-    private GroupServiceImpl groupService = new GroupServiceImpl(logger, groupRepository);
+    @Mock private Logger logger;
+    @Mock private GroupRepository groupRepository;
+    @InjectMocks private GroupServiceImpl groupService;
+
+    @BeforeEach
+    public void initMocks() {
+        MockitoAnnotations.initMocks(this);
+    }
 
     @Test
-    void whenFindById_thenFindGroup() {
+    public void whenFindById_thenFindGroup() {
         Group group = GroupModelRepository.getModel1();
         doReturn(group).when(groupRepository).getOne(1);
 

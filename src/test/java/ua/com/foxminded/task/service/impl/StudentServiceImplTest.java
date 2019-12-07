@@ -2,15 +2,17 @@ package ua.com.foxminded.task.service.impl;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 import java.util.List;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import ua.com.foxminded.task.dao.GroupRepository;
 import ua.com.foxminded.task.dao.StudentRepository;
@@ -22,10 +24,15 @@ import ua.com.foxminded.task.domain.repository.dto.StudentDtoModelRepository;
 
 public class StudentServiceImplTest {
 
-    private Logger logger = LoggerFactory.getLogger(StudentServiceImpl.class);
-    private StudentRepository studentRepository = mock(StudentRepository.class);
-    private GroupRepository groupRepository = mock(GroupRepository.class);
-    private StudentServiceImpl studentService = new StudentServiceImpl(logger, studentRepository, groupRepository);
+    @Mock private Logger logger;
+    @Mock private GroupRepository groupRepository;
+    @Mock private StudentRepository studentRepository;
+    @InjectMocks private StudentServiceImpl studentService;
+
+    @BeforeEach
+    public void initMocks() {
+        MockitoAnnotations.initMocks(this);
+    }
 
     @Test
     void whenFindById_thenFindStudentAndConvertItToDto() {
