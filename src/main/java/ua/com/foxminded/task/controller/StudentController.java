@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import ua.com.foxminded.task.dao.exception.EntityAlreadyExistsException;
+import ua.com.foxminded.task.dao.exception.EntityNotValidException;
 import ua.com.foxminded.task.dao.exception.NoEntityFoundException;
 import ua.com.foxminded.task.dao.exception.NoExecuteQueryException;
 import ua.com.foxminded.task.domain.dto.GroupDto;
@@ -140,10 +141,14 @@ public class StudentController {
                 path = pathEdit;
                 groups = groupService.findAllDto();
             } catch (EntityAlreadyExistsException e) {
-                errorMessage = new StringBuilder("Record sudent was not created/updated! The record already exists!");
+                errorMessage = new StringBuilder("Record sudent was not created! The record already exists!");
                 path = pathEdit;
             } catch (NoEntityFoundException e) {
                 errorMessage = new StringBuilder("Student " + studentDto + " not found!");
+                path = pathEdit;
+            } catch (EntityNotValidException e) {
+                errorMessage = new StringBuilder("Record sudent was not updated! The data is not valid!");
+                path = pathEdit;
             }
         } else {
             errorMessage = new StringBuilder("You enter incorrect data!");

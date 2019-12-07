@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import ua.com.foxminded.task.dao.exception.EntityAlreadyExistsException;
+import ua.com.foxminded.task.dao.exception.EntityNotValidException;
 import ua.com.foxminded.task.dao.exception.NoEntityFoundException;
 import ua.com.foxminded.task.dao.exception.NoExecuteQueryException;
 import ua.com.foxminded.task.domain.dto.GroupDto;
@@ -132,10 +133,13 @@ public class GroupController {
                 errorMessage = new StringBuilder("Record group was not edited!");
                 path = pathEdit;
             } catch (EntityAlreadyExistsException e) {
-                errorMessage = new StringBuilder("Record group was not created/updated! The record already exists!");
+                errorMessage = new StringBuilder("Record group was not created! The record already exists!");
                 path = pathEdit;
             } catch (NoEntityFoundException e) {
                 errorMessage = new StringBuilder("Group " + groupDto + " not found!");
+                path = pathEdit;
+            } catch (EntityNotValidException e) {
+                errorMessage = new StringBuilder("Record group was not updated! The data is not valid!");
                 path = pathEdit;
             }
         } else {

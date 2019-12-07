@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import ua.com.foxminded.task.dao.GroupRepository;
 import ua.com.foxminded.task.dao.StudentRepository;
 import ua.com.foxminded.task.dao.exception.EntityAlreadyExistsException;
+import ua.com.foxminded.task.dao.exception.EntityNotValidException;
 import ua.com.foxminded.task.dao.exception.NoEntityFoundException;
 import ua.com.foxminded.task.domain.Group;
 import ua.com.foxminded.task.domain.Student;
@@ -75,7 +76,7 @@ public class StudentServiceImpl implements StudentService {
             studenUpdated = studentRepository.saveAndFlush(student);
         } catch (DataIntegrityViolationException e) {
             logger.warn("update() [student:{}], exception:{}", student, e);
-            throw new EntityAlreadyExistsException("update() student: " + student, e);
+            throw new EntityNotValidException("update() student: " + student, e);
         }
         return ConverterToDtoService.convert(studenUpdated);
     }

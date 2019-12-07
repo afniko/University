@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import ua.com.foxminded.task.dao.GroupRepository;
 import ua.com.foxminded.task.dao.exception.EntityAlreadyExistsException;
+import ua.com.foxminded.task.dao.exception.EntityNotValidException;
 import ua.com.foxminded.task.dao.exception.NoEntityFoundException;
 import ua.com.foxminded.task.domain.Group;
 import ua.com.foxminded.task.domain.dto.GroupDto;
@@ -74,7 +75,7 @@ public class GroupServiceImpl implements GroupService {
             groupUpdated = groupRepository.saveAndFlush(group);
         } catch (DataIntegrityViolationException e) {
             logger.warn("update() [group:{}], exception:{}", group, e);
-            throw new EntityAlreadyExistsException("update() group: " + group, e);
+            throw new EntityNotValidException("update() group: " + group, e);
         }
         return ConverterToDtoService.convert(groupUpdated);
     }
