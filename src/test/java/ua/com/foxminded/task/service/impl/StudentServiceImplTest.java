@@ -55,12 +55,12 @@ public class StudentServiceImplTest {
     void whenCreate_thenInvocCreateDaoClass() {
         Student student = StudentModelRepository.getModel1();
         StudentDto studentDto = StudentDtoModelRepository.getModel1();
-        doReturn(student).when(studentRepository).save(student);
+        doReturn(student).when(studentRepository).saveAndFlush(student);
         doReturn(student.getGroup()).when(groupRepository).getOne(student.getGroup().getId());
 
         StudentDto studentDtoActually = studentService.create(studentDto);
 
-        verify(studentRepository, times(1)).save(student);
+        verify(studentRepository, times(1)).saveAndFlush(student);
         verify(groupRepository, times(1)).getOne(student.getGroup().getId());
         assertEquals(studentDto, studentDtoActually);
     }
@@ -71,13 +71,13 @@ public class StudentServiceImplTest {
         StudentDto studentDto = StudentDtoModelRepository.getModel1();
         studentDto.setId(1);
         student.setId(1);
-        doReturn(student).when(studentRepository).save(student);
+        doReturn(student).when(studentRepository).saveAndFlush(student);
         doReturn(student).when(studentRepository).getOne(student.getId());
         doReturn(student.getGroup()).when(groupRepository).getOne(student.getGroup().getId());
 
         StudentDto studentDtoActually = studentService.update(studentDto);
 
-        verify(studentRepository, times(1)).save(student);
+        verify(studentRepository, times(1)).saveAndFlush(student);
         verify(studentRepository, times(1)).getOne(student.getId());
         verify(groupRepository, times(1)).getOne(student.getGroup().getId());
         assertEquals(studentDto, studentDtoActually);

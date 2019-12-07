@@ -64,11 +64,11 @@ public class GroupServiceImplTest {
         Group groupInput = GroupModelRepository.getModel1();
         Group groupExpected = GroupModelRepository.getModelWithId();
 
-        doReturn(groupExpected).when(groupRepository).save(groupInput);
+        doReturn(groupExpected).when(groupRepository).saveAndFlush(groupInput);
 
         GroupDto groupDtoActually = groupService.create(groupDto);
 
-        verify(groupRepository, times(1)).save(groupInput);
+        verify(groupRepository, times(1)).saveAndFlush(groupInput);
         assertEquals(groupDto, groupDtoActually);
     }
 
@@ -78,12 +78,12 @@ public class GroupServiceImplTest {
         Group group = GroupModelRepository.getModelWithId();
         Group groupExpected = GroupModelRepository.getModelWithId();
         groupExpected.setId(1);
-        doReturn(groupExpected).when(groupRepository).save(group);
+        doReturn(groupExpected).when(groupRepository).saveAndFlush(group);
         doReturn(group).when(groupRepository).getOne(groupDto.getId());
 
         GroupDto groupDtoActually = groupService.update(groupDto);
 
-        verify(groupRepository, times(1)).save(groupExpected);
+        verify(groupRepository, times(1)).saveAndFlush(groupExpected);
         verify(groupRepository, times(1)).getOne(groupDto.getId());
         assertEquals(groupDto, groupDtoActually);
     }

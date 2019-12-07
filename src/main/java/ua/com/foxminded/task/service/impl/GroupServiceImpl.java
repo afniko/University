@@ -52,7 +52,7 @@ public class GroupServiceImpl implements GroupService {
         Group group = retriveGroupFromDto(groupDto);
         Group groupResult = null;
         try {
-            groupResult = groupRepository.save(group);
+            groupResult = groupRepository.saveAndFlush(group);
         } catch (DataIntegrityViolationException e) {
             logger.warn("create() [group:{}], exception:{}", group, e);
             throw new EntityAlreadyExistsException("create() group: " + group, e);
@@ -66,7 +66,7 @@ public class GroupServiceImpl implements GroupService {
         Group group = retriveGroupFromDto(groupDto);
         Group groupUpdated = null;
         try {
-            groupUpdated = groupRepository.save(group);
+            groupUpdated = groupRepository.saveAndFlush(group);
         } catch (DataIntegrityViolationException e) {
             logger.warn("update() [group:{}], exception:{}", group, e);
             throw new EntityAlreadyExistsException("update() group: " + group, e);

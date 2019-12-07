@@ -53,7 +53,7 @@ public class StudentServiceImpl implements StudentService {
         Student student = retriveStudentFromDto(studentDto);
         Student studentResult = null;
         try {
-            studentResult = studentRepository.save(student);
+            studentResult = studentRepository.saveAndFlush(student);
         } catch (DataIntegrityViolationException e) {
             logger.warn("create() [student:{}], exception:{}", student, e);
             throw new EntityAlreadyExistsException("create() student: " + student, e);
@@ -67,7 +67,7 @@ public class StudentServiceImpl implements StudentService {
         Student student = retriveStudentFromDto(studentDto);
         Student studenUpdated = null;
         try {
-            studenUpdated = studentRepository.save(student);
+            studenUpdated = studentRepository.saveAndFlush(student);
         } catch (DataIntegrityViolationException e) {
             logger.warn("update() [student:{}], exception:{}", student, e);
             throw new EntityAlreadyExistsException("update() student: " + student, e);
