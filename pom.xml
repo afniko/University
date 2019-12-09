@@ -15,7 +15,6 @@
 
     <properties>
         <java.version>1.8</java.version>
-        <org.flywaydb.extensions.flyway-spring-test>6.0.0</org.flywaydb.extensions.flyway-spring-test>
         <org.postgresql.version>42.2.8</org.postgresql.version>
         <mockito.version>2.25.1</mockito.version>
         <commons.lang3.version>3.8.1</commons.lang3.version>
@@ -46,13 +45,6 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>org.flywaydb.flyway-test-extensions</groupId>
-            <artifactId>flyway-spring-test</artifactId>
-            <version>${org.flywaydb.extensions.flyway-spring-test}</version>
             <scope>test</scope>
         </dependency>
 
@@ -89,7 +81,6 @@
             <scope>provided</scope>
         </dependency>
 
-        
     </dependencies>
 
     <build>

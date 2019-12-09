@@ -1,14 +1,11 @@
 package ua.com.foxminded.task.config;
 
-import javax.annotation.Resource;
-
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.context.annotation.PropertySource;
-import org.springframework.core.env.Environment;
 
 @Configuration
 @ComponentScan(basePackages = { "ua.com.foxminded.task" })
@@ -19,15 +16,15 @@ public class TestConfig {
     @Autowired
     private Logger logger;
 
-    @Resource
-    private Environment env;
-
+//    @Resource
+//    private Environment env;
+//
 //    @Bean
 //    @Primary
 //    public DataSourceProperties dataSourceProperties() {
 //        return new DataSourceProperties();
 //    }
-
+//
 //    @Bean
 //    public LocalContainerEntityManagerFactoryBean entityManagerFactory(@Autowired DataSource dataSource) throws NamingException {
 //        final LocalContainerEntityManagerFactoryBean entityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean();
@@ -39,12 +36,12 @@ public class TestConfig {
 //
 //        return entityManagerFactoryBean;
 //    }
-
+//
 //    @Bean
 //    public JpaVendorAdapter jpaVendorAdapter() {
 //        return new HibernateJpaVendorAdapter();
 //    }
-
+//
 //    private Properties getHibernateProperties() {
 //        Properties properties = new Properties();
 //        properties.put("hibernate.dialect", env.getRequiredProperty("db.hibernate.dialect"));
@@ -57,14 +54,14 @@ public class TestConfig {
 //        properties.put("hibernate.cache.use_query_cache", env.getRequiredProperty("db.hibernate.cache.use_query_cache"));
 //        return properties;
 //    }
-
+//
 //    @Bean
 //    public PlatformTransactionManager transactionManager(EntityManagerFactory entityManagerFactory) {
 //        JpaTransactionManager transactionManager = new JpaTransactionManager();
 //        transactionManager.setEntityManagerFactory(entityManagerFactory);
 //        return transactionManager;
 //    }
-
+//
 //    @Bean
 //    public DataSource dataSource() throws NamingException {
 //        DriverManagerDataSource dataSource = new DriverManagerDataSource();
@@ -74,19 +71,19 @@ public class TestConfig {
 //        dataSource.setPassword(env.getProperty("db.password"));
 //        return dataSource;
 //    }
-
+//
 //    @Bean
 //    public HikariDataSource dataSource(DataSourceProperties properties) {
 //        return properties.initializeDataSourceBuilder().type(HikariDataSource.class).build();
 //    }
-
+//
 //    @Bean
 //    @Scope("prototype")
 //    public Logger produceLogger(InjectionPoint injectionPoint) {
 //        Class<?> classOnWired = injectionPoint.getMember().getDeclaringClass();
 //        return LoggerFactory.getLogger(classOnWired);
 //    }
-
+//
 //    @Bean(initMethod = "migrate")
 //    public Flyway flyway() {
 //        logger.info("flyway()");

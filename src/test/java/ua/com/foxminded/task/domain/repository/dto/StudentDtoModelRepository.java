@@ -118,4 +118,17 @@ public class StudentDtoModelRepository {
         return student;
     }
 
+    public static StudentDto getModel7() {
+        StudentDto student = new StudentDto();
+        Group group = GroupModelRepository.getModel13();
+        group.setId(3);
+        student.setFirstName("firstName7");
+        student.setMiddleName("middleName7");
+        student.setLastName("lastName7");
+        student.setBirthday(LocalDate.parse("1997-02-15"));
+        student.setIdFees(111111667);
+        student.setGroupTitle(group.getTitle());
+        student.setIdGroup(String.valueOf(group.getId()));
+        return student;
+    }
 }
