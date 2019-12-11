@@ -139,7 +139,7 @@ public class GroupController {
                 errorMessage = new StringBuilder("Group " + groupDto + " not found!");
                 path = pathEdit;
             } catch (EntityNotValidException e) {
-                errorMessage = new StringBuilder("Record group was not updated! The data is not valid!");
+                errorMessage = new StringBuilder("Record group was not updated/created! The data is not valid!");
                 path = pathEdit;
             }
         } else {

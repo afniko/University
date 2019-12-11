@@ -52,13 +52,17 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public StudentDto create(StudentDto studentDto) {
         logger.debug("create() [studentDto:{}]", studentDto);
+        if (studentDto.getId()!=0) {
+            logger.warn("create() [studentDto:{}]", studentDto);
+            throw new EntityAlreadyExistsException("create() studentDto: " + studentDto);
+        }
         Student student = retriveStudentFromDto(studentDto);
         Student studentResult = null;
         try {
             studentResult = studentRepository.saveAndFlush(student);
         } catch (DataIntegrityViolationException e) {
             logger.warn("create() [student:{}], exception:{}", student, e);
-            throw new EntityAlreadyExistsException("create() student: " + student, e);
+            throw new EntityNotValidException("create() student: " + student, e);
         }
         return ConverterToDtoService.convert(studentResult);
     }

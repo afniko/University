@@ -147,7 +147,7 @@ public class StudentController {
                 errorMessage = new StringBuilder("Student " + studentDto + " not found!");
                 path = pathEdit;
             } catch (EntityNotValidException e) {
-                errorMessage = new StringBuilder("Record sudent was not updated! The data is not valid!");
+                errorMessage = new StringBuilder("Record sudent was not updated/created! The data is not valid!");
                 path = pathEdit;
             }
         } else {

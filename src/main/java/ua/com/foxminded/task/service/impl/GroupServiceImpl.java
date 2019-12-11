@@ -51,13 +51,17 @@ public class GroupServiceImpl implements GroupService {
     @Override
     public GroupDto create(GroupDto groupDto) {
         logger.debug("create() [groupDto:{}]", groupDto);
+        if (groupDto.getId()!=0) {
+            logger.warn("create() [groupDto:{}]", groupDto);
+            throw new EntityAlreadyExistsException("create() groupDto: " + groupDto);
+        }
         Group group = retriveGroupFromDto(groupDto);
         Group groupResult = null;
         try {
             groupResult = groupRepository.saveAndFlush(group);
         } catch (DataIntegrityViolationException e) {
             logger.warn("create() [group:{}], exception:{}", group, e);
-            throw new EntityAlreadyExistsException("create() group: " + group, e);
+            throw new EntityNotValidException("create() group: " + group, e);
         }
         return ConverterToDtoService.convert(groupResult);
     }
