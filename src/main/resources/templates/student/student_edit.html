@@ -17,43 +17,48 @@
     <br />
 
     <div class="container-fluid">
-        <form class="form-horizontal" th:action="@{/student_edit}" method="post" modelAttribute="studentDto">
+        <form class="form-horizontal" action="#" th:action="@{/student_edit}" method="post" th:object="${studentDto}">
             <div class="form-group">
                 <label for="text" class="col-sm-2 control-label">First name</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" id="firstName" name="firstName" th:value="${student.firstName}" placeholder="Enter first name">
+                    <input type="text" class="form-control" th:field="*{firstName}" placeholder="Enter first name" required> <small class="text-danger"
+                        th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}">Name Error</small>
                 </div>
                 <label for="text" class="col-sm-2 control-label">Last name</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" id="lastName" name="lastName" th:value="${student.lastName}" placeholder="Enter last name">
+                    <input type="text" class="form-control" th:field="*{lastName}" placeholder="Enter last name"> <small class="text-danger" th:if="${#fields.hasErrors('lastName')}"
+                        th:errors="*{lastName}">Name Error</small>
                 </div>
                 <label for="text" class="col-sm-2 control-label">Middle name</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" id="middleName" name="middleName" th:value="${student.middleName}" placeholder="Enter middle name">
+                    <input type="text" class="form-control" th:field="*{middleName}" placeholder="Enter middle name"> <small class="text-danger" th:if="${#fields.hasErrors('middleName')}"
+                        th:errors="*{middleName}">Name Error</small>
                 </div>
                 <label for="text" class="col-sm-2 control-label">Birthday</label>
                 <div class="col-sm-10">
-                    <input th:type="date" class="form-control" id="birthday" name="birthday" th:value="${student.birthday}" placeholder="YYYY-MM-DD">
+                    <input th:type="date" class="form-control" th:field="*{birthday}" placeholder="YYYY-MM-DD" required> <small class="text-danger" th:if="${#fields.hasErrors('birthday')}"
+                        th:errors="*{birthday}">Name Error</small>
                 </div>
                 <label for="text" class="col-sm-2 control-label">Id fees</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" id="idFees" name="idFees" th:value="${student.idFees}>0 ? ${student.idFees} : null" placeholder="XXXXXXXXX - 9 number">
+                    <input type="text" class="form-control" id="idFees" name="idFees" th:value="${studentDto.idFees}>0 ? ${studentDto.idFees} : null" placeholder="XXXXXXXXX - 9 number" required>
+                    <small class="text-danger" th:if="${#fields.hasErrors('idFees')}" th:errors="*{idFees}">Name Error</small>
                 </div>
                 <label for="text" class="col-sm-2 control-label">Group</label>
                 <div class="col-sm-10">
-                    <select class="selectpicker" data-live-search="true" id="idGroup" name="idGroup">
-                        <option value="" th:text="${student.groupTitle}==null ? 'Choose group':'Remove group'"></option>
-                        <option th:each="group : ${groups}" th:value="${group.id}" th:text=${group.title} th:selected="${student.idGroup}==${group.id}"></option>
-                    </select>
+                    <select class="selectpicker" data-live-search="true" th:field="*{idGroup}">
+                        <option value="" th:text="${studentDto.groupTitle}==null ? 'Choose group':'Remove group'"></option>
+                        <option th:each="group : ${groups}" th:value="${group.id}" th:text=${group.title} th:selected="${studentDto.idGroup}==${group.id}"></option>
+                    </select> <small class="text-danger" th:if="${#fields.hasErrors('idGroup')}" th:errors="*{idGroup}">Name Error</small>
                 </div>
             </div>
             <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">
-                    <th:block th:if="${student.groupTitle!=null}">
-                        <input type="hidden" id="groupTitle" name="groupTitle" th:value="${student.groupTitle}" />
+                    <th:block th:if="${groupTitle!=null}">
+                        <input type="hidden" th:field="*{groupTitle}" />
                     </th:block>
-                    <input type="hidden" name="id" th:value="${student.id}" />
-                    <button type="submit" class="btn btn-default" th:text="${student.id}==0 ? 'Create' : 'Update'"></button>
+                    <input type="hidden" th:field="*{id}" />
+                    <button type="submit" class="btn btn-default" th:text="${studentDto.id}==0 ? 'Create' : 'Update'"></button>
                 </div>
             </div>
         </form>

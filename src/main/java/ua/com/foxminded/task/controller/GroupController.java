@@ -10,8 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
-import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -114,7 +112,7 @@ public class GroupController {
                            BindingResult bindingResult, 
                            Model model) {
         logger.debug("editPost()");
-        StringBuilder errorMessage = null;
+        String errorMessage = null;
         String successMessage = null;
         String path = PATH_HTML_GROUP;
         String pathEdit = PATH_HTML_GROUP_EDIT;
@@ -130,28 +128,21 @@ public class GroupController {
                     successMessage = "Record group was created!";
                 }
             } catch (NoExecuteQueryException e) {
-                errorMessage = new StringBuilder("Record group was not edited!");
+                errorMessage = "Record group was not edited!";
                 path = pathEdit;
             } catch (EntityAlreadyExistsException e) {
-                errorMessage = new StringBuilder("Record group was not created! The record already exists!");
+                errorMessage = "Record group was not created! The record already exists!";
                 path = pathEdit;
             } catch (NoEntityFoundException e) {
-                errorMessage = new StringBuilder("Group " + groupDto + " not found!");
+                errorMessage = "Group " + groupDto + " not found!";
                 path = pathEdit;
             } catch (EntityNotValidException e) {
-                errorMessage = new StringBuilder("Record group was not updated/created! The data is not valid!");
+                bindingResult.rejectValue("title", "error.groupDto", "The title already exists!");
+                errorMessage = "Record group was not updated/created! The data is not valid!";
                 path = pathEdit;
             }
         } else {
-            logger.info("editPost() bindingResult: " + bindingResult.getModel());
-            errorMessage = new StringBuilder("You enter incorrect data! ");
-            List<ObjectError> errors = bindingResult.getAllErrors();
-            for (ObjectError error : errors) {
-                String fieldName = ((FieldError) error).getField();
-                String message = error.getDefaultMessage();
-                errorMessage.append(" ");
-                errorMessage.append("field " + fieldName + " has error:" + message);
-            }
+            errorMessage = "You enter incorrect data! ";
             path = pathEdit;
         }
 

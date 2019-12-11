@@ -10,8 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
-import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -33,7 +31,7 @@ public class StudentController {
     private static final String PATH_HTML_STUDENTS = "student/students";
     private static final String PATH_HTML_STUDENT_EDIT = "student/student_edit";
     private static final String ATTRIBUTE_HTML_TITLE = "title";
-    private static final String ATTRIBUTE_HTML_STUDENT = "student";
+    private static final String ATTRIBUTE_HTML_STUDENT = "studentDto";
     private static final String ATTRIBUTE_HTML_STUDENTS = "students";
     private static final String ATTRIBUTE_HTML_GROUPS = "groups";
     private static final String ATTRIBUTE_HTML_ERROR_MESSAGE = "errorMessage";
@@ -70,13 +68,13 @@ public class StudentController {
     public String student(@RequestParam("id") String idString, Model model) {
         logger.debug("student()");
         String errorMessage = null;
-        StudentDto student = null;
+        StudentDto studentDto = null;
         List<GroupDto> groups = null;
         int id = 0;
         try {
             if (checkId(idString)) {
                 id = Integer.valueOf(idString);
-                student = studentService.findByIdDto(id);
+                studentDto = studentService.findByIdDto(id);
                 groups = groupService.findAllDto();
             } else {
                 errorMessage = "You id is blank";
@@ -89,7 +87,7 @@ public class StudentController {
             errorMessage = "Student id# must be numeric!";
         }
         model.addAttribute(ATTRIBUTE_HTML_TITLE, "Student");
-        model.addAttribute(ATTRIBUTE_HTML_STUDENT, student);
+        model.addAttribute(ATTRIBUTE_HTML_STUDENT, studentDto);
         model.addAttribute(ATTRIBUTE_HTML_GROUPS, groups);
         model.addAttribute(ATTRIBUTE_HTML_ERROR_MESSAGE, errorMessage);
         return PATH_HTML_STUDENT;
@@ -99,10 +97,10 @@ public class StudentController {
     public String editGet(@RequestParam(name = "id", required = false) String id, Model model) {
         logger.debug("editGet(), id: {}", id);
         String errorMessage = null;
-        StudentDto student = new StudentDto();
+        StudentDto studentDto = new StudentDto();
         try {
             if (checkId(id)) {
-                student = studentService.findByIdDto(Integer.valueOf(id));
+                studentDto = studentService.findByIdDto(Integer.valueOf(id));
             }
         } catch (NoEntityFoundException e) {
             errorMessage = "Problem with finding group";
@@ -110,7 +108,7 @@ public class StudentController {
         List<GroupDto> groups = groupService.findAllDto();
 
         model.addAttribute(ATTRIBUTE_HTML_TITLE, "Student edit");
-        model.addAttribute(ATTRIBUTE_HTML_STUDENT, student);
+        model.addAttribute(ATTRIBUTE_HTML_STUDENT, studentDto);
         model.addAttribute(ATTRIBUTE_HTML_GROUPS, groups);
         model.addAttribute(ATTRIBUTE_HTML_ERROR_MESSAGE, errorMessage);
         return PATH_HTML_STUDENT_EDIT;
@@ -118,10 +116,9 @@ public class StudentController {
 
     @PostMapping("/student_edit")
     public String editPost(@Valid @ModelAttribute("studentDto") StudentDto studentDto, 
-                           BindingResult bindingResult, 
-                           Model model) {
+            BindingResult bindingResult, Model model) {
         logger.debug("editPost()");
-        StringBuilder errorMessage = null;
+        String errorMessage = null;
         String successMessage = null;
         List<GroupDto> groups = null;
         String path = PATH_HTML_STUDENT;
@@ -137,28 +134,22 @@ public class StudentController {
                     successMessage = "Record student was created";
                 }
             } catch (NoExecuteQueryException e) {
-                errorMessage = new StringBuilder("Record student was not edited!");
+                errorMessage = "Record student was not edited!";
                 path = pathEdit;
                 groups = groupService.findAllDto();
             } catch (EntityAlreadyExistsException e) {
-                errorMessage = new StringBuilder("Record sudent was not created! The record already exists!");
+                errorMessage = "Record sudent was not created! The record already exists!";
                 path = pathEdit;
             } catch (NoEntityFoundException e) {
-                errorMessage = new StringBuilder("Student " + studentDto + " not found!");
+                errorMessage = "Student " + studentDto + " not found!";
                 path = pathEdit;
             } catch (EntityNotValidException e) {
-                errorMessage = new StringBuilder("Record sudent was not updated/created! The data is not valid!");
+                bindingResult.rejectValue("idFees", "error.studentDto", "The id fees number already exists!");
+                errorMessage = "Record sudent was not updated/created! The data is not valid!";
                 path = pathEdit;
             }
         } else {
-            errorMessage = new StringBuilder("You enter incorrect data!");
-            List<ObjectError> errors = bindingResult.getAllErrors();
-            for (ObjectError error : errors) {
-                String fieldName = ((FieldError) error).getField();
-                String message = error.getDefaultMessage();
-                errorMessage.append(" ");
-                errorMessage.append("field " + fieldName + " has error:" + message);
-            }
+            errorMessage = "You enter incorrect data!";
             path = pathEdit;
             groups = groupService.findAllDto();
         }
