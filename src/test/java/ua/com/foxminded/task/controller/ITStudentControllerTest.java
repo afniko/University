@@ -33,11 +33,14 @@ import ua.com.foxminded.task.domain.repository.dto.StudentDtoModelRepository;
 
 @SpringBootTest
 public class ITStudentControllerTest {
-    
-    @Autowired private Flyway flyway;
-    @Autowired private GroupRepository groupRepository;
-    @Autowired private StudentRepository studentRepository;
-    
+
+    @Autowired
+    private Flyway flyway;
+    @Autowired
+    private GroupRepository groupRepository;
+    @Autowired
+    private StudentRepository studentRepository;
+
     private static final String PATH_HTML_STUDENT = "student/student";
     private static final String PATH_HTML_STUDENTS = "student/students";
     private static final String PATH_HTML_STUDENT_EDIT = "student/student_edit";
@@ -50,10 +53,6 @@ public class ITStudentControllerTest {
     private static final Group GROUP2 = GroupModelRepository.getModel2();
     private static final Group GROUP3 = GroupModelRepository.getModel3();
     private static final Group GROUP4 = GroupModelRepository.getModel4();
-    private static final GroupDto GROUP_DTO1 = GroupDtoModelRepository.getModel1();
-    private static final GroupDto GROUP_DTO2 = GroupDtoModelRepository.getModel2();
-    private static final GroupDto GROUP_DTO3 = GroupDtoModelRepository.getModel3();
-    private static final GroupDto GROUP_DTO4 = GroupDtoModelRepository.getModel4();
 
     private MockMvc mockMvc;
 

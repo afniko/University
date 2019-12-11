@@ -18,8 +18,10 @@ import ua.com.foxminded.task.domain.repository.GroupModelRepository;
 @SpringBootTest
 public class ITGroupRepositoryTest {
 
-    @Autowired private GroupRepository groupRepository;
-    @Autowired private Flyway flyway;
+    @Autowired
+    private GroupRepository groupRepository;
+    @Autowired
+    private Flyway flyway;
 
     private static final Group GROUP11 = GroupModelRepository.getModel11();
     private static final Group GROUP12 = GroupModelRepository.getModel12();

@@ -23,9 +23,12 @@ import ua.com.foxminded.task.domain.repository.dto.GroupDtoModelRepository;
 
 public class GroupServiceImplTest {
 
-    @Mock private Logger logger;
-    @Mock private GroupRepository groupRepository;
-    @InjectMocks private GroupServiceImpl groupService;
+    @Mock
+    private Logger logger;
+    @Mock
+    private GroupRepository groupRepository;
+    @InjectMocks
+    private GroupServiceImpl groupService;
 
     @BeforeEach
     public void initMocks() {

@@ -21,9 +21,12 @@ import ua.com.foxminded.task.domain.repository.StudentModelRepository;
 @SpringBootTest
 public class ITStudentRepositoryTest {
 
-    @Autowired private StudentRepository studentRepository;
-    @Autowired private GroupRepository groupRepository;
-    @Autowired private Flyway flyway;
+    @Autowired
+    private StudentRepository studentRepository;
+    @Autowired
+    private GroupRepository groupRepository;
+    @Autowired
+    private Flyway flyway;
 
     private static final Student STUDENT1 = StudentModelRepository.getModel1();
     private static final Student STUDENT2 = StudentModelRepository.getModel2();

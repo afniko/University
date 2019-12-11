@@ -30,10 +30,12 @@ import ua.com.foxminded.task.domain.repository.dto.GroupDtoModelRepository;
 
 @SpringBootTest
 public class ITGroupControllerTest {
-    
-    @Autowired private Flyway flyway;
-    @Autowired private GroupRepository groupRepository;
-    
+
+    @Autowired
+    private Flyway flyway;
+    @Autowired
+    private GroupRepository groupRepository;
+
     private static final String PATH_HTML_GROUP = "group/group";
     private static final String PATH_HTML_GROUPS = "group/groups";
     private static final String PATH_HTML_GROUP_EDIT = "group/group_edit";

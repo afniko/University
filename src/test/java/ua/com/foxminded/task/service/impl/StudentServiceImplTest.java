@@ -21,13 +21,16 @@ import ua.com.foxminded.task.domain.dto.StudentDto;
 import ua.com.foxminded.task.domain.repository.StudentModelRepository;
 import ua.com.foxminded.task.domain.repository.dto.StudentDtoModelRepository;
 
-
 public class StudentServiceImplTest {
 
-    @Mock private Logger logger;
-    @Mock private GroupRepository groupRepository;
-    @Mock private StudentRepository studentRepository;
-    @InjectMocks private StudentServiceImpl studentService;
+    @Mock
+    private Logger logger;
+    @Mock
+    private GroupRepository groupRepository;
+    @Mock
+    private StudentRepository studentRepository;
+    @InjectMocks
+    private StudentServiceImpl studentService;
 
     @BeforeEach
     public void initMocks() {
