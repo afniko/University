@@ -93,7 +93,9 @@ Branch: task17.2
 ####Task 18 - Spring Boot
 Convert application to Spring Boot
 Branch: task18
-
+####Task 19 - Spring Data JPA
+Rewrite the DAO layer. Use Spring Data JPA instead of Hibernate.
+Branch: task19
 
 ##Author
 With best regards, Mykola Afanasiev!

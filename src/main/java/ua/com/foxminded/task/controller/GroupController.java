@@ -1,24 +1,24 @@
 package ua.com.foxminded.task.controller;
 
 import java.util.List;
-import java.util.Set;
 
-import javax.validation.ConstraintViolation;
-import javax.validation.Validation;
-import javax.validation.Validator;
-import javax.validation.ValidatorFactory;
+import javax.validation.Valid;
 
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import ua.com.foxminded.task.dao.exception.EntityAlreadyExistsException;
+import ua.com.foxminded.task.dao.exception.EntityNotValidException;
 import ua.com.foxminded.task.dao.exception.NoEntityFoundException;
 import ua.com.foxminded.task.dao.exception.NoExecuteQueryException;
 import ua.com.foxminded.task.domain.dto.GroupDto;
@@ -110,15 +110,16 @@ public class GroupController {
     }
 
     @PostMapping("/group_edit")
-    public String editPost(@ModelAttribute("groupDto") GroupDto groupDto, Model model) {
+    public String editPost(@Valid @ModelAttribute("groupDto") GroupDto groupDto, 
+                           BindingResult bindingResult, 
+                           Model model) {
         logger.debug("editPost()");
         StringBuilder errorMessage = null;
         String successMessage = null;
         String path = PATH_HTML_GROUP;
         String pathEdit = PATH_HTML_GROUP_EDIT;
 
-        Set<ConstraintViolation<GroupDto>> violations = validateGroupDto(groupDto);
-        if (violations.isEmpty()) {
+        if (!bindingResult.hasErrors()) {
 
             try {
                 if (groupDto.getId() != 0) {
@@ -132,14 +133,23 @@ public class GroupController {
                 errorMessage = new StringBuilder("Record group was not edited!");
                 path = pathEdit;
             } catch (EntityAlreadyExistsException e) {
-                errorMessage = new StringBuilder("Record group was not created/updated! The record already exists!");
+                errorMessage = new StringBuilder("Record group was not created! The record already exists!");
+                path = pathEdit;
+            } catch (NoEntityFoundException e) {
+                errorMessage = new StringBuilder("Group " + groupDto + " not found!");
+                path = pathEdit;
+            } catch (EntityNotValidException e) {
+                errorMessage = new StringBuilder("Record group was not updated/created! The data is not valid!");
                 path = pathEdit;
             }
         } else {
             errorMessage = new StringBuilder("You enter incorrect data! ");
-            for (ConstraintViolation<GroupDto> violation : violations) {
+            List<ObjectError> errors = bindingResult.getAllErrors();
+            for (ObjectError error : errors) {
+                String fieldName = ((FieldError) error).getField();
+                String message = error.getDefaultMessage();
                 errorMessage.append(" ");
-                errorMessage.append(violation.getMessage());
+                errorMessage.append("field " + fieldName + " has error:" + message);
             }
             path = pathEdit;
         }
@@ -149,15 +159,6 @@ public class GroupController {
         model.addAttribute(ATTRIBUTE_HTML_ERROR_MESSAGE, errorMessage);
         model.addAttribute(ATTRIBUTE_HTML_SUCCESS_MESSAGE, successMessage);
         return path;
-    }
-
-    private Set<ConstraintViolation<GroupDto>> validateGroupDto(GroupDto groupDto) {
-        logger.debug("validateGroupDto()");
-        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
-        Validator validator = factory.getValidator();
-        Set<ConstraintViolation<GroupDto>> violations = validator.validate(groupDto);
-        factory.close();
-        return violations;
     }
 
     private boolean checkId(String id) {

@@ -5,9 +5,13 @@ import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
-import ua.com.foxminded.task.dao.GroupDao;
+import ua.com.foxminded.task.dao.GroupRepository;
+import ua.com.foxminded.task.dao.exception.EntityAlreadyExistsException;
+import ua.com.foxminded.task.dao.exception.EntityNotValidException;
+import ua.com.foxminded.task.dao.exception.NoEntityFoundException;
 import ua.com.foxminded.task.domain.Group;
 import ua.com.foxminded.task.domain.dto.GroupDto;
 import ua.com.foxminded.task.service.GroupService;
@@ -16,19 +20,19 @@ import ua.com.foxminded.task.service.converter.ConverterToDtoService;
 @Service
 public class GroupServiceImpl implements GroupService {
 
-    private GroupDao groupDao;
+    private GroupRepository groupRepository;
     private Logger logger;
 
     @Autowired
-    public GroupServiceImpl(Logger logger, GroupDao groupDao) {
+    public GroupServiceImpl(Logger logger, GroupRepository groupRepository) {
         this.logger = logger;
-        this.groupDao = groupDao;
+        this.groupRepository = groupRepository;
     }
 
     @Override
     public Group findById(int id) {
         logger.debug("findById() [id:{}]", id);
-        return groupDao.findById(id);
+        return groupRepository.getOne(id);
     }
 
     @Override
@@ -41,27 +45,47 @@ public class GroupServiceImpl implements GroupService {
     @Override
     public List<GroupDto> findAllDto() {
         logger.debug("findAllDto()");
-        return groupDao.findAll().stream().map(ConverterToDtoService::convert).collect(Collectors.toList());
+        return groupRepository.findAll().stream().map(ConverterToDtoService::convert).collect(Collectors.toList());
     }
 
     @Override
     public GroupDto create(GroupDto groupDto) {
         logger.debug("create() [groupDto:{}]", groupDto);
+        if (groupDto.getId()!=0) {
+            logger.warn("create() [groupDto:{}]", groupDto);
+            throw new EntityAlreadyExistsException("create() groupDto: " + groupDto);
+        }
         Group group = retriveGroupFromDto(groupDto);
-        Group groupResult = groupDao.create(group);
+        Group groupResult = null;
+        try {
+            groupResult = groupRepository.saveAndFlush(group);
+        } catch (DataIntegrityViolationException e) {
+            logger.warn("create() [group:{}], exception:{}", group, e);
+            throw new EntityNotValidException("create() group: " + group, e);
+        }
         return ConverterToDtoService.convert(groupResult);
     }
 
     @Override
     public GroupDto update(GroupDto groupDto) {
         logger.debug("update() [groupDto:{}]", groupDto);
+        int groupId = groupDto.getId();
+        if (!groupRepository.existsById(groupId)) {
+            throw new NoEntityFoundException("Group not exist!");
+        }
         Group group = retriveGroupFromDto(groupDto);
-        Group groupUpdated = groupDao.update(group);
+        Group groupUpdated = null;
+        try {
+            groupUpdated = groupRepository.saveAndFlush(group);
+        } catch (DataIntegrityViolationException e) {
+            logger.warn("update() [group:{}], exception:{}", group, e);
+            throw new EntityNotValidException("update() group: " + group, e);
+        }
         return ConverterToDtoService.convert(groupUpdated);
     }
 
     private Group retriveGroupFromDto(GroupDto groupDto) {
-        Group group = (groupDto.getId() != 0) ? groupDao.findById(groupDto.getId()) : new Group();
+        Group group = (groupDto.getId() != 0) ? groupRepository.getOne(groupDto.getId()) : new Group();
         group.setTitle(groupDto.getTitle());
         group.setYearEntry(groupDto.getYearEntry());
         return group;

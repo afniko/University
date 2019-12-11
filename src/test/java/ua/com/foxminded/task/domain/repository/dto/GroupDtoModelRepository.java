@@ -84,7 +84,7 @@ public class GroupDtoModelRepository {
         return group;
     }
 
-    private static GroupDto getModel6() {
+    public static GroupDto getModel6() {
         GroupDto group = new GroupDto();
         group.setTitle("group6");
         group.setYearEntry(2019);

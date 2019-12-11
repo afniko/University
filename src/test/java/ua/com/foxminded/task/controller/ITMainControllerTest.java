@@ -10,13 +10,13 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-@WebMvcTest(controllers=MainController.class)
-public class MainControllerTest {
+@SpringBootTest
+public class ITMainControllerTest {
 
     private MockMvc mockMvc;
     private Logger logger = LoggerFactory.getLogger(StudentController.class);
