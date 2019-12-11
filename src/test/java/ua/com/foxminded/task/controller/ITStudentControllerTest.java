@@ -45,7 +45,7 @@ public class ITStudentControllerTest {
     private static final String PATH_HTML_STUDENTS = "student/students";
     private static final String PATH_HTML_STUDENT_EDIT = "student/student_edit";
     private static final String ATTRIBUTE_HTML_TITLE = "title";
-    private static final String ATTRIBUTE_HTML_STUDENT = "student";
+    private static final String ATTRIBUTE_HTML_STUDENT = "studentDto";
     private static final String ATTRIBUTE_HTML_STUDENTS = "students";
     private static final String ATTRIBUTE_HTML_GROUPS = "groups";
     private static final String ATTRIBUTE_HTML_SUCCESS_MESSAGE = "successMessage";

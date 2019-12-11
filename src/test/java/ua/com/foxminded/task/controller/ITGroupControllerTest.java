@@ -40,7 +40,7 @@ public class ITGroupControllerTest {
     private static final String PATH_HTML_GROUPS = "group/groups";
     private static final String PATH_HTML_GROUP_EDIT = "group/group_edit";
     private static final String ATTRIBUTE_HTML_TITLE = "title";
-    private static final String ATTRIBUTE_HTML_GROUP = "group";
+    private static final String ATTRIBUTE_HTML_GROUP = "groupDto";
     private static final String ATTRIBUTE_HTML_GROUPS = "groups";
     private static final String ATTRIBUTE_HTML_SUCCESS_MESSAGE = "successMessage";
     private static final Group GROUP1 = GroupModelRepository.getModel1();
