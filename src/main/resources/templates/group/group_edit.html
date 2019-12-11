@@ -17,27 +17,28 @@
     <br />
 
     <div class="container-fluid">
-        <form class="form-horizontal" th:action="@{/group_edit}" method="post" modelAttribute="groupDto">
+        <form class="form-horizontal" action="#" th:action="@{/group_edit}" method="post" th:object="${groupDto}">
             <div class="form-group">
                 <label for="text" class="col-sm-3 control-label">Title</label>
                 <div class="col-sm-9">
-                    <input type="text" class="form-control"  id="title" name="title" placeholder="Enter title" th:value="${group.title}">
+                    <input type="text" class="form-control" th:field="*{title}" placeholder="Enter title" th:value="${title}">
                 </div>
 
                 <label for="text" class="col-sm-3 control-label">Year of entry</label>
                 <div class="col-sm-9">
-                    <input type="text" class="form-control" id="yearEntry" name="yearEntry" placeholder="YYYY" th:value="${group.yearEntry}">
+                    <input type="text" class="form-control" th:field="*{yearEntry}" placeholder="YYYY" th:value="${yearEntry}">
+                    <span th:if="${#fields.hasErrors('yearEntry')}" th:errors="*{yearEntry}">Name Error</span>
                 </div>
             </div>
 
             <div class="form-group">
                 <div class="col-sm-offset-3 col-sm-9">
-                    <th:block th:if="${group.id==0}">
+                    <th:block th:if="${id==0}">
                         <button type="submit" class="btn btn-success">Create</button>
                     </th:block>
 
-                    <th:block th:if="${group.id!=0}">
-                        <input type="hidden" name="id" th:value="${group.id}" />
+                    <th:block th:if="${id!=0}">
+                        <input type="hidden" th:field="*{id}" th:value="${id}" />
                         <button type="submit" class="btn btn-danger">Update</button>
                     </th:block>
 
