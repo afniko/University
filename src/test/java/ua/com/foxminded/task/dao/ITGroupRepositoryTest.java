@@ -1,6 +1,7 @@
 package ua.com.foxminded.task.dao;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.util.Arrays;
@@ -36,24 +37,31 @@ public class ITGroupRepositoryTest {
     }
 
     @Test
-    public void WhenPutAtTableDbGroupObjects_thenGetThisObjectsFindById() {
+    public void whenPutAtTableDbGroupObjects_thenGetThisObjectsFindById() {
         int id = GROUP12.getId();
         assertTrue(groupRepository.findById(id).get().equals(GROUP12));
     }
 
     @Test
-    public void WhenPutAtTableDbGroupObjects_thenGetThisObjects() {
+    public void whenPutAtTableDbGroupObjects_thenGetThisObjects() {
         assertTrue(groupRepository.findAll().containsAll(Arrays.asList(GROUP11, GROUP12, GROUP13)));
     }
 
     @Test
-    public void WhenUpdateAtTableDbGroupObject_thenGetNewObject() {
+    public void whenUpdateAtTableDbGroupObject_thenGetNewObject() {
         String titleExpected = "test_title_text";
         Group group = groupRepository.findById(1).get();
         group.setTitle(titleExpected);
         Group groupActually = groupRepository.save(group);
         String titleActually = groupActually.getTitle();
         assertEquals(titleExpected, titleActually);
+    }
+
+    @Test
+    public void whenPutTitle_thenCheckExitsGroup() {
+        String existsTitle = GROUP11.getTitle();
+        assertTrue(groupRepository.existsByTitle(existsTitle));
+        assertFalse(groupRepository.existsByTitle("Not existing title"));
     }
 
     @AfterEach

@@ -116,6 +116,7 @@ public class ITGroupControllerTest {
   @Test
   void whenRetriveHttpPostRequestGroupEditAndGroupWithId_thenExpectViewNameGroupeditWithAttribute() throws Exception {
       GroupDto groupDto = GroupDtoModelRepository.getModelWithId();
+      groupDto.setTitle("uniqueTitle");
       String httpRequest = "/group_edit";
       MvcResult mvcResult = this.mockMvc.perform(post(httpRequest).accept(MediaType.TEXT_HTML_VALUE).flashAttr("groupDto", groupDto))
               .andExpect(status().isOk())

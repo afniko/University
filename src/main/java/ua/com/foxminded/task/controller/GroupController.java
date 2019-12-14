@@ -137,7 +137,7 @@ public class GroupController {
                 errorMessage = "Group " + groupDto + " not found!";
                 path = pathEdit;
             } catch (EntityNotValidException e) {
-                bindingResult.rejectValue("title", "error.groupDto", "The title already exists!");
+                bindingResult.rejectValue("title", "error.groupDto", "The title value is not valid!");
                 errorMessage = "Record group was not updated/created! The data is not valid!";
                 path = pathEdit;
             }
