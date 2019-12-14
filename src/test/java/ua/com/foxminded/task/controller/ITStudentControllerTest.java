@@ -124,7 +124,6 @@ public class ITStudentControllerTest {
   void whenRetriveHttpPostRequestStudentEditAndStudentWithId_thenExpectViewNameStudenteditWithAttribute() throws Exception {
       StudentDto studentDto = StudentDtoModelRepository.getModel1();
       studentDto.setId(1);
-      studentDto.setIdFees(121212121);
       String httpRequest = "/student_edit";
       MvcResult mvcResult = this.mockMvc.perform(post(httpRequest).accept(MediaType.TEXT_HTML_VALUE).flashAttr("studentDto", studentDto))
               .andExpect(status().isOk())

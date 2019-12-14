@@ -1,9 +1,11 @@
 package ua.com.foxminded.task.controller;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
@@ -66,7 +68,7 @@ public class ITGroupControllerTest {
 
     @Test
     void whenRetriveHttpGetRequestGroups_thenExpectViewNameGroupsAndAllGroupsFromDataBase() throws Exception {
-        List<GroupDto> groups = Arrays.asList(GROUP_DTO1, GROUP_DTO2, GROUP_DTO3, GROUP_DTO4);
+        List<GroupDto> groups = Arrays.asList(GROUP_DTO1, GROUP_DTO2, GROUP_DTO3);
         MvcResult mvcResult =  this.mockMvc.perform(get("/groups").accept(MediaType.APPLICATION_JSON))
         .andExpect(status().isOk())
         .andExpect(view().name(PATH_HTML_GROUPS))
@@ -76,7 +78,7 @@ public class ITGroupControllerTest {
         String actuallyTitle = mvcResult.getRequest().getAttribute(ATTRIBUTE_HTML_TITLE).toString();
         assertEquals(actuallyTitle, expectedTitle);
         List<GroupDto> actuallyGroups = (List<GroupDto>) mvcResult.getRequest().getAttribute(ATTRIBUTE_HTML_GROUPS);
-        assertEquals(groups, actuallyGroups);
+        assertTrue( actuallyGroups.containsAll(groups));
     }
 
   @Test
@@ -116,7 +118,6 @@ public class ITGroupControllerTest {
   @Test
   void whenRetriveHttpPostRequestGroupEditAndGroupWithId_thenExpectViewNameGroupeditWithAttribute() throws Exception {
       GroupDto groupDto = GroupDtoModelRepository.getModelWithId();
-      groupDto.setTitle("uniqueTitle");
       String httpRequest = "/group_edit";
       MvcResult mvcResult = this.mockMvc.perform(post(httpRequest).accept(MediaType.TEXT_HTML_VALUE).flashAttr("groupDto", groupDto))
               .andExpect(status().isOk())
@@ -151,8 +152,77 @@ public class ITGroupControllerTest {
       String actuallySuccessMessage = mvcResult.getRequest().getAttribute(ATTRIBUTE_HTML_SUCCESS_MESSAGE).toString();
       assertEquals(actuallySuccessMessage, expectedSuccessMessage);
   }
+  
+  @Test
+  void whenRetriveHttpPostRequestGroupEditAndGroupWithIdButNotUniqueTitle_thenVerifyErrorResponse() throws Exception {
+      GroupDto groupDto = GROUP_DTO4;
+      groupDto.setId(1);
+      groupDto.setTitle(GROUP_DTO2.getTitle());
+      String httpRequest = "/group_edit";
+      this.mockMvc.perform(post(httpRequest).accept(MediaType.TEXT_HTML_VALUE).flashAttr("groupDto", groupDto))
+              .andExpect(status().isOk())
+              .andExpect(view().name(PATH_HTML_GROUP_EDIT))
+              .andExpect(model().attributeHasErrors("groupDto"))
+              .andDo(print())
+              .andReturn();
+  }
     
-    
+  @Test
+  void whenRetriveHttpPostRequestGroupEditAndGroupWithIdButYearEntryNotCorrectMaxValue_thenVerifyErrorResponse() throws Exception {
+      GroupDto groupDto = GROUP_DTO4;
+      groupDto.setId(1);
+      groupDto.setYearEntry(99999);
+      String httpRequest = "/group_edit";
+      this.mockMvc.perform(post(httpRequest).accept(MediaType.TEXT_HTML_VALUE).flashAttr("groupDto", groupDto))
+              .andExpect(status().isOk())
+              .andExpect(view().name(PATH_HTML_GROUP_EDIT))
+              .andExpect(model().attributeHasFieldErrorCode("groupDto", "yearEntry", "Max"))
+              .andDo(print())
+              .andReturn();
+  }
+  
+  @Test
+  void whenRetriveHttpPostRequestGroupEditAndGroupWithIdButYearEntryNotCorrectMinValue_thenVerifyErrorResponse() throws Exception {
+      GroupDto groupDto = GROUP_DTO4;
+      groupDto.setId(1);
+      groupDto.setYearEntry(999);
+      String httpRequest = "/group_edit";
+      this.mockMvc.perform(post(httpRequest).accept(MediaType.TEXT_HTML_VALUE).flashAttr("groupDto", groupDto))
+              .andExpect(status().isOk())
+              .andExpect(view().name(PATH_HTML_GROUP_EDIT))
+              .andExpect(model().attributeHasFieldErrorCode("groupDto", "yearEntry", "Min"))
+              .andDo(print())
+              .andReturn();
+  }
+  
+  @Test
+  void whenRetriveHttpPostRequestGroupEditAndGroupWithIdButTitleNotCorrectLength_thenVerifyErrorResponse() throws Exception {
+      GroupDto groupDto = GROUP_DTO4;
+      groupDto.setId(1);
+      groupDto.setTitle("qwertyuiopasdfghjklzxcvbnm");
+      String httpRequest = "/group_edit";
+      this.mockMvc.perform(post(httpRequest).accept(MediaType.TEXT_HTML_VALUE).flashAttr("groupDto", groupDto))
+              .andExpect(status().isOk())
+              .andExpect(view().name(PATH_HTML_GROUP_EDIT))
+              .andExpect(model().attributeHasFieldErrorCode("groupDto", "title", "Length"))
+              .andDo(print())
+              .andReturn();
+  }
+  
+  @Test
+  void whenRetriveHttpPostRequestGroupEditAndGroupWithIdButTitleBlank_thenVerifyErrorResponse() throws Exception {
+      GroupDto groupDto = GROUP_DTO4;
+      groupDto.setId(1);
+      groupDto.setTitle("");
+      String httpRequest = "/group_edit";
+      this.mockMvc.perform(post(httpRequest).accept(MediaType.TEXT_HTML_VALUE).flashAttr("groupDto", groupDto))
+              .andExpect(status().isOk())
+              .andExpect(view().name(PATH_HTML_GROUP_EDIT))
+              .andExpect(model().attributeHasFieldErrorCode("groupDto", "title", "NotBlank"))
+              .andDo(print())
+              .andReturn();
+  }
+  
     @AfterEach
     public void removeCreatedTables() {
         flyway.clean();
