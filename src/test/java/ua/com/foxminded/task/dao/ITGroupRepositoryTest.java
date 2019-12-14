@@ -1,7 +1,6 @@
 package ua.com.foxminded.task.dao;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.util.Arrays;
@@ -58,10 +57,10 @@ public class ITGroupRepositoryTest {
     }
 
     @Test
-    public void whenPutTitle_thenCheckExitsGroup() {
-        String existsTitle = GROUP11.getTitle();
-        assertTrue(groupRepository.existsByTitle(existsTitle));
-        assertFalse(groupRepository.existsByTitle("Not existing title"));
+    public void whenPutTitle_thenGetExitsGroup() {
+        String title = GROUP11.getTitle();
+        Group groupActually = groupRepository.findByTitle(title);
+        assertEquals(GROUP11, groupActually);
     }
 
     @AfterEach

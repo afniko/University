@@ -7,7 +7,7 @@ import ua.com.foxminded.task.domain.Group;
 
 @Repository
 public interface GroupRepository extends JpaRepository<Group, Integer> {
-    
-    boolean existsByTitle(String title);
-    
+
+    public Group findByTitle(String title);
+
 }

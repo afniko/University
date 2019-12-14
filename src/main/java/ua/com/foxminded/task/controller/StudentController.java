@@ -144,7 +144,7 @@ public class StudentController {
                 errorMessage = "Student " + studentDto + " not found!";
                 path = pathEdit;
             } catch (EntityNotValidException e) {
-                bindingResult.rejectValue("idFees", "error.studentDto", "The id fees number already exists!");
+                bindingResult.rejectValue("idFees", "error.studentDto", "The id fees number not valid!");
                 errorMessage = "Record sudent was not updated/created! The data is not valid!";
                 path = pathEdit;
             }

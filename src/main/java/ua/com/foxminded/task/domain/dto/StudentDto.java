@@ -10,6 +10,9 @@ import javax.validation.constraints.Past;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import ua.com.foxminded.task.validator.StudentIdFeesUnique;
+
+@StudentIdFeesUnique(message = "Id fees is already exists!")
 public class StudentDto {
 
     private int id;

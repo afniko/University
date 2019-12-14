@@ -9,11 +9,11 @@ import org.hibernate.validator.constraints.Length;
 
 import ua.com.foxminded.task.validator.GroupTitleUnique;
 
+@GroupTitleUnique(message = "Title is already exists!")
 public class GroupDto {
 
     private int id;
 
-    @GroupTitleUnique(message = "Title is already exists!")
     @NotBlank(message = "Title can`t be blank!")
     @Length(max = 20, message = "Maximum length is 20!")
     private String title;

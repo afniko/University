@@ -11,4 +11,7 @@ import ua.com.foxminded.task.domain.Student;
 public interface StudentRepository extends JpaRepository<Student, Integer> {
 
     public List<Student> findAllByGroupId(Integer id);
+
+    public Student findByIdFees(Integer idFees);
+
 }
