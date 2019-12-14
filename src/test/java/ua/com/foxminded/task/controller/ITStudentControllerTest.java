@@ -1,9 +1,11 @@
 package ua.com.foxminded.task.controller;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
@@ -53,6 +55,7 @@ public class ITStudentControllerTest {
     private static final Group GROUP2 = GroupModelRepository.getModel2();
     private static final Group GROUP3 = GroupModelRepository.getModel3();
     private static final Group GROUP4 = GroupModelRepository.getModel4();
+//    private static final Student STUDENT7 = StudentDtoModelRepository.getModel7();
 
     private MockMvc mockMvc;
 
@@ -80,7 +83,7 @@ public class ITStudentControllerTest {
       String actuallyTitle = mvcResult.getRequest().getAttribute(ATTRIBUTE_HTML_TITLE).toString();
       assertEquals(actuallyTitle, expectedTitle);
       List<StudentDto> actuallyStudents = (List<StudentDto>) mvcResult.getRequest().getAttribute(ATTRIBUTE_HTML_STUDENTS);
-      assertEquals(students, actuallyStudents);
+      assertTrue(actuallyStudents.containsAll(students));
   }
   
   @Test
@@ -159,6 +162,119 @@ public class ITStudentControllerTest {
       assertEquals(actuallySuccessMessage, expectedSuccessMessage);
   }
     
+  @Test
+  void whenRetriveHttpPostRequestStudentEditAndStudentWithBlankFirstName_thenVerifyErrorResponse() throws Exception {
+      StudentDto studentDto = StudentDtoModelRepository.getModel7();
+//      studentDto.setId(7);
+      studentDto.setFirstName("");
+      String httpRequest = "/student_edit";
+      this.mockMvc.perform(post(httpRequest).accept(MediaType.TEXT_HTML_VALUE).flashAttr("studentDto", studentDto))
+              .andExpect(status().isOk())
+              .andExpect(view().name(PATH_HTML_STUDENT_EDIT))
+              .andExpect(model().attributeHasFieldErrorCode("studentDto", "firstName", "NotBlank"))
+              .andDo(print())
+              .andReturn();
+  }
+  
+  @Test
+  void whenRetriveHttpPostRequestStudentEditAndStudentWithFirstNameLength_thenVerifyErrorResponse() throws Exception {
+      StudentDto studentDto = StudentDtoModelRepository.getModel7();
+//      studentDto.setId(7);
+      studentDto.setFirstName("qwertyuiopasdfghjklzxcvbnm");
+      String httpRequest = "/student_edit";
+      this.mockMvc.perform(post(httpRequest).accept(MediaType.TEXT_HTML_VALUE).flashAttr("studentDto", studentDto))
+              .andExpect(status().isOk())
+              .andExpect(view().name(PATH_HTML_STUDENT_EDIT))
+              .andExpect(model().attributeHasFieldErrorCode("studentDto", "firstName", "Length"))
+              .andDo(print())
+              .andReturn();
+  }
+  
+  @Test
+  void whenRetriveHttpPostRequestStudentEditAndStudentWithMiddleNameLength_thenVerifyErrorResponse() throws Exception {
+      StudentDto studentDto = StudentDtoModelRepository.getModel7();
+//      studentDto.setId(7);
+      studentDto.setMiddleName("qwertyuiopasdfghjklzxcvbnm");
+      String httpRequest = "/student_edit";
+      this.mockMvc.perform(post(httpRequest).accept(MediaType.TEXT_HTML_VALUE).flashAttr("studentDto", studentDto))
+              .andExpect(status().isOk())
+              .andExpect(view().name(PATH_HTML_STUDENT_EDIT))
+              .andExpect(model().attributeHasFieldErrorCode("studentDto", "middleName", "Length"))
+              .andDo(print())
+              .andReturn();
+  }
+  
+  @Test
+  void whenRetriveHttpPostRequestStudentEditAndStudentWithLastNameLength_thenVerifyErrorResponse() throws Exception {
+      StudentDto studentDto = StudentDtoModelRepository.getModel7();
+//      studentDto.setId(7);
+      studentDto.setLastName("qwertyuiopasdfghjklzxcvbnm");
+      String httpRequest = "/student_edit";
+      this.mockMvc.perform(post(httpRequest).accept(MediaType.TEXT_HTML_VALUE).flashAttr("studentDto", studentDto))
+              .andExpect(status().isOk())
+              .andExpect(view().name(PATH_HTML_STUDENT_EDIT))
+              .andExpect(model().attributeHasFieldErrorCode("studentDto", "lastName", "Length"))
+              .andDo(print())
+              .andReturn();
+  }
+  
+  @Test
+  void whenRetriveHttpPostRequestStudentEditAndStudentWithGroupTitleLength_thenVerifyErrorResponse() throws Exception {
+      StudentDto studentDto = StudentDtoModelRepository.getModel7();
+//      studentDto.setId(7);
+      studentDto.setGroupTitle("qwertyuiopasdfghjklzxcvbnm");
+      String httpRequest = "/student_edit";
+      this.mockMvc.perform(post(httpRequest).accept(MediaType.TEXT_HTML_VALUE).flashAttr("studentDto", studentDto))
+              .andExpect(status().isOk())
+              .andExpect(view().name(PATH_HTML_STUDENT_EDIT))
+              .andExpect(model().attributeHasFieldErrorCode("studentDto", "groupTitle", "Length"))
+              .andDo(print())
+              .andReturn();
+  }
+  
+  @Test
+  void whenRetriveHttpPostRequestStudentEditAndStudentWithIdFeesMax_thenVerifyErrorResponse() throws Exception {
+      StudentDto studentDto = StudentDtoModelRepository.getModel7();
+//      studentDto.setId(7);
+      studentDto.setIdFees(1212121212);
+      String httpRequest = "/student_edit";
+      this.mockMvc.perform(post(httpRequest).accept(MediaType.TEXT_HTML_VALUE).flashAttr("studentDto", studentDto))
+              .andExpect(status().isOk())
+              .andExpect(view().name(PATH_HTML_STUDENT_EDIT))
+              .andExpect(model().attributeHasFieldErrorCode("studentDto", "idFees", "Max"))
+              .andDo(print())
+              .andReturn();
+  }
+  
+  @Test
+  void whenRetriveHttpPostRequestStudentEditAndStudentWithIdFeesMin_thenVerifyErrorResponse() throws Exception {
+      StudentDto studentDto = StudentDtoModelRepository.getModel7();
+//      studentDto.setId(7);
+      studentDto.setIdFees(12121212);
+      String httpRequest = "/student_edit";
+      this.mockMvc.perform(post(httpRequest).accept(MediaType.TEXT_HTML_VALUE).flashAttr("studentDto", studentDto))
+              .andExpect(status().isOk())
+              .andExpect(view().name(PATH_HTML_STUDENT_EDIT))
+              .andExpect(model().attributeHasFieldErrorCode("studentDto", "idFees", "Min"))
+              .andDo(print())
+              .andReturn();
+  }
+  
+  @Test
+  void whenRetriveHttpPostRequestStudentEditAndStudentWithIdFeesNotUnique_thenVerifyErrorResponse() throws Exception {
+      StudentDto studentDto = StudentDtoModelRepository.getModel7();
+      studentDto.setId(7);
+      int idFeesExist = StudentDtoModelRepository.getModel6().getIdFees();
+      studentDto.setIdFees(idFeesExist);
+      String httpRequest = "/student_edit";
+      this.mockMvc.perform(post(httpRequest).accept(MediaType.TEXT_HTML_VALUE).flashAttr("studentDto", studentDto))
+              .andExpect(status().isOk())
+              .andExpect(view().name(PATH_HTML_STUDENT_EDIT))
+              .andExpect(model().attributeHasErrors("studentDto"))
+              .andDo(print())
+              .andReturn();
+  }
+  
     @AfterEach
     public void removeCreatedTables() {
         flyway.clean();

@@ -114,12 +114,12 @@ public class StudentModelRepository {
     public static Student getModel7() {
         Student student = new Student();
         Group group = GroupModelRepository.getModel1();
-        group.setId(1);
-        student.setFirstName("firstName1");
-        student.setMiddleName("middleName1");
-        student.setLastName("lastName1");
-        student.setBirthday(LocalDate.of(1999, 06, 25));
-        student.setIdFees(111111111);
+        group.setId(3);
+        student.setFirstName("firstName7");
+        student.setMiddleName("middleName7");
+        student.setLastName("lastName7");
+        student.setBirthday(LocalDate.parse("1997-02-15"));
+        student.setIdFees(111111667);
         student.setGroup(group);
         return student;
     }
