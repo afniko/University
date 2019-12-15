@@ -162,7 +162,7 @@ public class ITGroupControllerTest {
       this.mockMvc.perform(post(httpRequest).accept(MediaType.TEXT_HTML_VALUE).flashAttr("groupDto", groupDto))
               .andExpect(status().isOk())
               .andExpect(view().name(PATH_HTML_GROUP_EDIT))
-              .andExpect(model().attributeHasErrors("groupDto"))
+              .andExpect(model().attributeHasFieldErrorCode("groupDto", "title", "GroupTitleUnique"))
               .andDo(print())
               .andReturn();
   }

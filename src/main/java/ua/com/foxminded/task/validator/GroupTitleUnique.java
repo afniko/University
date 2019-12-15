@@ -19,6 +19,8 @@ public @interface GroupTitleUnique {
 
     String message() default "Title not unigue!";
 
+    String fieldName() default "title";
+
     Class<?>[] groups() default {};
 
     Class<? extends Payload>[] payload() default {};

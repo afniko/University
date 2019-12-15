@@ -19,6 +19,8 @@ public @interface StudentIdFeesUnique {
 
     String message() default "Id fees not unigue!";
 
+    String fieldName() default "idFees";
+
     Class<?>[] groups() default {};
 
     Class<? extends Payload>[] payload() default {};

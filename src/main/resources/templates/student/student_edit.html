@@ -8,7 +8,6 @@
         <th:block th:if="${errorMessage != null}">
             <div class="alert alert-danger">
                 <div th:text="${errorMessage}"></div>
-                <div th:errors="*{studentDto}"></div>
             </div>
         </th:block>
         <th:block th:if="${successMessage != null}">

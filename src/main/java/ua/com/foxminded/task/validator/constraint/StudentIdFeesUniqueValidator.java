@@ -13,9 +13,18 @@ import ua.com.foxminded.task.domain.dto.StudentDto;
 import ua.com.foxminded.task.validator.StudentIdFeesUnique;
 
 public class StudentIdFeesUniqueValidator implements ConstraintValidator<StudentIdFeesUnique, StudentDto> {
+    
+    private String message;
+    private String fieldName;
 
     @Autowired
     private StudentRepository studentRepository;
+
+    @Override
+    public void initialize(StudentIdFeesUnique constraintAnnotation) {
+        this.message = constraintAnnotation.message();
+        this.fieldName = constraintAnnotation.fieldName();
+    }
 
     @Override
     public boolean isValid(StudentDto studentDto, ConstraintValidatorContext context) {
@@ -24,6 +33,10 @@ public class StudentIdFeesUniqueValidator implements ConstraintValidator<Student
         Student studentExisting = studentRepository.findByIdFees(idFees);
         if (!Objects.isNull(studentExisting)) {
             result = (studentDto.getId() == studentExisting.getId());
+        }
+        if (!result) {
+            context.disableDefaultConstraintViolation();
+            context.buildConstraintViolationWithTemplate(message).addPropertyNode(fieldName).addConstraintViolation();
         }
         return result;
     }
