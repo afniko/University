@@ -1,4 +1,4 @@
-package ua.com.foxminded.task.validator.constraint;
+package ua.com.foxminded.task.validation.validator;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
@@ -7,7 +7,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import ua.com.foxminded.task.dao.StudentRepository;
-import ua.com.foxminded.task.validator.MaxStudentsInGroupLimit;
+import ua.com.foxminded.task.validation.annotation.MaxStudentsInGroupLimit;
 
 public class MaxStudentsInGroupLimitValidator implements ConstraintValidator<MaxStudentsInGroupLimit, String> {
 

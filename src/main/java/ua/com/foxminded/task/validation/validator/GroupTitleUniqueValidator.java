@@ -1,4 +1,4 @@
-package ua.com.foxminded.task.validator.constraint;
+package ua.com.foxminded.task.validation.validator;
 
 import java.util.Objects;
 
@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import ua.com.foxminded.task.dao.GroupRepository;
 import ua.com.foxminded.task.domain.Group;
 import ua.com.foxminded.task.domain.dto.GroupDto;
-import ua.com.foxminded.task.validator.GroupTitleUnique;
+import ua.com.foxminded.task.validation.annotation.GroupTitleUnique;
 
 public class GroupTitleUniqueValidator implements ConstraintValidator<GroupTitleUnique, GroupDto> {
 

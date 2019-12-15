@@ -1,4 +1,4 @@
-package ua.com.foxminded.task.validator;
+package ua.com.foxminded.task.validation.annotation;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
@@ -9,17 +9,17 @@ import java.lang.annotation.Target;
 import javax.validation.Constraint;
 import javax.validation.Payload;
 
-import ua.com.foxminded.task.validator.constraint.StudentIdFeesUniqueValidator;
+import ua.com.foxminded.task.validation.validator.GroupTitleUniqueValidator;
 
 @Documented
-@Constraint(validatedBy = StudentIdFeesUniqueValidator.class)
+@Constraint(validatedBy = GroupTitleUniqueValidator.class)
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface StudentIdFeesUnique {
+public @interface GroupTitleUnique {
 
-    String message() default "Id fees not unigue!";
+    String message() default "Title not unigue!";
 
-    String fieldName() default "idFees";
+    String fieldName() default "title";
 
     Class<?>[] groups() default {};
 

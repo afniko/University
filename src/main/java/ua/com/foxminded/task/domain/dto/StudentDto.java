@@ -10,8 +10,8 @@ import javax.validation.constraints.Past;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import ua.com.foxminded.task.validator.MaxStudentsInGroupLimit;
-import ua.com.foxminded.task.validator.StudentIdFeesUnique;
+import ua.com.foxminded.task.validation.annotation.MaxStudentsInGroupLimit;
+import ua.com.foxminded.task.validation.annotation.StudentIdFeesUnique;
 
 @StudentIdFeesUnique(message = "Id fees is already exists!")
 public class StudentDto {

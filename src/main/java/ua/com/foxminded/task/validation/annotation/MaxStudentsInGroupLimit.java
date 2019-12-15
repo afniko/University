@@ -1,4 +1,4 @@
-package ua.com.foxminded.task.validator;
+package ua.com.foxminded.task.validation.annotation;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
@@ -9,17 +9,17 @@ import java.lang.annotation.Target;
 import javax.validation.Constraint;
 import javax.validation.Payload;
 
-import ua.com.foxminded.task.validator.constraint.GroupTitleUniqueValidator;
+import ua.com.foxminded.task.validation.validator.MaxStudentsInGroupLimitValidator;
 
 @Documented
-@Constraint(validatedBy = GroupTitleUniqueValidator.class)
-@Target(ElementType.TYPE)
+@Constraint(validatedBy = MaxStudentsInGroupLimitValidator.class)
+@Target({ ElementType.FIELD, ElementType.METHOD })
 @Retention(RetentionPolicy.RUNTIME)
-public @interface GroupTitleUnique {
+public @interface MaxStudentsInGroupLimit {
 
-    String message() default "Title not unigue!";
+    int value();
 
-    String fieldName() default "title";
+    String message() default "Max participant in group!";
 
     Class<?>[] groups() default {};
 

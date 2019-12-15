@@ -1,4 +1,4 @@
-package ua.com.foxminded.task.validator.constraint;
+package ua.com.foxminded.task.validation.validator;
 
 import java.util.Objects;
 
@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import ua.com.foxminded.task.dao.StudentRepository;
 import ua.com.foxminded.task.domain.Student;
 import ua.com.foxminded.task.domain.dto.StudentDto;
-import ua.com.foxminded.task.validator.StudentIdFeesUnique;
+import ua.com.foxminded.task.validation.annotation.StudentIdFeesUnique;
 
 public class StudentIdFeesUniqueValidator implements ConstraintValidator<StudentIdFeesUnique, StudentDto> {
     

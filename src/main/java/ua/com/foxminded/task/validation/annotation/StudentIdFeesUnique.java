@@ -1,4 +1,4 @@
-package ua.com.foxminded.task.validator;
+package ua.com.foxminded.task.validation.annotation;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
@@ -9,17 +9,17 @@ import java.lang.annotation.Target;
 import javax.validation.Constraint;
 import javax.validation.Payload;
 
-import ua.com.foxminded.task.validator.constraint.MaxStudentsInGroupLimitValidator;
+import ua.com.foxminded.task.validation.validator.StudentIdFeesUniqueValidator;
 
 @Documented
-@Constraint(validatedBy = MaxStudentsInGroupLimitValidator.class)
-@Target({ ElementType.FIELD, ElementType.METHOD })
+@Constraint(validatedBy = StudentIdFeesUniqueValidator.class)
+@Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface MaxStudentsInGroupLimit {
+public @interface StudentIdFeesUnique {
 
-    int value();
+    String message() default "Id fees not unigue!";
 
-    String message() default "Max participant in group!";
+    String fieldName() default "idFees";
 
     Class<?>[] groups() default {};
 
