@@ -10,6 +10,7 @@ import javax.validation.constraints.Past;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import ua.com.foxminded.task.validator.MaxStudentsInGroupLimit;
 import ua.com.foxminded.task.validator.StudentIdFeesUnique;
 
 @StudentIdFeesUnique(message = "Id fees is already exists!")
@@ -38,6 +39,7 @@ public class StudentDto {
     @Length(max = 20, message = "Maximum length of title group is 20!")
     private String groupTitle;
 
+    @MaxStudentsInGroupLimit(3)
     private String idGroup;
 
     public int getId() {

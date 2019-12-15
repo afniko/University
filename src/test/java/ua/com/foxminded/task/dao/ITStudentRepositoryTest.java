@@ -100,6 +100,13 @@ public class ITStudentRepositoryTest {
         assertEquals(STUDENT1, studentActually);
     }
 
+    @Test
+    public void whenPutIdGroup_thenGetCountStudentsInGroup() {
+        int idGroup = STUDENT1.getGroup().getId();
+        long count = studentRepository.countByGroupId(idGroup);
+        assertEquals(2, count);
+    }
+
     @AfterEach
     public void cleanDB() {
         flyway.clean();
