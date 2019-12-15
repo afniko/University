@@ -21,14 +21,14 @@
             <div class="form-group">
                 <label for="text" class="col-sm-3 control-label">Title</label>
                 <div class="col-sm-9">
-                    <input type="text" class="form-control" th:field="*{title}" placeholder="Enter title" required> <small class="text-danger" th:if="${#fields.hasErrors('title')}"
-                        th:errors="*{title}">Name Error</small>
+                    <input type="text" class="form-control" th:field="*{title}" placeholder="Enter title" required> 
+                    <small class="text-danger" th:if="${#fields.hasErrors('title')}" th:errors="*{title}">Name Error</small>
                 </div>
 
                 <label for="text" class="col-sm-3 control-label">Year of entry</label>
                 <div class="col-sm-9">
-                    <input type="text" class="form-control" th:field="*{yearEntry}" placeholder="YYYY" required> <small class="text-danger" th:if="${#fields.hasErrors('yearEntry')}"
-                        th:errors="*{yearEntry}">Name Error</small>
+                    <input type="text" class="form-control" th:field="*{yearEntry}" placeholder="YYYY" required> 
+                    <small class="text-danger" th:if="${#fields.hasErrors('yearEntry')}" th:errors="*{yearEntry}">Name Error</small>
                 </div>
             </div>
 
