@@ -267,6 +267,19 @@ public class ITStudentControllerTest {
               .andReturn();
   }
   
+  @Test
+  void whenRetriveHttpPostRequestSetStudentGroupIdOverLimit_thenVerifyErrorResponse() throws Exception {
+      StudentDto studentDto = StudentDtoModelRepository.getModel6();
+      studentDto.setIdGroup("2");
+      String httpRequest = "/student_edit";
+      this.mockMvc.perform(post(httpRequest).accept(MediaType.TEXT_HTML_VALUE).flashAttr("studentDto", studentDto))
+              .andExpect(status().isOk())
+              .andExpect(view().name(PATH_HTML_STUDENT_EDIT))
+              .andExpect(model().attributeHasFieldErrorCode("studentDto", "idGroup", "MaxStudentsInGroupLimit"))
+              .andDo(print())
+              .andReturn();
+  }
+  
     @AfterEach
     public void removeCreatedTables() {
         flyway.clean();
