@@ -115,7 +115,6 @@ public class GroupController {
         String errorMessage = null;
         String successMessage = null;
         String path = PATH_HTML_GROUP;
-        String pathEdit = PATH_HTML_GROUP_EDIT;
 
         if (!bindingResult.hasErrors()) {
 
@@ -129,21 +128,20 @@ public class GroupController {
                 }
             } catch (NoExecuteQueryException e) {
                 errorMessage = "Record group was not edited!";
-                path = pathEdit;
+                path = PATH_HTML_GROUP_EDIT;
             } catch (EntityAlreadyExistsException e) {
                 errorMessage = "Record group was not created! The record already exists!";
-                path = pathEdit;
+                path = PATH_HTML_GROUP_EDIT;
             } catch (NoEntityFoundException e) {
                 errorMessage = "Group " + groupDto + " not found!";
-                path = pathEdit;
+                path = PATH_HTML_GROUP_EDIT;
             } catch (EntityNotValidException e) {
-                bindingResult.rejectValue("title", "error.groupDto", "The title value is not valid!");
                 errorMessage = "Record group was not updated/created! The data is not valid!";
-                path = pathEdit;
+                path = PATH_HTML_GROUP_EDIT;
             }
         } else {
             errorMessage = "You enter incorrect data! ";
-            path = pathEdit;
+            path = PATH_HTML_GROUP_EDIT;
         }
 
         model.addAttribute(ATTRIBUTE_HTML_TITLE, "Group edit");

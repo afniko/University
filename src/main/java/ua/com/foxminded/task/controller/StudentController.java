@@ -122,7 +122,6 @@ public class StudentController {
         String successMessage = null;
         List<GroupDto> groups = null;
         String path = PATH_HTML_STUDENT;
-        String pathEdit = PATH_HTML_STUDENT_EDIT;
 
         if (!bindingResult.hasErrors()) {
             try {
@@ -135,22 +134,21 @@ public class StudentController {
                 }
             } catch (NoExecuteQueryException e) {
                 errorMessage = "Record student was not edited!";
-                path = pathEdit;
+                path = PATH_HTML_STUDENT_EDIT;
                 groups = groupService.findAllDto();
             } catch (EntityAlreadyExistsException e) {
                 errorMessage = "Record sudent was not created! The record already exists!";
-                path = pathEdit;
+                path = PATH_HTML_STUDENT_EDIT;
             } catch (NoEntityFoundException e) {
                 errorMessage = "Student " + studentDto + " not found!";
-                path = pathEdit;
+                path = PATH_HTML_STUDENT_EDIT;
             } catch (EntityNotValidException e) {
-                bindingResult.rejectValue("idFees", "error.studentDto", "The id fees number not valid!");
                 errorMessage = "Record sudent was not updated/created! The data is not valid!";
-                path = pathEdit;
+                path = PATH_HTML_STUDENT_EDIT;
             }
         } else {
             errorMessage = "You enter incorrect data!";
-            path = pathEdit;
+            path = PATH_HTML_STUDENT_EDIT;
             groups = groupService.findAllDto();
         }
 
