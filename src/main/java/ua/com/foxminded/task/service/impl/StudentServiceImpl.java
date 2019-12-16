@@ -85,6 +85,18 @@ public class StudentServiceImpl implements StudentService {
         return ConverterToDtoService.convert(studenUpdated);
     }
 
+    @Override
+    public Student findByIdFees(Integer idFees) {
+        logger.debug("findByIdFees() [idFees:{}]", idFees);
+        return studentRepository.findByIdFees(idFees);
+    }
+
+    @Override
+    public long countByGroupId(Integer id) {
+        logger.debug("countByGroupId() [id:{}]", id);
+        return studentRepository.countByGroupId(id);
+    }
+
     private Student retriveStudentFromDto(StudentDto studentDto) {
         Student student = (studentDto.getId() != 0) ? studentRepository.getOne(studentDto.getId()) : new Student();
 

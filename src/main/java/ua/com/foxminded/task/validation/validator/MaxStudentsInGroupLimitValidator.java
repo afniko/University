@@ -10,9 +10,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 
-import ua.com.foxminded.task.dao.StudentRepository;
-import ua.com.foxminded.task.domain.Student;
 import ua.com.foxminded.task.domain.dto.StudentDto;
+import ua.com.foxminded.task.service.StudentService;
 import ua.com.foxminded.task.validation.annotation.MaxStudentsInGroupLimit;
 
 public class MaxStudentsInGroupLimitValidator implements ConstraintValidator<MaxStudentsInGroupLimit, StudentDto> {
@@ -24,7 +23,7 @@ public class MaxStudentsInGroupLimitValidator implements ConstraintValidator<Max
     private Environment env;
 
     @Autowired
-    private StudentRepository studentRepository;
+    private StudentService studentService;
 
     @Override
     public void initialize(MaxStudentsInGroupLimit constraintAnnotation) {
@@ -41,25 +40,23 @@ public class MaxStudentsInGroupLimitValidator implements ConstraintValidator<Max
             String limit = env.getRequiredProperty("annotation.validator.maxstudentingrouplimit");
             int limitInt = Integer.parseInt(limit);
             int idGroupInt = Integer.parseInt(idGroup);
-            long countStudentsInGroup = studentRepository.countByGroupId(idGroupInt);
+            long countStudentsInGroup = studentService.countByGroupId(idGroupInt);
 
             if (countStudentsInGroup >= limitInt) {
                 int studentId = studentDto.getId();
 
                 if (studentId != 0) {
-                    Student studentExisting = studentRepository.getOne(studentId);
-
-                    if (Objects.nonNull(studentExisting.getGroup())) {
-                        int idGroupExistingStudent = studentExisting.getGroup().getId();
-
-                        if (idGroupInt != idGroupExistingStudent) {
+                    StudentDto studentExisting = studentService.findByIdDto(studentId);
+                    String idGroupExistingStudent = studentExisting.getIdGroup();
+                    if (Objects.nonNull(idGroupExistingStudent)) {
+                        if (!idGroup.equals(idGroupExistingStudent)) {
                             result = false;
                         }
-                        
+
                     } else {
                         result = false;
                     }
-                    
+
                 } else {
                     result = false;
                 }

@@ -84,6 +84,12 @@ public class GroupServiceImpl implements GroupService {
         return ConverterToDtoService.convert(groupUpdated);
     }
 
+    @Override
+    public Group findByTitle(String title) {
+        logger.debug("findByTitle() [title:{}]", title);
+        return groupRepository.findByTitle(title);
+    }
+
     private Group retriveGroupFromDto(GroupDto groupDto) {
         Group group = (groupDto.getId() != 0) ? groupRepository.getOne(groupDto.getId()) : new Group();
         group.setTitle(groupDto.getTitle());

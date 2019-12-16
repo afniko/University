@@ -7,9 +7,9 @@ import javax.validation.ConstraintValidatorContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import ua.com.foxminded.task.dao.StudentRepository;
 import ua.com.foxminded.task.domain.Student;
 import ua.com.foxminded.task.domain.dto.StudentDto;
+import ua.com.foxminded.task.service.StudentService;
 import ua.com.foxminded.task.validation.annotation.StudentIdFeesUnique;
 
 public class StudentIdFeesUniqueValidator implements ConstraintValidator<StudentIdFeesUnique, StudentDto> {
@@ -18,7 +18,7 @@ public class StudentIdFeesUniqueValidator implements ConstraintValidator<Student
     private String fieldName;
 
     @Autowired
-    private StudentRepository studentRepository;
+    private StudentService studentService;
 
     @Override
     public void initialize(StudentIdFeesUnique constraintAnnotation) {
@@ -30,7 +30,7 @@ public class StudentIdFeesUniqueValidator implements ConstraintValidator<Student
     public boolean isValid(StudentDto studentDto, ConstraintValidatorContext context) {
         int idFees = studentDto.getIdFees();
         boolean result = true;
-        Student studentExisting = studentRepository.findByIdFees(idFees);
+        Student studentExisting = studentService.findByIdFees(idFees);
         if (!Objects.isNull(studentExisting)) {
             result = (studentDto.getId() == studentExisting.getId());
         }

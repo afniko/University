@@ -7,9 +7,9 @@ import javax.validation.ConstraintValidatorContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import ua.com.foxminded.task.dao.GroupRepository;
 import ua.com.foxminded.task.domain.Group;
 import ua.com.foxminded.task.domain.dto.GroupDto;
+import ua.com.foxminded.task.service.GroupService;
 import ua.com.foxminded.task.validation.annotation.GroupTitleUnique;
 
 public class GroupTitleUniqueValidator implements ConstraintValidator<GroupTitleUnique, GroupDto> {
@@ -18,7 +18,7 @@ public class GroupTitleUniqueValidator implements ConstraintValidator<GroupTitle
     private String fieldName;
 
     @Autowired
-    private GroupRepository groupRepository;
+    private GroupService groupService;
 
     @Override
     public void initialize(GroupTitleUnique constraintAnnotation) {
@@ -29,7 +29,7 @@ public class GroupTitleUniqueValidator implements ConstraintValidator<GroupTitle
     @Override
     public boolean isValid(GroupDto groupDto, ConstraintValidatorContext context) {
         String title = groupDto.getTitle();
-        Group groupExist = groupRepository.findByTitle(title);
+        Group groupExist = groupService.findByTitle(title);
         boolean result = true;
         if (!Objects.isNull(groupExist)) {
             result = (groupExist.getId() == groupDto.getId());
