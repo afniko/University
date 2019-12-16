@@ -13,14 +13,14 @@ import ua.com.foxminded.task.validation.validator.MaxStudentsInGroupLimitValidat
 
 @Documented
 @Constraint(validatedBy = MaxStudentsInGroupLimitValidator.class)
-@Target({ ElementType.FIELD, ElementType.METHOD })
+@Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface MaxStudentsInGroupLimit {
 
-    int value();
-
     String message() default "Max participant in group!";
 
+    String fieldName() default "idGroup";
+    
     Class<?>[] groups() default {};
 
     Class<? extends Payload>[] payload() default {};

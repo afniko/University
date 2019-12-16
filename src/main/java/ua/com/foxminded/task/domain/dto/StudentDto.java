@@ -13,6 +13,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import ua.com.foxminded.task.validation.annotation.MaxStudentsInGroupLimit;
 import ua.com.foxminded.task.validation.annotation.StudentIdFeesUnique;
 
+@MaxStudentsInGroupLimit
 @StudentIdFeesUnique(message = "Id fees is already exists!")
 public class StudentDto {
 
@@ -39,7 +40,6 @@ public class StudentDto {
     @Length(max = 20, message = "Maximum length of title group is 20!")
     private String groupTitle;
 
-    @MaxStudentsInGroupLimit(3)
     private String idGroup;
 
     public int getId() {
