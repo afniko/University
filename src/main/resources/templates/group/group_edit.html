@@ -19,13 +19,13 @@
     <div class="container-fluid">
         <form class="form-horizontal" action="#" th:action="@{/group_edit}" method="post" th:object="${groupDto}">
             <div class="form-group">
-                <label for="text" class="col-sm-3 control-label">Title</label>
+                <label for="title" class="col-sm-3 control-label">Title</label>
                 <div class="col-sm-9">
                     <input type="text" class="form-control" th:field="*{title}" placeholder="Enter title" required> 
                     <small class="text-danger" th:if="${#fields.hasErrors('title')}" th:errors="*{title}">Error</small>
                 </div>
 
-                <label for="text" class="col-sm-3 control-label">Year of entry</label>
+                <label for="yearEntry" class="col-sm-3 control-label">Year of entry</label>
                 <div class="col-sm-9">
                     <input type="text" class="form-control" th:field="*{yearEntry}" placeholder="YYYY" required> 
                     <small class="text-danger" th:if="${#fields.hasErrors('yearEntry')}" th:errors="*{yearEntry}">Error</small>
