@@ -51,6 +51,8 @@ public class ITStudentControllerTest {
     private static final String ATTRIBUTE_HTML_STUDENTS = "students";
     private static final String ATTRIBUTE_HTML_GROUPS = "groups";
     private static final String ATTRIBUTE_HTML_SUCCESS_MESSAGE = "successMessage";
+    private static final String ATTRIBUTE_HTML_ERROR_MESSAGE = "errorMessage";
+    private static final String EXPECTED_ERROR_MESSAGE = "You enter incorrect data!";
     private static final Group GROUP1 = GroupModelRepository.getModel1();
     private static final Group GROUP2 = GroupModelRepository.getModel2();
     private static final Group GROUP3 = GroupModelRepository.getModel3();
@@ -70,7 +72,7 @@ public class ITStudentControllerTest {
     }
 
   @Test
-  void whenRetriveHttpGetRequestStudents_thenExpectViewNameStudentsWithAttribute() throws Exception {
+  void whenRetriveAllStudent_thenExpectListOfStudent() throws Exception {
       List<StudentDto> students = StudentDtoModelRepository.getModels();
       String httpRequest = "/students";
       MvcResult mvcResult = this.mockMvc.perform(get(httpRequest).accept(MediaType.TEXT_HTML_VALUE))
@@ -86,7 +88,7 @@ public class ITStudentControllerTest {
   }
   
   @Test
-  void whenRetriveHttpGetRequestStudent_thenExpectViewNameStudentWithAttribute() throws Exception {
+  void whenRetriveTheStudent_thenExpectStudentById() throws Exception {
       StudentDto studentDto = StudentDtoModelRepository.getModel1();
       int id = 1;
       String httpRequest = "/student?id=" + id;
@@ -103,7 +105,7 @@ public class ITStudentControllerTest {
   }
   
   @Test
-  void whenRetriveHttpGetRequestStudentEdit_thenExpectViewNameStudenteditWithAttribute() throws Exception {
+  void whenRetriveEditExistsStudent_thenExpectFormWithStudentField() throws Exception {
       StudentDto studentDto = StudentDtoModelRepository.getModel1();
       List<GroupDto> groups = GroupDtoModelRepository.getModels();
       int id = 1;
@@ -123,7 +125,7 @@ public class ITStudentControllerTest {
   }
   
   @Test
-  void whenRetriveHttpPostRequestStudentEditAndStudentWithId_thenExpectViewNameStudenteditWithAttribute() throws Exception {
+  void whenSubmitEditFormStudentWithId_thenUpdateStudent() throws Exception {
       StudentDto studentDto = StudentDtoModelRepository.getModel1();
       studentDto.setId(1);
       String httpRequest = "/student_edit";
@@ -143,7 +145,7 @@ public class ITStudentControllerTest {
   }
   
   @Test
-  void whenRetriveHttpPostRequestStudentEditAndStudentWithoutId_thenExpectViewNameStudenteditWithAttribute() throws Exception {
+  void whenSubmitEditFormStudentWithoutId_thenCreateStudent() throws Exception {
       StudentDto studentDto = StudentDtoModelRepository.getModel7();
       String httpRequest = "/student_edit";
       MvcResult mvcResult = this.mockMvc.perform(post(httpRequest).accept(MediaType.TEXT_HTML_VALUE).flashAttr("studentDto", studentDto))
@@ -162,122 +164,65 @@ public class ITStudentControllerTest {
   }
     
   @Test
-  void whenRetriveHttpPostRequestStudentEditAndStudentWithBlankFirstName_thenVerifyErrorResponse() throws Exception {
+  void whenUpdateGroupWithNotCorrectValues_thenExpectError() throws Exception {
       StudentDto studentDto = StudentDtoModelRepository.getModel7();
       studentDto.setFirstName("");
+      studentDto.setIdFees(1212121212);
       String httpRequest = "/student_edit";
-      this.mockMvc.perform(post(httpRequest).accept(MediaType.TEXT_HTML_VALUE).flashAttr("studentDto", studentDto))
+      MvcResult mvcResult = this.mockMvc.perform(post(httpRequest).accept(MediaType.TEXT_HTML_VALUE).flashAttr("studentDto", studentDto))
               .andExpect(status().isOk())
               .andExpect(view().name(PATH_HTML_STUDENT_EDIT))
               .andExpect(model().attributeHasFieldErrorCode("studentDto", "firstName", "NotBlank"))
-              .andDo(print())
-              .andReturn();
-  }
-  
-  @Test
-  void whenRetriveHttpPostRequestStudentEditAndStudentWithFirstNameLength_thenVerifyErrorResponse() throws Exception {
-      StudentDto studentDto = StudentDtoModelRepository.getModel7();
-      studentDto.setFirstName("qwertyuiopasdfghjklzxcvbnm");
-      String httpRequest = "/student_edit";
-      this.mockMvc.perform(post(httpRequest).accept(MediaType.TEXT_HTML_VALUE).flashAttr("studentDto", studentDto))
-              .andExpect(status().isOk())
-              .andExpect(view().name(PATH_HTML_STUDENT_EDIT))
-              .andExpect(model().attributeHasFieldErrorCode("studentDto", "firstName", "Length"))
-              .andDo(print())
-              .andReturn();
-  }
-  
-  @Test
-  void whenRetriveHttpPostRequestStudentEditAndStudentWithMiddleNameLength_thenVerifyErrorResponse() throws Exception {
-      StudentDto studentDto = StudentDtoModelRepository.getModel7();
-      studentDto.setMiddleName("qwertyuiopasdfghjklzxcvbnm");
-      String httpRequest = "/student_edit";
-      this.mockMvc.perform(post(httpRequest).accept(MediaType.TEXT_HTML_VALUE).flashAttr("studentDto", studentDto))
-              .andExpect(status().isOk())
-              .andExpect(view().name(PATH_HTML_STUDENT_EDIT))
-              .andExpect(model().attributeHasFieldErrorCode("studentDto", "middleName", "Length"))
-              .andDo(print())
-              .andReturn();
-  }
-  
-  @Test
-  void whenRetriveHttpPostRequestStudentEditAndStudentWithLastNameLength_thenVerifyErrorResponse() throws Exception {
-      StudentDto studentDto = StudentDtoModelRepository.getModel7();
-      studentDto.setLastName("qwertyuiopasdfghjklzxcvbnm");
-      String httpRequest = "/student_edit";
-      this.mockMvc.perform(post(httpRequest).accept(MediaType.TEXT_HTML_VALUE).flashAttr("studentDto", studentDto))
-              .andExpect(status().isOk())
-              .andExpect(view().name(PATH_HTML_STUDENT_EDIT))
-              .andExpect(model().attributeHasFieldErrorCode("studentDto", "lastName", "Length"))
-              .andDo(print())
-              .andReturn();
-  }
-  
-  @Test
-  void whenRetriveHttpPostRequestStudentEditAndStudentWithGroupTitleLength_thenVerifyErrorResponse() throws Exception {
-      StudentDto studentDto = StudentDtoModelRepository.getModel7();
-      studentDto.setGroupTitle("qwertyuiopasdfghjklzxcvbnm");
-      String httpRequest = "/student_edit";
-      this.mockMvc.perform(post(httpRequest).accept(MediaType.TEXT_HTML_VALUE).flashAttr("studentDto", studentDto))
-              .andExpect(status().isOk())
-              .andExpect(view().name(PATH_HTML_STUDENT_EDIT))
-              .andExpect(model().attributeHasFieldErrorCode("studentDto", "groupTitle", "Length"))
-              .andDo(print())
-              .andReturn();
-  }
-  
-  @Test
-  void whenRetriveHttpPostRequestStudentEditAndStudentWithIdFeesMax_thenVerifyErrorResponse() throws Exception {
-      StudentDto studentDto = StudentDtoModelRepository.getModel7();
-      studentDto.setIdFees(1212121212);
-      String httpRequest = "/student_edit";
-      this.mockMvc.perform(post(httpRequest).accept(MediaType.TEXT_HTML_VALUE).flashAttr("studentDto", studentDto))
-              .andExpect(status().isOk())
-              .andExpect(view().name(PATH_HTML_STUDENT_EDIT))
               .andExpect(model().attributeHasFieldErrorCode("studentDto", "idFees", "Max"))
               .andDo(print())
               .andReturn();
+      
+      String actuallyErrorMessage = mvcResult.getRequest().getAttribute(ATTRIBUTE_HTML_ERROR_MESSAGE).toString();
+      assertEquals(EXPECTED_ERROR_MESSAGE, actuallyErrorMessage);
   }
   
   @Test
-  void whenRetriveHttpPostRequestStudentEditAndStudentWithIdFeesMin_thenVerifyErrorResponse() throws Exception {
+  void whenUpdateGroupWithNotCorrectValues_thenExpectError2() throws Exception {
       StudentDto studentDto = StudentDtoModelRepository.getModel7();
+      studentDto.setFirstName("qwertyuiopasdfghjklzxcvbnm");
+      studentDto.setMiddleName("qwertyuiopasdfghjklzxcvbnm");
+      studentDto.setLastName("qwertyuiopasdfghjklzxcvbnm");
+      studentDto.setGroupTitle("qwertyuiopasdfghjklzxcvbnm");
       studentDto.setIdFees(12121212);
       String httpRequest = "/student_edit";
-      this.mockMvc.perform(post(httpRequest).accept(MediaType.TEXT_HTML_VALUE).flashAttr("studentDto", studentDto))
+      MvcResult mvcResult = this.mockMvc.perform(post(httpRequest).accept(MediaType.TEXT_HTML_VALUE).flashAttr("studentDto", studentDto))
               .andExpect(status().isOk())
               .andExpect(view().name(PATH_HTML_STUDENT_EDIT))
+              .andExpect(model().attributeHasFieldErrorCode("studentDto", "firstName", "Length"))
+              .andExpect(model().attributeHasFieldErrorCode("studentDto", "middleName", "Length"))
+              .andExpect(model().attributeHasFieldErrorCode("studentDto", "lastName", "Length"))
+              .andExpect(model().attributeHasFieldErrorCode("studentDto", "groupTitle", "Length"))
               .andExpect(model().attributeHasFieldErrorCode("studentDto", "idFees", "Min"))
               .andDo(print())
               .andReturn();
+      
+      String actuallyErrorMessage = mvcResult.getRequest().getAttribute(ATTRIBUTE_HTML_ERROR_MESSAGE).toString();
+      assertEquals(EXPECTED_ERROR_MESSAGE, actuallyErrorMessage);
   }
   
   @Test
-  void whenRetriveHttpPostRequestStudentEditAndStudentWithIdFeesNotUnique_thenVerifyErrorResponse() throws Exception {
+  void whenUpdateGroupWithNotCorrectValues_thenExpectError3() throws Exception {
       StudentDto studentDto = StudentDtoModelRepository.getModel7();
       studentDto.setId(7);
       int idFeesExist = StudentDtoModelRepository.getModel6().getIdFees();
       studentDto.setIdFees(idFeesExist);
+      studentDto.setIdGroup("2");
       String httpRequest = "/student_edit";
-      this.mockMvc.perform(post(httpRequest).accept(MediaType.TEXT_HTML_VALUE).flashAttr("studentDto", studentDto))
+      MvcResult mvcResult = this.mockMvc.perform(post(httpRequest).accept(MediaType.TEXT_HTML_VALUE).flashAttr("studentDto", studentDto))
               .andExpect(status().isOk())
               .andExpect(view().name(PATH_HTML_STUDENT_EDIT))
               .andExpect(model().attributeHasFieldErrorCode("studentDto", "idFees", "StudentIdFeesUnique"))
-              .andDo(print())
-              .andReturn();
-  }
-  
-  @Test
-  void whenRetriveHttpPostRequestSetStudentGroupIdOverLimit_thenVerifyErrorResponse() throws Exception {
-      StudentDto studentDto = StudentDtoModelRepository.getModel6();
-      studentDto.setIdGroup("2");
-      String httpRequest = "/student_edit";
-      this.mockMvc.perform(post(httpRequest).accept(MediaType.TEXT_HTML_VALUE).flashAttr("studentDto", studentDto))
-              .andExpect(status().isOk())
-              .andExpect(view().name(PATH_HTML_STUDENT_EDIT))
               .andExpect(model().attributeHasFieldErrorCode("studentDto", "idGroup", "MaxStudentsInGroupLimit"))
               .andDo(print())
               .andReturn();
+      
+      String actuallyErrorMessage = mvcResult.getRequest().getAttribute(ATTRIBUTE_HTML_ERROR_MESSAGE).toString();
+      assertEquals(EXPECTED_ERROR_MESSAGE, actuallyErrorMessage);
   }
   
     @AfterEach

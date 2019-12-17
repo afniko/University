@@ -140,7 +140,7 @@ public class GroupController {
                 path = PATH_HTML_GROUP_EDIT;
             }
         } else {
-            errorMessage = "You enter incorrect data! ";
+            errorMessage = "You enter incorrect data!";
             path = PATH_HTML_GROUP_EDIT;
         }
 

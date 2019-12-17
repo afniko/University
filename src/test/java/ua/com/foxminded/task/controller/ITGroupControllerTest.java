@@ -45,6 +45,8 @@ public class ITGroupControllerTest {
     private static final String ATTRIBUTE_HTML_GROUP = "groupDto";
     private static final String ATTRIBUTE_HTML_GROUPS = "groups";
     private static final String ATTRIBUTE_HTML_SUCCESS_MESSAGE = "successMessage";
+    private static final String ATTRIBUTE_HTML_ERROR_MESSAGE = "errorMessage";
+    private static final String EXPECTED_ERROR_MESSAGE = "You enter incorrect data!";
     private static final Group GROUP1 = GroupModelRepository.getModel1();
     private static final Group GROUP2 = GroupModelRepository.getModel2();
     private static final Group GROUP3 = GroupModelRepository.getModel3();
@@ -67,22 +69,22 @@ public class ITGroupControllerTest {
     }
 
     @Test
-    void whenRetriveHttpGetRequestGroups_thenExpectViewNameGroupsAndAllGroupsFromDataBase() throws Exception {
+    void whenRetriveAllGroups_thenExpectListOfGroups() throws Exception {
         List<GroupDto> groups = Arrays.asList(GROUP_DTO1, GROUP_DTO2, GROUP_DTO3);
         MvcResult mvcResult =  this.mockMvc.perform(get("/groups").accept(MediaType.APPLICATION_JSON))
-        .andExpect(status().isOk())
-        .andExpect(view().name(PATH_HTML_GROUPS))
-        .andDo(print())
-        .andReturn();
+                .andExpect(status().isOk())
+                .andExpect(view().name(PATH_HTML_GROUPS))
+                .andDo(print())
+                .andReturn();
         String expectedTitle = "Groups";
         String actuallyTitle = mvcResult.getRequest().getAttribute(ATTRIBUTE_HTML_TITLE).toString();
         assertEquals(actuallyTitle, expectedTitle);
         List<GroupDto> actuallyGroups = (List<GroupDto>) mvcResult.getRequest().getAttribute(ATTRIBUTE_HTML_GROUPS);
-        assertTrue( actuallyGroups.containsAll(groups));
+        assertTrue(actuallyGroups.containsAll(groups));
     }
 
   @Test
-  void whenRetriveHttpGetRequestGroup_thenExpectViewNameGroupWithAttribute() throws Exception {
+  void whenRetriveTheGroup_thenExpectGroupById() throws Exception {
       GroupDto groupDto = GroupDtoModelRepository.getModelWithId();
       int id = groupDto.getId();
       String httpRequest = "/group?id=" + id;
@@ -99,7 +101,7 @@ public class ITGroupControllerTest {
   }
 
   @Test
-  void whenRetriveHttpGetRequestGroupEdit_thenExpectViewNameGroupeditWithAttribute() throws Exception {
+  void whenRetriveEditExistsGroup_thenExpectFormWithGroupField() throws Exception {
       GroupDto groupDto = GroupDtoModelRepository.getModelWithId();
       int id = groupDto.getId();
       String httpRequest = "/group_edit?id=" + id;
@@ -116,7 +118,7 @@ public class ITGroupControllerTest {
   }
 
   @Test
-  void whenRetriveHttpPostRequestGroupEditAndGroupWithId_thenExpectViewNameGroupeditWithAttribute() throws Exception {
+  void whenSubmitEditFormGroupWithId_thenUpdateGroup() throws Exception {
       GroupDto groupDto = GroupDtoModelRepository.getModelWithId();
       String httpRequest = "/group_edit";
       MvcResult mvcResult = this.mockMvc.perform(post(httpRequest).accept(MediaType.TEXT_HTML_VALUE).flashAttr("groupDto", groupDto))
@@ -135,7 +137,7 @@ public class ITGroupControllerTest {
   }
 
   @Test
-  void whenRetriveHttpPostRequestGroupEditAndGroupWithoutId_thenExpectViewNameGroupeditWithAttribute() throws Exception {
+  void whenSubmitEditFormGroupWithoutId_thenCreateGroup() throws Exception {
       GroupDto groupDto = GroupDtoModelRepository.getModel6();
       String httpRequest = "/group_edit";
       MvcResult mvcResult = this.mockMvc.perform(post(httpRequest).accept(MediaType.TEXT_HTML_VALUE).flashAttr("groupDto", groupDto))
@@ -154,73 +156,58 @@ public class ITGroupControllerTest {
   }
   
   @Test
-  void whenRetriveHttpPostRequestGroupEditAndGroupWithIdButNotUniqueTitle_thenVerifyErrorResponse() throws Exception {
+  void whenUpdateGroupWithNotCorrectValues_thenExpectError() throws Exception {
       GroupDto groupDto = GROUP_DTO4;
       groupDto.setId(1);
       groupDto.setTitle(GROUP_DTO2.getTitle());
+      groupDto.setYearEntry(99999);
       String httpRequest = "/group_edit";
-      this.mockMvc.perform(post(httpRequest).accept(MediaType.TEXT_HTML_VALUE).flashAttr("groupDto", groupDto))
+      MvcResult mvcResult = this.mockMvc.perform(post(httpRequest).accept(MediaType.TEXT_HTML_VALUE).flashAttr("groupDto", groupDto))
               .andExpect(status().isOk())
               .andExpect(view().name(PATH_HTML_GROUP_EDIT))
               .andExpect(model().attributeHasFieldErrorCode("groupDto", "title", "GroupTitleUnique"))
-              .andDo(print())
-              .andReturn();
-  }
-    
-  @Test
-  void whenRetriveHttpPostRequestGroupEditAndGroupWithIdButYearEntryNotCorrectMaxValue_thenVerifyErrorResponse() throws Exception {
-      GroupDto groupDto = GROUP_DTO4;
-      groupDto.setId(1);
-      groupDto.setYearEntry(99999);
-      String httpRequest = "/group_edit";
-      this.mockMvc.perform(post(httpRequest).accept(MediaType.TEXT_HTML_VALUE).flashAttr("groupDto", groupDto))
-              .andExpect(status().isOk())
-              .andExpect(view().name(PATH_HTML_GROUP_EDIT))
               .andExpect(model().attributeHasFieldErrorCode("groupDto", "yearEntry", "Max"))
               .andDo(print())
               .andReturn();
-  }
+        
+        String actuallyErrorMessage = mvcResult.getRequest().getAttribute(ATTRIBUTE_HTML_ERROR_MESSAGE).toString();
+        assertEquals(EXPECTED_ERROR_MESSAGE, actuallyErrorMessage);
+    }
   
   @Test
-  void whenRetriveHttpPostRequestGroupEditAndGroupWithIdButYearEntryNotCorrectMinValue_thenVerifyErrorResponse() throws Exception {
-      GroupDto groupDto = GROUP_DTO4;
-      groupDto.setId(1);
-      groupDto.setYearEntry(999);
-      String httpRequest = "/group_edit";
-      this.mockMvc.perform(post(httpRequest).accept(MediaType.TEXT_HTML_VALUE).flashAttr("groupDto", groupDto))
-              .andExpect(status().isOk())
-              .andExpect(view().name(PATH_HTML_GROUP_EDIT))
-              .andExpect(model().attributeHasFieldErrorCode("groupDto", "yearEntry", "Min"))
-              .andDo(print())
-              .andReturn();
-  }
-  
-  @Test
-  void whenRetriveHttpPostRequestGroupEditAndGroupWithIdButTitleNotCorrectLength_thenVerifyErrorResponse() throws Exception {
+  void whenUpdateGroupWithNotCorrectValues_thenExpectError2() throws Exception {
       GroupDto groupDto = GROUP_DTO4;
       groupDto.setId(1);
       groupDto.setTitle("qwertyuiopasdfghjklzxcvbnm");
+      groupDto.setYearEntry(999);
       String httpRequest = "/group_edit";
-      this.mockMvc.perform(post(httpRequest).accept(MediaType.TEXT_HTML_VALUE).flashAttr("groupDto", groupDto))
+      MvcResult mvcResult = this.mockMvc.perform(post(httpRequest).accept(MediaType.TEXT_HTML_VALUE).flashAttr("groupDto", groupDto))
               .andExpect(status().isOk())
               .andExpect(view().name(PATH_HTML_GROUP_EDIT))
+              .andExpect(model().attributeHasFieldErrorCode("groupDto", "yearEntry", "Min"))
               .andExpect(model().attributeHasFieldErrorCode("groupDto", "title", "Length"))
               .andDo(print())
               .andReturn();
+      
+      String actuallyErrorMessage = mvcResult.getRequest().getAttribute(ATTRIBUTE_HTML_ERROR_MESSAGE).toString();
+      assertEquals(EXPECTED_ERROR_MESSAGE, actuallyErrorMessage);
   }
   
   @Test
-  void whenRetriveHttpPostRequestGroupEditAndGroupWithIdButTitleBlank_thenVerifyErrorResponse() throws Exception {
+  void whenUpdateGroupWithNotCorrectTitle_thenExpectError() throws Exception {
       GroupDto groupDto = GROUP_DTO4;
       groupDto.setId(1);
       groupDto.setTitle("");
       String httpRequest = "/group_edit";
-      this.mockMvc.perform(post(httpRequest).accept(MediaType.TEXT_HTML_VALUE).flashAttr("groupDto", groupDto))
+      MvcResult mvcResult = this.mockMvc.perform(post(httpRequest).accept(MediaType.TEXT_HTML_VALUE).flashAttr("groupDto", groupDto))
               .andExpect(status().isOk())
               .andExpect(view().name(PATH_HTML_GROUP_EDIT))
               .andExpect(model().attributeHasFieldErrorCode("groupDto", "title", "NotBlank"))
               .andDo(print())
               .andReturn();
+      
+      String actuallyErrorMessage = mvcResult.getRequest().getAttribute(ATTRIBUTE_HTML_ERROR_MESSAGE).toString();
+      assertEquals(EXPECTED_ERROR_MESSAGE, actuallyErrorMessage);
   }
   
     @AfterEach
