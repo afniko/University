@@ -15,5 +15,7 @@ public interface StudentRepository extends JpaRepository<Student, Integer> {
     public Student findByIdFees(Integer idFees);
     
     public long countByGroupId(Integer id);
+    
+    public boolean existsStudentByIdAndGroupId(Integer studentId, Integer groupId);
 
 }

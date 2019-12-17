@@ -18,5 +18,7 @@ public interface StudentService {
     public Student findByIdFees(Integer idFees);
 
     public long countByGroupId(Integer id);
+    
+    public boolean existsStudentByIdAndGroupId(Integer studentId, Integer groupId);
 
 }

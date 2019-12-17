@@ -97,6 +97,12 @@ public class StudentServiceImpl implements StudentService {
         return studentRepository.countByGroupId(id);
     }
 
+    @Override
+    public boolean existsStudentByIdAndGroupId(Integer studentId, Integer groupId) {
+        logger.debug("existsStudentByIdAndGroupId() [studentId:{}, groupId:{}]", studentId, groupId);
+        return studentRepository.existsStudentByIdAndGroupId(studentId, groupId);
+    }
+
     private Student retriveStudentFromDto(StudentDto studentDto) {
         Student student = (studentDto.getId() != 0) ? studentRepository.getOne(studentDto.getId()) : new Student();
 
