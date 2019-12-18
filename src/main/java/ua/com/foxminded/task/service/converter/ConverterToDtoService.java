@@ -1,6 +1,6 @@
 package ua.com.foxminded.task.service.converter;
 
-import java.util.Objects;
+import static java.util.Objects.nonNull;
 
 import ua.com.foxminded.task.domain.Group;
 import ua.com.foxminded.task.domain.Student;
@@ -14,7 +14,7 @@ public final class ConverterToDtoService {
 
     public static StudentDto convert(Student student) {
         StudentDto studentDto = new StudentDto();
-        if (Objects.nonNull(student.getId())) {
+        if (nonNull(student.getId())) {
             studentDto.setId(student.getId());
         }
         studentDto.setFirstName(student.getFirstName());
@@ -22,9 +22,8 @@ public final class ConverterToDtoService {
         studentDto.setLastName(student.getLastName());
         studentDto.setBirthday(student.getBirthday());
         studentDto.setIdFees(student.getIdFees());
-        if (Objects.nonNull(student.getGroup())) {
-            int idGroup = student.getGroup().getId();
-            studentDto.setIdGroup(String.valueOf(idGroup));
+        if (nonNull(student.getGroup())) {
+            studentDto.setIdGroup(student.getGroup().getId());
             studentDto.setGroupTitle(student.getGroup().getTitle());
         }
         return studentDto;

@@ -116,7 +116,8 @@ public class StudentController {
 
     @PostMapping("/student_edit")
     public String editPost(@Valid @ModelAttribute("studentDto") StudentDto studentDto, 
-            BindingResult bindingResult, Model model) {
+            BindingResult bindingResult, 
+            Model model) {
         logger.debug("editPost()");
         String errorMessage = null;
         String successMessage = null;

@@ -211,7 +211,7 @@ public class ITStudentControllerTest {
       studentDto.setId(7);
       int idFeesExist = StudentDtoModelRepository.getModel6().getIdFees();
       studentDto.setIdFees(idFeesExist);
-      studentDto.setIdGroup("2");
+      studentDto.setIdGroup(2);
       String httpRequest = "/student_edit";
       MvcResult mvcResult = this.mockMvc.perform(post(httpRequest).accept(MediaType.TEXT_HTML_VALUE).flashAttr("studentDto", studentDto))
               .andExpect(status().isOk())

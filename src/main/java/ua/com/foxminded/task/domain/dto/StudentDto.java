@@ -40,7 +40,7 @@ public class StudentDto {
     @Length(max = 20, message = "Maximum length of title group is 20!")
     private String groupTitle;
 
-    private String idGroup;
+    private int idGroup;
 
     public int getId() {
         return id;
@@ -98,11 +98,11 @@ public class StudentDto {
         this.groupTitle = groupTitle;
     }
 
-    public String getIdGroup() {
+    public int getIdGroup() {
         return idGroup;
     }
 
-    public void setIdGroup(String idGroup) {
+    public void setIdGroup(int idGroup) {
         this.idGroup = idGroup;
     }
 
@@ -113,7 +113,7 @@ public class StudentDto {
         result = prime * result + ((birthday == null) ? 0 : birthday.hashCode());
         result = prime * result + ((firstName == null) ? 0 : firstName.hashCode());
         result = prime * result + idFees;
-        result = prime * result + ((idGroup == null) ? 0 : idGroup.hashCode());
+        result = prime * result + idGroup;
         result = prime * result + ((lastName == null) ? 0 : lastName.hashCode());
         result = prime * result + ((middleName == null) ? 0 : middleName.hashCode());
         return result;
@@ -140,10 +140,7 @@ public class StudentDto {
             return false;
         if (idFees != other.idFees)
             return false;
-        if (idGroup == null) {
-            if (other.idGroup != null)
-                return false;
-        } else if (!idGroup.equals(other.idGroup))
+        if (idGroup != other.idGroup)
             return false;
         if (lastName == null) {
             if (other.lastName != null)

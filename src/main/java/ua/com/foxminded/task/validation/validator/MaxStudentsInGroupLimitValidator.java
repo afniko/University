@@ -3,7 +3,6 @@ package ua.com.foxminded.task.validation.validator;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 
@@ -32,19 +31,15 @@ public class MaxStudentsInGroupLimitValidator implements ConstraintValidator<Max
     public boolean isValid(StudentDto studentDto, ConstraintValidatorContext context) {
         boolean result = true;
         int studentId = studentDto.getId();
-        String idGroup = studentDto.getIdGroup();
+        int idGroup = studentDto.getIdGroup();
 
-        if (StringUtils.isNotBlank(idGroup)) {
+        long countStudentsInGroup = studentService.countByGroupId(idGroup);
 
-            int idGroupInt = Integer.parseInt(idGroup);
-            long countStudentsInGroup = studentService.countByGroupId(idGroupInt);
+        if (countStudentsInGroup >= limit) {
+            boolean isStudentAtGroup = studentService.existsStudentByIdAndGroupId(studentId, idGroup);
 
-            if (countStudentsInGroup >= limit) {
-                boolean isStudentAtGroup = studentService.existsStudentByIdAndGroupId(studentId, idGroupInt);
-
-                if (!isStudentAtGroup) {
-                    result = false;
-                }
+            if (!isStudentAtGroup) {
+                result = false;
             }
         }
         if (!result) {

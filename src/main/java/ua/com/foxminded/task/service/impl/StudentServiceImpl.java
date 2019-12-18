@@ -1,8 +1,5 @@
 package ua.com.foxminded.task.service.impl;
 
-import static java.util.Objects.nonNull;
-import static org.apache.commons.lang3.StringUtils.isNoneBlank;
-
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -52,7 +49,7 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public StudentDto create(StudentDto studentDto) {
         logger.debug("create() [studentDto:{}]", studentDto);
-        if (studentDto.getId()!=0) {
+        if (studentDto.getId() != 0) {
             logger.warn("create() [studentDto:{}]", studentDto);
             throw new EntityAlreadyExistsException("create() studentDto: " + studentDto);
         }
@@ -106,9 +103,8 @@ public class StudentServiceImpl implements StudentService {
     private Student retriveStudentFromDto(StudentDto studentDto) {
         Student student = (studentDto.getId() != 0) ? studentRepository.getOne(studentDto.getId()) : new Student();
 
-        Group group = nonNull(studentDto.getIdGroup()) && isNoneBlank(studentDto.getIdGroup()) ? groupRepository.getOne(Integer.valueOf(studentDto.getIdGroup())) : null;
+        Group group = studentDto.getIdGroup() != 0 ? groupRepository.getOne(Integer.valueOf(studentDto.getIdGroup())) : null;
         student.setGroup(group);
-
         student.setFirstName(studentDto.getFirstName());
         student.setMiddleName(studentDto.getMiddleName());
         student.setLastName(studentDto.getLastName());
