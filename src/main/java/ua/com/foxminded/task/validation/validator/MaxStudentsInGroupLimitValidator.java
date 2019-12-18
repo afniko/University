@@ -1,13 +1,11 @@
 package ua.com.foxminded.task.validation.validator;
 
-import javax.annotation.Resource;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.env.Environment;
 
 import ua.com.foxminded.task.domain.dto.StudentDto;
 import ua.com.foxminded.task.service.StudentService;
@@ -20,9 +18,6 @@ public class MaxStudentsInGroupLimitValidator implements ConstraintValidator<Max
 
     @Value("${univer.validation.maxStudentCountInGroup}")
     private int limit;
-
-    @Resource
-    private Environment env;
 
     @Autowired
     private StudentService studentService;
