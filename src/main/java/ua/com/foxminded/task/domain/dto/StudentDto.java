@@ -3,12 +3,18 @@ package ua.com.foxminded.task.domain.dto;
 import java.time.LocalDate;
 
 import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Past;
 
 import org.hibernate.validator.constraints.Length;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import ua.com.foxminded.task.validation.annotation.MaxStudentsInGroupLimit;
+import ua.com.foxminded.task.validation.annotation.StudentIdFeesUnique;
+
+@MaxStudentsInGroupLimit
+@StudentIdFeesUnique(message = "Id fees is already exists!")
 public class StudentDto {
 
     private int id;
@@ -23,17 +29,18 @@ public class StudentDto {
     @Length(max = 20, message = "Maximum length of last name is 20!")
     private String lastName;
 
-    @DateTimeFormat(pattern="yyyy-MM-dd")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Past(message = "Birthday date must be in past!")
     private LocalDate birthday;
 
-    @Max(value = 999999999, message = "Maximum value is 9 number!")
+    @Min(value = 100000000, message = "Value is 9 number!")
+    @Max(value = 999999999, message = "Value is 9 number!")
     private int idFees;
 
     @Length(max = 20, message = "Maximum length of title group is 20!")
     private String groupTitle;
 
-    private String idGroup;
+    private int idGroup;
 
     public int getId() {
         return id;
@@ -91,11 +98,11 @@ public class StudentDto {
         this.groupTitle = groupTitle;
     }
 
-    public String getIdGroup() {
+    public int getIdGroup() {
         return idGroup;
     }
 
-    public void setIdGroup(String idGroup) {
+    public void setIdGroup(int idGroup) {
         this.idGroup = idGroup;
     }
 
@@ -106,7 +113,7 @@ public class StudentDto {
         result = prime * result + ((birthday == null) ? 0 : birthday.hashCode());
         result = prime * result + ((firstName == null) ? 0 : firstName.hashCode());
         result = prime * result + idFees;
-        result = prime * result + ((idGroup == null) ? 0 : idGroup.hashCode());
+        result = prime * result + idGroup;
         result = prime * result + ((lastName == null) ? 0 : lastName.hashCode());
         result = prime * result + ((middleName == null) ? 0 : middleName.hashCode());
         return result;
@@ -133,10 +140,7 @@ public class StudentDto {
             return false;
         if (idFees != other.idFees)
             return false;
-        if (idGroup == null) {
-            if (other.idGroup != null)
-                return false;
-        } else if (!idGroup.equals(other.idGroup))
+        if (idGroup != other.idGroup)
             return false;
         if (lastName == null) {
             if (other.lastName != null)

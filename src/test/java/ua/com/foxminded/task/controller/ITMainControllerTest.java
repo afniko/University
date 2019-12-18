@@ -28,7 +28,7 @@ public class ITMainControllerTest {
     }
 
     @Test
-    void whenRetriveHttpRequestSlash_thenExpectViewNameMainWithAttribute() throws Exception {
+    void whenRetriveMainPage_thenExpectMainView() throws Exception {
         String expectedViewName = "main";
         MvcResult mvcResult = this.mockMvc.perform(get("/"))
                 .andExpect(status().isOk())

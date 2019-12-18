@@ -8,4 +8,6 @@ import ua.com.foxminded.task.domain.Group;
 @Repository
 public interface GroupRepository extends JpaRepository<Group, Integer> {
 
+    public Group findByTitle(String title);
+
 }

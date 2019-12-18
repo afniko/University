@@ -96,6 +96,9 @@ Branch: task18
 ####Task 19 - Spring Data JPA
 Rewrite the DAO layer. Use Spring Data JPA instead of Hibernate.
 Branch: task19
+####Task 20 - - Validation
+Add validation to your models. It could be name validation, time validation, number of students in groups, etc. Ask your mentor for validations that should be implemented in your code.
+Branch: task20
 
 ##Author
 With best regards, Mykola Afanasiev!

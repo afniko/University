@@ -85,6 +85,28 @@ public class ITStudentRepositoryTest {
         assertTrue(students.containsAll(Arrays.asList(STUDENT3, STUDENT4, STUDENT5)));
     }
 
+    @Test
+    public void whenPutIdGroup_thenGetListOfStudentsWithIdGroup() {
+        int idGroup = STUDENT1.getGroup().getId();
+        List<Student> studentsExpected = Arrays.asList(STUDENT1, STUDENT2);
+        List<Student> studentsActually = studentRepository.findAllByGroupId(idGroup);
+        assertEquals(studentsExpected, studentsActually);
+    }
+
+    @Test
+    public void whenPutIdFees_thenGetExitsStudent() {
+        int idFees = STUDENT1.getIdFees();
+        Student studentActually = studentRepository.findByIdFees(idFees);
+        assertEquals(STUDENT1, studentActually);
+    }
+
+    @Test
+    public void whenPutIdGroup_thenGetCountStudentsInGroup() {
+        int idGroup = STUDENT1.getGroup().getId();
+        long count = studentRepository.countByGroupId(idGroup);
+        assertEquals(2, count);
+    }
+
     @AfterEach
     public void cleanDB() {
         flyway.clean();

@@ -10,8 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
-import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -31,7 +29,7 @@ public class GroupController {
     private static final String PATH_HTML_GROUPS = "group/groups";
     private static final String PATH_HTML_GROUP_EDIT = "group/group_edit";
     private static final String ATTRIBUTE_HTML_TITLE = "title";
-    private static final String ATTRIBUTE_HTML_GROUP = "group";
+    private static final String ATTRIBUTE_HTML_GROUP = "groupDto";
     private static final String ATTRIBUTE_HTML_GROUPS = "groups";
     private static final String ATTRIBUTE_HTML_ERROR_MESSAGE = "errorMessage";
     private static final String ATTRIBUTE_HTML_SUCCESS_MESSAGE = "successMessage";
@@ -67,13 +65,13 @@ public class GroupController {
     public String group(@RequestParam("id") String idString, Model model) {
         logger.debug("group()");
         String errorMessage = null;
-        GroupDto group = null;
+        GroupDto groupDto = null;
 
         int id = 0;
         try {
             if (checkId(idString)) {
                 id = Integer.valueOf(idString);
-                group = groupService.findByIdDto(id);
+                groupDto = groupService.findByIdDto(id);
             } else {
                 errorMessage = "You id is blank";
             }
@@ -86,7 +84,7 @@ public class GroupController {
         }
 
         model.addAttribute(ATTRIBUTE_HTML_TITLE, "Group");
-        model.addAttribute(ATTRIBUTE_HTML_GROUP, group);
+        model.addAttribute(ATTRIBUTE_HTML_GROUP, groupDto);
         model.addAttribute(ATTRIBUTE_HTML_ERROR_MESSAGE, errorMessage);
         return PATH_HTML_GROUP;
     }
@@ -95,16 +93,16 @@ public class GroupController {
     public String editGet(@RequestParam(name = "id", required = false) String id, Model model) {
         logger.debug("editGet(), id: {}", id);
         String errorMessage = null;
-        GroupDto group = new GroupDto();
+        GroupDto groupDto = new GroupDto();
         try {
             if (checkId(id)) {
-                group = groupService.findByIdDto(Integer.valueOf(id));
+                groupDto = groupService.findByIdDto(Integer.valueOf(id));
             }
         } catch (NoEntityFoundException e) {
             errorMessage = "Problem with finding group";
         }
         model.addAttribute(ATTRIBUTE_HTML_TITLE, "Group edit");
-        model.addAttribute(ATTRIBUTE_HTML_GROUP, group);
+        model.addAttribute(ATTRIBUTE_HTML_GROUP, groupDto);
         model.addAttribute(ATTRIBUTE_HTML_ERROR_MESSAGE, errorMessage);
         return PATH_HTML_GROUP_EDIT;
     }
@@ -114,10 +112,9 @@ public class GroupController {
                            BindingResult bindingResult, 
                            Model model) {
         logger.debug("editPost()");
-        StringBuilder errorMessage = null;
+        String errorMessage = null;
         String successMessage = null;
         String path = PATH_HTML_GROUP;
-        String pathEdit = PATH_HTML_GROUP_EDIT;
 
         if (!bindingResult.hasErrors()) {
 
@@ -130,28 +127,21 @@ public class GroupController {
                     successMessage = "Record group was created!";
                 }
             } catch (NoExecuteQueryException e) {
-                errorMessage = new StringBuilder("Record group was not edited!");
-                path = pathEdit;
+                errorMessage = "Record group was not edited!";
+                path = PATH_HTML_GROUP_EDIT;
             } catch (EntityAlreadyExistsException e) {
-                errorMessage = new StringBuilder("Record group was not created! The record already exists!");
-                path = pathEdit;
+                errorMessage = "Record group was not created! The record already exists!";
+                path = PATH_HTML_GROUP_EDIT;
             } catch (NoEntityFoundException e) {
-                errorMessage = new StringBuilder("Group " + groupDto + " not found!");
-                path = pathEdit;
+                errorMessage = "Group " + groupDto + " not found!";
+                path = PATH_HTML_GROUP_EDIT;
             } catch (EntityNotValidException e) {
-                errorMessage = new StringBuilder("Record group was not updated/created! The data is not valid!");
-                path = pathEdit;
+                errorMessage = "Record group was not updated/created! The data is not valid!";
+                path = PATH_HTML_GROUP_EDIT;
             }
         } else {
-            errorMessage = new StringBuilder("You enter incorrect data! ");
-            List<ObjectError> errors = bindingResult.getAllErrors();
-            for (ObjectError error : errors) {
-                String fieldName = ((FieldError) error).getField();
-                String message = error.getDefaultMessage();
-                errorMessage.append(" ");
-                errorMessage.append("field " + fieldName + " has error:" + message);
-            }
-            path = pathEdit;
+            errorMessage = "You enter incorrect data!";
+            path = PATH_HTML_GROUP_EDIT;
         }
 
         model.addAttribute(ATTRIBUTE_HTML_TITLE, "Group edit");

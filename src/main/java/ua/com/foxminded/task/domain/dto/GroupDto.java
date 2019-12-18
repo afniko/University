@@ -7,6 +7,9 @@ import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.Length;
 
+import ua.com.foxminded.task.validation.annotation.GroupTitleUnique;
+
+@GroupTitleUnique(message = "Title is already exists!")
 public class GroupDto {
 
     private int id;

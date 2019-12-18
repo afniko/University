@@ -6,54 +6,46 @@
 
     <div class="container-fluid">
         <th:block th:if="${errorMessage != null}">
-            <div class="alert alert-danger" th:text="${errorMessage}">Error!!</div>
-            <br />
+            <div class="alert alert-danger">
+                <div th:text="${errorMessage}"></div>
+            </div>
         </th:block>
         <th:block th:if="${successMessage != null}">
             <div class="alert alert-success" th:text="${successMessage}">Success</div>
-            <br />
         </th:block>
     </div>
     <br />
 
     <div class="container-fluid">
-        <form class="form-horizontal" th:action="@{/group_edit}" method="post" modelAttribute="groupDto">
+        <form class="form-horizontal" action="#" th:action="@{/group_edit}" method="post" th:object="${groupDto}">
             <div class="form-group">
-                <label for="text" class="col-sm-3 control-label">Title</label>
+                <label for="title" class="col-sm-3 control-label">Title</label>
                 <div class="col-sm-9">
-                    <input type="text" class="form-control"  id="title" name="title" placeholder="Enter title" th:value="${group.title}">
+                    <input type="text" class="form-control" th:field="*{title}" placeholder="Enter title" required> 
+                    <small class="text-danger" th:if="${#fields.hasErrors('title')}" th:errors="*{title}">Error</small>
                 </div>
 
-                <label for="text" class="col-sm-3 control-label">Year of entry</label>
+                <label for="yearEntry" class="col-sm-3 control-label">Year of entry</label>
                 <div class="col-sm-9">
-                    <input type="text" class="form-control" id="yearEntry" name="yearEntry" placeholder="YYYY" th:value="${group.yearEntry}">
+                    <input type="text" class="form-control" th:field="*{yearEntry}" placeholder="YYYY" required> 
+                    <small class="text-danger" th:if="${#fields.hasErrors('yearEntry')}" th:errors="*{yearEntry}">Error</small>
                 </div>
             </div>
 
             <div class="form-group">
                 <div class="col-sm-offset-3 col-sm-9">
-                    <th:block th:if="${group.id==0}">
-                        <button type="submit" class="btn btn-success">Create</button>
-                    </th:block>
-
-                    <th:block th:if="${group.id!=0}">
-                        <input type="hidden" name="id" th:value="${group.id}" />
-                        <button type="submit" class="btn btn-danger">Update</button>
-                    </th:block>
-
+                        <input type="hidden" th:field="*{id}" />
+                        <button type="submit" class="btn btn-danger" th:text="*{id}==0 ? 'Create' : 'Update'"></button>
                 </div>
             </div>
         </form>
     </div>
 
 
-
     <br />
 
     <div th:insert="fragments/footer">&copy;2019 University project</div>
 
-
-
-
 </body>
+
 </html>

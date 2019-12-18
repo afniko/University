@@ -17,4 +17,6 @@ public interface GroupService {
 
     public GroupDto update(GroupDto groupDto);
 
+    public Group findByTitle(String title);
+
 }
