@@ -11,21 +11,20 @@ For compile project put files in folder "src/main/java" Use next command in comm
 mvn compile
 ```
 
-###Create execute war 
+###Create execute jar 
 For create execute war file and type in the following command and hit "Enter"
 ```
 mvn clean install
 ```
 
-
 #### Configure apache tomcat 9 server:
 Add to $Catalina/lib folder library for postgresql (postgresql-42.2.8.jar)
 
 ###Starting project:
-For starting project deploy war file on web-server. And follow 
-to web link: http://{ip address web-server:port}/{name of war file}
+For starting project copy jar file on web-server. And execute next command:
 ```
-For example: http://localhost:8080/task-university-java8-api-0.0.1-SNAPSHOT
+ mvn clean package spring-boot:repackage
+ java -jar target/{name of war file}.jar
 ```
 
 ###Tests
@@ -36,12 +35,12 @@ mvn validate
 ```
 
 For starting unit tests and checkstyle audit
-Use command and get "Ok" (20 tests)!
+Use command and get "Ok"!
 ```
 mvn test
 ```
 For starting integration tests, unit tests and checkstyle audit
-Use command and get "Ok" (4 tests)!
+Use command and get "Ok"!
 ```
 mvn verify
 ```
@@ -99,6 +98,10 @@ Branch: task19
 ####Task 20 - - Validation
 Add validation to your models. It could be name validation, time validation, number of students in groups, etc. Ask your mentor for validations that should be implemented in your code.
 Branch: task20
+####Task 21 - REST
+Add REST Endpoints to your project. All UI functionality should be available in the REST endpoints
+Branch: task21
+
 
 ##Author
 With best regards, Mykola Afanasiev!
