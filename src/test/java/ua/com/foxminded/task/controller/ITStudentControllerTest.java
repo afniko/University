@@ -164,7 +164,7 @@ public class ITStudentControllerTest {
   }
     
   @Test
-  void whenUpdateGroupWithNotCorrectValues_thenExpectError() throws Exception {
+  void whenUpdateStudentWithNotCorrectValues_thenExpectError() throws Exception {
       StudentDto studentDto = StudentDtoModelRepository.getModel7();
       studentDto.setFirstName("");
       studentDto.setIdFees(1212121212);
@@ -182,7 +182,7 @@ public class ITStudentControllerTest {
   }
   
   @Test
-  void whenUpdateGroupWithNotCorrectValues_thenExpectError2() throws Exception {
+  void whenUpdateStudentWithNotCorrectValues_thenExpectError2() throws Exception {
       StudentDto studentDto = StudentDtoModelRepository.getModel7();
       studentDto.setFirstName("qwertyuiopasdfghjklzxcvbnm");
       studentDto.setMiddleName("qwertyuiopasdfghjklzxcvbnm");
@@ -206,7 +206,7 @@ public class ITStudentControllerTest {
   }
   
   @Test
-  void whenUpdateGroupWithNotCorrectValues_thenExpectError3() throws Exception {
+  void whenUpdateStudentWithNotCorrectValues_thenExpectError3() throws Exception {
       StudentDto studentDto = StudentDtoModelRepository.getModel7();
       studentDto.setId(7);
       int idFeesExist = StudentDtoModelRepository.getModel6().getIdFees();

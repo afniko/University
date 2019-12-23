@@ -74,7 +74,9 @@ public class ITGroupRestControllerTest {
 
   @Test
   void whenSubmitEditFormGroupWithId_thenUpdateGroup() throws Exception {
-      String group = "{\"id\":2,\"title\":\"group2\",\"yearEntry\":2001}";
+      String group = "{\"id\":2,"
+                   + "\"title\":\"group2\","
+                   + "\"yearEntry\":2001}";
       this.mockMvc.perform(post("/api/groups")
                 .content(group)
                 .contentType(MediaType.APPLICATION_JSON))
@@ -89,7 +91,9 @@ public class ITGroupRestControllerTest {
 
   @Test
   void whenSubmitEditFormGroupWithoutId_thenCreateGroup() throws Exception {
-      String group = "{\"id\":0,\"title\":\"group3\",\"yearEntry\":2013}";
+      String group = "{\"id\":0,"
+                   + "\"title\":\"group3\","
+                   + "\"yearEntry\":2013}";
       this.mockMvc.perform(post("/api/groups")
                 .content(group)
                 .contentType(MediaType.APPLICATION_JSON))
@@ -104,7 +108,9 @@ public class ITGroupRestControllerTest {
  
   @Test
   void whenUpdateGroupWithNotCorrectValues_thenExpectError() throws Exception {
-      String group = "{\"id\":2,\"title\":\"group1\",\"yearEntry\":99999}";
+      String group = "{\"id\":2,"
+                   + "\"title\":\"group1\","
+                   + "\"yearEntry\":99999}";
       this.mockMvc.perform(post("/api/groups")
                 .content(group)
                 .contentType(MediaType.APPLICATION_JSON))
@@ -118,7 +124,9 @@ public class ITGroupRestControllerTest {
   
   @Test
   void whenUpdateGroupWithNotCorrectValues_thenExpectError2() throws Exception {
-      String group = "{\"id\":2,\"title\":\"qwertyuiopasdfghjklzxcvbnm\",\"yearEntry\":999}";
+      String group = "{\"id\":2,"
+                   + "\"title\":\"qwertyuiopasdfghjklzxcvbnm\","
+                   + "\"yearEntry\":999}";
       this.mockMvc.perform(post("/api/groups")
                 .content(group)
                 .contentType(MediaType.APPLICATION_JSON))
@@ -132,7 +140,9 @@ public class ITGroupRestControllerTest {
   
   @Test
   void whenUpdateGroupWithNotCorrectTitle_thenExpectError() throws Exception {
-      String group = "{\"id\":2,\"title\":\"\",\"yearEntry\":2018}";
+      String group = "{\"id\":2,"
+                   + "\"title\":\"\","
+                   + "\"yearEntry\":2018}";
       this.mockMvc.perform(post("/api/groups")
                 .content(group)
                 .contentType(MediaType.APPLICATION_JSON))
