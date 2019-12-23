@@ -38,7 +38,7 @@ public class StudentController {
     @GetMapping(path = "/students/{id}", produces = "application/json")
     public StudentDto studentById(@PathVariable("id") int id) {
         logger.debug("studentById()");
-        return studentService.findByIdDto(Integer.valueOf(id));
+        return studentService.findByIdDto(id);
     }
 
     @PostMapping(path = "/students", produces = "application/json")
