@@ -4,7 +4,6 @@ import java.util.List;
 
 import javax.validation.Valid;
 
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,19 +32,13 @@ public class StudentController {
     @GetMapping(path = "/students", produces = "application/json")
     public List<StudentDto> students() {
         logger.debug("students()");
-        List<StudentDto> students = null;
-        students = studentService.findAllDto();
-        return students;
+        return studentService.findAllDto();
     }
 
     @GetMapping(path = "/students/{id}", produces = "application/json")
-    public StudentDto studentById(@PathVariable("id") String id) {
+    public StudentDto studentById(@PathVariable("id") int id) {
         logger.debug("studentById()");
-        StudentDto studentDto = null;
-        if (checkId(id)) {
-            studentDto = studentService.findByIdDto(Integer.valueOf(id));
-        }
-        return studentDto;
+        return studentService.findByIdDto(Integer.valueOf(id));
     }
 
     @PostMapping(path = "/students", produces = "application/json")
@@ -57,10 +50,6 @@ public class StudentController {
             studentDto = studentService.create(studentDto);
         }
         return studentDto;
-    }
-
-    private boolean checkId(String id) {
-        return StringUtils.isNoneBlank(id);
     }
 
 }

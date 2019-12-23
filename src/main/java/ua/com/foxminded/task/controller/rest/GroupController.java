@@ -4,7 +4,6 @@ import java.util.List;
 
 import javax.validation.Valid;
 
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,19 +32,13 @@ public class GroupController {
     @GetMapping(path = "/groups", produces = "application/json")
     public List<GroupDto> groups() {
         logger.debug("groups()");
-        List<GroupDto> groups = null;
-        groups = groupService.findAllDto();
-        return groups;
+        return groupService.findAllDto();
     }
 
     @GetMapping(path = "/groups/{id}", produces = "application/json")
-    public GroupDto groupById(@PathVariable("id") String id) {
+    public GroupDto groupById(@PathVariable("id") int id) {
         logger.debug("groupById()");
-        GroupDto groupDto = null;
-        if (checkId(id)) {
-            groupDto = groupService.findByIdDto(Integer.valueOf(id));
-        }
-        return groupDto;
+        return groupService.findByIdDto(id);
     }
 
     @PostMapping(path = "/groups", produces = "application/json")
@@ -57,10 +50,6 @@ public class GroupController {
             groupDto = groupService.create(groupDto);
         }
         return groupDto;
-    }
-
-    private boolean checkId(String id) {
-        return StringUtils.isNoneBlank(id);
     }
 
 }
