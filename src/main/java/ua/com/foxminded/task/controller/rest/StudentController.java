@@ -7,7 +7,6 @@ import javax.validation.Valid;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -40,7 +39,7 @@ public class StudentController {
     }
 
     @GetMapping(path = "/students/{id}", produces = "application/json")
-    public StudentDto studentById(@PathVariable("id") String id, Model model) {
+    public StudentDto studentById(@PathVariable("id") String id) {
         logger.debug("studentById()");
         StudentDto studentDto = null;
         if (checkId(id)) {

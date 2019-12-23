@@ -7,7 +7,6 @@ import javax.validation.Valid;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -32,7 +31,7 @@ public class GroupController {
     }
 
     @GetMapping(path = "/groups", produces = "application/json")
-    public List<GroupDto> groups(Model model) {
+    public List<GroupDto> groups() {
         logger.debug("groups()");
         List<GroupDto> groups = null;
         groups = groupService.findAllDto();
@@ -40,7 +39,7 @@ public class GroupController {
     }
 
     @GetMapping(path = "/groups/{id}", produces = "application/json")
-    public GroupDto groupById(@PathVariable("id") String id, Model model) {
+    public GroupDto groupById(@PathVariable("id") String id) {
         logger.debug("groupById()");
         GroupDto groupDto = null;
         if (checkId(id)) {
