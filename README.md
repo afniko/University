@@ -11,7 +11,7 @@ For compile project put files in folder "src/main/java" Use next command in comm
 mvn compile
 ```
 
-###Create execute jar 
+###Create execute war 
 For create execute war file and type in the following command and hit "Enter"
 ```
 mvn clean install
@@ -21,10 +21,10 @@ mvn clean install
 Add to $Catalina/lib folder library for postgresql (postgresql-42.2.8.jar)
 
 ###Starting project:
-For starting project copy jar file on web-server. And execute next command:
+For starting project deploy war file on web-server. And follow 
+to web link: http://{ip address web-server:port}/{name of war file}
 ```
- mvn clean package spring-boot:repackage
- java -jar target/{name of war file}.jar
+-For example: http://localhost:8080/task-university-java8-api-0.0.1-SNAPSHOT
 ```
 
 ###Tests
@@ -91,6 +91,11 @@ Add Thymeleaf
 Branch: task17.2
 ####Task 18 - Spring Boot
 Convert application to Spring Boot
+For starting project copy jar file on web-server. And execute next command:
+```
+ mvn clean package spring-boot:repackage
+ java -jar target/{name of war file}.jar
+```
 Branch: task18
 ####Task 19 - Spring Data JPA
 Rewrite the DAO layer. Use Spring Data JPA instead of Hibernate.
