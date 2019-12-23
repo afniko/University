@@ -19,7 +19,7 @@ import ua.com.foxminded.task.domain.dto.StudentDto;
 import ua.com.foxminded.task.service.StudentService;
 
 @RestController("studentRestController")
-@RequestMapping("/api/rest")
+@RequestMapping("/api")
 public class StudentController {
 
     private Logger logger;

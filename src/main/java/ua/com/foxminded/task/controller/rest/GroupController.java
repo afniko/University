@@ -19,7 +19,7 @@ import ua.com.foxminded.task.domain.dto.GroupDto;
 import ua.com.foxminded.task.service.GroupService;
 
 @RestController("groupRestController")
-@RequestMapping("/api/rest")
+@RequestMapping("/api")
 public class GroupController {
 
     private GroupService groupService;
