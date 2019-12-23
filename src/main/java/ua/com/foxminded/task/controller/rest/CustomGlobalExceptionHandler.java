@@ -37,42 +37,43 @@ public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler
         body.put("status", status.value());
 
         Map<String, String> errors = new HashMap<>();
-        ex.getBindingResult().getAllErrors().forEach((error) -> {
+        ex.getBindingResult().getAllErrors().forEach(error -> {
             String fieldName = ((FieldError) error).getField();
             String errorMessage = error.getDefaultMessage();
             errors.put(fieldName, errorMessage);
         });
         body.put("errors", errors);
+        status = HttpStatus.CONFLICT;
         return new ResponseEntity<>(body, headers, status);
     }
 
     @ExceptionHandler(EntityNotFoundException.class)
     public void entityNotFoundException(HttpServletResponse response) throws IOException {
-        response.sendError(HttpStatus.BAD_REQUEST.value(), "Entity not found!");
+        response.sendError(HttpStatus.NOT_FOUND.value(), "Entity not found!");
     }
 
     @ExceptionHandler(NumberFormatException.class)
     public void numberFormatException(HttpServletResponse response) throws IOException {
-        response.sendError(HttpStatus.BAD_REQUEST.value(), "Id must be numeric!");
+        response.sendError(HttpStatus.UNSUPPORTED_MEDIA_TYPE.value(), "Id must be numeric!");
     }
 
     @ExceptionHandler(EntityAlreadyExistsException.class)
     public void entityAlreadyExistsException(HttpServletResponse response) throws IOException {
-        response.sendError(HttpStatus.BAD_REQUEST.value(), "Record was not created! The record already exists!");
+        response.sendError(HttpStatus.CONFLICT.value(), "Record was not created! The record already exists!");
     }
 
     @ExceptionHandler(EntityNotValidException.class)
     public void entityNotValidException(HttpServletResponse response) throws IOException {
-        response.sendError(HttpStatus.BAD_REQUEST.value(), "Record was not updated/created! The data is not valid!");
+        response.sendError(HttpStatus.UNSUPPORTED_MEDIA_TYPE.value(), "Record was not updated/created! The data is not valid!");
     }
 
     @ExceptionHandler(NoEntityFoundException.class)
     public void noEntityFoundException(HttpServletResponse response) throws IOException {
-        response.sendError(HttpStatus.BAD_REQUEST.value(), "Record not found!");
+        response.sendError(HttpStatus.NOT_FOUND.value(), "Record not found!");
     }
     
     @ExceptionHandler(NoExecuteQueryException.class)
     public void noExecuteQueryException(HttpServletResponse response) throws IOException {
-        response.sendError(HttpStatus.BAD_REQUEST.value(), "Something with goes wrong!");
+        response.sendError(HttpStatus.EXPECTATION_FAILED.value(), "Something with goes wrong!");
     }
 }
