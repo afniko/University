@@ -57,7 +57,7 @@ public class ITStudentRestControllerTest {
     }
 
     @Test
-    void whenRetriveAllStudent_thenExpectListOfStudent() throws Exception {
+    void whenPerformStudentsRequest_thenExpectListOfStudent() throws Exception {
         this.mockMvc.perform(get("/api/students").accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
@@ -82,7 +82,7 @@ public class ITStudentRestControllerTest {
     }
 
     @Test
-    void whenRetriveTheStudent_thenExpectStudentById() throws Exception {
+    void whenPerformStudentsAndIdRequest_thenExpectStudentById() throws Exception {
         this.mockMvc.perform(get("/api/students/2").accept(MediaType.APPLICATION_JSON))
                   .andExpect(status().isOk())
                   .andExpect(content().contentType(MediaType.APPLICATION_JSON))
@@ -99,7 +99,7 @@ public class ITStudentRestControllerTest {
     }
 
   @Test
-  void whenSubmitEditFormStudentWithId_thenUpdateStudent() throws Exception {
+  void whenPerformPostStudentsRequest_thenUpdateStudent() throws Exception {
       String student = "{\"id\":2,\"firstName\":\"firstName2\","
                      + "\"middleName\":\"middleName2\","
                      + "\"lastName\":\"lastName2\","
@@ -125,7 +125,7 @@ public class ITStudentRestControllerTest {
   }
 
   @Test
-  void whenSubmitEditFormStudentWithoutId_thenCreateStudent() throws Exception {
+  void whenPerformPostStudentsRequestWithIdZero_thenCreateStudent() throws Exception {
       String student = "{\"id\":0,\"firstName\":\"firstName7\","
                      + "\"middleName\":\"middleName7\","
                      + "\"lastName\":\"lastName7\","

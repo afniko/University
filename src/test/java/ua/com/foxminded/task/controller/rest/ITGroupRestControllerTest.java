@@ -46,7 +46,7 @@ public class ITGroupRestControllerTest {
     }
 
     @Test
-    void whenRetriveAllGroups_thenExpectListOfGroups() throws Exception {
+    void whenPerformGroupsRequest_thenExpectListOfGroups() throws Exception {
         this.mockMvc.perform(get("/api/groups").accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
@@ -61,7 +61,7 @@ public class ITGroupRestControllerTest {
     }
 
     @Test
-    void whenRetriveTheGroup_thenExpectGroupById() throws Exception {
+    void whenPerformGroupAndIdRequest_thenExpectGroupById() throws Exception {
         this.mockMvc.perform(get("/api/groups/2").accept(MediaType.APPLICATION_JSON))
                   .andExpect(status().isOk())
                   .andExpect(content().contentType(MediaType.APPLICATION_JSON))
@@ -73,7 +73,7 @@ public class ITGroupRestControllerTest {
     }
 
   @Test
-  void whenSubmitEditFormGroupWithId_thenUpdateGroup() throws Exception {
+  void whenPerformPostGroupsRequest_thenUpdateGroup() throws Exception {
       String group = "{\"id\":2,"
                    + "\"title\":\"group2\","
                    + "\"yearEntry\":2001}";
@@ -90,7 +90,7 @@ public class ITGroupRestControllerTest {
   }
 
   @Test
-  void whenSubmitEditFormGroupWithoutId_thenCreateGroup() throws Exception {
+  void whenPerformPostGroupsRequestWithIdZero_thenCreateGroup() throws Exception {
       String group = "{\"id\":0,"
                    + "\"title\":\"group3\","
                    + "\"yearEntry\":2013}";
