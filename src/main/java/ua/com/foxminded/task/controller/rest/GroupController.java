@@ -30,19 +30,19 @@ public class GroupController {
     }
 
     @GetMapping(path = "/groups", produces = "application/json")
-    public List<GroupDto> groups() {
+    public List<GroupDto> getGroups() {
         logger.debug("groups()");
         return groupService.findAllDto();
     }
 
     @GetMapping(path = "/groups/{id}", produces = "application/json")
-    public GroupDto groupById(@PathVariable("id") int id) {
+    public GroupDto getGroupById(@PathVariable("id") int id) {
         logger.debug("groupById()");
         return groupService.findByIdDto(id);
     }
 
     @PostMapping(path = "/groups", produces = "application/json")
-    public GroupDto editGroup(@Valid @RequestBody GroupDto groupDto) {
+    public GroupDto saveGroup(@Valid @RequestBody GroupDto groupDto) {
         logger.debug("editPost()");
         if (groupDto.getId() != 0) {
             groupDto = groupService.update(groupDto);

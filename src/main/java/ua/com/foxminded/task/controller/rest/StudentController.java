@@ -30,19 +30,19 @@ public class StudentController {
     }
 
     @GetMapping(path = "/students", produces = "application/json")
-    public List<StudentDto> students() {
+    public List<StudentDto> getStudents() {
         logger.debug("students()");
         return studentService.findAllDto();
     }
 
     @GetMapping(path = "/students/{id}", produces = "application/json")
-    public StudentDto studentById(@PathVariable("id") int id) {
+    public StudentDto getStudentById(@PathVariable("id") int id) {
         logger.debug("studentById()");
         return studentService.findByIdDto(id);
     }
 
     @PostMapping(path = "/students", produces = "application/json")
-    public StudentDto editPost(@Valid @RequestBody StudentDto studentDto) {
+    public StudentDto saveStudent(@Valid @RequestBody StudentDto studentDto) {
         logger.debug("editPost()");
         if (studentDto.getId() != 0) {
             studentDto = studentService.update(studentDto);
