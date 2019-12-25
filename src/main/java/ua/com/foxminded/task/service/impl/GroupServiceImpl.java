@@ -3,6 +3,8 @@ package ua.com.foxminded.task.service.impl;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.persistence.EntityNotFoundException;
+
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -38,8 +40,14 @@ public class GroupServiceImpl implements GroupService {
     @Override
     public GroupDto findByIdDto(int id) {
         logger.debug("findById() [id:{}]", id);
-        Group group = findById(id);
-        return ConverterToDtoService.convert(group);
+        GroupDto groupDto = null;
+        try {
+            Group group = findById(id);
+            groupDto = ConverterToDtoService.convert(group);
+        } catch (EntityNotFoundException e) {
+            throw new NoEntityFoundException("findByIdDto() id: " + id);
+        }
+        return groupDto;
     }
 
     @Override

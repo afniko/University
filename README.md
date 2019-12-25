@@ -17,7 +17,6 @@ For create execute war file and type in the following command and hit "Enter"
 mvn clean install
 ```
 
-
 #### Configure apache tomcat 9 server:
 Add to $Catalina/lib folder library for postgresql (postgresql-42.2.8.jar)
 
@@ -25,7 +24,7 @@ Add to $Catalina/lib folder library for postgresql (postgresql-42.2.8.jar)
 For starting project deploy war file on web-server. And follow 
 to web link: http://{ip address web-server:port}/{name of war file}
 ```
-For example: http://localhost:8080/task-university-java8-api-0.0.1-SNAPSHOT
+-For example: http://localhost:8080/task-university-java8-api-0.0.1-SNAPSHOT
 ```
 
 ###Tests
@@ -36,12 +35,12 @@ mvn validate
 ```
 
 For starting unit tests and checkstyle audit
-Use command and get "Ok" (20 tests)!
+Use command and get "Ok"!
 ```
 mvn test
 ```
 For starting integration tests, unit tests and checkstyle audit
-Use command and get "Ok" (4 tests)!
+Use command and get "Ok"!
 ```
 mvn verify
 ```
@@ -92,6 +91,11 @@ Add Thymeleaf
 Branch: task17.2
 ####Task 18 - Spring Boot
 Convert application to Spring Boot
+For starting project copy jar file on web-server. And execute next command:
+```
+ mvn clean package spring-boot:repackage
+ java -jar target/{name of war file}.jar
+```
 Branch: task18
 ####Task 19 - Spring Data JPA
 Rewrite the DAO layer. Use Spring Data JPA instead of Hibernate.
@@ -99,6 +103,10 @@ Branch: task19
 ####Task 20 - - Validation
 Add validation to your models. It could be name validation, time validation, number of students in groups, etc. Ask your mentor for validations that should be implemented in your code.
 Branch: task20
+####Task 21 - REST
+Add REST Endpoints to your project. All UI functionality should be available in the REST endpoints
+Branch: task21
+
 
 ##Author
 With best regards, Mykola Afanasiev!

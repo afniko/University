@@ -12,6 +12,7 @@ import ua.com.foxminded.task.validation.annotation.GroupTitleUnique;
 @GroupTitleUnique(message = "Title is already exists!")
 public class GroupDto {
 
+    @Min(value = 0, message = "Id must be more than zero!")
     private int id;
 
     @NotBlank(message = "Title can`t be blank!")
@@ -77,7 +78,5 @@ public class GroupDto {
             return false;
         return true;
     }
-
-   
 
 }
