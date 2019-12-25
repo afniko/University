@@ -106,6 +106,15 @@ Branch: task20
 ####Task 21 - REST
 Add REST Endpoints to your project. All UI functionality should be available in the REST endpoints
 Branch: task21
+####Task 22 - Swagger
+Add Swagger documentation to your project. 
+You can use 2 or 3 versions or ask your mentor.
+link to swagger page: 
+```
+http://localhost:8080/swagger-ui.html
+```
+Branch: task22
+
 
 
 ##Author

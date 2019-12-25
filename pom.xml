@@ -21,6 +21,7 @@
         <commons.lang3.version>3.8.1</commons.lang3.version>
         <org.flywaydb.flyway.core.version>5.2.4</org.flywaydb.flyway.core.version>
         <hibernate.jpamodelgen.version>5.4.7.Final</hibernate.jpamodelgen.version>
+        <swagger.version>2.9.2</swagger.version>
 
         <org.flywaydb.flyway.plugin.version>5.2.4</org.flywaydb.flyway.plugin.version>
         <maven.checkstyle.plugin.version>3.1.0</maven.checkstyle.plugin.version>
@@ -80,6 +81,19 @@
             <artifactId>hibernate-jpamodelgen</artifactId>
             <version>${hibernate.jpamodelgen.version}</version>
             <scope>provided</scope>
+        </dependency>
+
+        <!-- for swagger api documentation -->
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger2</artifactId>
+            <version>${swagger.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger-ui</artifactId>
+            <version>${swagger.version}</version>
         </dependency>
 
     </dependencies>

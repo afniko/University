@@ -10,36 +10,48 @@ import javax.validation.constraints.Past;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import ua.com.foxminded.task.validation.annotation.MaxStudentsInGroupLimit;
 import ua.com.foxminded.task.validation.annotation.StudentIdFeesUnique;
 
 @MaxStudentsInGroupLimit
 @StudentIdFeesUnique(message = "Id fees is already exists!")
+@ApiModel(description = "Object with a student and group information")
 public class StudentDto {
 
+    @Min(value = 0, message = "Id must be more than zero!")
+    @ApiModelProperty(notes = "The database generated student id")
     private int id;
 
     @NotBlank(message = "First name can`t be blank!")
     @Length(max = 20, message = "Maximum length of first name is 20!")
+    @ApiModelProperty(notes = "The student first name. Not blank. Max length is 20 character")
     private String firstName;
 
     @Length(max = 20, message = "Maximum length of middle name is 20!")
+    @ApiModelProperty(notes = "The student middle name. Max length is 20 character")
     private String middleName;
 
     @Length(max = 20, message = "Maximum length of last name is 20!")
+    @ApiModelProperty(notes = "The student last name. Max length is 20 character")
     private String lastName;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Past(message = "Birthday date must be in past!")
+    @ApiModelProperty(notes = "The student birthday date. Date must be in past")
     private LocalDate birthday;
 
     @Min(value = 100000000, message = "Value is 9 number!")
     @Max(value = 999999999, message = "Value is 9 number!")
+    @ApiModelProperty(notes = "The student identification number in an fees authority. Value is 9 number")
     private int idFees;
 
     @Length(max = 20, message = "Maximum length of title group is 20!")
+    @ApiModelProperty(notes = "The students name of group. Max length is 20 character")
     private String groupTitle;
 
+    @ApiModelProperty(notes = "The unique number of students group")
     private int idGroup;
 
     public int getId() {
