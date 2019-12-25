@@ -3,6 +3,8 @@ package ua.com.foxminded.task.service.impl;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.persistence.EntityNotFoundException;
+
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -36,8 +38,14 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public StudentDto findByIdDto(int id) {
         logger.debug("findByIdDto() [id:{}]", id);
-        Student student = studentRepository.getOne(id);
-        return ConverterToDtoService.convert(student);
+        StudentDto studentDto = null;
+        try {
+            Student student = studentRepository.getOne(id);
+            studentDto = ConverterToDtoService.convert(student);
+        } catch (EntityNotFoundException e) {
+            throw new NoEntityFoundException("findByIdDto() id: " + id);
+        }
+        return studentDto;
     }
 
     @Override

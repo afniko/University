@@ -6,7 +6,6 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import javax.persistence.EntityNotFoundException;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.http.HttpHeaders;
@@ -43,18 +42,8 @@ public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler
             errors.put(fieldName, errorMessage);
         });
         body.put("errors", errors);
-        status = HttpStatus.CONFLICT;
+        status = HttpStatus.BAD_REQUEST;
         return new ResponseEntity<>(body, headers, status);
-    }
-
-    @ExceptionHandler(EntityNotFoundException.class)
-    public void entityNotFoundException(HttpServletResponse response) throws IOException {
-        response.sendError(HttpStatus.NOT_FOUND.value(), "Entity not found!");
-    }
-
-    @ExceptionHandler(NumberFormatException.class)
-    public void numberFormatException(HttpServletResponse response) throws IOException {
-        response.sendError(HttpStatus.UNSUPPORTED_MEDIA_TYPE.value(), "Id must be numeric!");
     }
 
     @ExceptionHandler(EntityAlreadyExistsException.class)
@@ -64,7 +53,7 @@ public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler
 
     @ExceptionHandler(EntityNotValidException.class)
     public void entityNotValidException(HttpServletResponse response) throws IOException {
-        response.sendError(HttpStatus.UNSUPPORTED_MEDIA_TYPE.value(), "Record was not updated/created! The data is not valid!");
+        response.sendError(HttpStatus.BAD_REQUEST.value(), "Record was not updated/created! The data is not valid!");
     }
 
     @ExceptionHandler(NoEntityFoundException.class)
