@@ -114,7 +114,9 @@ link to swagger page:
 http://localhost:8080/swagger-ui.html
 ```
 Branch: task22
-
+####Task 23 - Spring Boot Tests
+Writed Integration and System tests using Spring Boot Test, H2 DB (it is possible to use Database Rider)
+Branch: task23
 
 
 ##Author
