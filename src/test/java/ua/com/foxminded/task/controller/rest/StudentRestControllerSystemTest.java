@@ -29,7 +29,7 @@ import ua.com.foxminded.task.domain.repository.GroupModelRepository;
 import ua.com.foxminded.task.domain.repository.StudentModelRepository;
 
 @SpringBootTest
-public class ITStudentRestControllerTest {
+public class StudentRestControllerSystemTest {
 
     @Autowired
     private Flyway flyway;
@@ -37,6 +37,8 @@ public class ITStudentRestControllerTest {
     private GroupRepository groupRepository;
     @Autowired
     private StudentRepository studentRepository;
+    @Autowired
+    private WebApplicationContext context;
 
     private static final Group GROUP1 = GroupModelRepository.getModel1();
     private static final Group GROUP2 = GroupModelRepository.getModel2();
@@ -46,8 +48,8 @@ public class ITStudentRestControllerTest {
     private MockMvc mockMvc;
 
     @BeforeEach
-    public void setup(WebApplicationContext wac) {
-        this.mockMvc = MockMvcBuilders.webAppContextSetup(wac).build();
+    public void setup() {
+        this.mockMvc = MockMvcBuilders.webAppContextSetup(context).build();
         flyway.migrate();
         groupRepository.save(GROUP1);
         groupRepository.save(GROUP2);
