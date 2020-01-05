@@ -48,12 +48,12 @@ public class GroupRestControllerIntegrationTest {
     @BeforeEach
     public void init() {
         this.mockMvc = MockMvcBuilders.webAppContextSetup(context).build();
-        GROUP_DTO1.setId(1);
-        GROUP_DTO2.setId(2);
     }
 
     @Test
     void whenPerformGroupsRequest_thenExpectListOfGroups() throws Exception {
+        GROUP_DTO1.setId(1);
+        GROUP_DTO2.setId(2);
         List<GroupDto> groupDtos = Arrays.asList(GROUP_DTO1, GROUP_DTO2);
 
         when(groupService.findAllDto()).thenReturn(groupDtos);
@@ -73,6 +73,7 @@ public class GroupRestControllerIntegrationTest {
 
     @Test
     void whenPerformGroupAndIdRequest_thenExpectGroupById() throws Exception {
+        GROUP_DTO2.setId(2);
 
         when(groupService.findByIdDto(2)).thenReturn(GROUP_DTO2);
 
