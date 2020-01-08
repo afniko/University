@@ -6,13 +6,11 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
-import org.flywaydb.core.Flyway;
 import org.junit.Rule;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 
 import com.github.database.rider.core.DBUnitRule;
 import com.github.database.rider.core.api.dataset.DataSet;
@@ -23,13 +21,11 @@ import ua.com.foxminded.task.domain.Group;
 
 @DBRider
 @SpringBootTest
-public class GroupRepositoryIntegratedTest {
+@ActiveProfiles("flywayoff")
+public class GroupRepositoryIntegrationTest {
 
     @Autowired
     private GroupRepository groupRepository;
-
-    @Autowired
-    private Flyway flyway;
 
     @Autowired
     private DataSource dataSource;
@@ -37,27 +33,23 @@ public class GroupRepositoryIntegratedTest {
     @Rule
     public DBUnitRule dbUnitRule = DBUnitRule.instance(() -> dataSource.getConnection());
 
-    @BeforeEach
-    public void createTables() {
-        flyway.migrate();
-    }
-
     @Test
+    @DataSet(cleanBefore = true)
     public void whenRepositoryHasNotRecords_thenReturnEmptyList() {
         List<Group> groups = groupRepository.findAll();
         assertThat(groups).isNotNull().isEmpty();
     }
 
     @Test
-    @DataSet(value = "group/groups.yml")
+    @DataSet(value = "group/groups.yml", cleanBefore = true)
     @ExpectedDataSet(value = "group/expectedGroups.yml")
-    public void whenRepositoryHasNotRecords_thenReturnNonEmptyList() {
+    public void whenRepositoryHasRecords_thenReturnNonEmptyList() {
         List<Group> groups = groupRepository.findAll();
         assertThat(groups).isNotNull().isNotEmpty().hasSize(3);
     }
 
     @Test
-    @DataSet(value = "group/groups.yml")
+    @DataSet(value = "group/groups.yml", cleanBefore = true)
     public void whenPutAtTableDbGroupObjects_thenGetThisObjectsFindById() {
         Group expectedGroup = new Group();
         expectedGroup.setTitle("group3");
@@ -67,7 +59,7 @@ public class GroupRepositoryIntegratedTest {
     }
 
     @Test
-    @DataSet(value = "group/groups.yml")
+    @DataSet(value = "group/groups.yml", cleanBefore = true)
     public void whenFindByTitle_thenGetExitsGroup() {
         String title = "group2";
         Group groupActually = groupRepository.findByTitle(title);
@@ -75,6 +67,7 @@ public class GroupRepositoryIntegratedTest {
     }
 
     @Test
+    @DataSet(cleanBefore = true)
     @ExpectedDataSet(value = "group/expectedGroup.yml")
     public void whenSaveObject_thenExpectRecord() {
         Group group = new Group();
@@ -85,7 +78,7 @@ public class GroupRepositoryIntegratedTest {
     }
 
     @Test
-    @DataSet(value = "group/group.yml")
+    @DataSet(value = "group/group.yml", cleanBefore = true)
     @ExpectedDataSet(value = "group/expectedGroup.yml")
     public void whenUpdateObject_thenExpectUpdatedRecord() {
         Group group = new Group();
@@ -94,11 +87,6 @@ public class GroupRepositoryIntegratedTest {
         group.setYearEntry(2015);
         Group groupActually = groupRepository.saveAndFlush(group);
         assertThat(groupActually).isNotNull();
-    }
-
-    @AfterEach
-    public void removeTables() {
-        flyway.clean();
     }
 
 }
