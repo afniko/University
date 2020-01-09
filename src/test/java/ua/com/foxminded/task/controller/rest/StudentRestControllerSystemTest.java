@@ -11,8 +11,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import org.flywaydb.core.Flyway;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,21 +20,16 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-import ua.com.foxminded.task.dao.GroupRepository;
-import ua.com.foxminded.task.dao.StudentRepository;
+import com.github.database.rider.core.api.dataset.DataSet;
+import com.github.database.rider.junit5.api.DBRider;
+
 import ua.com.foxminded.task.domain.Group;
 import ua.com.foxminded.task.domain.repository.GroupModelRepository;
-import ua.com.foxminded.task.domain.repository.StudentModelRepository;
 
+@DBRider
 @SpringBootTest
 public class StudentRestControllerSystemTest {
 
-    @Autowired
-    private Flyway flyway;
-    @Autowired
-    private GroupRepository groupRepository;
-    @Autowired
-    private StudentRepository studentRepository;
     @Autowired
     private WebApplicationContext context;
 
@@ -50,15 +43,16 @@ public class StudentRestControllerSystemTest {
     @BeforeEach
     public void setup() {
         this.mockMvc = MockMvcBuilders.webAppContextSetup(context).build();
-        flyway.migrate();
-        groupRepository.save(GROUP1);
-        groupRepository.save(GROUP2);
-        groupRepository.save(GROUP3);
-        groupRepository.saveAndFlush(GROUP4);
-        studentRepository.saveAll(StudentModelRepository.getModels());
+//        flyway.migrate();
+//        groupRepository.save(GROUP1);
+//        groupRepository.save(GROUP2);
+//        groupRepository.save(GROUP3);
+//        groupRepository.saveAndFlush(GROUP4);
+//        studentRepository.saveAll(StudentModelRepository.getModels());
     }
 
     @Test
+    @DataSet(value = "student/studentsWithGroups.yml", cleanBefore = true)
     void whenPerformStudentsRequest_thenExpectListOfStudent() throws Exception {
         this.mockMvc.perform(get("/api/students").accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
@@ -71,7 +65,7 @@ public class StudentRestControllerSystemTest {
                 .andExpect(jsonPath("$[0].lastName", is("lastName1")))
                 .andExpect(jsonPath("$[0].birthday", is("1999-06-25")))
                 .andExpect(jsonPath("$[0].idFees", is(111111111)))
-                .andExpect(jsonPath("$[0].groupTitle", is("group1")))
+                .andExpect(jsonPath("$[0].groupTitle", is("group11")))
                 .andExpect(jsonPath("$[0].idGroup", is(1)))
                 .andExpect(jsonPath("$[1].id", is(2)))
                 .andExpect(jsonPath("$[1].firstName", is("firstName2")))
@@ -79,11 +73,12 @@ public class StudentRestControllerSystemTest {
                 .andExpect(jsonPath("$[1].lastName", is("lastName2")))
                 .andExpect(jsonPath("$[1].birthday", is("1998-06-25")))
                 .andExpect(jsonPath("$[1].idFees", is(222211111)))
-                .andExpect(jsonPath("$[1].groupTitle", is("group1")))
+                .andExpect(jsonPath("$[1].groupTitle", is("group11")))
                 .andExpect(jsonPath("$[1].idGroup", is(1)));
     }
 
     @Test
+    @DataSet(value = "student/studentsWithGroups.yml", cleanBefore = true)
     void whenPerformStudentsAndIdRequest_thenExpectStudentById() throws Exception {
         this.mockMvc.perform(get("/api/students/2").accept(MediaType.APPLICATION_JSON))
                   .andExpect(status().isOk())
@@ -96,12 +91,13 @@ public class StudentRestControllerSystemTest {
                   .andExpect(jsonPath("$.lastName", is("lastName2")))
                   .andExpect(jsonPath("$.birthday", is("1998-06-25")))
                   .andExpect(jsonPath("$.idFees", is(222211111)))
-                  .andExpect(jsonPath("$.groupTitle", is("group1")))
+                  .andExpect(jsonPath("$.groupTitle", is("group11")))
                   .andExpect(jsonPath("$.idGroup", is(1)));
     }
 
-  @Test
-  void whenPerformPostStudentsRequest_thenUpdateStudent() throws Exception {
+    @Test
+    @DataSet(value = "student/studentsWithGroups.yml", cleanBefore = true)
+    void whenPerformPostStudentsRequest_thenUpdateStudent() throws Exception {
       String student = "{\"id\":2,\"firstName\":\"firstName2\","
                      + "\"middleName\":\"middleName2\","
                      + "\"lastName\":\"lastName2\","
@@ -126,8 +122,9 @@ public class StudentRestControllerSystemTest {
                 .andExpect(jsonPath("$.idGroup", is(0)));
   }
 
-  @Test
-  void whenPerformPostStudentsRequestWithIdZero_thenCreateStudent() throws Exception {
+    @Test
+    @DataSet(value = "student/studentsWithGroups.yml", cleanBefore = true)
+    void whenPerformPostStudentsRequestWithIdZero_thenCreateStudent() throws Exception {
       String student = "{\"id\":0,\"firstName\":\"firstName7\","
                      + "\"middleName\":\"middleName7\","
                      + "\"lastName\":\"lastName7\","
@@ -142,18 +139,17 @@ public class StudentRestControllerSystemTest {
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(jsonPath("$", aMapWithSize(8)))
-                .andExpect(jsonPath("$.id", is(7)))
                 .andExpect(jsonPath("$.firstName", is("firstName7")))
                 .andExpect(jsonPath("$.middleName", is("middleName7")))
                 .andExpect(jsonPath("$.lastName", is("lastName7")))
                 .andExpect(jsonPath("$.birthday", is("1997-06-25")))
                 .andExpect(jsonPath("$.idFees", is(232211111)))
-                .andExpect(jsonPath("$.groupTitle", is("group3")))
+                .andExpect(jsonPath("$.groupTitle", is("group13")))
                 .andExpect(jsonPath("$.idGroup", is(3)));
   }
 
-  @Test
-  void whenUpdateStudentWithNotCorrectValues_thenExpectError() throws Exception {
+    @Test
+    void whenUpdateStudentWithNotCorrectValues_thenExpectError() throws Exception {
       String student = "{\"id\":0,\"firstName\":\"\","
                      + "\"middleName\":\"middleName7\","
                      + "\"lastName\":\"lastName7\","
@@ -172,8 +168,8 @@ public class StudentRestControllerSystemTest {
                 .andExpect(jsonPath("$.errors.idFees", is("Value is 9 number!")));
   }
 
-  @Test
-  void whenUpdateStudentWithNotCorrectValues_thenExpectError2() throws Exception {
+    @Test
+    void whenUpdateStudentWithNotCorrectValues_thenExpectError2() throws Exception {
       String student = "{\"id\":0,\"firstName\":\"qwertyuiopasdfghjklzxcvbnm\","
                      + "\"middleName\":\"qwertyuiopasdfghjklzxcvbnm\","
                      + "\"lastName\":\"qwertyuiopasdfghjklzxcvbnm\","
@@ -195,8 +191,9 @@ public class StudentRestControllerSystemTest {
                 .andExpect(jsonPath("$.errors.groupTitle", is("Maximum length of title group is 20!")));
   }
 
-  @Test
-  void whenUpdateStudentWithNotCorrectValues_thenExpectError3() throws Exception {
+    @Test
+    @DataSet(value = "student/studentsWithGroups.yml", cleanBefore = true)
+    void whenUpdateStudentWithNotCorrectValues_thenExpectError3() throws Exception {
       String student = "{\"id\":6,\"firstName\":\"firstName2\","
                      + "\"middleName\":\"middleName7\","
                      + "\"lastName\":\"lastName7\","
@@ -215,8 +212,4 @@ public class StudentRestControllerSystemTest {
                 .andExpect(jsonPath("$.errors.idGroup", is("Max participant in group!")));
   }
   
-    @AfterEach
-    public void removeCreatedTables() {
-        flyway.clean();
-    }
 }
