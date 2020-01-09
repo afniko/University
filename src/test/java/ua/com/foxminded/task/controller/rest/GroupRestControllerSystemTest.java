@@ -9,8 +9,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import org.flywaydb.core.Flyway;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,40 +18,31 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-import ua.com.foxminded.task.dao.GroupRepository;
-import ua.com.foxminded.task.domain.Group;
-import ua.com.foxminded.task.domain.repository.GroupModelRepository;
+import com.github.database.rider.core.api.dataset.DataSet;
+import com.github.database.rider.junit5.api.DBRider;
 
+@DBRider
 @SpringBootTest
 public class GroupRestControllerSystemTest {
 
     @Autowired
-    private Flyway flyway;
-    @Autowired
-    private GroupRepository groupRepository;
-    @Autowired
     private WebApplicationContext context;
-
-    private static final Group GROUP1 = GroupModelRepository.getModel1();
-    private static final Group GROUP2 = GroupModelRepository.getModel2();
 
     private MockMvc mockMvc;
 
     @BeforeEach
     public void init() {
         this.mockMvc = MockMvcBuilders.webAppContextSetup(context).build();
-        flyway.migrate();
-        groupRepository.save(GROUP1);
-        groupRepository.saveAndFlush(GROUP2);
     }
 
     @Test
+    @DataSet(value = "group/groups.yml", cleanBefore = true)
     void whenPerformGroupsRequest_thenExpectListOfGroups() throws Exception {
         this.mockMvc.perform(get("/api/groups").accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andDo(print())
-                .andExpect(jsonPath("$", hasSize(2)))
+                .andExpect(jsonPath("$", hasSize(4)))
                 .andExpect(jsonPath("$[0].id", is(1)))
                 .andExpect(jsonPath("$[0].title", is("group1")))
                 .andExpect(jsonPath("$[0].yearEntry", is(2016)))
@@ -63,6 +52,7 @@ public class GroupRestControllerSystemTest {
     }
 
     @Test
+    @DataSet(value = "group/groups.yml", cleanBefore = true)
     void whenPerformGroupAndIdRequest_thenExpectGroupById() throws Exception {
         this.mockMvc.perform(get("/api/groups/2").accept(MediaType.APPLICATION_JSON))
                   .andExpect(status().isOk())
@@ -74,8 +64,9 @@ public class GroupRestControllerSystemTest {
                   .andExpect(jsonPath("$.yearEntry", is(2018)));
     }
 
-  @Test
-  void whenPerformPostGroupsRequest_thenUpdateGroup() throws Exception {
+    @Test
+    @DataSet(value = "group/groups.yml", cleanBefore = true)
+    void whenPerformPostGroupsRequest_thenUpdateGroup() throws Exception {
       String group = "{\"id\":2,"
                    + "\"title\":\"group2\","
                    + "\"yearEntry\":2001}";
@@ -91,10 +82,11 @@ public class GroupRestControllerSystemTest {
                 .andExpect(jsonPath("$.yearEntry", is(2001)));
   }
 
-  @Test
-  void whenPerformPostGroupsRequestWithIdZero_thenCreateGroup() throws Exception {
+    @Test
+    @DataSet(value = "group/groups.yml", cleanBefore = true)
+    void whenPerformPostGroupsRequestWithIdZero_thenCreateGroup() throws Exception {
       String group = "{\"id\":0,"
-                   + "\"title\":\"group3\","
+                   + "\"title\":\"group33\","
                    + "\"yearEntry\":2013}";
       this.mockMvc.perform(post("/api/groups")
                 .content(group)
@@ -103,13 +95,13 @@ public class GroupRestControllerSystemTest {
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(jsonPath("$", aMapWithSize(3)))
-                .andExpect(jsonPath("$.id", is(3)))
-                .andExpect(jsonPath("$.title", is("group3")))
+                .andExpect(jsonPath("$.title", is("group33")))
                 .andExpect(jsonPath("$.yearEntry", is(2013)));
   }
  
-  @Test
-  void whenUpdateGroupWithNotCorrectValues_thenExpectError() throws Exception {
+    @Test
+    @DataSet(value = "group/groups.yml", cleanBefore = true)
+    void whenUpdateGroupWithNotCorrectValues_thenExpectError() throws Exception {
       String group = "{\"id\":2,"
                    + "\"title\":\"group1\","
                    + "\"yearEntry\":99999}";
@@ -124,8 +116,8 @@ public class GroupRestControllerSystemTest {
                 .andExpect(jsonPath("$.errors.yearEntry", is("Year of entry is not correct!")));
   }
   
-  @Test
-  void whenUpdateGroupWithNotCorrectValues_thenExpectError2() throws Exception {
+    @Test
+    void whenUpdateGroupWithNotCorrectValues_thenExpectError2() throws Exception {
       String group = "{\"id\":2,"
                    + "\"title\":\"qwertyuiopasdfghjklzxcvbnm\","
                    + "\"yearEntry\":999}";
@@ -140,8 +132,8 @@ public class GroupRestControllerSystemTest {
                 .andExpect(jsonPath("$.errors.yearEntry", is("Year of entry is not correct!")));
   }
   
-  @Test
-  void whenUpdateGroupWithNotCorrectTitle_thenExpectError() throws Exception {
+    @Test
+    void whenUpdateGroupWithNotCorrectTitle_thenExpectError() throws Exception {
       String group = "{\"id\":2,"
                    + "\"title\":\"\","
                    + "\"yearEntry\":2018}";
@@ -154,9 +146,5 @@ public class GroupRestControllerSystemTest {
                 .andExpect(jsonPath("$.errors", aMapWithSize(1)))
                 .andExpect(jsonPath("$.errors.title", is("Title can`t be blank!")));
   }
-  
-    @AfterEach
-    public void removeCreatedTables() {
-        flyway.clean();
-    }
+
 }
