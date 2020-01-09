@@ -1,9 +1,9 @@
 package ua.com.foxminded.task.controller;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.CoreMatchers.allOf;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -14,8 +14,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import java.util.List;
 
-import org.flywaydb.core.Flyway;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,25 +24,18 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-import ua.com.foxminded.task.dao.GroupRepository;
-import ua.com.foxminded.task.dao.StudentRepository;
-import ua.com.foxminded.task.domain.Group;
+import com.github.database.rider.core.api.dataset.DataSet;
+import com.github.database.rider.junit5.api.DBRider;
+
 import ua.com.foxminded.task.domain.dto.GroupDto;
 import ua.com.foxminded.task.domain.dto.StudentDto;
-import ua.com.foxminded.task.domain.repository.GroupModelRepository;
-import ua.com.foxminded.task.domain.repository.StudentModelRepository;
 import ua.com.foxminded.task.domain.repository.dto.GroupDtoModelRepository;
 import ua.com.foxminded.task.domain.repository.dto.StudentDtoModelRepository;
 
+@DBRider
 @SpringBootTest
 public class StudentControllerSystemTest {
 
-    @Autowired
-    private Flyway flyway;
-    @Autowired
-    private GroupRepository groupRepository;
-    @Autowired
-    private StudentRepository studentRepository;
     @Autowired
     private WebApplicationContext context;
 
@@ -55,25 +46,16 @@ public class StudentControllerSystemTest {
     private static final String ATTRIBUTE_HTML_STUDENTS = "students";
     private static final String ATTRIBUTE_HTML_GROUPS = "groups";
     private static final String EXPECTED_ERROR_MESSAGE = "You enter incorrect data!";
-    private static final Group GROUP1 = GroupModelRepository.getModel1();
-    private static final Group GROUP2 = GroupModelRepository.getModel2();
-    private static final Group GROUP3 = GroupModelRepository.getModel3();
-    private static final Group GROUP4 = GroupModelRepository.getModel4();
 
     private MockMvc mockMvc;
 
     @BeforeEach
     public void init() {
         this.mockMvc = MockMvcBuilders.webAppContextSetup(context).build();
-        flyway.migrate();
-        groupRepository.save(GROUP1);
-        groupRepository.save(GROUP2);
-        groupRepository.save(GROUP3);
-        groupRepository.saveAndFlush(GROUP4);
-        studentRepository.saveAll(StudentModelRepository.getModels());
     }
 
     @Test
+    @DataSet(value = "student/studentsWithGroups.yml", cleanBefore = true)
     void whenRetriveAllStudent_thenExpectListOfStudent() throws Exception {
         String expectedTitle = "Students";
         List<StudentDto> students = StudentDtoModelRepository.getModels();
@@ -85,10 +67,11 @@ public class StudentControllerSystemTest {
                 .andDo(print())
                 .andReturn();
         List<StudentDto> actuallyStudents = (List<StudentDto>) mvcResult.getRequest().getAttribute(ATTRIBUTE_HTML_STUDENTS);
-        assertTrue(actuallyStudents.containsAll(students));
+        assertThat(actuallyStudents).containsAll(students);
     }
 
     @Test
+    @DataSet(value = "student/studentsWithGroups.yml", cleanBefore = true)
     void whenRetriveTheStudent_thenExpectStudentById() throws Exception {
         String expectedTitle = "Student";
         StudentDto studentDto = StudentDtoModelRepository.getModel1();
@@ -105,10 +88,11 @@ public class StudentControllerSystemTest {
     }
 
     @Test
+    @DataSet(value = "student/studentsWithGroups.yml", cleanBefore = true)
     void whenRetriveEditExistsStudent_thenExpectFormWithStudentField() throws Exception {
         String expectedTitle = "Student edit";
         StudentDto studentDto = StudentDtoModelRepository.getModel1();
-        List<GroupDto> groups = GroupDtoModelRepository.getModels();
+        List<GroupDto> groups = GroupDtoModelRepository.getModelDtos();
         int id = 1;
         String httpRequest = "/student_edit?id=" + id;
         MvcResult mvcResult = this.mockMvc.perform(get(httpRequest).accept(MediaType.TEXT_HTML_VALUE))
@@ -118,12 +102,13 @@ public class StudentControllerSystemTest {
                 .andDo(print())
                 .andReturn();
         StudentDto actuallyStudent = (StudentDto) mvcResult.getRequest().getAttribute(ATTRIBUTE_HTML_STUDENT);
-        assertEquals(studentDto, actuallyStudent);
+        assertThat(studentDto).isEqualTo(actuallyStudent);
         List<GroupDto> actuallyGroups = (List<GroupDto>) mvcResult.getRequest().getAttribute(ATTRIBUTE_HTML_GROUPS);
-        assertEquals(groups, actuallyGroups);
+        assertThat(actuallyGroups).containsAll(groups);
     }
 
     @Test
+    @DataSet(value = "student/studentsWithGroups.yml", cleanBefore = true)
     void whenSubmitEditFormStudentWithId_thenUpdateStudent() throws Exception {
         String expectedTitle = "Student edit";
         String expectedSuccessMessage = "Record student was updated!";
@@ -144,6 +129,7 @@ public class StudentControllerSystemTest {
     }
 
     @Test
+    @DataSet(value = "student/studentsWithGroups.yml", cleanBefore = true)
     void whenSubmitEditFormStudentWithoutId_thenCreateStudent() throws Exception {
         String expectedTitle = "Student edit";
         String expectedSuccessMessage = "Record student was created";
@@ -163,6 +149,7 @@ public class StudentControllerSystemTest {
     }
 
     @Test
+    @DataSet(value = "student/studentsWithGroups.yml", cleanBefore = true)
     void whenUpdateStudentWithNotCorrectValues_thenExpectError() throws Exception {
         StudentDto studentDto = StudentDtoModelRepository.getModel7();
         studentDto.setFirstName("");
@@ -179,6 +166,7 @@ public class StudentControllerSystemTest {
     }
 
     @Test
+    @DataSet(value = "student/studentsWithGroups.yml", cleanBefore = true)
     void whenUpdateStudentWithNotCorrectValues_thenExpectError2() throws Exception {
         StudentDto studentDto = StudentDtoModelRepository.getModel7();
         studentDto.setFirstName("qwertyuiopasdfghjklzxcvbnm");
@@ -201,6 +189,7 @@ public class StudentControllerSystemTest {
     }
 
     @Test
+    @DataSet(value = "student/studentsWithGroups.yml", cleanBefore = true)
     void whenUpdateStudentWithNotCorrectValues_thenExpectError3() throws Exception {
         StudentDto studentDto = StudentDtoModelRepository.getModel7();
         studentDto.setId(7);
@@ -218,8 +207,4 @@ public class StudentControllerSystemTest {
                 .andReturn();
     }
 
-    @AfterEach
-    public void removeCreatedTables() {
-        flyway.clean();
-    }
 }

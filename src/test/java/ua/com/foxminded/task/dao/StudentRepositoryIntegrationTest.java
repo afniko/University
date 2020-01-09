@@ -12,7 +12,6 @@ import org.junit.Rule;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ActiveProfiles;
 
 import com.github.database.rider.core.DBUnitRule;
 import com.github.database.rider.core.api.dataset.DataSet;
@@ -23,7 +22,6 @@ import ua.com.foxminded.task.domain.Student;
 
 @DBRider
 @SpringBootTest
-@ActiveProfiles("flywayoff")
 public class StudentRepositoryIntegrationTest {
 
     @Autowired
@@ -103,15 +101,15 @@ public class StudentRepositoryIntegrationTest {
     @Test
     @DataSet(value = "student/studentsWithGroups.yml", cleanBefore = true)
     public void whenFindByGroupId_thenReturnTwoRecords() {
-        List<Student> students = studentRepository.findAllByGroupId(3);
-        assertThat(students).isNotNull().isNotEmpty().hasSize(2);
+        List<Student> students = studentRepository.findAllByGroupId(2);
+        assertThat(students).isNotNull().isNotEmpty().hasSize(3);
     }
 
     @Test
     @DataSet(value = "student/studentsWithGroups.yml", cleanBefore = true)
     public void whenCountByGroupId_thenReturnTwoRecords() {
-        long count = studentRepository.countByGroupId(3);
-        assertThat(count).isEqualTo(2L);
+        long count = studentRepository.countByGroupId(2);
+        assertThat(count).isEqualTo(3L);
     }
 
     @Test

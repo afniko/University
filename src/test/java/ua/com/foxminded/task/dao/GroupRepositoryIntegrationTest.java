@@ -10,7 +10,6 @@ import org.junit.Rule;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ActiveProfiles;
 
 import com.github.database.rider.core.DBUnitRule;
 import com.github.database.rider.core.api.dataset.DataSet;
@@ -21,7 +20,6 @@ import ua.com.foxminded.task.domain.Group;
 
 @DBRider
 @SpringBootTest
-@ActiveProfiles("flywayoff")
 public class GroupRepositoryIntegrationTest {
 
     @Autowired
@@ -45,7 +43,7 @@ public class GroupRepositoryIntegrationTest {
     @ExpectedDataSet(value = "group/expectedGroups.yml")
     public void whenRepositoryHasRecords_thenReturnNonEmptyList() {
         List<Group> groups = groupRepository.findAll();
-        assertThat(groups).isNotNull().isNotEmpty().hasSize(3);
+        assertThat(groups).isNotNull().isNotEmpty().hasSize(4);
     }
 
     @Test
@@ -53,7 +51,7 @@ public class GroupRepositoryIntegrationTest {
     public void whenPutAtTableDbGroupObjects_thenGetThisObjectsFindById() {
         Group expectedGroup = new Group();
         expectedGroup.setTitle("group3");
-        expectedGroup.setYearEntry(2019);
+        expectedGroup.setYearEntry(2017);
         Group group = groupRepository.findById(3).get();
         assertThat(group).isEqualTo(expectedGroup);
     }

@@ -15,8 +15,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import java.util.Arrays;
 import java.util.List;
 
-import org.flywaydb.core.Flyway;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,19 +25,16 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-import ua.com.foxminded.task.dao.GroupRepository;
-import ua.com.foxminded.task.domain.Group;
+import com.github.database.rider.core.api.dataset.DataSet;
+import com.github.database.rider.junit5.api.DBRider;
+
 import ua.com.foxminded.task.domain.dto.GroupDto;
-import ua.com.foxminded.task.domain.repository.GroupModelRepository;
 import ua.com.foxminded.task.domain.repository.dto.GroupDtoModelRepository;
 
+@DBRider
 @SpringBootTest
 public class GroupControllerSystemTest {
 
-    @Autowired
-    private Flyway flyway;
-    @Autowired
-    private GroupRepository groupRepository;
     @Autowired
     private WebApplicationContext context;
 
@@ -49,10 +44,6 @@ public class GroupControllerSystemTest {
     private static final String ATTRIBUTE_HTML_GROUP = "groupDto";
     private static final String ATTRIBUTE_HTML_GROUPS = "groups";
     private static final String EXPECTED_ERROR_MESSAGE = "You enter incorrect data!";
-    private static final Group GROUP1 = GroupModelRepository.getModel1();
-    private static final Group GROUP2 = GroupModelRepository.getModel2();
-    private static final Group GROUP3 = GroupModelRepository.getModel3();
-    private static final Group GROUP4 = GroupModelRepository.getModel4();
     private static final GroupDto GROUP_DTO1 = GroupDtoModelRepository.getModel1();
     private static final GroupDto GROUP_DTO2 = GroupDtoModelRepository.getModel2();
     private static final GroupDto GROUP_DTO3 = GroupDtoModelRepository.getModel3();
@@ -63,14 +54,10 @@ public class GroupControllerSystemTest {
     @BeforeEach
     public void init() {
         this.mockMvc = MockMvcBuilders.webAppContextSetup(context).build();
-        flyway.migrate();
-        groupRepository.save(GROUP1);
-        groupRepository.save(GROUP2);
-        groupRepository.save(GROUP3);
-        groupRepository.saveAndFlush(GROUP4);
     }
 
     @Test
+    @DataSet(value = "group/groups.yml", cleanBefore = true)
     void whenRetriveAllGroups_thenExpectListOfGroups() throws Exception {
         String expectedTitle = "Groups";
         List<GroupDto> groups = Arrays.asList(GROUP_DTO1, GROUP_DTO2, GROUP_DTO3);
@@ -86,6 +73,7 @@ public class GroupControllerSystemTest {
     }
 
     @Test
+    @DataSet(value = "group/groups.yml", cleanBefore = true)
     void whenRetriveTheGroup_thenExpectGroupById() throws Exception {
         String expectedTitle = "Group";
         GroupDto groupDto = GroupDtoModelRepository.getModelWithId();
@@ -102,6 +90,7 @@ public class GroupControllerSystemTest {
     }
 
     @Test
+    @DataSet(value = "group/groups.yml", cleanBefore = true)
     void whenRetriveEditExistsGroup_thenExpectFormWithGroupField() throws Exception {
         String expectedTitle = "Group edit";
         GroupDto groupDto = GroupDtoModelRepository.getModelWithId();
@@ -118,6 +107,7 @@ public class GroupControllerSystemTest {
     }
 
     @Test
+    @DataSet(value = "group/groups.yml", cleanBefore = true)
     void whenSubmitEditFormGroupWithId_thenUpdateGroup() throws Exception {
         String expectedTitle = "Group edit";
         String expectedSuccessMessage = "Record group was updated!";
@@ -138,6 +128,7 @@ public class GroupControllerSystemTest {
     }
 
     @Test
+    @DataSet(value = "group/groups.yml", cleanBefore = true)
     void whenSubmitEditFormGroupWithoutId_thenCreateGroup() throws Exception {
         String expectedTitle = "Group edit";
         String expectedSuccessMessage = "Record group was created!";
@@ -158,6 +149,7 @@ public class GroupControllerSystemTest {
     }
 
     @Test
+    @DataSet(value = "group/groups.yml", cleanBefore = true)
     void whenUpdateGroupWithNotCorrectValues_thenExpectError() throws Exception {
         GroupDto groupDto = GROUP_DTO4;
         groupDto.setId(1);
@@ -175,6 +167,7 @@ public class GroupControllerSystemTest {
     }
 
     @Test
+    @DataSet(value = "group/groups.yml", cleanBefore = true)
     void whenUpdateGroupWithNotCorrectValues_thenExpectError2() throws Exception {
         GroupDto groupDto = GROUP_DTO4;
         groupDto.setId(1);
@@ -192,6 +185,7 @@ public class GroupControllerSystemTest {
     }
 
     @Test
+    @DataSet(value = "group/groups.yml", cleanBefore = true)
     void whenUpdateGroupWithNotCorrectTitle_thenExpectError() throws Exception {
         GroupDto groupDto = GROUP_DTO4;
         groupDto.setId(1);
@@ -204,10 +198,5 @@ public class GroupControllerSystemTest {
                 .andExpect(model().attributeHasFieldErrorCode("groupDto", "title", "NotBlank"))
                 .andDo(print())
                 .andReturn();
-    }
-
-    @AfterEach
-    public void removeCreatedTables() {
-        flyway.clean();
     }
 }
