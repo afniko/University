@@ -54,7 +54,7 @@ public class StudentControllerSystemTest {
         this.mockMvc = MockMvcBuilders.webAppContextSetup(context).build();
     }
 
-//    @Test
+    @Test
     @DataSet(value = "student/studentsWithGroups.yml", 
              cleanBefore = true, 
              skipCleaningFor = "flyway_schema_history")
@@ -72,7 +72,7 @@ public class StudentControllerSystemTest {
         assertThat(actuallyStudents).containsAll(students);
     }
 
-//    @Test
+    @Test
     @DataSet(value = "student/studentsWithGroups.yml", 
              cleanBefore = true, 
              skipCleaningFor = "flyway_schema_history")
@@ -91,7 +91,7 @@ public class StudentControllerSystemTest {
         assertEquals(studentDto, actuallyStudent);
     }
 
-//    @Test
+    @Test
     @DataSet(value = "student/studentsWithGroups.yml", 
              cleanBefore = true, 
              skipCleaningFor = "flyway_schema_history")
@@ -113,7 +113,7 @@ public class StudentControllerSystemTest {
         assertThat(actuallyGroups).containsAll(groups);
     }
 
-//    @Test
+    @Test
     @DataSet(value = "student/studentsWithGroups.yml", 
              cleanBefore = true, 
              skipCleaningFor = "flyway_schema_history")
@@ -158,7 +158,7 @@ public class StudentControllerSystemTest {
         assertThat(actuallyStudent).isEqualTo(studentDto);
     }
 
-//    @Test
+    @Test
     @DataSet(value = "student/studentsWithGroups.yml", 
              cleanBefore = true, 
              skipCleaningFor = "flyway_schema_history")
@@ -177,7 +177,7 @@ public class StudentControllerSystemTest {
                 .andReturn();
     }
 
-//    @Test
+    @Test
     @DataSet(value = "student/studentsWithGroups.yml", 
              cleanBefore = true, 
              skipCleaningFor = "flyway_schema_history")
@@ -202,7 +202,7 @@ public class StudentControllerSystemTest {
                 .andReturn();
     }
 
-//    @Test
+    @Test
     @DataSet(value = "student/studentsWithGroups.yml", 
              cleanBefore = true, 
              skipCleaningFor = "flyway_schema_history")
