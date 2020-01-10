@@ -23,9 +23,6 @@ import org.springframework.web.context.WebApplicationContext;
 import com.github.database.rider.core.api.dataset.DataSet;
 import com.github.database.rider.junit5.api.DBRider;
 
-import ua.com.foxminded.task.domain.Group;
-import ua.com.foxminded.task.domain.repository.GroupModelRepository;
-
 @DBRider
 @SpringBootTest
 public class StudentRestControllerSystemTest {
@@ -33,26 +30,17 @@ public class StudentRestControllerSystemTest {
     @Autowired
     private WebApplicationContext context;
 
-    private static final Group GROUP1 = GroupModelRepository.getModel1();
-    private static final Group GROUP2 = GroupModelRepository.getModel2();
-    private static final Group GROUP3 = GroupModelRepository.getModel3();
-    private static final Group GROUP4 = GroupModelRepository.getModel4();
-
     private MockMvc mockMvc;
 
     @BeforeEach
     public void setup() {
         this.mockMvc = MockMvcBuilders.webAppContextSetup(context).build();
-//        flyway.migrate();
-//        groupRepository.save(GROUP1);
-//        groupRepository.save(GROUP2);
-//        groupRepository.save(GROUP3);
-//        groupRepository.saveAndFlush(GROUP4);
-//        studentRepository.saveAll(StudentModelRepository.getModels());
     }
 
     @Test
-    @DataSet(value = "student/studentsWithGroups.yml", cleanBefore = true)
+    @DataSet(value = "student/studentsWithGroups.yml", 
+             cleanBefore = true, 
+             skipCleaningFor = "flyway_schema_history")
     void whenPerformStudentsRequest_thenExpectListOfStudent() throws Exception {
         this.mockMvc.perform(get("/api/students").accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
@@ -78,7 +66,9 @@ public class StudentRestControllerSystemTest {
     }
 
     @Test
-    @DataSet(value = "student/studentsWithGroups.yml", cleanBefore = true)
+    @DataSet(value = "student/studentsWithGroups.yml", 
+             cleanBefore = true, 
+             skipCleaningFor = "flyway_schema_history")
     void whenPerformStudentsAndIdRequest_thenExpectStudentById() throws Exception {
         this.mockMvc.perform(get("/api/students/2").accept(MediaType.APPLICATION_JSON))
                   .andExpect(status().isOk())
@@ -96,7 +86,9 @@ public class StudentRestControllerSystemTest {
     }
 
     @Test
-    @DataSet(value = "student/studentsWithGroups.yml", cleanBefore = true)
+    @DataSet(value = "student/studentsWithGroups.yml", 
+             cleanBefore = true, 
+             skipCleaningFor = "flyway_schema_history")
     void whenPerformPostStudentsRequest_thenUpdateStudent() throws Exception {
       String student = "{\"id\":2,\"firstName\":\"firstName2\","
                      + "\"middleName\":\"middleName2\","
@@ -123,7 +115,9 @@ public class StudentRestControllerSystemTest {
   }
 
     @Test
-    @DataSet(value = "student/studentsWithGroups.yml", cleanBefore = true)
+    @DataSet(value = "student/studentsWithGroups.yml", 
+             cleanBefore = true, 
+             skipCleaningFor = "flyway_schema_history")
     void whenPerformPostStudentsRequestWithIdZero_thenCreateStudent() throws Exception {
       String student = "{\"id\":0,\"firstName\":\"firstName7\","
                      + "\"middleName\":\"middleName7\","
@@ -192,7 +186,9 @@ public class StudentRestControllerSystemTest {
   }
 
     @Test
-    @DataSet(value = "student/studentsWithGroups.yml", cleanBefore = true)
+    @DataSet(value = "student/studentsWithGroups.yml", 
+             cleanBefore = true, 
+             skipCleaningFor = "flyway_schema_history")
     void whenUpdateStudentWithNotCorrectValues_thenExpectError3() throws Exception {
       String student = "{\"id\":6,\"firstName\":\"firstName2\","
                      + "\"middleName\":\"middleName7\","

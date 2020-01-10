@@ -86,16 +86,17 @@ public class GroupServiceImplTest {
     @Test
     void whenUpdate_thenInvocUpdateDaoClass() {
         GroupDto groupDto = GroupDtoModelRepository.getModelWithId();
-        Group group = GroupModelRepository.getModelWithId();
-        Group groupExpected = GroupModelRepository.getModelWithId();
-        groupExpected.setId(1);
-        doReturn(groupExpected).when(groupRepository).saveAndFlush(group);
+        Group group = new Group();
+        group.setId(1);
+        group.setTitle("group21");
+        group.setYearEntry(2016);GroupModelRepository.getModelWithId();
+        doReturn(group).when(groupRepository).saveAndFlush(group);
         doReturn(true).when(groupRepository).existsById(groupDto.getId());
         doReturn(group).when(groupRepository).getOne(groupDto.getId());
 
         GroupDto groupDtoActually = groupService.update(groupDto);
 
-        verify(groupRepository, times(1)).saveAndFlush(groupExpected);
+        verify(groupRepository, times(1)).saveAndFlush(group);
         verify(groupRepository, times(1)).getOne(groupDto.getId());
         assertEquals(groupDto, groupDtoActually);
     }

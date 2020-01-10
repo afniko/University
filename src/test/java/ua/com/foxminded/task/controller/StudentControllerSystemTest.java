@@ -55,7 +55,9 @@ public class StudentControllerSystemTest {
     }
 
     @Test
-    @DataSet(value = "student/studentsWithGroups.yml", cleanBefore = true)
+    @DataSet(value = "student/studentsWithGroups.yml", 
+             cleanBefore = true, 
+             skipCleaningFor = "flyway_schema_history")
     void whenRetriveAllStudent_thenExpectListOfStudent() throws Exception {
         String expectedTitle = "Students";
         List<StudentDto> students = StudentDtoModelRepository.getModels();
@@ -71,7 +73,9 @@ public class StudentControllerSystemTest {
     }
 
     @Test
-    @DataSet(value = "student/studentsWithGroups.yml", cleanBefore = true)
+    @DataSet(value = "student/studentsWithGroups.yml", 
+             cleanBefore = true, 
+             skipCleaningFor = "flyway_schema_history")
     void whenRetriveTheStudent_thenExpectStudentById() throws Exception {
         String expectedTitle = "Student";
         StudentDto studentDto = StudentDtoModelRepository.getModel1();
@@ -88,7 +92,9 @@ public class StudentControllerSystemTest {
     }
 
     @Test
-    @DataSet(value = "student/studentsWithGroups.yml", cleanBefore = true)
+    @DataSet(value = "student/studentsWithGroups.yml", 
+             cleanBefore = true, 
+             skipCleaningFor = "flyway_schema_history")
     void whenRetriveEditExistsStudent_thenExpectFormWithStudentField() throws Exception {
         String expectedTitle = "Student edit";
         StudentDto studentDto = StudentDtoModelRepository.getModel1();
@@ -108,7 +114,10 @@ public class StudentControllerSystemTest {
     }
 
     @Test
-    @DataSet(value = "student/studentsWithGroups.yml", cleanBefore = true)
+    @DataSet(value = "student/studentsWithGroups.yml", 
+             cleanBefore = true, 
+             skipCleaningFor = "flyway_schema_history",
+             transactional = false)
     void whenSubmitEditFormStudentWithId_thenUpdateStudent() throws Exception {
         String expectedTitle = "Student edit";
         String expectedSuccessMessage = "Record student was updated!";
@@ -125,11 +134,13 @@ public class StudentControllerSystemTest {
                 .andDo(print())
                 .andReturn();
         StudentDto actuallyStudent = (StudentDto) mvcResult.getRequest().getAttribute(ATTRIBUTE_HTML_STUDENT);
-        assertEquals(studentDto, actuallyStudent);
+        assertThat(actuallyStudent).isEqualTo(studentDto);
     }
 
     @Test
-    @DataSet(value = "student/studentsWithGroups.yml", cleanBefore = true)
+    @DataSet(value = "student/studentsWithGroups.yml", 
+             cleanBefore = true, 
+             skipCleaningFor = "flyway_schema_history")
     void whenSubmitEditFormStudentWithoutId_thenCreateStudent() throws Exception {
         String expectedTitle = "Student edit";
         String expectedSuccessMessage = "Record student was created";
@@ -145,11 +156,13 @@ public class StudentControllerSystemTest {
                 .andDo(print())
                 .andReturn();
         StudentDto actuallyStudent = (StudentDto) mvcResult.getRequest().getAttribute(ATTRIBUTE_HTML_STUDENT);
-        assertEquals(studentDto, actuallyStudent);
+        assertThat(actuallyStudent).isEqualTo(studentDto);
     }
 
     @Test
-    @DataSet(value = "student/studentsWithGroups.yml", cleanBefore = true)
+    @DataSet(value = "student/studentsWithGroups.yml", 
+             cleanBefore = true, 
+             skipCleaningFor = "flyway_schema_history")
     void whenUpdateStudentWithNotCorrectValues_thenExpectError() throws Exception {
         StudentDto studentDto = StudentDtoModelRepository.getModel7();
         studentDto.setFirstName("");
@@ -166,7 +179,9 @@ public class StudentControllerSystemTest {
     }
 
     @Test
-    @DataSet(value = "student/studentsWithGroups.yml", cleanBefore = true)
+    @DataSet(value = "student/studentsWithGroups.yml", 
+             cleanBefore = true, 
+             skipCleaningFor = "flyway_schema_history")
     void whenUpdateStudentWithNotCorrectValues_thenExpectError2() throws Exception {
         StudentDto studentDto = StudentDtoModelRepository.getModel7();
         studentDto.setFirstName("qwertyuiopasdfghjklzxcvbnm");
@@ -189,7 +204,9 @@ public class StudentControllerSystemTest {
     }
 
     @Test
-    @DataSet(value = "student/studentsWithGroups.yml", cleanBefore = true)
+    @DataSet(value = "student/studentsWithGroups.yml", 
+             cleanBefore = true, 
+             skipCleaningFor = "flyway_schema_history")
     void whenUpdateStudentWithNotCorrectValues_thenExpectError3() throws Exception {
         StudentDto studentDto = StudentDtoModelRepository.getModel7();
         studentDto.setId(7);

@@ -49,7 +49,7 @@ public class GroupDtoModelRepository {
     public static GroupDto getModelWithId() {
         GroupDto group = new GroupDto();
         group.setId(1);
-        group.setTitle("group1");
+        group.setTitle("group21");
         group.setYearEntry(2016);
         return group;
     }

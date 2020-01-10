@@ -36,7 +36,9 @@ public class GroupRestControllerSystemTest {
     }
 
     @Test
-    @DataSet(value = "group/groups.yml", cleanBefore = true)
+    @DataSet(value = "group/groups.yml", 
+             cleanBefore = true, 
+             skipCleaningFor = "flyway_schema_history")
     void whenPerformGroupsRequest_thenExpectListOfGroups() throws Exception {
         this.mockMvc.perform(get("/api/groups").accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
@@ -52,7 +54,9 @@ public class GroupRestControllerSystemTest {
     }
 
     @Test
-    @DataSet(value = "group/groups.yml", cleanBefore = true)
+    @DataSet(value = "group/groups.yml", 
+             cleanBefore = true, 
+             skipCleaningFor = "flyway_schema_history")
     void whenPerformGroupAndIdRequest_thenExpectGroupById() throws Exception {
         this.mockMvc.perform(get("/api/groups/2").accept(MediaType.APPLICATION_JSON))
                   .andExpect(status().isOk())
@@ -65,7 +69,9 @@ public class GroupRestControllerSystemTest {
     }
 
     @Test
-    @DataSet(value = "group/groups.yml", cleanBefore = true)
+    @DataSet(value = "group/groups.yml", 
+             cleanBefore = true, 
+             skipCleaningFor = "flyway_schema_history")
     void whenPerformPostGroupsRequest_thenUpdateGroup() throws Exception {
       String group = "{\"id\":2,"
                    + "\"title\":\"group2\","
@@ -83,7 +89,9 @@ public class GroupRestControllerSystemTest {
   }
 
     @Test
-    @DataSet(value = "group/groups.yml", cleanBefore = true)
+    @DataSet(value = "group/groups.yml", 
+             cleanBefore = true, 
+             skipCleaningFor = "flyway_schema_history")
     void whenPerformPostGroupsRequestWithIdZero_thenCreateGroup() throws Exception {
       String group = "{\"id\":0,"
                    + "\"title\":\"group33\","
@@ -100,7 +108,9 @@ public class GroupRestControllerSystemTest {
   }
  
     @Test
-    @DataSet(value = "group/groups.yml", cleanBefore = true)
+    @DataSet(value = "group/groups.yml", 
+             cleanBefore = true, 
+             skipCleaningFor = "flyway_schema_history")
     void whenUpdateGroupWithNotCorrectValues_thenExpectError() throws Exception {
       String group = "{\"id\":2,"
                    + "\"title\":\"group1\","

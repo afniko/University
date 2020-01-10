@@ -34,14 +34,16 @@ public class StudentRepositoryIntegrationTest {
     public DBUnitRule dbUnitRule = DBUnitRule.instance(() -> dataSource.getConnection());
 
     @Test
-    @DataSet(cleanBefore = true)
+    @DataSet(cleanBefore = true, skipCleaningFor = "flyway_schema_history")
     public void whenRepositoryHasNotRecords_thenReturnEmptyList() {
         List<Student> students = studentRepository.findAll();
         assertThat(students).isNotNull().isEmpty();
     }
 
     @Test
-    @DataSet(value = "student/students.yml", disableConstraints = true, cleanBefore = true)
+    @DataSet(value = "student/students.yml", 
+             cleanBefore = true, 
+             skipCleaningFor = "flyway_schema_history")
     @ExpectedDataSet(value = "student/expectedStudents.yml")
     public void whenRepositoryHasRecords_thenReturnNonEmptyList() {
         List<Student> students = studentRepository.findAll();
@@ -49,7 +51,9 @@ public class StudentRepositoryIntegrationTest {
     }
 
     @Test
-    @DataSet(value = "student/students.yml", cleanBefore = true)
+    @DataSet(value = "student/students.yml", 
+             cleanBefore = true, 
+             skipCleaningFor = "flyway_schema_history")
     public void whenPutAtTableDbStudentObjects_thenGetThisObjectsFindById() {
         Student expectedStudent = new Student();
         expectedStudent.setFirstName("firstname3");
@@ -62,7 +66,9 @@ public class StudentRepositoryIntegrationTest {
     }
 
     @Test
-    @DataSet(value = "student/students.yml", cleanBefore = true)
+    @DataSet(value = "student/students.yml", 
+             cleanBefore = true, 
+             skipCleaningFor = "flyway_schema_history")
     public void whenFindByIdFees_thenGetExitsStudent() {
         int idFees = 111111113;
         Student studentActually = studentRepository.findByIdFees(idFees);
@@ -70,7 +76,7 @@ public class StudentRepositoryIntegrationTest {
     }
 
     @Test
-    @DataSet(cleanBefore = true)
+    @DataSet(cleanBefore = true, skipCleaningFor = "flyway_schema_history")
     @ExpectedDataSet(value = "student/expectedStudent.yml")
     public void whenSaveObject_thenExpectRecord() {
         Student student = new Student();
@@ -84,7 +90,9 @@ public class StudentRepositoryIntegrationTest {
     }
 
     @Test
-    @DataSet(value = "student/student.yml", cleanBefore = true)
+    @DataSet(value = "student/student.yml", 
+             cleanBefore = true, 
+             skipCleaningFor = "flyway_schema_history")
     @ExpectedDataSet(value = "student/expectedStudent.yml")
     public void whenUpdateObject_thenExpectUpdatedRecord() {
         Student student = new Student();
@@ -99,21 +107,27 @@ public class StudentRepositoryIntegrationTest {
     }
 
     @Test
-    @DataSet(value = "student/studentsWithGroups.yml", cleanBefore = true)
+    @DataSet(value = "student/studentsWithGroups.yml", 
+             cleanBefore = true, 
+             skipCleaningFor = "flyway_schema_history")
     public void whenFindByGroupId_thenReturnTwoRecords() {
         List<Student> students = studentRepository.findAllByGroupId(2);
         assertThat(students).isNotNull().isNotEmpty().hasSize(3);
     }
 
     @Test
-    @DataSet(value = "student/studentsWithGroups.yml", cleanBefore = true)
+    @DataSet(value = "student/studentsWithGroups.yml", 
+             cleanBefore = true, 
+             skipCleaningFor = "flyway_schema_history")
     public void whenCountByGroupId_thenReturnTwoRecords() {
         long count = studentRepository.countByGroupId(2);
         assertThat(count).isEqualTo(3L);
     }
 
     @Test
-    @DataSet(value = "student/studentsWithGroups.yml", cleanBefore = true)
+    @DataSet(value = "student/studentsWithGroups.yml", 
+             cleanBefore = true, 
+             skipCleaningFor = "flyway_schema_history")
     public void whenCheckExistStudentByIdAndGroupId_thenReturnTrue() {
         boolean isExists = studentRepository.existsStudentByIdAndGroupId(3, 2);
         assertTrue(isExists);

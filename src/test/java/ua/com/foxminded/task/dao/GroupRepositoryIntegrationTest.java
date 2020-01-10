@@ -32,14 +32,16 @@ public class GroupRepositoryIntegrationTest {
     public DBUnitRule dbUnitRule = DBUnitRule.instance(() -> dataSource.getConnection());
 
     @Test
-    @DataSet(cleanBefore = true)
+    @DataSet(cleanBefore = true, skipCleaningFor = "flyway_schema_history")
     public void whenRepositoryHasNotRecords_thenReturnEmptyList() {
         List<Group> groups = groupRepository.findAll();
         assertThat(groups).isNotNull().isEmpty();
     }
 
     @Test
-    @DataSet(value = "group/groups.yml", cleanBefore = true)
+    @DataSet(value = "group/groups.yml", 
+             cleanBefore = true, 
+             skipCleaningFor = "flyway_schema_history")
     @ExpectedDataSet(value = "group/expectedGroups.yml")
     public void whenRepositoryHasRecords_thenReturnNonEmptyList() {
         List<Group> groups = groupRepository.findAll();
@@ -47,7 +49,9 @@ public class GroupRepositoryIntegrationTest {
     }
 
     @Test
-    @DataSet(value = "group/groups.yml", cleanBefore = true)
+    @DataSet(value = "group/groups.yml", 
+             cleanBefore = true, 
+             skipCleaningFor = "flyway_schema_history")
     public void whenPutAtTableDbGroupObjects_thenGetThisObjectsFindById() {
         Group expectedGroup = new Group();
         expectedGroup.setTitle("group3");
@@ -57,7 +61,9 @@ public class GroupRepositoryIntegrationTest {
     }
 
     @Test
-    @DataSet(value = "group/groups.yml", cleanBefore = true)
+    @DataSet(value = "group/groups.yml", 
+             cleanBefore = true, 
+             skipCleaningFor = "flyway_schema_history")
     public void whenFindByTitle_thenGetExitsGroup() {
         String title = "group2";
         Group groupActually = groupRepository.findByTitle(title);
@@ -65,7 +71,7 @@ public class GroupRepositoryIntegrationTest {
     }
 
     @Test
-    @DataSet(cleanBefore = true)
+    @DataSet(cleanBefore = true, skipCleaningFor = "flyway_schema_history")
     @ExpectedDataSet(value = "group/expectedGroup.yml")
     public void whenSaveObject_thenExpectRecord() {
         Group group = new Group();
@@ -76,7 +82,9 @@ public class GroupRepositoryIntegrationTest {
     }
 
     @Test
-    @DataSet(value = "group/group.yml", cleanBefore = true)
+    @DataSet(value = "group/group.yml", 
+             cleanBefore = true, 
+             skipCleaningFor = "flyway_schema_history")
     @ExpectedDataSet(value = "group/expectedGroup.yml")
     public void whenUpdateObject_thenExpectUpdatedRecord() {
         Group group = new Group();

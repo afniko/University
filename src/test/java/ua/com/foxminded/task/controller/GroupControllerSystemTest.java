@@ -57,7 +57,9 @@ public class GroupControllerSystemTest {
     }
 
     @Test
-    @DataSet(value = "group/groups.yml", cleanBefore = true)
+    @DataSet(value = "group/groups.yml", 
+             cleanBefore = true, 
+             skipCleaningFor = "flyway_schema_history")
     void whenRetriveAllGroups_thenExpectListOfGroups() throws Exception {
         String expectedTitle = "Groups";
         List<GroupDto> groups = Arrays.asList(GROUP_DTO1, GROUP_DTO2, GROUP_DTO3);
@@ -73,11 +75,16 @@ public class GroupControllerSystemTest {
     }
 
     @Test
-    @DataSet(value = "group/groups.yml", cleanBefore = true)
+    @DataSet(value = "group/groups.yml", 
+             cleanBefore = true, 
+             skipCleaningFor = "flyway_schema_history")
     void whenRetriveTheGroup_thenExpectGroupById() throws Exception {
         String expectedTitle = "Group";
-        GroupDto groupDto = GroupDtoModelRepository.getModelWithId();
-        int id = groupDto.getId();
+        GroupDto groupDto = new GroupDto();
+        int id = 2;
+        groupDto.setId(id);
+        groupDto.setTitle("group2");
+        groupDto.setYearEntry(2018);
         String httpRequest = "/group?id=" + id;
         MvcResult mvcResult = this.mockMvc.perform(get(httpRequest).accept(MediaType.TEXT_HTML_VALUE))
                 .andExpect(status().isOk())
@@ -90,11 +97,16 @@ public class GroupControllerSystemTest {
     }
 
     @Test
-    @DataSet(value = "group/groups.yml", cleanBefore = true)
+    @DataSet(value = "group/groups.yml", 
+             cleanBefore = true, 
+             skipCleaningFor = "flyway_schema_history")
     void whenRetriveEditExistsGroup_thenExpectFormWithGroupField() throws Exception {
         String expectedTitle = "Group edit";
-        GroupDto groupDto = GroupDtoModelRepository.getModelWithId();
-        int id = groupDto.getId();
+        GroupDto groupDto = new GroupDto();
+        int id = 2;
+        groupDto.setId(id);
+        groupDto.setTitle("group2");
+        groupDto.setYearEntry(2018);
         String httpRequest = "/group_edit?id=" + id;
         MvcResult mvcResult = this.mockMvc.perform(get(httpRequest).accept(MediaType.TEXT_HTML_VALUE))
                 .andExpect(status().isOk())
@@ -107,7 +119,9 @@ public class GroupControllerSystemTest {
     }
 
     @Test
-    @DataSet(value = "group/groups.yml", cleanBefore = true)
+    @DataSet(value = "group/groups.yml", 
+             cleanBefore = true, 
+             skipCleaningFor = "flyway_schema_history")
     void whenSubmitEditFormGroupWithId_thenUpdateGroup() throws Exception {
         String expectedTitle = "Group edit";
         String expectedSuccessMessage = "Record group was updated!";
@@ -128,11 +142,15 @@ public class GroupControllerSystemTest {
     }
 
     @Test
-    @DataSet(value = "group/groups.yml", cleanBefore = true)
+    @DataSet(value = "group/groups.yml", 
+             cleanBefore = true, 
+             skipCleaningFor = "flyway_schema_history")
     void whenSubmitEditFormGroupWithoutId_thenCreateGroup() throws Exception {
         String expectedTitle = "Group edit";
         String expectedSuccessMessage = "Record group was created!";
-        GroupDto groupDto = GroupDtoModelRepository.getModel6();
+        GroupDto groupDto = new GroupDto();
+        groupDto.setTitle("group26");
+        groupDto.setYearEntry(2015);
         String httpRequest = "/group_edit";
         MvcResult mvcResult = this.mockMvc.perform(post(httpRequest).accept(MediaType.TEXT_HTML_VALUE).flashAttr("groupDto", groupDto))
                 .andExpect(status().isOk())
@@ -149,7 +167,9 @@ public class GroupControllerSystemTest {
     }
 
     @Test
-    @DataSet(value = "group/groups.yml", cleanBefore = true)
+    @DataSet(value = "group/groups.yml", 
+             cleanBefore = true, 
+             skipCleaningFor = "flyway_schema_history")
     void whenUpdateGroupWithNotCorrectValues_thenExpectError() throws Exception {
         GroupDto groupDto = GROUP_DTO4;
         groupDto.setId(1);
@@ -167,7 +187,9 @@ public class GroupControllerSystemTest {
     }
 
     @Test
-    @DataSet(value = "group/groups.yml", cleanBefore = true)
+    @DataSet(value = "group/groups.yml", 
+             cleanBefore = true, 
+             skipCleaningFor = "flyway_schema_history")
     void whenUpdateGroupWithNotCorrectValues_thenExpectError2() throws Exception {
         GroupDto groupDto = GROUP_DTO4;
         groupDto.setId(1);
@@ -185,7 +207,9 @@ public class GroupControllerSystemTest {
     }
 
     @Test
-    @DataSet(value = "group/groups.yml", cleanBefore = true)
+    @DataSet(value = "group/groups.yml", 
+             cleanBefore = true, 
+             skipCleaningFor = "flyway_schema_history")
     void whenUpdateGroupWithNotCorrectTitle_thenExpectError() throws Exception {
         GroupDto groupDto = GROUP_DTO4;
         groupDto.setId(1);
