@@ -1,5 +1,6 @@
 package ua.com.foxminded.task.controller;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.CoreMatchers.allOf;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.junit.Assert.assertEquals;
@@ -28,6 +29,7 @@ import org.springframework.web.context.WebApplicationContext;
 import com.github.database.rider.core.api.dataset.DataSet;
 import com.github.database.rider.junit5.api.DBRider;
 
+import ua.com.foxminded.task.dao.GroupRepository;
 import ua.com.foxminded.task.domain.dto.GroupDto;
 import ua.com.foxminded.task.domain.repository.dto.GroupDtoModelRepository;
 
@@ -140,16 +142,17 @@ public class GroupControllerSystemTest {
         GroupDto actuallyGroup = (GroupDto) mvcResult.getRequest().getAttribute(ATTRIBUTE_HTML_GROUP);
         assertEquals(groupDto, actuallyGroup);
     }
+@Autowired
+private GroupRepository groupRepo;
 
     @Test
-    @DataSet(value = "group/groups.yml", 
-             cleanBefore = true, 
+    @DataSet(cleanBefore = true, 
              skipCleaningFor = "flyway_schema_history")
     void whenSubmitEditFormGroupWithoutId_thenCreateGroup() throws Exception {
         String expectedTitle = "Group edit";
         String expectedSuccessMessage = "Record group was created!";
         GroupDto groupDto = new GroupDto();
-        groupDto.setTitle("group26");
+        groupDto.setTitle("group27");
         groupDto.setYearEntry(2015);
         String httpRequest = "/group_edit";
         MvcResult mvcResult = this.mockMvc.perform(post(httpRequest).accept(MediaType.TEXT_HTML_VALUE).flashAttr("groupDto", groupDto))
@@ -163,7 +166,7 @@ public class GroupControllerSystemTest {
                 .andDo(print())
                 .andReturn();
         GroupDto actuallyGroup = (GroupDto) mvcResult.getRequest().getAttribute(ATTRIBUTE_HTML_GROUP);
-        assertEquals(groupDto, actuallyGroup);
+        assertThat(actuallyGroup).isEqualTo(groupDto);
     }
 
     @Test

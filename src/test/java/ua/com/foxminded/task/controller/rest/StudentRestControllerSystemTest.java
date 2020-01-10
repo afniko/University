@@ -115,7 +115,7 @@ public class StudentRestControllerSystemTest {
   }
 
     @Test
-    @DataSet(value = "student/studentsWithGroups.yml", 
+    @DataSet(value = "group/groups.yml", 
              cleanBefore = true, 
              skipCleaningFor = "flyway_schema_history")
     void whenPerformPostStudentsRequestWithIdZero_thenCreateStudent() throws Exception {
@@ -138,7 +138,7 @@ public class StudentRestControllerSystemTest {
                 .andExpect(jsonPath("$.lastName", is("lastName7")))
                 .andExpect(jsonPath("$.birthday", is("1997-06-25")))
                 .andExpect(jsonPath("$.idFees", is(232211111)))
-                .andExpect(jsonPath("$.groupTitle", is("group13")))
+                .andExpect(jsonPath("$.groupTitle", is("group3")))
                 .andExpect(jsonPath("$.idGroup", is(3)));
   }
 

@@ -89,8 +89,7 @@ public class GroupRestControllerSystemTest {
   }
 
     @Test
-    @DataSet(value = "group/groups.yml", 
-             cleanBefore = true, 
+    @DataSet(cleanBefore = true, 
              skipCleaningFor = "flyway_schema_history")
     void whenPerformPostGroupsRequestWithIdZero_thenCreateGroup() throws Exception {
       String group = "{\"id\":0,"
