@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import ua.com.foxminded.task.dao.exception.EntityAlreadyExistsException;
 import ua.com.foxminded.task.dao.exception.EntityNotValidException;
 import ua.com.foxminded.task.dao.exception.NoEntityFoundException;
-import ua.com.foxminded.task.dao.exception.NoExecuteQueryException;
 import ua.com.foxminded.task.domain.dto.GroupDto;
 import ua.com.foxminded.task.domain.dto.StudentDto;
 import ua.com.foxminded.task.service.GroupService;
@@ -52,11 +51,7 @@ public class StudentController {
         logger.debug("students()");
         String errorMessage = null;
         List<StudentDto> students = null;
-        try {
-            students = studentService.findAllDto();
-        } catch (NoExecuteQueryException e) {
-            errorMessage = "Something with student goes wrong!";
-        }
+        students = studentService.findAllDto();
 
         model.addAttribute(ATTRIBUTE_HTML_TITLE, "Students");
         model.addAttribute(ATTRIBUTE_HTML_STUDENTS, students);
@@ -79,8 +74,6 @@ public class StudentController {
             } else {
                 errorMessage = "You id is blank";
             }
-        } catch (NoExecuteQueryException e) {
-            errorMessage = "Something with student goes wrong!";
         } catch (NoEntityFoundException e) {
             errorMessage = "Student by id#" + id + " not found!";
         } catch (NumberFormatException e) {
@@ -133,10 +126,6 @@ public class StudentController {
                     studentDto = studentService.create(studentDto);
                     successMessage = "Record student was created";
                 }
-            } catch (NoExecuteQueryException e) {
-                errorMessage = "Record student was not edited!";
-                path = PATH_HTML_STUDENT_EDIT;
-                groups = groupService.findAllDto();
             } catch (EntityAlreadyExistsException e) {
                 errorMessage = "Record sudent was not created! The record already exists!";
                 path = PATH_HTML_STUDENT_EDIT;

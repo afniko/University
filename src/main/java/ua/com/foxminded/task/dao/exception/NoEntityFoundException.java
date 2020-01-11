@@ -6,12 +6,4 @@ public class NoEntityFoundException extends RuntimeException {
         super(message);
     }
 
-    public NoEntityFoundException(String message, Throwable cause) {
-        super(message, cause);
-    }
-
-    public NoEntityFoundException(Throwable cause) {
-        super(cause);
-    }
-
 }

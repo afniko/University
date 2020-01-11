@@ -28,7 +28,6 @@ import ua.com.foxminded.task.config.TestMvcConfig;
 import ua.com.foxminded.task.dao.exception.EntityAlreadyExistsException;
 import ua.com.foxminded.task.dao.exception.EntityNotValidException;
 import ua.com.foxminded.task.dao.exception.NoEntityFoundException;
-import ua.com.foxminded.task.dao.exception.NoExecuteQueryException;
 import ua.com.foxminded.task.domain.dto.GroupDto;
 import ua.com.foxminded.task.domain.dto.StudentDto;
 import ua.com.foxminded.task.domain.repository.dto.GroupDtoModelRepository;
@@ -77,22 +76,6 @@ public class StudentControllerTest {
     }
     
     @Test
-    void whenInvokeAllStudentsWithBadRequest_thenExpectErrorsMessage() throws Exception {
-        String expectedErrorMessage = "Something with student goes wrong!";
-        String httpRequest = "/students";
-
-        doThrow(NoExecuteQueryException.class).when(studentService).findAllDto();
-        
-        MvcResult mvcResult = this.mockMvc.perform(get(httpRequest).accept(MediaType.TEXT_HTML_VALUE))
-                .andExpect(status().isOk())
-                .andExpect(view().name(PATH_HTML_STUDENTS))
-                .andDo(print())
-                .andReturn();
-        String actuallyErrorMessage = (String) mvcResult.getRequest().getAttribute(ATTRIBUTE_HTML_ERROR_MESSAGE);
-        assertThat(expectedErrorMessage).isEqualTo(actuallyErrorMessage);
-    }
-
-    @Test
     void whenRetriveTheStudent_thenExpectStudentById() throws Exception {
         StudentDto studentDto = StudentDtoModelRepository.getModel1();
         int id = 1;
@@ -115,23 +98,6 @@ public class StudentControllerTest {
     void whenInvokeByBlankId_thenErrorMessage() throws Exception {
         String expectedErrorMessage = "You id is blank";
         String httpRequest = "/student?id=";
-
-        MvcResult mvcResult = this.mockMvc.perform(get(httpRequest).accept(MediaType.TEXT_HTML_VALUE))
-                .andExpect(status().isOk())
-                .andExpect(view().name(PATH_HTML_STUDENT))
-                .andDo(print())
-                .andReturn();
-        String actuallyErrorMessage = (String) mvcResult.getRequest().getAttribute(ATTRIBUTE_HTML_ERROR_MESSAGE);
-        assertThat(expectedErrorMessage).isEqualTo(actuallyErrorMessage);
-    }
-    
-    @Test
-    void whenInvokeGroupWithBadRequest_thenErrorMessage() throws Exception {
-        String expectedErrorMessage = "Something with student goes wrong!";
-        int id = 1;
-        String httpRequest = "/student?id=" + id;
-        
-        doThrow(NoExecuteQueryException.class).when(studentService).findByIdDto(id);
 
         MvcResult mvcResult = this.mockMvc.perform(get(httpRequest).accept(MediaType.TEXT_HTML_VALUE))
                 .andExpect(status().isOk())
@@ -259,26 +225,6 @@ public class StudentControllerTest {
                 .andReturn();
         StudentDto actuallyStudent = (StudentDto) mvcResult.getRequest().getAttribute(ATTRIBUTE_HTML_STUDENT);
         assertThat(studentDto).isEqualTo(actuallyStudent);
-    }
-    
-    @Test
-    void whenInvokeEditStudentWithNoExequteQuery_thenExpectErrorMessage() throws Exception {
-        String expectedErrorMessage = "Record student was not edited!";
-        StudentDto studentDto = StudentDtoModelRepository.getModel1();
-        List<GroupDto> groupDtos = GroupDtoModelRepository.getModels();
-        studentDto.setId(1);
-        String httpRequest = "/student_edit";
-
-        doThrow(NoExecuteQueryException.class).when(studentService).update(studentDto);
-        when(groupService.findAllDto()).thenReturn(groupDtos);
-        
-        MvcResult mvcResult = this.mockMvc.perform(post(httpRequest).accept(MediaType.TEXT_HTML_VALUE).flashAttr("studentDto", studentDto))
-                .andExpect(status().isOk())
-                .andExpect(view().name(PATH_HTML_STUDENT_EDIT))
-                .andDo(print())
-                .andReturn();
-        String actuallyErrorMessage = (String) mvcResult.getRequest().getAttribute(ATTRIBUTE_HTML_ERROR_MESSAGE);
-        assertThat(expectedErrorMessage).isEqualTo(actuallyErrorMessage);
     }
     
     @Test

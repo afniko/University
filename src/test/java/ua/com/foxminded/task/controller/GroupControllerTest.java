@@ -27,7 +27,6 @@ import ua.com.foxminded.task.config.TestMvcConfig;
 import ua.com.foxminded.task.dao.exception.EntityAlreadyExistsException;
 import ua.com.foxminded.task.dao.exception.EntityNotValidException;
 import ua.com.foxminded.task.dao.exception.NoEntityFoundException;
-import ua.com.foxminded.task.dao.exception.NoExecuteQueryException;
 import ua.com.foxminded.task.domain.dto.GroupDto;
 import ua.com.foxminded.task.domain.repository.dto.GroupDtoModelRepository;
 import ua.com.foxminded.task.service.GroupService;
@@ -64,20 +63,6 @@ public class GroupControllerTest {
                 .andReturn();
         List<GroupDto> actuallyGroups = (List<GroupDto>) mvcResult.getRequest().getAttribute(ATTRIBUTE_HTML_GROUPS);
         assertTrue(actuallyGroups.containsAll(groupDtos));
-    }
-    
-    @Test
-    void whenInvokeAllGroupsWithBadRequest_thenExpectErrorsMessage() throws Exception {
-        String expectedErrorMessage = "Something with group goes wrong!";
-        doThrow(NoExecuteQueryException.class).when(groupService).findAllDto();
-        
-        MvcResult mvcResult = this.mockMvc.perform(get("/groups").accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andExpect(view().name(PATH_HTML_GROUPS))
-                .andDo(print())
-                .andReturn();
-        String actuallyErrorMessage = (String) mvcResult.getRequest().getAttribute(ATTRIBUTE_HTML_ERROR_MESSAGE);
-        assertThat(expectedErrorMessage).isEqualTo(actuallyErrorMessage);
     }
     
     @Test
@@ -118,23 +103,6 @@ public class GroupControllerTest {
         String expectedErrorMessage = "You id is blank";
         String httpRequest = "/group?id=";
 
-        MvcResult mvcResult = this.mockMvc.perform(get(httpRequest).accept(MediaType.TEXT_HTML_VALUE))
-                .andExpect(status().isOk())
-                .andExpect(view().name(PATH_HTML_GROUP))
-                .andDo(print())
-                .andReturn();
-        String actuallyErrorMessage = (String)  mvcResult.getRequest().getAttribute(ATTRIBUTE_HTML_ERROR_MESSAGE);
-        assertThat(expectedErrorMessage).isEqualTo(actuallyErrorMessage);
-    }
-    
-    @Test
-    void whenInvokeGroupWithBadRequest_thenErrorMessage() throws Exception {
-        int id = 1;
-        String expectedErrorMessage = "Something with group goes wrong!";
-        String httpRequest = "/group?id=" + id;
-        
-        doThrow(NoExecuteQueryException.class).when(groupService).findByIdDto(id);
-        
         MvcResult mvcResult = this.mockMvc.perform(get(httpRequest).accept(MediaType.TEXT_HTML_VALUE))
                 .andExpect(status().isOk())
                 .andExpect(view().name(PATH_HTML_GROUP))
@@ -256,23 +224,6 @@ public class GroupControllerTest {
                 .andReturn();
         GroupDto actuallyGroup = (GroupDto) mvcResult.getRequest().getAttribute(ATTRIBUTE_HTML_GROUP);
         assertThat(groupDto).isEqualTo(actuallyGroup);
-    }
-    
-    @Test
-    void whenInvokeEditGroupWithNoExequteQuery_thenExpectErrorMessage() throws Exception {
-        GroupDto groupDto = GroupDtoModelRepository.getModel1();
-        String httpRequest = "/group_edit";
-        String expectedErrorMessage = "Record group was not edited!";
-        
-        doThrow(NoExecuteQueryException.class).when(groupService).create(groupDto);
-        
-        MvcResult mvcResult = this.mockMvc.perform(post(httpRequest).accept(MediaType.TEXT_HTML_VALUE).flashAttr("groupDto", groupDto))
-                .andExpect(status().isOk())
-                .andExpect(view().name(PATH_HTML_GROUP_EDIT))
-                .andDo(print())
-                .andReturn();
-        String actuallyErrorMessage = (String)  mvcResult.getRequest().getAttribute(ATTRIBUTE_HTML_ERROR_MESSAGE);
-        assertThat(expectedErrorMessage).isEqualTo(actuallyErrorMessage);
     }
     
     @Test
