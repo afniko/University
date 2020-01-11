@@ -24,13 +24,9 @@ import ua.com.foxminded.task.dao.StudentRepository;
 import ua.com.foxminded.task.dao.exception.EntityAlreadyExistsException;
 import ua.com.foxminded.task.dao.exception.EntityNotValidException;
 import ua.com.foxminded.task.dao.exception.NoEntityFoundException;
-import ua.com.foxminded.task.domain.Group;
 import ua.com.foxminded.task.domain.Student;
-import ua.com.foxminded.task.domain.dto.GroupDto;
 import ua.com.foxminded.task.domain.dto.StudentDto;
-import ua.com.foxminded.task.domain.repository.GroupModelRepository;
 import ua.com.foxminded.task.domain.repository.StudentModelRepository;
-import ua.com.foxminded.task.domain.repository.dto.GroupDtoModelRepository;
 import ua.com.foxminded.task.domain.repository.dto.StudentDtoModelRepository;
 
 public class StudentServiceImplTest {
