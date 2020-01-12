@@ -10,8 +10,6 @@ import static org.mockito.Mockito.verify;
 
 import java.util.List;
 
-import javax.persistence.EntityNotFoundException;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -23,7 +21,6 @@ import org.springframework.dao.DataIntegrityViolationException;
 import ua.com.foxminded.task.dao.GroupRepository;
 import ua.com.foxminded.task.dao.exception.EntityAlreadyExistsException;
 import ua.com.foxminded.task.dao.exception.EntityNotValidException;
-import ua.com.foxminded.task.dao.exception.NoEntityFoundException;
 import ua.com.foxminded.task.domain.Group;
 import ua.com.foxminded.task.domain.dto.GroupDto;
 import ua.com.foxminded.task.domain.repository.GroupModelRepository;
@@ -118,16 +115,6 @@ public class GroupServiceImplTest {
     }
     
     @Test
-    public void whenNotFindById_thenThrowException() {
-        int id = 1;
-        doThrow(EntityNotFoundException.class).when(groupRepository).getOne(id);
-
-        assertThatThrownBy(() -> groupService.findByIdDto(id))
-             .isInstanceOf(NoEntityFoundException.class)
-             .hasMessage("findByIdDto() id: %s", id);
-    }
-    
-    @Test
     public void whenCreateRecordEntityWithId_thenThrowException() {
         GroupDto group = new GroupDto();
         group.setId(1);
@@ -148,17 +135,6 @@ public class GroupServiceImplTest {
              .hasMessageContaining("create() group: " + group);
     }
     
-    @Test
-    public void whenUpdateRecordEntityWithId_thenThrowException() {
-        GroupDto group = new GroupDto();
-        group.setId(1);
-        doReturn(false).when(groupRepository).existsById(group.getId());
-
-        assertThatThrownBy(() -> groupService.update(group))
-             .isInstanceOf(NoEntityFoundException.class)
-             .hasMessage("Group not exist!");
-    }
-
     @Test
     public void whenUpdateRecordWithNotValidEntity_thenThrowException() {
         GroupDto groupDto = GroupDtoModelRepository.getModel1();

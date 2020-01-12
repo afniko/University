@@ -5,6 +5,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import javax.persistence.EntityNotFoundException;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -16,7 +18,6 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import ua.com.foxminded.task.config.TestMvcConfig;
 import ua.com.foxminded.task.dao.exception.EntityAlreadyExistsException;
 import ua.com.foxminded.task.dao.exception.EntityNotValidException;
-import ua.com.foxminded.task.dao.exception.NoEntityFoundException;
 
 @WebMvcTest(GroupController.class)
 @Import(TestMvcConfig.class)
@@ -56,7 +57,7 @@ public class CustomGlobalExceptionHandlerIntegrationTest {
     
     @Test
     public void whenNoEntityFoundException_thenGetStatus() throws Exception {
-        doThrow(NoEntityFoundException.class).when(groupController).getGroupById(1);
+        doThrow(EntityNotFoundException.class).when(groupController).getGroupById(1);
         
         mockMvc.perform(get("/api/groups/1"))
            .andExpect(status().isNotFound())

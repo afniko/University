@@ -15,6 +15,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import java.util.List;
 
+import javax.persistence.EntityNotFoundException;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -27,7 +29,6 @@ import org.springframework.test.web.servlet.MvcResult;
 import ua.com.foxminded.task.config.TestMvcConfig;
 import ua.com.foxminded.task.dao.exception.EntityAlreadyExistsException;
 import ua.com.foxminded.task.dao.exception.EntityNotValidException;
-import ua.com.foxminded.task.dao.exception.NoEntityFoundException;
 import ua.com.foxminded.task.domain.dto.GroupDto;
 import ua.com.foxminded.task.domain.dto.StudentDto;
 import ua.com.foxminded.task.domain.repository.dto.GroupDtoModelRepository;
@@ -113,7 +114,7 @@ public class StudentControllerTest {
         String expectedErrorMessage = "Student by id#" + id + " not found!";
         String httpRequest = "/student?id=" + id;
         
-        doThrow(NoEntityFoundException.class).when(studentService).findByIdDto(id);
+        doThrow(EntityNotFoundException.class).when(studentService).findByIdDto(id);
 
         MvcResult mvcResult = this.mockMvc.perform(get(httpRequest).accept(MediaType.TEXT_HTML_VALUE))
                 .andExpect(status().isOk())
@@ -171,7 +172,7 @@ public class StudentControllerTest {
         int id = 1;
         String httpRequest = "/student_edit?id=" + id;
         
-        doThrow(NoEntityFoundException.class).when(studentService).findByIdDto(id);
+        doThrow(EntityNotFoundException.class).when(studentService).findByIdDto(id);
         when(groupService.findAllDto()).thenReturn(groupDtos);
 
         MvcResult mvcResult = this.mockMvc.perform(get(httpRequest).accept(MediaType.TEXT_HTML_VALUE))
@@ -250,7 +251,7 @@ public class StudentControllerTest {
         String expectedErrorMessage = "Student " + studentDto + " not found!";
         String httpRequest = "/student_edit";
 
-        doThrow(NoEntityFoundException.class).when(studentService).update(studentDto);
+        doThrow(EntityNotFoundException.class).when(studentService).update(studentDto);
         
         MvcResult mvcResult = this.mockMvc.perform(post(httpRequest).accept(MediaType.TEXT_HTML_VALUE).flashAttr("studentDto", studentDto))
                 .andExpect(status().isOk())

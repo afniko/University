@@ -14,7 +14,6 @@ import ua.com.foxminded.task.dao.GroupRepository;
 import ua.com.foxminded.task.dao.StudentRepository;
 import ua.com.foxminded.task.dao.exception.EntityAlreadyExistsException;
 import ua.com.foxminded.task.dao.exception.EntityNotValidException;
-import ua.com.foxminded.task.dao.exception.NoEntityFoundException;
 import ua.com.foxminded.task.domain.Group;
 import ua.com.foxminded.task.domain.Student;
 import ua.com.foxminded.task.domain.dto.StudentDto;
@@ -39,12 +38,8 @@ public class StudentServiceImpl implements StudentService {
     public StudentDto findByIdDto(int id) {
         logger.debug("findByIdDto() [id:{}]", id);
         StudentDto studentDto = null;
-        try {
             Student student = studentRepository.getOne(id);
             studentDto = ConverterToDtoService.convert(student);
-        } catch (EntityNotFoundException e) {
-            throw new NoEntityFoundException("findByIdDto() id: " + id);
-        }
         return studentDto;
     }
 
@@ -77,7 +72,7 @@ public class StudentServiceImpl implements StudentService {
         logger.debug("update() [studentDto:{}]", studentDto);
         int studentId = studentDto.getId();
         if (!studentRepository.existsById(studentId)) {
-            throw new NoEntityFoundException("Student not exist!");
+            throw new EntityNotFoundException("Student not exist!");
         }
         Student student = retriveStudentFromDto(studentDto);
         Student studenUpdated = null;

@@ -14,6 +14,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import java.util.List;
 
+import javax.persistence.EntityNotFoundException;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -26,7 +28,6 @@ import org.springframework.test.web.servlet.MvcResult;
 import ua.com.foxminded.task.config.TestMvcConfig;
 import ua.com.foxminded.task.dao.exception.EntityAlreadyExistsException;
 import ua.com.foxminded.task.dao.exception.EntityNotValidException;
-import ua.com.foxminded.task.dao.exception.NoEntityFoundException;
 import ua.com.foxminded.task.domain.dto.GroupDto;
 import ua.com.foxminded.task.domain.repository.dto.GroupDtoModelRepository;
 import ua.com.foxminded.task.service.GroupService;
@@ -68,7 +69,7 @@ public class GroupControllerTest {
     @Test
     void whenInvokeAllGroupsWithNoEntity_thenExpectErrorsMessage() throws Exception {
         String expectedErrorMessage = "Problem with finding group";
-        doThrow(NoEntityFoundException.class).when(groupService).findAllDto();
+        doThrow(EntityNotFoundException.class).when(groupService).findAllDto();
         
         MvcResult mvcResult = this.mockMvc.perform(get("/groups").accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
@@ -118,7 +119,7 @@ public class GroupControllerTest {
         String expectedErrorMessage = "Group by id#" + id + " not found!";
         String httpRequest = "/group?id=" + id;
         
-        doThrow(NoEntityFoundException.class).when(groupService).findByIdDto(id);
+        doThrow(EntityNotFoundException.class).when(groupService).findByIdDto(id);
         
         MvcResult mvcResult = this.mockMvc.perform(get(httpRequest).accept(MediaType.TEXT_HTML_VALUE))
                 .andExpect(status().isOk())
@@ -171,7 +172,7 @@ public class GroupControllerTest {
         String expectedErrorMessage = "Problem with finding group";
         String httpRequest = "/group_edit?id=" + id;
         
-        doThrow(NoEntityFoundException.class).when(groupService).findByIdDto(id);
+        doThrow(EntityNotFoundException.class).when(groupService).findByIdDto(id);
         
         MvcResult mvcResult = this.mockMvc.perform(get(httpRequest).accept(MediaType.TEXT_HTML_VALUE))
                 .andExpect(status().isOk())
@@ -249,7 +250,7 @@ public class GroupControllerTest {
         String httpRequest = "/group_edit";
         String expectedErrorMessage = "Group " + groupDto + " not found!";
         
-        doThrow(NoEntityFoundException.class).when(groupService).update(groupDto);
+        doThrow(EntityNotFoundException.class).when(groupService).update(groupDto);
         
         MvcResult mvcResult = this.mockMvc.perform(post(httpRequest).accept(MediaType.TEXT_HTML_VALUE).flashAttr("groupDto", groupDto))
                 .andExpect(status().isOk())

@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 import ua.com.foxminded.task.dao.GroupRepository;
 import ua.com.foxminded.task.dao.exception.EntityAlreadyExistsException;
 import ua.com.foxminded.task.dao.exception.EntityNotValidException;
-import ua.com.foxminded.task.dao.exception.NoEntityFoundException;
 import ua.com.foxminded.task.domain.Group;
 import ua.com.foxminded.task.domain.dto.GroupDto;
 import ua.com.foxminded.task.service.GroupService;
@@ -41,12 +40,8 @@ public class GroupServiceImpl implements GroupService {
     public GroupDto findByIdDto(int id) {
         logger.debug("findById() [id:{}]", id);
         GroupDto groupDto = null;
-        try {
             Group group = findById(id);
             groupDto = ConverterToDtoService.convert(group);
-        } catch (EntityNotFoundException e) {
-            throw new NoEntityFoundException("findByIdDto() id: " + id);
-        }
         return groupDto;
     }
 
@@ -79,7 +74,7 @@ public class GroupServiceImpl implements GroupService {
         logger.debug("update() [groupDto:{}]", groupDto);
         int groupId = groupDto.getId();
         if (!groupRepository.existsById(groupId)) {
-            throw new NoEntityFoundException("Group not exist!");
+            throw new EntityNotFoundException("Group not exist!");
         }
         Group group = retriveGroupFromDto(groupDto);
         Group groupUpdated = null;

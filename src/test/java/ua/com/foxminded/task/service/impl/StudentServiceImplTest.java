@@ -9,8 +9,6 @@ import static org.mockito.Mockito.verify;
 
 import java.util.List;
 
-import javax.persistence.EntityNotFoundException;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -23,7 +21,6 @@ import ua.com.foxminded.task.dao.GroupRepository;
 import ua.com.foxminded.task.dao.StudentRepository;
 import ua.com.foxminded.task.dao.exception.EntityAlreadyExistsException;
 import ua.com.foxminded.task.dao.exception.EntityNotValidException;
-import ua.com.foxminded.task.dao.exception.NoEntityFoundException;
 import ua.com.foxminded.task.domain.Student;
 import ua.com.foxminded.task.domain.dto.StudentDto;
 import ua.com.foxminded.task.domain.repository.StudentModelRepository;
@@ -128,16 +125,6 @@ public class StudentServiceImplTest {
     }
     
     @Test
-    public void whenNotFindById_thenThrowException() {
-        int id = 1;
-        doThrow(EntityNotFoundException.class).when(studentRepository).getOne(id);
-
-        assertThatThrownBy(() -> studentService.findByIdDto(id))
-             .isInstanceOf(NoEntityFoundException.class)
-             .hasMessage("findByIdDto() id: %s", id);
-    }
-
-    @Test
     public void whenCreateRecordEntityWithId_thenThrowException() {
         StudentDto student = new StudentDto();
         student.setId(1);
@@ -159,17 +146,6 @@ public class StudentServiceImplTest {
              .hasMessageContaining("create() student: " + student);
     }
     
-    @Test
-    public void whenUpdateRecordEntityWithId_thenThrowException() {
-        StudentDto student = new StudentDto();
-        student.setId(1);
-        doReturn(false).when(studentRepository).existsById(student.getId());
-
-        assertThatThrownBy(() -> studentService.update(student))
-             .isInstanceOf(NoEntityFoundException.class)
-             .hasMessage("Student not exist!");
-    }
-
     @Test
     public void whenUpdateRecordWithNotValidEntity_thenThrowException() {
         StudentDto studentDto = StudentDtoModelRepository.getModel1();
