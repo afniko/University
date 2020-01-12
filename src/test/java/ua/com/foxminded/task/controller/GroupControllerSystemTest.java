@@ -142,8 +142,6 @@ public class GroupControllerSystemTest {
         GroupDto actuallyGroup = (GroupDto) mvcResult.getRequest().getAttribute(ATTRIBUTE_HTML_GROUP);
         assertEquals(groupDto, actuallyGroup);
     }
-@Autowired
-private GroupRepository groupRepo;
 
     @Test
     @DataSet(cleanBefore = true, 
