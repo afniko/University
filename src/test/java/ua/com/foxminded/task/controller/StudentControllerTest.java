@@ -54,7 +54,6 @@ public class StudentControllerTest {
     private static final String ATTRIBUTE_HTML_STUDENT = "studentDto";
     private static final String ATTRIBUTE_HTML_STUDENTS = "students";
     private static final String ATTRIBUTE_HTML_GROUPS = "groups";
-    private static final String EXPECTED_ERROR_MESSAGE = "You enter incorrect data!";
     private static final String ATTRIBUTE_HTML_ERROR_MESSAGE = "errorMessage";
     
     @Test

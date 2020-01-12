@@ -40,8 +40,8 @@ public class GroupRestControllerIntegrationTest {
     @MockBean
     private GroupService groupService;
 
-    private static final GroupDto GROUP_DTO1 = GroupDtoModelRepository.getModel1();
-    private static final GroupDto GROUP_DTO2 = GroupDtoModelRepository.getModel2();
+    private static GroupDto GROUP_DTO1 = GroupDtoModelRepository.getModel1();
+    private static GroupDto GROUP_DTO2 = GroupDtoModelRepository.getModel2();
 
     private MockMvc mockMvc;
 

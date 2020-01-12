@@ -45,10 +45,10 @@ public class GroupControllerSystemTest {
     private static final String ATTRIBUTE_HTML_GROUP = "groupDto";
     private static final String ATTRIBUTE_HTML_GROUPS = "groups";
     private static final String EXPECTED_ERROR_MESSAGE = "You enter incorrect data!";
-    private static final GroupDto GROUP_DTO1 = GroupDtoModelRepository.getModel1();
-    private static final GroupDto GROUP_DTO2 = GroupDtoModelRepository.getModel2();
-    private static final GroupDto GROUP_DTO3 = GroupDtoModelRepository.getModel3();
-    private static final GroupDto GROUP_DTO4 = GroupDtoModelRepository.getModel4();
+    private static GroupDto GROUP_DTO1 = GroupDtoModelRepository.getModel1();
+    private static GroupDto GROUP_DTO2 = GroupDtoModelRepository.getModel2();
+    private static GroupDto GROUP_DTO3 = GroupDtoModelRepository.getModel3();
+    private static GroupDto GROUP_DTO4 = GroupDtoModelRepository.getModel4();
 
     private MockMvc mockMvc;
 

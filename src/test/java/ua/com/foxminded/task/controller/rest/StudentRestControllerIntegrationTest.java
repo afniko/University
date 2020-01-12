@@ -42,8 +42,8 @@ public class StudentRestControllerIntegrationTest {
     @MockBean
     private StudentService studentService;
 
-    private static final StudentDto STUDENT_DTO1 = StudentDtoModelRepository.getModel1();
-    private static final StudentDto STUDENT_DTO2 = StudentDtoModelRepository.getModel2();
+    private static StudentDto STUDENT_DTO1 = StudentDtoModelRepository.getModel1();
+    private static StudentDto STUDENT_DTO2 = StudentDtoModelRepository.getModel2();
 
     private MockMvc mockMvc;
 
