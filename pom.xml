@@ -24,7 +24,7 @@
         <org.flywaydb.flyway.core.version>5.2.4</org.flywaydb.flyway.core.version>
         <hibernate.jpamodelgen.version>5.4.7.Final</hibernate.jpamodelgen.version>
         <swagger.version>2.9.2</swagger.version>
-        <rider.version>1.9.1</rider.version>
+        <database-rider.version>1.9.1</database-rider.version>
 
         <org.flywaydb.flyway.plugin.version>5.2.4</org.flywaydb.flyway.plugin.version>
         <maven.checkstyle.plugin.version>3.1.0</maven.checkstyle.plugin.version>
@@ -103,7 +103,7 @@
         <dependency>
             <groupId>com.github.database-rider</groupId>
             <artifactId>rider-junit5</artifactId>
-            <version>${rider.version}</version>
+            <version>${database-rider.version}</version>
             <scope>test</scope>
         </dependency>
 
