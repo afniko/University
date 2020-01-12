@@ -95,9 +95,9 @@ public class GroupServiceImplTest {
     public void whenUpdate_thenInvocUpdateDaoClass() {
         GroupDto groupDto = GroupDtoModelRepository.getModelWithId();
         Group group = new Group();
-        group.setId(1);
-        group.setTitle("group21");
-        group.setYearEntry(2016);
+        group.setId(groupDto.getId());
+        group.setTitle(groupDto.getTitle());
+        group.setYearEntry(groupDto.getYearEntry());
         doReturn(group).when(groupRepository).saveAndFlush(group);
         doReturn(true).when(groupRepository).existsById(groupDto.getId());
         doReturn(group).when(groupRepository).getOne(groupDto.getId());
