@@ -29,7 +29,6 @@ import org.springframework.web.context.WebApplicationContext;
 import com.github.database.rider.core.api.dataset.DataSet;
 import com.github.database.rider.junit5.api.DBRider;
 
-import ua.com.foxminded.task.dao.GroupRepository;
 import ua.com.foxminded.task.domain.dto.GroupDto;
 import ua.com.foxminded.task.domain.repository.dto.GroupDtoModelRepository;
 
