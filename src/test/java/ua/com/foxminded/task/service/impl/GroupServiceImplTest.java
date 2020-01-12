@@ -97,7 +97,7 @@ public class GroupServiceImplTest {
         Group group = new Group();
         group.setId(1);
         group.setTitle("group21");
-        group.setYearEntry(2016);GroupModelRepository.getModelWithId();
+        group.setYearEntry(2016);
         doReturn(group).when(groupRepository).saveAndFlush(group);
         doReturn(true).when(groupRepository).existsById(groupDto.getId());
         doReturn(group).when(groupRepository).getOne(groupDto.getId());
