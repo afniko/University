@@ -101,27 +101,39 @@ public class StudentServiceImplTest {
     
     @Test
     public void whenFindByIdFees_thenInvokeMethod() {
-        Integer idFees = 111111111;
-        studentService.findByIdFees(idFees);
+        Student expectedStudent = StudentModelRepository.getModel1();
+        Integer expectedIdFees = expectedStudent.getIdFees();
+        doReturn(expectedStudent).when(studentRepository).findByIdFees(expectedIdFees);
         
-        verify(studentRepository, times(1)).findByIdFees(idFees);
+        Student actuallyStudent = studentService.findByIdFees(expectedIdFees);
+        
+        verify(studentRepository, times(1)).findByIdFees(expectedIdFees);
+        assertEquals(expectedIdFees, actuallyStudent.getIdFees());
     }
     
     @Test
     public void whenCountByGroupId_thenInvokeMethod() {
         Integer id = 1;
-        studentService.countByGroupId(id);
+        long expectedCount = 5L;
+        doReturn(expectedCount).when(studentRepository).countByGroupId(id);
+        
+        long actuallyCount = studentService.countByGroupId(id);
         
         verify(studentRepository, times(1)).countByGroupId(id);
+        assertEquals(expectedCount, actuallyCount);
     }
     
     @Test
     public void whenCheckExistsStudentByIdAndGroupId_thenInvokeMethod() {
         Integer studentId = 1;
         Integer groupId = 1;
-        studentService.existsStudentByIdAndGroupId(studentId, groupId);
+        boolean expectedResult = true;
+        doReturn(expectedResult).when(studentRepository).existsStudentByIdAndGroupId(studentId, groupId);
+        
+        boolean actuallyResult = studentService.existsStudentByIdAndGroupId(studentId, groupId);
         
         verify(studentRepository, times(1)).existsStudentByIdAndGroupId(studentId, groupId);
+        assertEquals(expectedResult, actuallyResult);
     }
     
     @Test
