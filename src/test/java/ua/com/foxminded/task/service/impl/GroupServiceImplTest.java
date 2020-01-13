@@ -42,12 +42,13 @@ public class GroupServiceImplTest {
 
     @Test
     public void whenFindById_thenFindGroup() {
-        Group group = GroupModelRepository.getModel1();
-        doReturn(group).when(groupRepository).getOne(1);
+        Group expectedGroup = GroupModelRepository.getModel1();
+        doReturn(expectedGroup).when(groupRepository).getOne(1);
 
-        groupService.findById(1);
+        Group actuallyGroup = groupService.findById(1);
 
         verify(groupRepository, times(1)).getOne(any(Integer.class));
+        assertEquals(expectedGroup, actuallyGroup);
     }
 
     @Test
@@ -108,10 +109,14 @@ public class GroupServiceImplTest {
     
     @Test
     public void whenFindByTitle_thenInvokeMethod() {
-        String title = "title";
-        groupService.findByTitle(title);
+        Group expectedGroup = GroupModelRepository.getModelWithId();
+        String expectedTitle = expectedGroup.getTitle();
+        doReturn(expectedGroup).when(groupRepository).findByTitle(expectedTitle);
         
-        verify(groupRepository, times(1)).findByTitle(title);
+        Group actuallyGroup = groupService.findByTitle(expectedTitle);
+        
+        verify(groupRepository, times(1)).findByTitle(expectedTitle);
+        assertEquals(expectedTitle, actuallyGroup.getTitle());
     }
     
     @Test
