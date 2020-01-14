@@ -25,15 +25,13 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import ua.com.foxminded.task.domain.dto.GroupDto;
 import ua.com.foxminded.task.domain.repository.dto.GroupDtoModelRepository;
 import ua.com.foxminded.task.service.GroupService;
-import ua.com.foxminded.task.validation.validator.GroupTitleUniqueValidator;
 
 @ExtendWith(SpringExtension.class)
 public class GroupControllerTest {
     
     private MockMvc mockMvc;
     private GroupController groupController;
-@MockBean
-private GroupTitleUniqueValidator validator;
+
     @MockBean
     private GroupService groupService;
     
@@ -49,7 +47,7 @@ private GroupTitleUniqueValidator validator;
     private static final String ATTRIBUTE_HTML_TITLE = "title";
     
     @BeforeEach
-    public void InitBinder() {
+    public void init() {
         groupController = new GroupController(logger, groupService);
         mockMvc = MockMvcBuilders.standaloneSetup(groupController).build();
     }
