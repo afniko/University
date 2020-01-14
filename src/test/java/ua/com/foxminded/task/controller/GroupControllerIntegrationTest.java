@@ -2,8 +2,8 @@ package ua.com.foxminded.task.controller;
 
 import static org.hamcrest.CoreMatchers.allOf;
 import static org.hamcrest.CoreMatchers.containsString;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -16,6 +16,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import java.util.Arrays;
 import java.util.List;
 
+import javax.persistence.EntityNotFoundException;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -23,9 +25,10 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MvcResult;
 
 import ua.com.foxminded.task.config.TestMvcConfig;
+import ua.com.foxminded.task.dao.exception.EntityAlreadyExistsException;
+import ua.com.foxminded.task.dao.exception.EntityNotValidException;
 import ua.com.foxminded.task.domain.dto.GroupDto;
 import ua.com.foxminded.task.domain.repository.dto.GroupDtoModelRepository;
 import ua.com.foxminded.task.service.GroupService;
@@ -45,6 +48,9 @@ public class GroupControllerIntegrationTest {
     private static final String PATH_HTML_GROUP_EDIT = "group/group_edit";
     private static final String ATTRIBUTE_HTML_GROUP = "groupDto";
     private static final String ATTRIBUTE_HTML_GROUPS = "groups";
+    private static final String ATTRIBUTE_HTML_ERROR_MESSAGE = "errorMessage";
+    private static final String ATTRIBUTE_HTML_SUCCESS_MESSAGE = "successMessage";
+    private static final String ATTRIBUTE_HTML_TITLE = "title";
     private static final String EXPECTED_ERROR_MESSAGE = "You enter incorrect data!";
     private static GroupDto GROUP_DTO1 = GroupDtoModelRepository.getModel1();
     private static GroupDto GROUP_DTO2 = GroupDtoModelRepository.getModel2();
@@ -58,14 +64,12 @@ public class GroupControllerIntegrationTest {
         
         when(groupService.findAllDto()).thenReturn(groupDtos);
         
-        MvcResult mvcResult = this.mockMvc.perform(get("/groups").accept(MediaType.APPLICATION_JSON))
+        this.mockMvc.perform(get("/groups").accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
+                .andExpect(model().attribute(ATTRIBUTE_HTML_TITLE, equalTo(expectedTitle)))
+                .andExpect(model().attribute(ATTRIBUTE_HTML_GROUPS, equalTo(groupDtos)))
                 .andExpect(view().name(PATH_HTML_GROUPS))
-                .andExpect(content().string(allOf(containsString("<title>" + expectedTitle + "</title>"))))
-                .andDo(print())
-                .andReturn();
-        List<GroupDto> actuallyGroups = (List<GroupDto>) mvcResult.getRequest().getAttribute(ATTRIBUTE_HTML_GROUPS);
-        assertTrue(actuallyGroups.containsAll(groupDtos));
+                .andDo(print());
     }
 
     @Test
@@ -77,14 +81,12 @@ public class GroupControllerIntegrationTest {
 
         when(groupService.findByIdDto(id)).thenReturn(groupDto);
 
-        MvcResult mvcResult = this.mockMvc.perform(get(httpRequest).accept(MediaType.TEXT_HTML_VALUE))
+        this.mockMvc.perform(get(httpRequest).accept(MediaType.TEXT_HTML_VALUE))
                 .andExpect(status().isOk())
+                .andExpect(model().attribute(ATTRIBUTE_HTML_TITLE, equalTo(expectedTitle)))
+                .andExpect(model().attribute(ATTRIBUTE_HTML_GROUP, equalTo(groupDto)))
                 .andExpect(view().name(PATH_HTML_GROUP))
-                .andExpect(content().string(allOf(containsString("<title>" + expectedTitle + "</title>"))))
-                .andDo(print())
-                .andReturn();
-        GroupDto actuallyGroup = (GroupDto) mvcResult.getRequest().getAttribute(ATTRIBUTE_HTML_GROUP);
-        assertEquals(groupDto, actuallyGroup);
+                .andDo(print());
     }
 
     @Test
@@ -96,14 +98,12 @@ public class GroupControllerIntegrationTest {
 
         when(groupService.findByIdDto(id)).thenReturn(groupDto);
 
-        MvcResult mvcResult = this.mockMvc.perform(get(httpRequest).accept(MediaType.TEXT_HTML_VALUE))
+        this.mockMvc.perform(get(httpRequest).accept(MediaType.TEXT_HTML_VALUE))
                 .andExpect(status().isOk())
+                .andExpect(model().attribute(ATTRIBUTE_HTML_TITLE, equalTo(expectedTitle)))
+                .andExpect(model().attribute(ATTRIBUTE_HTML_GROUP, equalTo(groupDto)))
                 .andExpect(view().name(PATH_HTML_GROUP_EDIT))
-                .andExpect(content().string(allOf(containsString("<title>" + expectedTitle + "</title>"))))
-                .andDo(print())
-                .andReturn();
-        GroupDto actuallyGroup = (GroupDto) mvcResult.getRequest().getAttribute(ATTRIBUTE_HTML_GROUP);
-        assertEquals(groupDto, actuallyGroup);
+                .andDo(print());
     }
 
     @Test
@@ -115,17 +115,13 @@ public class GroupControllerIntegrationTest {
 
         when(groupService.update(groupDto)).thenReturn(groupDto);
 
-        MvcResult mvcResult = this.mockMvc.perform(post(httpRequest).accept(MediaType.TEXT_HTML_VALUE).flashAttr("groupDto", groupDto))
+        this.mockMvc.perform(post(httpRequest).accept(MediaType.TEXT_HTML_VALUE).flashAttr("groupDto", groupDto))
                 .andExpect(status().isOk())
+                .andExpect(model().attribute(ATTRIBUTE_HTML_TITLE, equalTo(expectedTitle)))
+                .andExpect(model().attribute(ATTRIBUTE_HTML_SUCCESS_MESSAGE, equalTo(expectedSuccessMessage)))
+                .andExpect(model().attribute(ATTRIBUTE_HTML_GROUP, equalTo(groupDto)))
                 .andExpect(view().name(PATH_HTML_GROUP))
-                .andExpect(content().string(allOf(
-                        containsString("<title>" + expectedTitle + "</title>"), 
-                        containsString("<div class=\"alert alert-success\">" + expectedSuccessMessage + "</div>")
-                        )))
-                .andDo(print())
-                .andReturn();
-        GroupDto actuallyGroup = (GroupDto) mvcResult.getRequest().getAttribute(ATTRIBUTE_HTML_GROUP);
-        assertEquals(groupDto, actuallyGroup);
+                .andDo(print());
     }
 
     @Test
@@ -137,17 +133,13 @@ public class GroupControllerIntegrationTest {
 
         when(groupService.create(groupDto)).thenReturn(groupDto);
 
-        MvcResult mvcResult = this.mockMvc.perform(post(httpRequest).accept(MediaType.TEXT_HTML_VALUE).flashAttr("groupDto", groupDto))
+        this.mockMvc.perform(post(httpRequest).accept(MediaType.TEXT_HTML_VALUE).flashAttr("groupDto", groupDto))
                 .andExpect(status().isOk())
+                .andExpect(model().attribute(ATTRIBUTE_HTML_TITLE, equalTo(expectedTitle)))
+                .andExpect(model().attribute(ATTRIBUTE_HTML_SUCCESS_MESSAGE, equalTo(expectedSuccessMessage)))
+                .andExpect(model().attribute(ATTRIBUTE_HTML_GROUP, equalTo(groupDto)))
                 .andExpect(view().name(PATH_HTML_GROUP))
-                .andExpect(content().string(allOf(
-                        containsString("<title>" + expectedTitle + "</title>"), 
-                        containsString("<div class=\"alert alert-success\">" + expectedSuccessMessage + "</div>")
-                        )))
-                .andDo(print())
-                .andReturn();
-        GroupDto actuallyGroup = (GroupDto) mvcResult.getRequest().getAttribute(ATTRIBUTE_HTML_GROUP);
-        assertEquals(groupDto, actuallyGroup);
+                .andDo(print());
     }
 
     @Test
@@ -161,8 +153,7 @@ public class GroupControllerIntegrationTest {
                 .andExpect(view().name(PATH_HTML_GROUP_EDIT))
                 .andExpect(content().string(allOf(containsString("<div>" + EXPECTED_ERROR_MESSAGE + "</div>"))))
                 .andExpect(model().attributeHasFieldErrorCode("groupDto", "yearEntry", "Max"))
-                .andDo(print())
-                .andReturn();
+                .andDo(print());
     }
 
     @Test
@@ -178,22 +169,68 @@ public class GroupControllerIntegrationTest {
                 .andExpect(content().string(allOf(containsString("<div>" + EXPECTED_ERROR_MESSAGE + "</div>"))))
                 .andExpect(model().attributeHasFieldErrorCode("groupDto", "yearEntry", "Min"))
                 .andExpect(model().attributeHasFieldErrorCode("groupDto", "title", "Length"))
-                .andDo(print())
-                .andReturn();
+                .andDo(print());
     }
 
     @Test
     void whenUpdateGroupWithNotCorrectTitle_thenExpectError() throws Exception {
+        String expectedTitle = "Group edit";
         GroupDto groupDto = GROUP_DTO4;
         groupDto.setId(1);
         groupDto.setTitle("");
         String httpRequest = "/group_edit";
         this.mockMvc.perform(post(httpRequest).accept(MediaType.TEXT_HTML_VALUE).flashAttr("groupDto", groupDto))
                 .andExpect(status().isOk())
+                .andExpect(model().attribute(ATTRIBUTE_HTML_TITLE, equalTo(expectedTitle)))
+                .andExpect(model().attribute(ATTRIBUTE_HTML_ERROR_MESSAGE, equalTo(EXPECTED_ERROR_MESSAGE)))
+                .andExpect(model().attribute(ATTRIBUTE_HTML_GROUP, equalTo(groupDto)))
                 .andExpect(view().name(PATH_HTML_GROUP_EDIT))
-                .andExpect(content().string(allOf(containsString("<div>" + EXPECTED_ERROR_MESSAGE + "</div>"))))
                 .andExpect(model().attributeHasFieldErrorCode("groupDto", "title", "NotBlank"))
-                .andDo(print())
-                .andReturn();
+                .andDo(print());
+    }
+    
+    @Test
+    void whenCreateExistsGroup_thenExpectErrorMessage() throws Exception {
+        GroupDto groupDto = GroupDtoModelRepository.getModel1();
+        String httpRequest = "/group_edit";
+        String expectedErrorMessage = "Record group was not created! The record already exists!";
+      
+        doThrow(EntityAlreadyExistsException.class).when(groupService).create(groupDto);
+      
+        this.mockMvc.perform(post(httpRequest).accept(MediaType.TEXT_HTML_VALUE).flashAttr("groupDto", groupDto))
+                .andExpect(status().isOk())
+                .andExpect(model().attribute(ATTRIBUTE_HTML_ERROR_MESSAGE, equalTo(expectedErrorMessage)))
+                .andExpect(view().name(PATH_HTML_GROUP_EDIT))
+                .andDo(print());
+    }
+  
+    @Test
+    void whenUpdateNotFountEntity_thenExpectErrorMessage() throws Exception {
+        GroupDto groupDto = GroupDtoModelRepository.getModelWithId();
+        String httpRequest = "/group_edit";
+        String expectedErrorMessage = "Group " + groupDto + " not found!";
+      
+        doThrow(EntityNotFoundException.class).when(groupService).update(groupDto);
+      
+        this.mockMvc.perform(post(httpRequest).accept(MediaType.TEXT_HTML_VALUE).flashAttr("groupDto", groupDto))
+                .andExpect(status().isOk())
+                .andExpect(model().attribute(ATTRIBUTE_HTML_ERROR_MESSAGE, equalTo(expectedErrorMessage)))
+                .andExpect(view().name(PATH_HTML_GROUP_EDIT))
+                .andDo(print());
+    }
+  
+    @Test
+    void whenCreateNotValidEntity_thenExpectErrorMessage() throws Exception {
+        GroupDto groupDto = GroupDtoModelRepository.getModel1();
+        String httpRequest = "/group_edit";
+        String expectedErrorMessage = "Record group was not updated/created! The data is not valid!";
+      
+        doThrow(EntityNotValidException.class).when(groupService).create(groupDto);
+      
+        this.mockMvc.perform(post(httpRequest).accept(MediaType.TEXT_HTML_VALUE).flashAttr("groupDto", groupDto))
+                .andExpect(status().isOk())
+                .andExpect(model().attribute(ATTRIBUTE_HTML_ERROR_MESSAGE, equalTo(expectedErrorMessage)))
+                .andExpect(view().name(PATH_HTML_GROUP_EDIT))
+                .andDo(print());
     }
 }

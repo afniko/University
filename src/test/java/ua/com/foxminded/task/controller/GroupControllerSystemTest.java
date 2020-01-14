@@ -1,10 +1,8 @@
 package ua.com.foxminded.task.controller;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.CoreMatchers.allOf;
 import static org.hamcrest.CoreMatchers.containsString;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.hamcrest.CoreMatchers.equalTo;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -22,7 +20,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
@@ -44,6 +41,8 @@ public class GroupControllerSystemTest {
     private static final String PATH_HTML_GROUP_EDIT = "group/group_edit";
     private static final String ATTRIBUTE_HTML_GROUP = "groupDto";
     private static final String ATTRIBUTE_HTML_GROUPS = "groups";
+    private static final String ATTRIBUTE_HTML_SUCCESS_MESSAGE = "successMessage";
+    private static final String ATTRIBUTE_HTML_TITLE = "title";
     private static final String EXPECTED_ERROR_MESSAGE = "You enter incorrect data!";
     private static GroupDto GROUP_DTO1 = GroupDtoModelRepository.getModel1();
     private static GroupDto GROUP_DTO2 = GroupDtoModelRepository.getModel2();
@@ -63,16 +62,15 @@ public class GroupControllerSystemTest {
              skipCleaningFor = "flyway_schema_history")
     void whenRetriveAllGroups_thenExpectListOfGroups() throws Exception {
         String expectedTitle = "Groups";
-        List<GroupDto> groups = Arrays.asList(GROUP_DTO1, GROUP_DTO2, GROUP_DTO3);
-        MvcResult mvcResult = this.mockMvc.perform(get("/groups").accept(MediaType.APPLICATION_JSON))
+        List<GroupDto> groups = Arrays.asList(GROUP_DTO1, GROUP_DTO2, GROUP_DTO3, GROUP_DTO4);
+        this.mockMvc.perform(get("/groups").accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
+                .andExpect(model().attribute(ATTRIBUTE_HTML_TITLE, equalTo(expectedTitle)))
+                .andExpect(model().attribute(ATTRIBUTE_HTML_GROUPS, equalTo(groups)))
                 .andExpect(view().name(PATH_HTML_GROUPS))
                 .andExpect(content().contentType("text/html; charset=UTF-8"))
                 .andExpect(content().string(allOf(containsString("<title>" + expectedTitle + "</title>"))))
-                .andDo(print())
-                .andReturn();
-        List<GroupDto> actuallyGroups = (List<GroupDto>) mvcResult.getRequest().getAttribute(ATTRIBUTE_HTML_GROUPS);
-        assertTrue(actuallyGroups.containsAll(groups));
+                .andDo(print());
     }
 
     @Test
@@ -87,14 +85,12 @@ public class GroupControllerSystemTest {
         groupDto.setTitle("group2");
         groupDto.setYearEntry(2018);
         String httpRequest = "/group?id=" + id;
-        MvcResult mvcResult = this.mockMvc.perform(get(httpRequest).accept(MediaType.TEXT_HTML_VALUE))
+        this.mockMvc.perform(get(httpRequest).accept(MediaType.TEXT_HTML_VALUE))
                 .andExpect(status().isOk())
+                .andExpect(model().attribute(ATTRIBUTE_HTML_TITLE, equalTo(expectedTitle)))
+                .andExpect(model().attribute(ATTRIBUTE_HTML_GROUP, equalTo(groupDto)))
                 .andExpect(view().name(PATH_HTML_GROUP))
-                .andExpect(content().string(allOf(containsString("<title>" + expectedTitle + "</title>"))))
-                .andDo(print())
-                .andReturn();
-        GroupDto actuallyGroup = (GroupDto) mvcResult.getRequest().getAttribute(ATTRIBUTE_HTML_GROUP);
-        assertEquals(groupDto, actuallyGroup);
+                .andDo(print());
     }
 
     @Test
@@ -109,14 +105,12 @@ public class GroupControllerSystemTest {
         groupDto.setTitle("group2");
         groupDto.setYearEntry(2018);
         String httpRequest = "/group_edit?id=" + id;
-        MvcResult mvcResult = this.mockMvc.perform(get(httpRequest).accept(MediaType.TEXT_HTML_VALUE))
+        this.mockMvc.perform(get(httpRequest).accept(MediaType.TEXT_HTML_VALUE))
                 .andExpect(status().isOk())
+                .andExpect(model().attribute(ATTRIBUTE_HTML_TITLE, equalTo(expectedTitle)))
+                .andExpect(model().attribute(ATTRIBUTE_HTML_GROUP, equalTo(groupDto)))
                 .andExpect(view().name(PATH_HTML_GROUP_EDIT))
-                .andExpect(content().string(allOf(containsString("<title>" + expectedTitle + "</title>"))))
-                .andDo(print())
-                .andReturn();
-        GroupDto actuallyGroup = (GroupDto) mvcResult.getRequest().getAttribute(ATTRIBUTE_HTML_GROUP);
-        assertEquals(groupDto, actuallyGroup);
+                .andDo(print());
     }
 
     @Test
@@ -128,18 +122,13 @@ public class GroupControllerSystemTest {
         String expectedSuccessMessage = "Record group was updated!";
         GroupDto groupDto = GroupDtoModelRepository.getModelWithId();
         String httpRequest = "/group_edit";
-        MvcResult mvcResult = this.mockMvc.perform(post(httpRequest).accept(MediaType.TEXT_HTML_VALUE).flashAttr("groupDto", groupDto))
+        this.mockMvc.perform(post(httpRequest).accept(MediaType.TEXT_HTML_VALUE).flashAttr("groupDto", groupDto))
                 .andExpect(status().isOk())
+                .andExpect(model().attribute(ATTRIBUTE_HTML_TITLE, equalTo(expectedTitle)))
+                .andExpect(model().attribute(ATTRIBUTE_HTML_SUCCESS_MESSAGE, equalTo(expectedSuccessMessage)))
+                .andExpect(model().attribute(ATTRIBUTE_HTML_GROUP, equalTo(groupDto)))
                 .andExpect(view().name(PATH_HTML_GROUP))
-                .andExpect(
-                        content().string(allOf(
-                                containsString("<title>" + expectedTitle + "</title>"), 
-                                containsString("<div class=\"alert alert-success\">" + expectedSuccessMessage + "</div>")
-                                )))
-                .andDo(print())
-                .andReturn();
-        GroupDto actuallyGroup = (GroupDto) mvcResult.getRequest().getAttribute(ATTRIBUTE_HTML_GROUP);
-        assertEquals(groupDto, actuallyGroup);
+                .andDo(print());
     }
 
     @Test
@@ -152,18 +141,13 @@ public class GroupControllerSystemTest {
         groupDto.setTitle("group27");
         groupDto.setYearEntry(2015);
         String httpRequest = "/group_edit";
-        MvcResult mvcResult = this.mockMvc.perform(post(httpRequest).accept(MediaType.TEXT_HTML_VALUE).flashAttr("groupDto", groupDto))
+        this.mockMvc.perform(post(httpRequest).accept(MediaType.TEXT_HTML_VALUE).flashAttr("groupDto", groupDto))
                 .andExpect(status().isOk())
+                .andExpect(model().attribute(ATTRIBUTE_HTML_TITLE, equalTo(expectedTitle)))
+                .andExpect(model().attribute(ATTRIBUTE_HTML_SUCCESS_MESSAGE, equalTo(expectedSuccessMessage)))
+                .andExpect(model().attribute(ATTRIBUTE_HTML_GROUP, equalTo(groupDto)))
                 .andExpect(view().name(PATH_HTML_GROUP))
-                .andExpect(
-                        content().string(allOf(
-                                containsString("<title>" + expectedTitle + "</title>"), 
-                                containsString("<div class=\"alert alert-success\">" + expectedSuccessMessage + "</div>")
-                                )))
-                .andDo(print())
-                .andReturn();
-        GroupDto actuallyGroup = (GroupDto) mvcResult.getRequest().getAttribute(ATTRIBUTE_HTML_GROUP);
-        assertThat(actuallyGroup).isEqualTo(groupDto);
+                .andDo(print());
     }
 
     @Test
@@ -182,8 +166,7 @@ public class GroupControllerSystemTest {
                 .andExpect(content().string(allOf(containsString("<div>" + EXPECTED_ERROR_MESSAGE + "</div>"))))
                 .andExpect(model().attributeHasFieldErrorCode("groupDto", "title", "GroupTitleUnique"))
                 .andExpect(model().attributeHasFieldErrorCode("groupDto", "yearEntry", "Max"))
-                .andDo(print())
-                .andReturn();
+                .andDo(print());
     }
 
     @Test
@@ -202,8 +185,7 @@ public class GroupControllerSystemTest {
                 .andExpect(content().string(allOf(containsString("<div>" + EXPECTED_ERROR_MESSAGE + "</div>"))))
                 .andExpect(model().attributeHasFieldErrorCode("groupDto", "yearEntry", "Min"))
                 .andExpect(model().attributeHasFieldErrorCode("groupDto", "title", "Length"))
-                .andDo(print())
-                .andReturn();
+                .andDo(print());
     }
 
     @Test
@@ -220,7 +202,6 @@ public class GroupControllerSystemTest {
                 .andExpect(view().name(PATH_HTML_GROUP_EDIT))
                 .andExpect(content().string(allOf(containsString("<div>" + EXPECTED_ERROR_MESSAGE + "</div>"))))
                 .andExpect(model().attributeHasFieldErrorCode("groupDto", "title", "NotBlank"))
-                .andDo(print())
-                .andReturn();
+                .andDo(print());
     }
 }
