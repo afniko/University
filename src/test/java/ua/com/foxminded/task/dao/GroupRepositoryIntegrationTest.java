@@ -74,9 +74,7 @@ public class GroupRepositoryIntegrationTest {
     @DataSet(cleanBefore = true, skipCleaningFor = "flyway_schema_history")
     @ExpectedDataSet(value = "group/expectedGroup.yml")
     public void whenSaveObject_thenExpectRecord() {
-        Group group = new Group();
-        group.setTitle("group10");
-        group.setYearEntry(2015);
+        Group group = getGroup();
         Group groupActually = groupRepository.saveAndFlush(group);
         assertThat(groupActually).isNotNull();
     }
@@ -87,12 +85,17 @@ public class GroupRepositoryIntegrationTest {
              skipCleaningFor = "flyway_schema_history")
     @ExpectedDataSet(value = "group/expectedGroup.yml")
     public void whenUpdateObject_thenExpectUpdatedRecord() {
-        Group group = new Group();
+        Group group = getGroup();
         group.setId(1);
-        group.setTitle("group10");
-        group.setYearEntry(2015);
         Group groupActually = groupRepository.saveAndFlush(group);
         assertThat(groupActually).isNotNull();
+    }
+
+    private Group getGroup() {
+        Group group = new Group();
+        group.setTitle("group10");
+        group.setYearEntry(2015);
+        return group;
     }
 
 }
