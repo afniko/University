@@ -55,12 +55,7 @@ public class StudentRepositoryIntegrationTest {
              cleanBefore = true, 
              skipCleaningFor = "flyway_schema_history")
     public void whenPutAtTableDbStudentObjects_thenGetThisObjectsFindById() {
-        Student expectedStudent = new Student();
-        expectedStudent.setFirstName("firstname3");
-        expectedStudent.setLastName("lastname3");
-        expectedStudent.setMiddleName("middlename3");
-        expectedStudent.setBirthday(LocalDate.of(1993, 02, 01));
-        expectedStudent.setIdFees(111111113);
+        Student expectedStudent = getStudent();
         Student student = studentRepository.findById(3).get();
         assertThat(student).isEqualTo(expectedStudent);
     }
@@ -79,12 +74,7 @@ public class StudentRepositoryIntegrationTest {
     @DataSet(cleanBefore = true, skipCleaningFor = "flyway_schema_history")
     @ExpectedDataSet(value = "student/expectedStudent.yml")
     public void whenSaveObject_thenExpectRecord() {
-        Student student = new Student();
-        student.setFirstName("firstname3");
-        student.setLastName("lastname3");
-        student.setMiddleName("middlename3");
-        student.setBirthday(LocalDate.of(1993, 02, 01));
-        student.setIdFees(111111113);
+        Student student = getStudent();
         Student studentActually = studentRepository.saveAndFlush(student);
         assertThat(studentActually).isNotNull();
     }
@@ -95,13 +85,8 @@ public class StudentRepositoryIntegrationTest {
              skipCleaningFor = "flyway_schema_history")
     @ExpectedDataSet(value = "student/expectedStudent.yml")
     public void whenUpdateObject_thenExpectUpdatedRecord() {
-        Student student = new Student();
+        Student student = getStudent();
         student.setId(1);
-        student.setFirstName("firstname3");
-        student.setLastName("lastname3");
-        student.setMiddleName("middlename3");
-        student.setBirthday(LocalDate.of(1993, 02, 01));
-        student.setIdFees(111111113);
         Student studentActually = studentRepository.saveAndFlush(student);
         assertThat(studentActually).isNotNull();
     }
@@ -131,6 +116,16 @@ public class StudentRepositoryIntegrationTest {
     public void whenCheckExistStudentByIdAndGroupId_thenReturnTrue() {
         boolean isExists = studentRepository.existsStudentByIdAndGroupId(3, 2);
         assertTrue(isExists);
+    }
+    
+    private Student getStudent() {
+        Student student = new Student();
+        student.setFirstName("firstname3");
+        student.setLastName("lastname3");
+        student.setMiddleName("middlename3");
+        student.setBirthday(LocalDate.of(1993, 02, 01));
+        student.setIdFees(111111113);
+        return student;
     }
 
 }
