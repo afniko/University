@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import javax.persistence.EntityNotFoundException;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.http.HttpHeaders;
@@ -20,8 +21,6 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 import ua.com.foxminded.task.dao.exception.EntityAlreadyExistsException;
 import ua.com.foxminded.task.dao.exception.EntityNotValidException;
-import ua.com.foxminded.task.dao.exception.NoEntityFoundException;
-import ua.com.foxminded.task.dao.exception.NoExecuteQueryException;
 
 @ControllerAdvice
 public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler {
@@ -56,13 +55,8 @@ public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler
         response.sendError(HttpStatus.BAD_REQUEST.value(), "Record was not updated/created! The data is not valid!");
     }
 
-    @ExceptionHandler(NoEntityFoundException.class)
+    @ExceptionHandler(EntityNotFoundException.class)
     public void noEntityFoundException(HttpServletResponse response) throws IOException {
         response.sendError(HttpStatus.NOT_FOUND.value(), "Record not found!");
-    }
-    
-    @ExceptionHandler(NoExecuteQueryException.class)
-    public void noExecuteQueryException(HttpServletResponse response) throws IOException {
-        response.sendError(HttpStatus.EXPECTATION_FAILED.value(), "Something with goes wrong!");
     }
 }

@@ -2,6 +2,7 @@ package ua.com.foxminded.task.controller;
 
 import java.util.List;
 
+import javax.persistence.EntityNotFoundException;
 import javax.validation.Valid;
 
 import org.apache.commons.lang3.StringUtils;
@@ -17,8 +18,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import ua.com.foxminded.task.dao.exception.EntityAlreadyExistsException;
 import ua.com.foxminded.task.dao.exception.EntityNotValidException;
-import ua.com.foxminded.task.dao.exception.NoEntityFoundException;
-import ua.com.foxminded.task.dao.exception.NoExecuteQueryException;
 import ua.com.foxminded.task.domain.dto.GroupDto;
 import ua.com.foxminded.task.domain.dto.StudentDto;
 import ua.com.foxminded.task.service.GroupService;
@@ -52,11 +51,7 @@ public class StudentController {
         logger.debug("students()");
         String errorMessage = null;
         List<StudentDto> students = null;
-        try {
-            students = studentService.findAllDto();
-        } catch (NoExecuteQueryException e) {
-            errorMessage = "Something with student goes wrong!";
-        }
+        students = studentService.findAllDto();
 
         model.addAttribute(ATTRIBUTE_HTML_TITLE, "Students");
         model.addAttribute(ATTRIBUTE_HTML_STUDENTS, students);
@@ -79,9 +74,7 @@ public class StudentController {
             } else {
                 errorMessage = "You id is blank";
             }
-        } catch (NoExecuteQueryException e) {
-            errorMessage = "Something with student goes wrong!";
-        } catch (NoEntityFoundException e) {
+        } catch (EntityNotFoundException e) {
             errorMessage = "Student by id#" + id + " not found!";
         } catch (NumberFormatException e) {
             errorMessage = "Student id# must be numeric!";
@@ -102,7 +95,7 @@ public class StudentController {
             if (checkId(id)) {
                 studentDto = studentService.findByIdDto(Integer.valueOf(id));
             }
-        } catch (NoEntityFoundException e) {
+        } catch (EntityNotFoundException e) {
             errorMessage = "Problem with finding group";
         }
         List<GroupDto> groups = groupService.findAllDto();
@@ -133,14 +126,10 @@ public class StudentController {
                     studentDto = studentService.create(studentDto);
                     successMessage = "Record student was created";
                 }
-            } catch (NoExecuteQueryException e) {
-                errorMessage = "Record student was not edited!";
-                path = PATH_HTML_STUDENT_EDIT;
-                groups = groupService.findAllDto();
             } catch (EntityAlreadyExistsException e) {
                 errorMessage = "Record sudent was not created! The record already exists!";
                 path = PATH_HTML_STUDENT_EDIT;
-            } catch (NoEntityFoundException e) {
+            } catch (EntityNotFoundException e) {
                 errorMessage = "Student " + studentDto + " not found!";
                 path = PATH_HTML_STUDENT_EDIT;
             } catch (EntityNotValidException e) {

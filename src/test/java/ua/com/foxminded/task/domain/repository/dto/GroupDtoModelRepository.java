@@ -15,6 +15,11 @@ public class GroupDtoModelRepository {
         List<GroupDto> groups = Arrays.asList(getModel1(), getModel2(), getModel3(), getModel4());
         return new ArrayList<>(groups);
     }
+    
+    public static List<GroupDto> getModelDtos() {
+        List<GroupDto> groups = Arrays.asList(getModel11(), getModel12(), getModel13(), getModel14());
+        return new ArrayList<>(groups);
+    }
 
     public static List<GroupDto> getModels1() {
         List<GroupDto> groups = Arrays.asList(getModel1(), getModel2());
@@ -44,7 +49,7 @@ public class GroupDtoModelRepository {
     public static GroupDto getModelWithId() {
         GroupDto group = new GroupDto();
         group.setId(1);
-        group.setTitle("group1");
+        group.setTitle("group21");
         group.setYearEntry(2016);
         return group;
     }
@@ -123,6 +128,13 @@ public class GroupDtoModelRepository {
         GroupDto group = new GroupDto();
         group.setTitle("group13");
         group.setYearEntry(2017);
+        return group;
+    }
+    
+    public static GroupDto getModel14() {
+        GroupDto group = new GroupDto();
+        group.setTitle("group14");
+        group.setYearEntry(2016);
         return group;
     }
 }

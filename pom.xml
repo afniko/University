@@ -15,6 +15,8 @@
     <packaging>jar</packaging>
 
     <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
         <org.postgresql.version>42.2.8</org.postgresql.version>
         <mockito.version>2.25.1</mockito.version>
@@ -22,6 +24,7 @@
         <org.flywaydb.flyway.core.version>5.2.4</org.flywaydb.flyway.core.version>
         <hibernate.jpamodelgen.version>5.4.7.Final</hibernate.jpamodelgen.version>
         <swagger.version>2.9.2</swagger.version>
+        <database-rider.version>1.9.1</database-rider.version>
 
         <org.flywaydb.flyway.plugin.version>5.2.4</org.flywaydb.flyway.plugin.version>
         <maven.checkstyle.plugin.version>3.1.0</maven.checkstyle.plugin.version>
@@ -96,6 +99,14 @@
             <version>${swagger.version}</version>
         </dependency>
 
+        <!-- for tests database connection -->
+        <dependency>
+            <groupId>com.github.database-rider</groupId>
+            <artifactId>rider-junit5</artifactId>
+            <version>${database-rider.version}</version>
+            <scope>test</scope>
+        </dependency>
+
     </dependencies>
 
     <build>
@@ -143,10 +154,11 @@
                         <phase>test</phase>
                         <configuration>
                             <excludes>
-                                <exclude>**/IT*</exclude>
+                                <exclude>**/*IntegrationTest</exclude>
+                                <exclude>**/*SystemTest</exclude>
                             </excludes>
                             <includes>
-                                <include>**/*</include>
+                                <include>**/*Test</include>
                             </includes>
                         </configuration>
                     </execution>
@@ -156,13 +168,29 @@
                         <goals>
                             <goal>test</goal>
                         </goals>
+                        <phase>package</phase>
+                        <configuration>
+                            <excludes>
+                                <exclude>none</exclude>
+                            </excludes>
+                            <includes>
+                                <include>**/*IntegrationTest</include>
+                            </includes>
+                        </configuration>
+                    </execution>
+
+                    <execution>
+                        <id>system-test</id>
+                        <goals>
+                            <goal>test</goal>
+                        </goals>
                         <phase>verify</phase>
                         <configuration>
                             <excludes>
                                 <exclude>none</exclude>
                             </excludes>
                             <includes>
-                                <include>**/IT*</include>
+                                <include>**/*SystemTest</include>
                             </includes>
                         </configuration>
                     </execution>

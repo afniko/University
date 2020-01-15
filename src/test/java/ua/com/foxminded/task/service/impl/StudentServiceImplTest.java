@@ -1,11 +1,15 @@
 package ua.com.foxminded.task.service.impl;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 import java.util.List;
+
+import javax.persistence.EntityNotFoundException;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -13,9 +17,12 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.slf4j.Logger;
+import org.springframework.dao.DataIntegrityViolationException;
 
 import ua.com.foxminded.task.dao.GroupRepository;
 import ua.com.foxminded.task.dao.StudentRepository;
+import ua.com.foxminded.task.dao.exception.EntityAlreadyExistsException;
+import ua.com.foxminded.task.dao.exception.EntityNotValidException;
 import ua.com.foxminded.task.domain.Student;
 import ua.com.foxminded.task.domain.dto.StudentDto;
 import ua.com.foxminded.task.domain.repository.StudentModelRepository;
@@ -93,5 +100,87 @@ public class StudentServiceImplTest {
         verify(groupRepository, times(1)).getOne(student.getGroup().getId());
         assertEquals(studentDto, studentDtoActually);
     }
+    
+    @Test
+    public void whenFindByIdFees_thenInvokeMethod() {
+        Student expectedStudent = StudentModelRepository.getModel1();
+        Integer expectedIdFees = expectedStudent.getIdFees();
+        doReturn(expectedStudent).when(studentRepository).findByIdFees(expectedIdFees);
+        
+        Student actuallyStudent = studentService.findByIdFees(expectedIdFees);
+        
+        verify(studentRepository, times(1)).findByIdFees(expectedIdFees);
+        assertEquals(expectedIdFees, actuallyStudent.getIdFees());
+    }
+    
+    @Test
+    public void whenCountByGroupId_thenInvokeMethod() {
+        Integer id = 1;
+        long expectedCount = 5L;
+        doReturn(expectedCount).when(studentRepository).countByGroupId(id);
+        
+        long actuallyCount = studentService.countByGroupId(id);
+        
+        verify(studentRepository, times(1)).countByGroupId(id);
+        assertEquals(expectedCount, actuallyCount);
+    }
+    
+    @Test
+    public void whenCheckExistsStudentByIdAndGroupId_thenInvokeMethod() {
+        Integer studentId = 1;
+        Integer groupId = 1;
+        boolean expectedResult = true;
+        doReturn(expectedResult).when(studentRepository).existsStudentByIdAndGroupId(studentId, groupId);
+        
+        boolean actuallyResult = studentService.existsStudentByIdAndGroupId(studentId, groupId);
+        
+        verify(studentRepository, times(1)).existsStudentByIdAndGroupId(studentId, groupId);
+        assertEquals(expectedResult, actuallyResult);
+    }
+    
+    @Test
+    public void whenCreateRecordEntityWithId_thenThrowException() {
+        StudentDto student = new StudentDto();
+        student.setId(1);
 
+        assertThatThrownBy(() -> studentService.create(student))
+             .isInstanceOf(EntityAlreadyExistsException.class)
+             .hasMessage("create() studentDto: %s", student);
+    }
+    
+    @Test
+    public void whenCreateRecordWithNotValidEntity_thenThrowException() {
+        StudentDto studentDto = StudentDtoModelRepository.getModel1();
+        Student student = StudentModelRepository.getModel1();
+        doReturn(student.getGroup()).when(groupRepository).getOne(student.getGroup().getId());
+        doThrow(DataIntegrityViolationException.class).when(studentRepository).saveAndFlush(student);
+
+        assertThatThrownBy(() -> studentService.create(studentDto))
+             .isInstanceOf(EntityNotValidException.class)
+             .hasMessageContaining("create() student: " + student);
+    }
+    
+    @Test
+    public void whenUpdateRecordWithNotValidEntity_thenThrowException() {
+        StudentDto studentDto = StudentDtoModelRepository.getModel1();
+        Student student = StudentModelRepository.getModel1();
+        doReturn(student.getGroup()).when(groupRepository).getOne(student.getGroup().getId());
+        doThrow(DataIntegrityViolationException.class).when(studentRepository).saveAndFlush(student);
+        doReturn(true).when(studentRepository).existsById(student.getId());
+
+        assertThatThrownBy(() -> studentService.update(studentDto))
+             .isInstanceOf(EntityNotValidException.class)
+             .hasMessageContaining("update() student: " + student);
+    }
+    
+    @Test
+    public void whenUpdateRecordNotFpund_thenThrowException() {
+        StudentDto studentDto = StudentDtoModelRepository.getModel1();
+        Student student = StudentModelRepository.getModel1();
+        doReturn(false).when(studentRepository).existsById(student.getId());
+
+        assertThatThrownBy(() -> studentService.update(studentDto))
+             .isInstanceOf(EntityNotFoundException.class)
+             .hasMessageContaining("Student not exist!");
+    }
 }

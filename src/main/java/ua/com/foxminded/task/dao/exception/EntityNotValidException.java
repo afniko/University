@@ -6,12 +6,4 @@ public class EntityNotValidException extends RuntimeException {
         super(message, cause);
     }
 
-    public EntityNotValidException(String message) {
-        super(message);
-    }
-
-    public EntityNotValidException(Throwable cause) {
-        super(cause);
-    }
-
 }

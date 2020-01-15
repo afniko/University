@@ -2,6 +2,7 @@ package ua.com.foxminded.task.controller;
 
 import java.util.List;
 
+import javax.persistence.EntityNotFoundException;
 import javax.validation.Valid;
 
 import org.apache.commons.lang3.StringUtils;
@@ -17,8 +18,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import ua.com.foxminded.task.dao.exception.EntityAlreadyExistsException;
 import ua.com.foxminded.task.dao.exception.EntityNotValidException;
-import ua.com.foxminded.task.dao.exception.NoEntityFoundException;
-import ua.com.foxminded.task.dao.exception.NoExecuteQueryException;
 import ua.com.foxminded.task.domain.dto.GroupDto;
 import ua.com.foxminded.task.service.GroupService;
 
@@ -49,9 +48,7 @@ public class GroupController {
         List<GroupDto> groups = null;
         try {
             groups = groupService.findAllDto();
-        } catch (NoExecuteQueryException e) {
-            errorMessage = "Something with group goes wrong!";
-        } catch (NoEntityFoundException e) {
+        } catch (EntityNotFoundException e) {
             errorMessage = "Problem with finding group";
         }
 
@@ -75,9 +72,7 @@ public class GroupController {
             } else {
                 errorMessage = "You id is blank";
             }
-        } catch (NoExecuteQueryException e) {
-            errorMessage = "Something with group goes wrong!";
-        } catch (NoEntityFoundException e) {
+        } catch (EntityNotFoundException e) {
             errorMessage = "Group by id#" + id + " not found!";
         } catch (NumberFormatException e) {
             errorMessage = "Group id# must be numeric!";
@@ -98,7 +93,7 @@ public class GroupController {
             if (checkId(id)) {
                 groupDto = groupService.findByIdDto(Integer.valueOf(id));
             }
-        } catch (NoEntityFoundException e) {
+        } catch (EntityNotFoundException e) {
             errorMessage = "Problem with finding group";
         }
         model.addAttribute(ATTRIBUTE_HTML_TITLE, "Group edit");
@@ -126,13 +121,10 @@ public class GroupController {
                     groupDto = groupService.create(groupDto);
                     successMessage = "Record group was created!";
                 }
-            } catch (NoExecuteQueryException e) {
-                errorMessage = "Record group was not edited!";
-                path = PATH_HTML_GROUP_EDIT;
             } catch (EntityAlreadyExistsException e) {
                 errorMessage = "Record group was not created! The record already exists!";
                 path = PATH_HTML_GROUP_EDIT;
-            } catch (NoEntityFoundException e) {
+            } catch (EntityNotFoundException e) {
                 errorMessage = "Group " + groupDto + " not found!";
                 path = PATH_HTML_GROUP_EDIT;
             } catch (EntityNotValidException e) {
