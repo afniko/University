@@ -9,6 +9,8 @@ import static org.mockito.Mockito.verify;
 
 import java.util.List;
 
+import javax.persistence.EntityNotFoundException;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -169,5 +171,16 @@ public class StudentServiceImplTest {
         assertThatThrownBy(() -> studentService.update(studentDto))
              .isInstanceOf(EntityNotValidException.class)
              .hasMessageContaining("update() student: " + student);
+    }
+    
+    @Test
+    public void whenUpdateRecordNotFpund_thenThrowException() {
+        StudentDto studentDto = StudentDtoModelRepository.getModel1();
+        Student student = StudentModelRepository.getModel1();
+        doReturn(false).when(studentRepository).existsById(student.getId());
+
+        assertThatThrownBy(() -> studentService.update(studentDto))
+             .isInstanceOf(EntityNotFoundException.class)
+             .hasMessageContaining("Student not exist!");
     }
 }

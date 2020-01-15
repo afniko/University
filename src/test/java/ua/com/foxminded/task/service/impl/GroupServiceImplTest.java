@@ -10,6 +10,8 @@ import static org.mockito.Mockito.verify;
 
 import java.util.List;
 
+import javax.persistence.EntityNotFoundException;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -150,5 +152,16 @@ public class GroupServiceImplTest {
         assertThatThrownBy(() -> groupService.update(groupDto))
              .isInstanceOf(EntityNotValidException.class)
              .hasMessageContaining("update() group: " + group);
+    }
+    
+    @Test
+    public void whenUpdateRecordNotFound_thenThrowException() {
+        GroupDto groupDto = GroupDtoModelRepository.getModel1();
+        Group group = GroupModelRepository.getModel1();
+        doReturn(false).when(groupRepository).existsById(group.getId());
+
+        assertThatThrownBy(() -> groupService.update(groupDto))
+             .isInstanceOf(EntityNotFoundException.class)
+             .hasMessageContaining("Group not exist!");
     }
 }
