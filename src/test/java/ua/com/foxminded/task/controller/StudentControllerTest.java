@@ -1,4 +1,5 @@
 package ua.com.foxminded.task.controller;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.when;
@@ -21,7 +22,12 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.ui.ExtendedModelMap;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 
+import ua.com.foxminded.task.dao.exception.EntityAlreadyExistsException;
+import ua.com.foxminded.task.dao.exception.EntityNotValidException;
 import ua.com.foxminded.task.domain.dto.GroupDto;
 import ua.com.foxminded.task.domain.dto.StudentDto;
 import ua.com.foxminded.task.domain.repository.dto.GroupDtoModelRepository;
@@ -43,6 +49,9 @@ public class StudentControllerTest {
     
     @MockBean
     private Logger logger;
+    
+    @MockBean
+    private BindingResult bindingResult;
 
     private static final String PATH_HTML_STUDENT = "student/student";
     private static final String PATH_HTML_STUDENTS = "student/students";
@@ -51,6 +60,7 @@ public class StudentControllerTest {
     private static final String ATTRIBUTE_HTML_STUDENTS = "students";
     private static final String ATTRIBUTE_HTML_GROUPS = "groups";
     private static final String ATTRIBUTE_HTML_ERROR_MESSAGE = "errorMessage";
+    private static final String ATTRIBUTE_HTML_SUCCESS_MESSAGE = "successMessage";
     private static final String ATTRIBUTE_HTML_TITLE = "title";
     
     @BeforeEach
@@ -170,4 +180,88 @@ public class StudentControllerTest {
                 .andExpect(forwardedUrl(PATH_HTML_STUDENT_EDIT))
                 .andDo(print());
     }
+    
+    @Test
+    void whenSubmitEditFormStudentWithId_thenUpdateStudent() throws Exception {
+        StudentDto studentDto = StudentDtoModelRepository.getModel1();
+        studentDto.setId(1);
+        String expectedTitle = "Student edit";
+        String expectedSuccessMessage = "Record student was updated!";
+        Model model = new ExtendedModelMap();
+
+        when(studentService.update(studentDto)).thenReturn(studentDto);
+        when(bindingResult.hasErrors()).thenReturn(false);
+
+        String actuallyView = studentController.editPost(studentDto, bindingResult, model);
+        
+        assertThat(PATH_HTML_STUDENT).isEqualTo(actuallyView);
+        assertThat(expectedTitle).isEqualTo(model.getAttribute(ATTRIBUTE_HTML_TITLE));
+        assertThat(expectedSuccessMessage).isEqualTo(model.getAttribute(ATTRIBUTE_HTML_SUCCESS_MESSAGE));
+        assertThat(studentDto).isEqualTo(model.getAttribute(ATTRIBUTE_HTML_STUDENT));
+    }
+
+    @Test
+    void whenSubmitEditFormStudentWithoutId_thenCreateStudent() throws Exception {
+        StudentDto studentDto = StudentDtoModelRepository.getModel7();
+        String expectedTitle = "Student edit";
+        String expectedSuccessMessage = "Record student was created";
+        Model model = new ExtendedModelMap();
+
+        when(studentService.create(studentDto)).thenReturn(studentDto);
+
+        String actuallyView = studentController.editPost(studentDto, bindingResult, model);
+
+        assertThat(PATH_HTML_STUDENT).isEqualTo(actuallyView);
+        assertThat(expectedTitle).isEqualTo(model.getAttribute(ATTRIBUTE_HTML_TITLE));
+        assertThat(expectedSuccessMessage).isEqualTo(model.getAttribute(ATTRIBUTE_HTML_SUCCESS_MESSAGE));
+        assertThat(studentDto).isEqualTo(model.getAttribute(ATTRIBUTE_HTML_STUDENT));
+    }
+    
+    @Test
+    void whenInvokeCreateExistsStudent_thenExpectErrorMessage() throws Exception {
+        String expectedErrorMessage = "Record sudent was not created! The record already exists!";
+        StudentDto studentDto = StudentDtoModelRepository.getModel1();
+        Model model = new ExtendedModelMap();
+
+        doThrow(EntityAlreadyExistsException.class).when(studentService).create(studentDto);
+      
+        String actuallyView = studentController.editPost(studentDto, bindingResult, model);
+
+        assertThat(PATH_HTML_STUDENT_EDIT).isEqualTo(actuallyView);
+        assertThat(expectedErrorMessage).isEqualTo(model.getAttribute(ATTRIBUTE_HTML_ERROR_MESSAGE));
+        assertThat(studentDto).isEqualTo(model.getAttribute(ATTRIBUTE_HTML_STUDENT));
+    }
+  
+    @Test
+    void whenInvokeEditNotFoundEntity_thenExpectErrorMessage() throws Exception {
+        StudentDto studentDto = StudentDtoModelRepository.getModel1();
+        studentDto.setId(1);
+        String expectedErrorMessage = "Student " + studentDto + " not found!";
+        Model model = new ExtendedModelMap();
+
+        doThrow(EntityNotFoundException.class).when(studentService).update(studentDto);
+      
+        String actuallyView = studentController.editPost(studentDto, bindingResult, model);
+
+        assertThat(PATH_HTML_STUDENT_EDIT).isEqualTo(actuallyView);
+        assertThat(expectedErrorMessage).isEqualTo(model.getAttribute(ATTRIBUTE_HTML_ERROR_MESSAGE));
+        assertThat(studentDto).isEqualTo(model.getAttribute(ATTRIBUTE_HTML_STUDENT));
+    }
+  
+    @Test
+    void whenInvokeEditNotValidEntity_thenExpectErrorMessage() throws Exception {
+        String expectedErrorMessage = "Record sudent was not updated/created! The data is not valid!";
+        StudentDto studentDto = StudentDtoModelRepository.getModel1();
+        studentDto.setId(1);
+        Model model = new ExtendedModelMap();
+
+        doThrow(EntityNotValidException.class).when(studentService).update(studentDto);
+      
+        String actuallyView = studentController.editPost(studentDto, bindingResult, model);
+
+        assertThat(PATH_HTML_STUDENT_EDIT).isEqualTo(actuallyView);
+        assertThat(expectedErrorMessage).isEqualTo(model.getAttribute(ATTRIBUTE_HTML_ERROR_MESSAGE));
+        assertThat(studentDto).isEqualTo(model.getAttribute(ATTRIBUTE_HTML_STUDENT));
+    }
+    
 }
