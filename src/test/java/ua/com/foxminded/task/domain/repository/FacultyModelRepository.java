@@ -25,42 +25,36 @@ public class FacultyModelRepository {
     public static Faculty getModel1() {
         Faculty faculty = new Faculty();
         faculty.setTitle("faculty1");
-        faculty.setDepartments(DepartmentModelRepository.getModels1());
         return faculty;
     }
 
     public static Faculty getModel2() {
         Faculty faculty = new Faculty();
         faculty.setTitle("faculty2");
-        faculty.setDepartments(DepartmentModelRepository.getModels2());
         return faculty;
     }
 
     public static Faculty getModel3() {
         Faculty faculty = new Faculty();
         faculty.setTitle("faculty3");
-        faculty.setDepartments(DepartmentModelRepository.getModels3());
         return faculty;
     }
 
     public static Faculty getModel4() {
         Faculty faculty = new Faculty();
         faculty.setTitle("faculty4");
-        faculty.setDepartments(DepartmentModelRepository.getModels1());
         return faculty;
     }
 
     public static Faculty getModel5() {
         Faculty faculty = new Faculty();
         faculty.setTitle("faculty5");
-        faculty.setDepartments(DepartmentModelRepository.getModels2());
         return faculty;
     }
 
     public static Faculty getModel6() {
         Faculty faculty = new Faculty();
         faculty.setTitle("faculty6");
-        faculty.setDepartments(DepartmentModelRepository.getModels3());
         return faculty;
     }
 
