@@ -1,35 +1,11 @@
 package ua.com.foxminded.task.domain;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Department {
 
     private int id;
     private String title;
     private String description;
-    private List<Group> groups = new ArrayList<>();
-    private List<Teacher> teachers = new ArrayList<>();
-
-    public void addGroup(Group group) {
-        group.setDepartment(this);
-        groups.add(group);
-    }
-
-    public void removeGroup(Group group) {
-        groups.remove(group);
-        group.setDepartment(null);
-    }
-
-    public void addTeacher(Teacher teacher) {
-        teachers.add(teacher);
-        teacher.setDepartment(this);
-    }
-
-    public void removeTeacher(Teacher teacher) {
-        teachers.remove(teacher);
-        teacher.setDepartment(null);
-    }
+    private Faculty faculty;
 
     public int getId() {
         return id;
@@ -55,27 +31,20 @@ public class Department {
         this.description = description;
     }
 
-    public List<Group> getGroups() {
-        return groups;
+    public Faculty getFaculty() {
+        return faculty;
     }
 
-    public void setGroups(List<Group> groups) {
-        this.groups = groups;
-    }
-
-    public List<Teacher> getTeachers() {
-        return teachers;
-    }
-
-    public void setTeachers(List<Teacher> teachers) {
-        this.teachers = teachers;
+    public void setFaculty(Faculty faculty) {
+        this.faculty = faculty;
     }
 
     @Override
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + id;
+        result = prime * result + ((description == null) ? 0 : description.hashCode());
+        result = prime * result + ((faculty == null) ? 0 : faculty.hashCode());
         result = prime * result + ((title == null) ? 0 : title.hashCode());
         return result;
     }
@@ -89,7 +58,15 @@ public class Department {
         if (getClass() != obj.getClass())
             return false;
         Department other = (Department) obj;
-        if (id != other.id)
+        if (description == null) {
+            if (other.description != null)
+                return false;
+        } else if (!description.equals(other.description))
+            return false;
+        if (faculty == null) {
+            if (other.faculty != null)
+                return false;
+        } else if (!faculty.equals(other.faculty))
             return false;
         if (title == null) {
             if (other.title != null)
@@ -101,7 +78,11 @@ public class Department {
 
     @Override
     public String toString() {
-        return "Department [id=" + id + ", title=" + title + "]";
+        return "Department [id=" + id 
+             + ", title=" + title 
+             + ", description=" + description 
+             + ", faculty=" + faculty 
+             + "]";
     }
 
 }

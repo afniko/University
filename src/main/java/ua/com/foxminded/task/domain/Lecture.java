@@ -1,13 +1,13 @@
 package ua.com.foxminded.task.domain;
 
-import java.sql.Time;
+import java.time.LocalTime;
 
 public class Lecture {
 
     private int id;
     private String number;
-    private Time startTime;
-    private Time endTime;
+    private LocalTime startTime;
+    private LocalTime endTime;
 
     public int getId() {
         return id;
@@ -25,19 +25,19 @@ public class Lecture {
         this.number = number;
     }
 
-    public Time getStartTime() {
+    public LocalTime getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(Time startTime) {
+    public void setStartTime(LocalTime startTime) {
         this.startTime = startTime;
     }
 
-    public Time getEndTime() {
+    public LocalTime getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(Time endTime) {
+    public void setEndTime(LocalTime endTime) {
         this.endTime = endTime;
     }
 
@@ -80,7 +80,13 @@ public class Lecture {
 
     @Override
     public String toString() {
-        return "Lecture [id=" + id + ", number=" + number + ", startTime=" + startTime + ", endTime=" + endTime + "]";
+        return "Lecture [id=" + id 
+             + ", number=" + number 
+             + ", startTime=" + startTime 
+             + ", endTime=" + endTime 
+             + "]";
     }
+
+    
 
 }

@@ -62,6 +62,9 @@ public class University {
     public int hashCode() {
         final int prime = 31;
         int result = 1;
+        result = prime * result + ((auditories == null) ? 0 : auditories.hashCode());
+        result = prime * result + ((faculties == null) ? 0 : faculties.hashCode());
+        result = prime * result + ((timetable == null) ? 0 : timetable.hashCode());
         result = prime * result + ((title == null) ? 0 : title.hashCode());
         return result;
     }
@@ -75,6 +78,21 @@ public class University {
         if (getClass() != obj.getClass())
             return false;
         University other = (University) obj;
+        if (auditories == null) {
+            if (other.auditories != null)
+                return false;
+        } else if (!auditories.equals(other.auditories))
+            return false;
+        if (faculties == null) {
+            if (other.faculties != null)
+                return false;
+        } else if (!faculties.equals(other.faculties))
+            return false;
+        if (timetable == null) {
+            if (other.timetable != null)
+                return false;
+        } else if (!timetable.equals(other.timetable))
+            return false;
         if (title == null) {
             if (other.title != null)
                 return false;
@@ -85,7 +103,13 @@ public class University {
 
     @Override
     public String toString() {
-        return "University [title=" + title + "]";
+        return "University [title=" + title 
+             + ", faculties=" + faculties 
+             + ", auditories=" + auditories 
+             + ", timetable=" + timetable 
+             + "]";
     }
+
+    
 
 }
