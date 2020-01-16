@@ -4,7 +4,7 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>27</x>
+      <x>0</x>
       <y>9</y>
       <w>243</w>
       <h>171</h>
@@ -26,7 +26,7 @@ Person
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>27</x>
+      <x>0</x>
       <y>216</y>
       <w>243</w>
       <h>81</h>
@@ -42,7 +42,7 @@ Person
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>135</x>
+      <x>108</x>
       <y>171</y>
       <w>27</w>
       <h>63</h>
@@ -54,7 +54,7 @@ Person
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>324</x>
+      <x>297</x>
       <y>90</y>
       <w>243</w>
       <h>90</h>
@@ -71,7 +71,7 @@ Person
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>261</x>
+      <x>234</x>
       <y>99</y>
       <w>81</w>
       <h>36</h>
@@ -83,7 +83,7 @@ Person
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>27</x>
+      <x>0</x>
       <y>342</y>
       <w>243</w>
       <h>135</h>
@@ -102,7 +102,7 @@ Person
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>135</x>
+      <x>108</x>
       <y>288</y>
       <w>27</w>
       <h>72</h>
@@ -113,18 +113,17 @@ Person
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>324</x>
+      <x>297</x>
       <y>225</y>
       <w>243</w>
-      <h>135</h>
+      <h>126</h>
     </coordinates>
     <panel_attributes>Department
 --
 -id:integer
 -title:String
 -description:String
--groups:List&lt;Groups&gt;
--teachers:List&lt;Teacher&gt;
+-faculty:Faculty
 --
 
 --</panel_attributes>
@@ -133,7 +132,7 @@ Person
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>135</x>
+      <x>108</x>
       <y>324</y>
       <w>207</w>
       <h>234</h>
@@ -144,16 +143,15 @@ Person
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>27</x>
+      <x>0</x>
       <y>540</y>
       <w>243</w>
-      <h>108</h>
+      <h>99</h>
     </coordinates>
     <panel_attributes>Faculty
 --
 -id:integer
 -title:String
--departments:List&lt;Department&gt;
 --
 
 --</panel_attributes>
@@ -162,7 +160,7 @@ Person
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>432</x>
+      <x>405</x>
       <y>171</y>
       <w>27</w>
       <h>72</h>
@@ -173,7 +171,7 @@ Person
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>198</x>
+      <x>171</x>
       <y>306</y>
       <w>144</w>
       <h>54</h>
@@ -184,7 +182,7 @@ Person
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>648</x>
+      <x>621</x>
       <y>243</y>
       <w>243</w>
       <h>171</h>
@@ -207,7 +205,7 @@ TimetableItem
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>648</x>
+      <x>621</x>
       <y>90</y>
       <w>243</w>
       <h>99</h>
@@ -224,7 +222,7 @@ TimetableItem
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>756</x>
+      <x>729</x>
       <y>180</y>
       <w>27</w>
       <h>81</h>
@@ -235,7 +233,7 @@ TimetableItem
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>558</x>
+      <x>531</x>
       <y>144</y>
       <w>108</w>
       <h>135</h>
@@ -246,7 +244,7 @@ TimetableItem
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>558</x>
+      <x>531</x>
       <y>99</y>
       <w>108</w>
       <h>27</h>
@@ -257,7 +255,7 @@ TimetableItem
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>648</x>
+      <x>621</x>
       <y>495</y>
       <w>243</w>
       <h>135</h>
@@ -277,7 +275,7 @@ TimetableItem
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>945</x>
+      <x>918</x>
       <y>495</y>
       <w>243</w>
       <h>90</h>
@@ -294,7 +292,7 @@ TimetableItem
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>882</x>
+      <x>855</x>
       <y>531</y>
       <w>81</w>
       <h>27</h>
@@ -305,7 +303,7 @@ TimetableItem
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>756</x>
+      <x>729</x>
       <y>405</y>
       <w>27</w>
       <h>108</h>
@@ -316,7 +314,7 @@ TimetableItem
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>261</x>
+      <x>234</x>
       <y>369</y>
       <w>405</w>
       <h>27</h>
@@ -327,7 +325,7 @@ TimetableItem
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>945</x>
+      <x>918</x>
       <y>288</y>
       <w>243</w>
       <h>126</h>
@@ -346,7 +344,7 @@ TimetableItem
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>882</x>
+      <x>855</x>
       <y>333</y>
       <w>81</w>
       <h>27</h>
@@ -357,7 +355,7 @@ TimetableItem
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>324</x>
+      <x>297</x>
       <y>540</y>
       <w>243</w>
       <h>117</h>
@@ -377,7 +375,7 @@ University
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>261</x>
+      <x>234</x>
       <y>585</y>
       <w>81</w>
       <h>27</h>
@@ -388,7 +386,7 @@ University
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>594</x>
+      <x>567</x>
       <y>387</y>
       <w>72</w>
       <h>324</h>
@@ -399,7 +397,7 @@ University
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>558</x>
+      <x>531</x>
       <y>567</y>
       <w>108</w>
       <h>27</h>
@@ -410,7 +408,7 @@ University
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>27</x>
+      <x>0</x>
       <y>693</y>
       <w>657</w>
       <h>99</h>
@@ -427,7 +425,7 @@ University
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>423</x>
+      <x>396</x>
       <y>648</y>
       <w>27</w>
       <h>63</h>
