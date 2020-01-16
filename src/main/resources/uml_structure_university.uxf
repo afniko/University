@@ -4,8 +4,8 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>27</x>
-      <y>9</y>
+      <x>0</x>
+      <y>0</y>
       <w>243</w>
       <h>171</h>
     </coordinates>
@@ -16,7 +16,7 @@ Person
 -firstName:String
 -lastName:String
 -middleName:String
--birthday:Date
+-birthday:LocalDate
 -idFees:integer
 --
 
@@ -26,8 +26,8 @@ Person
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>27</x>
-      <y>216</y>
+      <x>0</x>
+      <y>207</y>
       <w>243</w>
       <h>81</h>
     </coordinates>
@@ -42,8 +42,8 @@ Person
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>135</x>
-      <y>171</y>
+      <x>108</x>
+      <y>162</y>
       <w>27</w>
       <h>63</h>
     </coordinates>
@@ -54,8 +54,8 @@ Person
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>324</x>
-      <y>90</y>
+      <x>297</x>
+      <y>81</y>
       <w>243</w>
       <h>90</h>
     </coordinates>
@@ -71,8 +71,8 @@ Person
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>261</x>
-      <y>99</y>
+      <x>234</x>
+      <y>90</y>
       <w>81</w>
       <h>36</h>
     </coordinates>
@@ -83,8 +83,8 @@ Person
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>27</x>
-      <y>342</y>
+      <x>0</x>
+      <y>333</y>
       <w>243</w>
       <h>135</h>
     </coordinates>
@@ -93,7 +93,7 @@ Person
 -id:integer
 -title:String
 -department:Department
--yearEntry:Date
+-yearEntry:integer
 --
 
 --</panel_attributes>
@@ -102,8 +102,8 @@ Person
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>135</x>
-      <y>288</y>
+      <x>108</x>
+      <y>279</y>
       <w>27</w>
       <h>72</h>
     </coordinates>
@@ -113,18 +113,17 @@ Person
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>324</x>
-      <y>225</y>
+      <x>297</x>
+      <y>216</y>
       <w>243</w>
-      <h>135</h>
+      <h>126</h>
     </coordinates>
     <panel_attributes>Department
 --
 -id:integer
 -title:String
 -description:String
--groups:List&lt;Groups&gt;
--teachers:List&lt;Teacher&gt;
+-faculty:Faculty
 --
 
 --</panel_attributes>
@@ -133,8 +132,8 @@ Person
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>135</x>
-      <y>324</y>
+      <x>108</x>
+      <y>315</y>
       <w>207</w>
       <h>234</h>
     </coordinates>
@@ -144,16 +143,15 @@ Person
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>27</x>
-      <y>540</y>
+      <x>0</x>
+      <y>531</y>
       <w>243</w>
-      <h>108</h>
+      <h>99</h>
     </coordinates>
     <panel_attributes>Faculty
 --
 -id:integer
 -title:String
--departments:List&lt;Department&gt;
 --
 
 --</panel_attributes>
@@ -162,8 +160,8 @@ Person
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>432</x>
-      <y>171</y>
+      <x>405</x>
+      <y>162</y>
       <w>27</w>
       <h>72</h>
     </coordinates>
@@ -173,8 +171,8 @@ Person
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>198</x>
-      <y>306</y>
+      <x>171</x>
+      <y>297</y>
       <w>144</w>
       <h>54</h>
     </coordinates>
@@ -184,8 +182,8 @@ Person
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>648</x>
-      <y>243</y>
+      <x>621</x>
+      <y>234</y>
       <w>243</w>
       <h>171</h>
     </coordinates>
@@ -197,7 +195,7 @@ TimetableItem
 -auditory:Auditory
 -groups:List&lt;Group&gt;
 -lecture:Lecture
--date:Date
+-date:LocalDate
 -teacher:Teacher
 --
 
@@ -207,8 +205,8 @@ TimetableItem
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>648</x>
-      <y>90</y>
+      <x>621</x>
+      <y>81</y>
       <w>243</w>
       <h>99</h>
     </coordinates>
@@ -224,8 +222,8 @@ TimetableItem
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>756</x>
-      <y>180</y>
+      <x>729</x>
+      <y>171</y>
       <w>27</w>
       <h>81</h>
     </coordinates>
@@ -235,8 +233,8 @@ TimetableItem
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>558</x>
-      <y>144</y>
+      <x>531</x>
+      <y>135</y>
       <w>108</w>
       <h>135</h>
     </coordinates>
@@ -246,8 +244,8 @@ TimetableItem
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>558</x>
-      <y>99</y>
+      <x>531</x>
+      <y>90</y>
       <w>108</w>
       <h>27</h>
     </coordinates>
@@ -257,8 +255,8 @@ TimetableItem
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>648</x>
-      <y>495</y>
+      <x>621</x>
+      <y>486</y>
       <w>243</w>
       <h>135</h>
     </coordinates>
@@ -277,8 +275,8 @@ TimetableItem
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>945</x>
-      <y>495</y>
+      <x>918</x>
+      <y>486</y>
       <w>243</w>
       <h>90</h>
     </coordinates>
@@ -294,8 +292,8 @@ TimetableItem
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>882</x>
-      <y>531</y>
+      <x>855</x>
+      <y>522</y>
       <w>81</w>
       <h>27</h>
     </coordinates>
@@ -305,8 +303,8 @@ TimetableItem
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>756</x>
-      <y>405</y>
+      <x>729</x>
+      <y>396</y>
       <w>27</w>
       <h>108</h>
     </coordinates>
@@ -316,8 +314,8 @@ TimetableItem
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>261</x>
-      <y>369</y>
+      <x>234</x>
+      <y>360</y>
       <w>405</w>
       <h>27</h>
     </coordinates>
@@ -327,8 +325,8 @@ TimetableItem
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>945</x>
-      <y>288</y>
+      <x>918</x>
+      <y>279</y>
       <w>243</w>
       <h>126</h>
     </coordinates>
@@ -336,8 +334,8 @@ TimetableItem
 --
 -id:integer
 -number:String
--startTime:Time
--endTime:Time
+-startTime:LocalTime
+-endTime:LocalTime
 --
 
 --</panel_attributes>
@@ -346,8 +344,8 @@ TimetableItem
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>882</x>
-      <y>333</y>
+      <x>855</x>
+      <y>324</y>
       <w>81</w>
       <h>27</h>
     </coordinates>
@@ -357,8 +355,8 @@ TimetableItem
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>324</x>
-      <y>540</y>
+      <x>297</x>
+      <y>531</y>
       <w>243</w>
       <h>117</h>
     </coordinates>
@@ -377,8 +375,8 @@ University
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>261</x>
-      <y>585</y>
+      <x>234</x>
+      <y>576</y>
       <w>81</w>
       <h>27</h>
     </coordinates>
@@ -388,8 +386,8 @@ University
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>594</x>
-      <y>387</y>
+      <x>567</x>
+      <y>378</y>
       <w>72</w>
       <h>324</h>
     </coordinates>
@@ -399,8 +397,8 @@ University
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>558</x>
-      <y>567</y>
+      <x>531</x>
+      <y>558</y>
       <w>108</w>
       <h>27</h>
     </coordinates>
@@ -410,8 +408,8 @@ University
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>27</x>
-      <y>693</y>
+      <x>0</x>
+      <y>684</y>
       <w>657</w>
       <h>99</h>
     </coordinates>
@@ -419,16 +417,16 @@ University
 --
 -timetabelItems:List&lt;TimeTableItem&gt;
 --
--findPeriod(student:Student, startPeriod:Date, endPeriod:Date):TimeTable
--findPeriod(teacher:Teacher, startPeriod:Date, endPeriod:Date):TimeTable
+-findPeriod(student:Student, startPeriod:LocalDate, endPeriod:LocalDate):TimeTable
+-findPeriod(teacher:Teacher, startPeriod:LocalDate, endPeriod:LocalDate):TimeTable
 --</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>423</x>
-      <y>648</y>
+      <x>396</x>
+      <y>639</y>
       <w>27</w>
       <h>63</h>
     </coordinates>
