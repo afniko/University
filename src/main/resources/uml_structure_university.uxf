@@ -16,7 +16,7 @@ Person
 -firstName:String
 -lastName:String
 -middleName:String
--birthday:Date
+-birthday:LocalDate
 -idFees:integer
 --
 
@@ -195,7 +195,7 @@ TimetableItem
 -auditory:Auditory
 -groups:List&lt;Group&gt;
 -lecture:Lecture
--date:LocalTime
+-date:LocalDate
 -teacher:Teacher
 --
 
