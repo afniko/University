@@ -3,7 +3,7 @@ package ua.com.foxminded.task.domain;
 import static org.junit.Assert.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
@@ -35,8 +35,8 @@ public class TimetableTest {
     public void whenSetPeriodForStudent_thenGetFindSchedule() {
         Timetable timetable = TimetableModelRepository.getModel();
         Student student = StudentModelRepository.getModel7();
-        Date startPeriod = Date.valueOf("2019-01-25");
-        Date endPeriod = Date.valueOf("2019-03-25");
+        LocalDate startPeriod = LocalDate.of(2019,01,25);
+        LocalDate endPeriod = LocalDate.of(2019,03,25);
         List<TimetableItem> timetableItemsExpected = TimetableItemModelRepository.getTimetableItemsStudentsExpected();
         List<TimetableItem> timetableItemsUnexpected = TimetableItemModelRepository.getTimetableItemsStudentUnexpected();
         Timetable timetableActual = timetable.findSchedule(student, startPeriod, endPeriod);
@@ -48,8 +48,8 @@ public class TimetableTest {
     public void whenSetPeriodForTeacher_thenGetFindSchedule() {
         Timetable timetable = TimetableModelRepository.getModel();
         Teacher teacher = TeacherModelRepository.getModel1();
-        Date startPeriod = Date.valueOf("2019-01-22");
-        Date endPeriod = Date.valueOf("2019-03-25");
+        LocalDate startPeriod = LocalDate.of(2019,01,22);
+        LocalDate endPeriod = LocalDate.of(2019,03,25);
         List<TimetableItem> timetableItemsExpected = TimetableItemModelRepository.getTimetableItemsTeacherExpected();
         List<TimetableItem> timetableItemsUnexpected = TimetableItemModelRepository.getTimetableItemsTeacherUnexpected();
         Timetable timetableActual = timetable.findSchedule(teacher, startPeriod, endPeriod);
