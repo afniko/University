@@ -5,7 +5,7 @@
     <id>UMLClass</id>
     <coordinates>
       <x>0</x>
-      <y>9</y>
+      <y>0</y>
       <w>243</w>
       <h>171</h>
     </coordinates>
@@ -27,7 +27,7 @@ Person
     <id>UMLClass</id>
     <coordinates>
       <x>0</x>
-      <y>216</y>
+      <y>207</y>
       <w>243</w>
       <h>81</h>
     </coordinates>
@@ -43,7 +43,7 @@ Person
     <id>Relation</id>
     <coordinates>
       <x>108</x>
-      <y>171</y>
+      <y>162</y>
       <w>27</w>
       <h>63</h>
     </coordinates>
@@ -55,7 +55,7 @@ Person
     <id>UMLClass</id>
     <coordinates>
       <x>297</x>
-      <y>90</y>
+      <y>81</y>
       <w>243</w>
       <h>90</h>
     </coordinates>
@@ -72,7 +72,7 @@ Person
     <id>Relation</id>
     <coordinates>
       <x>234</x>
-      <y>99</y>
+      <y>90</y>
       <w>81</w>
       <h>36</h>
     </coordinates>
@@ -84,7 +84,7 @@ Person
     <id>UMLClass</id>
     <coordinates>
       <x>0</x>
-      <y>342</y>
+      <y>333</y>
       <w>243</w>
       <h>135</h>
     </coordinates>
@@ -93,7 +93,7 @@ Person
 -id:integer
 -title:String
 -department:Department
--yearEntry:Date
+-yearEntry:integer
 --
 
 --</panel_attributes>
@@ -103,7 +103,7 @@ Person
     <id>Relation</id>
     <coordinates>
       <x>108</x>
-      <y>288</y>
+      <y>279</y>
       <w>27</w>
       <h>72</h>
     </coordinates>
@@ -114,7 +114,7 @@ Person
     <id>UMLClass</id>
     <coordinates>
       <x>297</x>
-      <y>225</y>
+      <y>216</y>
       <w>243</w>
       <h>126</h>
     </coordinates>
@@ -133,7 +133,7 @@ Person
     <id>Relation</id>
     <coordinates>
       <x>108</x>
-      <y>324</y>
+      <y>315</y>
       <w>207</w>
       <h>234</h>
     </coordinates>
@@ -144,7 +144,7 @@ Person
     <id>UMLClass</id>
     <coordinates>
       <x>0</x>
-      <y>540</y>
+      <y>531</y>
       <w>243</w>
       <h>99</h>
     </coordinates>
@@ -161,7 +161,7 @@ Person
     <id>Relation</id>
     <coordinates>
       <x>405</x>
-      <y>171</y>
+      <y>162</y>
       <w>27</w>
       <h>72</h>
     </coordinates>
@@ -172,7 +172,7 @@ Person
     <id>Relation</id>
     <coordinates>
       <x>171</x>
-      <y>306</y>
+      <y>297</y>
       <w>144</w>
       <h>54</h>
     </coordinates>
@@ -183,7 +183,7 @@ Person
     <id>UMLClass</id>
     <coordinates>
       <x>621</x>
-      <y>243</y>
+      <y>234</y>
       <w>243</w>
       <h>171</h>
     </coordinates>
@@ -195,7 +195,7 @@ TimetableItem
 -auditory:Auditory
 -groups:List&lt;Group&gt;
 -lecture:Lecture
--date:Date
+-date:LocalTime
 -teacher:Teacher
 --
 
@@ -206,7 +206,7 @@ TimetableItem
     <id>UMLClass</id>
     <coordinates>
       <x>621</x>
-      <y>90</y>
+      <y>81</y>
       <w>243</w>
       <h>99</h>
     </coordinates>
@@ -223,7 +223,7 @@ TimetableItem
     <id>Relation</id>
     <coordinates>
       <x>729</x>
-      <y>180</y>
+      <y>171</y>
       <w>27</w>
       <h>81</h>
     </coordinates>
@@ -234,7 +234,7 @@ TimetableItem
     <id>Relation</id>
     <coordinates>
       <x>531</x>
-      <y>144</y>
+      <y>135</y>
       <w>108</w>
       <h>135</h>
     </coordinates>
@@ -245,7 +245,7 @@ TimetableItem
     <id>Relation</id>
     <coordinates>
       <x>531</x>
-      <y>99</y>
+      <y>90</y>
       <w>108</w>
       <h>27</h>
     </coordinates>
@@ -256,7 +256,7 @@ TimetableItem
     <id>UMLClass</id>
     <coordinates>
       <x>621</x>
-      <y>495</y>
+      <y>486</y>
       <w>243</w>
       <h>135</h>
     </coordinates>
@@ -276,7 +276,7 @@ TimetableItem
     <id>UMLClass</id>
     <coordinates>
       <x>918</x>
-      <y>495</y>
+      <y>486</y>
       <w>243</w>
       <h>90</h>
     </coordinates>
@@ -293,7 +293,7 @@ TimetableItem
     <id>Relation</id>
     <coordinates>
       <x>855</x>
-      <y>531</y>
+      <y>522</y>
       <w>81</w>
       <h>27</h>
     </coordinates>
@@ -304,7 +304,7 @@ TimetableItem
     <id>Relation</id>
     <coordinates>
       <x>729</x>
-      <y>405</y>
+      <y>396</y>
       <w>27</w>
       <h>108</h>
     </coordinates>
@@ -315,7 +315,7 @@ TimetableItem
     <id>Relation</id>
     <coordinates>
       <x>234</x>
-      <y>369</y>
+      <y>360</y>
       <w>405</w>
       <h>27</h>
     </coordinates>
@@ -326,7 +326,7 @@ TimetableItem
     <id>UMLClass</id>
     <coordinates>
       <x>918</x>
-      <y>288</y>
+      <y>279</y>
       <w>243</w>
       <h>126</h>
     </coordinates>
@@ -334,8 +334,8 @@ TimetableItem
 --
 -id:integer
 -number:String
--startTime:Time
--endTime:Time
+-startTime:LocalTime
+-endTime:LocalTime
 --
 
 --</panel_attributes>
@@ -345,7 +345,7 @@ TimetableItem
     <id>Relation</id>
     <coordinates>
       <x>855</x>
-      <y>333</y>
+      <y>324</y>
       <w>81</w>
       <h>27</h>
     </coordinates>
@@ -356,7 +356,7 @@ TimetableItem
     <id>UMLClass</id>
     <coordinates>
       <x>297</x>
-      <y>540</y>
+      <y>531</y>
       <w>243</w>
       <h>117</h>
     </coordinates>
@@ -376,7 +376,7 @@ University
     <id>Relation</id>
     <coordinates>
       <x>234</x>
-      <y>585</y>
+      <y>576</y>
       <w>81</w>
       <h>27</h>
     </coordinates>
@@ -387,7 +387,7 @@ University
     <id>Relation</id>
     <coordinates>
       <x>567</x>
-      <y>387</y>
+      <y>378</y>
       <w>72</w>
       <h>324</h>
     </coordinates>
@@ -398,7 +398,7 @@ University
     <id>Relation</id>
     <coordinates>
       <x>531</x>
-      <y>567</y>
+      <y>558</y>
       <w>108</w>
       <h>27</h>
     </coordinates>
@@ -409,7 +409,7 @@ University
     <id>UMLClass</id>
     <coordinates>
       <x>0</x>
-      <y>693</y>
+      <y>684</y>
       <w>657</w>
       <h>99</h>
     </coordinates>
@@ -417,8 +417,8 @@ University
 --
 -timetabelItems:List&lt;TimeTableItem&gt;
 --
--findPeriod(student:Student, startPeriod:Date, endPeriod:Date):TimeTable
--findPeriod(teacher:Teacher, startPeriod:Date, endPeriod:Date):TimeTable
+-findPeriod(student:Student, startPeriod:LocalDate, endPeriod:LocalDate):TimeTable
+-findPeriod(teacher:Teacher, startPeriod:LocalDate, endPeriod:LocalDate):TimeTable
 --</panel_attributes>
     <additional_attributes/>
   </element>
@@ -426,7 +426,7 @@ University
     <id>Relation</id>
     <coordinates>
       <x>396</x>
-      <y>648</y>
+      <y>639</y>
       <w>27</w>
       <h>63</h>
     </coordinates>
