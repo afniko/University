@@ -115,7 +115,10 @@ public abstract class Person {
 
     @Override
     public String toString() {
-        return "Person [id=" + id + ", firstName=" + firstName + ", idFees=" + idFees + "]";
+        return "Person [id=" + id 
+             + ", firstName=" + firstName 
+             + ", idFees=" + idFees 
+             + "]";
     }
 
 }
