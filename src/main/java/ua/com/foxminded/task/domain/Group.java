@@ -5,8 +5,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 @Entity
 @Table(name = "groups")
@@ -18,7 +19,8 @@ public class Group {
     private int id;
     @Column(name = "title")
     private String title;
-    @Transient
+    @ManyToOne
+    @JoinColumn(name = "department_id")
     private Department department;
     @Column(name = "yearentry")
     private int yearEntry;
