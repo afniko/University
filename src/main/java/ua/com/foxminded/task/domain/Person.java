@@ -117,8 +117,10 @@ public abstract class Person {
     public String toString() {
         return "Person [id=" + id 
              + ", firstName=" + firstName 
-             + ", idFees=" + idFees 
-             + "]";
+             + ", lastName=" + lastName 
+             + ", middleName=" + middleName 
+             + ", birthday=" + birthday 
+             + ", idFees=" + idFees + "]";
     }
 
 }

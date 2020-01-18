@@ -28,18 +28,6 @@ public class Student extends Person {
     }
 
     @Override
-    public String toString() {
-        return "Student [group=" + group 
-             + ", id=" + id 
-             + ", firstName=" + firstName 
-             + ", lastName=" + lastName 
-             + ", middleName=" + middleName 
-             + ", birthday=" + birthday 
-             + ", idFees=" + idFees 
-             + "]";
-    }
-
-    @Override
     public int hashCode() {
         final int prime = 31;
         int result = super.hashCode();
@@ -63,5 +51,19 @@ public class Student extends Person {
             return false;
         return true;
     }
+
+    @Override
+    public String toString() {
+        return "Student [group=" + group 
+                + ", id=" + id 
+                + ", firstName=" + firstName 
+                + ", lastName=" + lastName 
+                + ", middleName=" + middleName 
+                + ", birthday=" + birthday 
+                + ", idFees=" + idFees 
+                + "]";
+    }
+
+    
 
 }
