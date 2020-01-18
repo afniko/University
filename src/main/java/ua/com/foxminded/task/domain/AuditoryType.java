@@ -48,7 +48,9 @@ public class AuditoryType {
 
     @Override
     public String toString() {
-        return "AuditoryType [id=" + id + ", type=" + type + "]";
+        return "AuditoryType [id=" + id 
+             + ", type=" + type 
+             + "]";
     }
 
 }

@@ -85,7 +85,11 @@ public class Group {
 
     @Override
     public String toString() {
-        return "Group [id=" + id + ", title=" + title + ", department=" + department + ", yearEntry=" + yearEntry + "]";
+        return "Group [id=" + id 
+             + ", title=" + title 
+             + ", department=" + department 
+             + ", yearEntry=" + yearEntry 
+             + "]";
     }
 
 }

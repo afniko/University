@@ -118,6 +118,13 @@ Branch: task22
 Writed Integration and System tests using Spring Boot Test, H2 DB (it is possible to use Database Rider)
 Branch: task23
 
+#### Issue#1 Analize of decompose University.
+Fix the UML diagram for application. Remove bidirectional links.
+Branch: task101
+
+#### Issue#2 Fix model
+Fix model based on University UML diagram. Create tests for model.
+Branch: task102
 
 ## Author
 With best regards, Mykola Afanasiev!
