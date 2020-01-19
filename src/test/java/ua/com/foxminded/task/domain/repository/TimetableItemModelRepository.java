@@ -1,6 +1,6 @@
 package ua.com.foxminded.task.domain.repository;
 
-import java.sql.Date;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -25,7 +25,7 @@ public class TimetableItemModelRepository {
 
     public static TimetableItem getEmptyModel() {
         TimetableItem timetableItem = new TimetableItem();
-        timetableItem.setDate(Date.valueOf("2019-01-21"));
+        timetableItem.setDate(LocalDate.of(2019,01,21));
         return timetableItem;
     }
 
@@ -67,7 +67,7 @@ public class TimetableItemModelRepository {
         timetableItem.setAuditory(AuditoryModelRepository.getModel1());
         timetableItem.setGroups(GroupModelRepository.getModels());
         timetableItem.setLecture(LectureModelRepository.getModel1());
-        timetableItem.setDate(Date.valueOf("2019-01-21"));
+        timetableItem.setDate(LocalDate.of(2019,01,21));
         timetableItem.setTeacher(TeacherModelRepository.getModel1());
         return timetableItem;
     }
@@ -78,7 +78,7 @@ public class TimetableItemModelRepository {
         timetableItem.setAuditory(AuditoryModelRepository.getModel2());
         timetableItem.setGroups(GroupModelRepository.getModels());
         timetableItem.setLecture(LectureModelRepository.getModel2());
-        timetableItem.setDate(Date.valueOf("2019-01-22"));
+        timetableItem.setDate(LocalDate.of(2019,01,22));
         timetableItem.setTeacher(TeacherModelRepository.getModel1());
         return timetableItem;
     }
@@ -89,7 +89,7 @@ public class TimetableItemModelRepository {
         timetableItem.setAuditory(AuditoryModelRepository.getModel3());
         timetableItem.setGroups(GroupModelRepository.getModels());
         timetableItem.setLecture(LectureModelRepository.getModel3());
-        timetableItem.setDate(Date.valueOf("2019-02-01"));
+        timetableItem.setDate(LocalDate.of(2019,02,01));
         timetableItem.setTeacher(TeacherModelRepository.getModel2());
         return timetableItem;
     }
@@ -100,7 +100,7 @@ public class TimetableItemModelRepository {
         timetableItem.setAuditory(AuditoryModelRepository.getModel4());
         timetableItem.setGroups(GroupModelRepository.getModels());
         timetableItem.setLecture(LectureModelRepository.getModel4());
-        timetableItem.setDate(Date.valueOf("2019-02-15"));
+        timetableItem.setDate(LocalDate.of(2019,02,15));
         timetableItem.setTeacher(TeacherModelRepository.getModel1());
         return timetableItem;
     }
@@ -111,7 +111,7 @@ public class TimetableItemModelRepository {
         timetableItem.setAuditory(AuditoryModelRepository.getModel5());
         timetableItem.setGroups(GroupModelRepository.getModels());
         timetableItem.setLecture(LectureModelRepository.getModel5());
-        timetableItem.setDate(Date.valueOf("2019-03-05"));
+        timetableItem.setDate(LocalDate.of(2019,03,05));
         timetableItem.setTeacher(TeacherModelRepository.getModel3());
         return timetableItem;
     }
@@ -122,7 +122,7 @@ public class TimetableItemModelRepository {
         timetableItem.setAuditory(AuditoryModelRepository.getModel6());
         timetableItem.setGroups(GroupModelRepository.getModels());
         timetableItem.setLecture(LectureModelRepository.getModel6());
-        timetableItem.setDate(Date.valueOf("2019-04-24"));
+        timetableItem.setDate(LocalDate.of(2019,04,24));
         timetableItem.setTeacher(TeacherModelRepository.getModel1());
         return timetableItem;
     }

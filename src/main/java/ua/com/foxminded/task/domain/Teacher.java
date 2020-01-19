@@ -41,6 +41,7 @@ public class Teacher extends Person {
         final int prime = 31;
         int result = super.hashCode();
         result = prime * result + ((department == null) ? 0 : department.hashCode());
+        result = prime * result + ((subjects == null) ? 0 : subjects.hashCode());
         return result;
     }
 
@@ -58,12 +59,20 @@ public class Teacher extends Person {
                 return false;
         } else if (!department.equals(other.department))
             return false;
+        if (subjects == null) {
+            if (other.subjects != null)
+                return false;
+        } else if (!subjects.equals(other.subjects))
+            return false;
         return true;
     }
 
     @Override
     public String toString() {
-        return "Teacher [department=" + department + "]";
+        return "Teacher [subjects=" + subjects 
+             + ", department=" + department 
+             + " " + super.toString() 
+             + "]";
     }
 
 }
