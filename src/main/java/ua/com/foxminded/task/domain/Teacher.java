@@ -4,10 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
@@ -16,7 +17,7 @@ import javax.persistence.Table;
 @PrimaryKeyJoinColumn(name = "person_id")
 public class Teacher extends Person {
 
-    @ManyToMany
+    @OneToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "teachers_subjects", 
             joinColumns = @JoinColumn(name = "teacher_id"), 
