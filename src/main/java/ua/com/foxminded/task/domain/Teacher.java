@@ -71,15 +71,8 @@ public class Teacher extends Person {
     public String toString() {
         return "Teacher [subjects=" + subjects 
              + ", department=" + department 
-             + ", id=" + id 
-             + ", firstName=" + firstName 
-             + ", lastName=" + lastName 
-             + ", middleName=" + middleName 
-             + ", birthday=" + birthday 
-             + ", idFees=" + idFees 
+             + " " + super.toString() 
              + "]";
     }
-
-    
 
 }
