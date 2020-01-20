@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
@@ -17,7 +16,7 @@ import javax.persistence.Table;
 @PrimaryKeyJoinColumn(name = "person_id")
 public class Teacher extends Person {
 
-    @OneToMany(fetch = FetchType.EAGER)
+    @OneToMany
     @JoinTable(
             name = "teachers_subjects", 
             joinColumns = @JoinColumn(name = "teacher_id"), 

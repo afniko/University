@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.sql.DataSource;
+import javax.transaction.Transactional;
 
 import org.junit.Rule;
 import org.junit.jupiter.api.Test;
@@ -51,6 +52,7 @@ public class TeacherRepositoryIntegrationTest {
     }
 
     @Test
+    @Transactional
     @DataSet(value = "teacher/teachers.yml", 
              cleanBefore = true, 
              skipCleaningFor = "flyway_schema_history")
@@ -58,9 +60,10 @@ public class TeacherRepositoryIntegrationTest {
         Teacher expectedTeacher = TeacherModelRepository.getModel3();
         expectedTeacher.setDepartment(null);
         expectedTeacher.setSubjects(new ArrayList<>());
+        expectedTeacher.setId(3);
         int id = 3;
-        Teacher actuallyTeacher = teacherRepository.findById(id).get();
-        assertThat(expectedTeacher).isEqualTo(actuallyTeacher);
+        Teacher actuallyTeacher = teacherRepository.getOne(id);
+        assertThat(expectedTeacher).isEqualToComparingFieldByField(actuallyTeacher);
     }
 
 //    @Test
