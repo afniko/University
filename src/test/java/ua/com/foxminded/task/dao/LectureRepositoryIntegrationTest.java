@@ -1,0 +1,92 @@
+package ua.com.foxminded.task.dao;
+
+import static org.assertj.core.api.Assertions.assertThat;
+
+import java.util.List;
+
+import javax.sql.DataSource;
+
+import org.junit.Rule;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+
+import com.github.database.rider.core.DBUnitRule;
+import com.github.database.rider.core.api.dataset.DataSet;
+import com.github.database.rider.core.api.dataset.ExpectedDataSet;
+import com.github.database.rider.junit5.api.DBRider;
+
+import ua.com.foxminded.task.domain.Lecture;
+import ua.com.foxminded.task.domain.repository.LectureModelRepository;
+
+@DBRider
+@SpringBootTest
+public class LectureRepositoryIntegrationTest {
+    
+    @Autowired
+    private LectureRepository lectureRepository;
+    @Autowired
+    private DataSource dataSource;
+    @Rule
+    public DBUnitRule dbUnitRule = DBUnitRule.instance(() -> dataSource.getConnection());
+    
+    @Test
+    @DataSet(cleanBefore = true, skipCleaningFor = "flyway_schema_history")
+    public void whenRepositoryHasNotRecords_thenReturnEmptyList() {
+        List<Lecture> lectures = lectureRepository.findAll();
+        assertThat(lectures).isNotNull().isEmpty();
+    }
+
+    @Test
+    @DataSet(value = "lecture/lectures.yml", 
+             cleanBefore = true, 
+             skipCleaningFor = "flyway_schema_history")
+    @ExpectedDataSet(value = "lecture/expected-lectures.yml")
+    public void whenRepositoryHasRecords_thenReturnNonEmptyList() {
+        List<Lecture> lectures = lectureRepository.findAll();
+        assertThat(lectures).isNotNull().isNotEmpty().hasSize(6);
+    }
+
+    @Test
+    @DataSet(value = "lecture/lectures.yml", 
+             cleanBefore = true, 
+             skipCleaningFor = "flyway_schema_history")
+    public void whenPutAtTableDbObjects_thenGetThisObjectsFindById() {
+        Lecture expectedLecture = LectureModelRepository.getModel3();
+        int id = 3;
+        Lecture actuallyLecture = lectureRepository.findById(id).get();
+        assertThat(expectedLecture).isEqualTo(actuallyLecture);
+    }
+
+//    @Test
+//    @DataSet(value = "group/groups.yml", 
+//             cleanBefore = true, 
+//             skipCleaningFor = "flyway_schema_history")
+//    public void whenFindByTitle_thenGetExitsGroup() {
+//        String title = "group2";
+//        Group groupActually = groupRepository.findByTitle(title);
+//        assertThat(groupActually.getTitle()).isNotNull().isEqualTo(title);
+//    }
+
+    @Test
+    @DataSet(cleanBefore = true, 
+             skipCleaningFor = "flyway_schema_history")
+    @ExpectedDataSet(value = "lecture/expected-lecture.yml")
+    public void whenSaveObject_thenExpectRecord() {
+        Lecture lecture = LectureModelRepository.getModel2();
+        Lecture actuallyLecture = lectureRepository.saveAndFlush(lecture);
+        assertThat(actuallyLecture).isNotNull();
+    }
+
+    @Test
+    @DataSet(value = "lecture/lecture.yml", 
+             cleanBefore = true, 
+             skipCleaningFor = "flyway_schema_history")
+    @ExpectedDataSet(value = "lecture/expected-lecture.yml")
+    public void whenUpdateObject_thenExpectUpdatedRecord() {
+        Lecture lecture = LectureModelRepository.getModel2();
+        lecture.setId(1);
+        Lecture actuallyLecture = lectureRepository.saveAndFlush(lecture);
+        assertThat(actuallyLecture).isNotNull();
+    }
+}

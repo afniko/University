@@ -17,7 +17,7 @@ import javax.persistence.Table;
 public abstract class Person {
 
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     protected int id;
     @Column(name = "first_name")
