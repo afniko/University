@@ -169,8 +169,15 @@ public class StudentDto {
 
     @Override
     public String toString() {
-        return "StudentDto [id=" + id + ", firstName=" + firstName + ", middleName=" + middleName + ", lastName=" + lastName + ", birthday=" + birthday + ", idFees=" + idFees + ", groupTitle="
-                + groupTitle + ", idGroup=" + idGroup + "]";
+        return "StudentDto [id=" + id 
+             + ", firstName=" + firstName 
+             + ", middleName=" + middleName 
+             + ", lastName=" + lastName 
+             + ", birthday=" + birthday 
+             + ", idFees=" + idFees 
+             + ", groupTitle=" + groupTitle 
+             + ", idGroup=" + idGroup 
+             + "]";
     }
 
 }

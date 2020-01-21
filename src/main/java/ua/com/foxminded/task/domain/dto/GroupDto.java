@@ -85,4 +85,12 @@ public class GroupDto {
         return true;
     }
 
+    @Override
+    public String toString() {
+        return "GroupDto [id=" + id 
+             + ", title=" + title 
+             + ", yearEntry=" + yearEntry 
+             + "]";
+    }
+
 }
