@@ -1,10 +1,12 @@
 package ua.com.foxminded.task.domain.dto;
 
+import java.time.LocalTime;
+
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.Length;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -24,15 +26,13 @@ public class LectureDto {
     @ApiModelProperty(notes = "The unique number name of lecture. Max length is 5 character")
     private String number;
 
-    @NotBlank(message = "Start time can`t be blank!")
-    @Pattern(regexp = "^[0-24]:[0-59]:[0-59]$", message = "Incorrect format time. Format must be 09:20:00")
+    @DateTimeFormat(pattern = "hh:mm:ss")
     @ApiModelProperty(notes = "The time of lecture beginning. Format must be 09:20:00")
-    private String startTime;
+    private LocalTime startTime;
 
-    @NotBlank(message = "End time can`t be blank!")
-    @Pattern(regexp = "^[0-24]:[0-59]:[0-59]$", message = "Incorrect format time. Format must be 09:20:00")
+    @DateTimeFormat(pattern = "hh:mm:ss")
     @ApiModelProperty(notes = "The time of lecture be finished. Format must be 09:20:00")
-    private String endTime;
+    private LocalTime endTime;
 
     public int getId() {
         return id;
@@ -50,19 +50,19 @@ public class LectureDto {
         this.number = number;
     }
 
-    public String getStartTime() {
+    public LocalTime getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(String startTime) {
+    public void setStartTime(LocalTime startTime) {
         this.startTime = startTime;
     }
 
-    public String getEndTime() {
+    public LocalTime getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(String endTime) {
+    public void setEndTime(LocalTime endTime) {
         this.endTime = endTime;
     }
 

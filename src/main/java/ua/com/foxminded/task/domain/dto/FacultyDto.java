@@ -12,7 +12,7 @@ import ua.com.foxminded.task.validation.annotation.GroupTitleUnique;
 @GroupTitleUnique(message = "Title is already exists!")
 //TODO create unique test
 @ApiModel(description = "Object with a faculty information")
-public class FucultyDto {
+public class FacultyDto {
 
     @Min(value = 0, message = "Id must be more than zero!")
     @ApiModelProperty(notes = "The database generated faculty id")
@@ -55,7 +55,7 @@ public class FucultyDto {
             return false;
         if (getClass() != obj.getClass())
             return false;
-        FucultyDto other = (FucultyDto) obj;
+        FacultyDto other = (FacultyDto) obj;
         if (title == null) {
             if (other.title != null)
                 return false;
