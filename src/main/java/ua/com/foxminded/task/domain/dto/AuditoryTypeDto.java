@@ -19,8 +19,8 @@ public class AuditoryTypeDto {
     private int id;
 
     @NotBlank(message = "Type name can`t be blank!")
-    @Length(max = 20, message = "Maximum length is 20!")
-    @ApiModelProperty(notes = "The unique type name. Max length is 20 character")
+    @Length(max = 45, message = "Maximum length is 45!")
+    @ApiModelProperty(notes = "The unique type name. Max length is 45 character")
     private String type;
 
     public int getId() {
