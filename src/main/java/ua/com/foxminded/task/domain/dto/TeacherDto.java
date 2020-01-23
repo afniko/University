@@ -12,7 +12,6 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import ua.com.foxminded.task.validation.annotation.MaxStudentsInGroupLimit;
 import ua.com.foxminded.task.validation.annotation.StudentIdFeesUnique;
 
 @StudentIdFeesUnique(message = "Id fees is already exists!")
