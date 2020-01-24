@@ -10,4 +10,5 @@ import ua.com.foxminded.task.domain.Subject;
 @Transactional
 public interface SubjectRepository extends JpaRepository<Subject, Integer> {
 
+    public boolean existsById(Integer id);
 }

@@ -56,7 +56,7 @@ public class StudentServiceImpl implements StudentService {
             logger.warn("create() [studentDto:{}]", studentDto);
             throw new EntityAlreadyExistsException("create() studentDto: " + studentDto);
         }
-        Student student = retriveStudentFromDto(studentDto);
+        Student student = retriveObjectFromDto(studentDto);
         Student studentResult = null;
         try {
             studentResult = studentRepository.saveAndFlush(student);
@@ -74,7 +74,7 @@ public class StudentServiceImpl implements StudentService {
         if (!studentRepository.existsById(studentId)) {
             throw new EntityNotFoundException("Student not exist!");
         }
-        Student student = retriveStudentFromDto(studentDto);
+        Student student = retriveObjectFromDto(studentDto);
         Student studenUpdated = null;
         try {
             studenUpdated = studentRepository.saveAndFlush(student);
@@ -103,7 +103,7 @@ public class StudentServiceImpl implements StudentService {
         return studentRepository.existsStudentByIdAndGroupId(studentId, groupId);
     }
 
-    private Student retriveStudentFromDto(StudentDto studentDto) {
+    private Student retriveObjectFromDto(StudentDto studentDto) {
         Student student = (studentDto.getId() != 0) ? studentRepository.getOne(studentDto.getId()) : new Student();
 
         Group group = studentDto.getIdGroup() != 0 ? groupRepository.getOne(Integer.valueOf(studentDto.getIdGroup())) : null;

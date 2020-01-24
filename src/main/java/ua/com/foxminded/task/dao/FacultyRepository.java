@@ -10,4 +10,5 @@ import ua.com.foxminded.task.domain.Faculty;
 @Transactional
 public interface FacultyRepository extends JpaRepository<Faculty, Integer> {
 
+    public boolean existsById(Integer id);
 }

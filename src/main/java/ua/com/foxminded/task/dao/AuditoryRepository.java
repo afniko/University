@@ -10,4 +10,5 @@ import ua.com.foxminded.task.domain.Auditory;
 @Transactional
 public interface AuditoryRepository extends JpaRepository<Auditory, Integer> {
 
+    public boolean existsById(Integer id);
 }

@@ -1,6 +1,8 @@
 package ua.com.foxminded.task.domain.dto;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
@@ -52,6 +54,9 @@ public class TeacherDto {
 
     @ApiModelProperty(notes = "The unique number of teacher department")
     private int idDepartment;
+    
+    @ApiModelProperty(notes = "The list of subjects by teacher")
+    private List<SubjectDto> subjects = new ArrayList<>();
 
     public int getId() {
         return id;
@@ -117,6 +122,14 @@ public class TeacherDto {
         this.idDepartment = idDepartment;
     }
 
+    public List<SubjectDto> getSubjects() {
+        return subjects;
+    }
+
+    public void setSubjects(List<SubjectDto> subjects) {
+        this.subjects = subjects;
+    }
+
     @Override
     public int hashCode() {
         final int prime = 31;
@@ -128,6 +141,7 @@ public class TeacherDto {
         result = prime * result + idFees;
         result = prime * result + ((lastName == null) ? 0 : lastName.hashCode());
         result = prime * result + ((middleName == null) ? 0 : middleName.hashCode());
+        result = prime * result + ((subjects == null) ? 0 : subjects.hashCode());
         return result;
     }
 
@@ -169,6 +183,11 @@ public class TeacherDto {
                 return false;
         } else if (!middleName.equals(other.middleName))
             return false;
+        if (subjects == null) {
+            if (other.subjects != null)
+                return false;
+        } else if (!subjects.equals(other.subjects))
+            return false;
         return true;
     }
 
@@ -182,6 +201,7 @@ public class TeacherDto {
              + ", idFees=" + idFees 
              + ", departmentTitle=" + departmentTitle 
              + ", idDepartment=" + idDepartment 
+             + ", subjects=" + subjects 
              + "]";
     }
 
