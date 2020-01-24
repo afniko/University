@@ -2,6 +2,9 @@ package ua.com.foxminded.task.service.converter;
 
 import static java.util.Objects.nonNull;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import ua.com.foxminded.task.domain.Auditory;
 import ua.com.foxminded.task.domain.AuditoryType;
 import ua.com.foxminded.task.domain.Department;
@@ -108,6 +111,9 @@ public final class ConverterToDtoService {
     
     public static TeacherDto convert(Teacher teacher) {
         TeacherDto teacherDto = new TeacherDto();
+        List<SubjectDto> subjectDtos = teacher.getSubjects().stream()
+                                                            .map(ConverterToDtoService::convert)
+                                                            .collect(Collectors.toList());
         teacherDto.setId(teacher.getId());
         teacherDto.setFirstName(teacher.getFirstName());
         teacherDto.setLastName(teacher.getLastName());
@@ -118,6 +124,7 @@ public final class ConverterToDtoService {
             teacherDto.setDepartmentTitle(teacher.getDepartment().getTitle());
             teacherDto.setIdDepartment(teacher.getDepartment().getId());
         }
+        teacherDto.setSubjects(subjectDtos);
         return teacherDto;
     }
 

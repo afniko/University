@@ -11,8 +11,13 @@ public class SubjectDtoModelRepository {
     private SubjectDtoModelRepository() {
     }
 
-    public static List<SubjectDto> getModels() {
+    public static List<SubjectDto> getModels1() {
         List<SubjectDto> subjects = Arrays.asList(getModel2(), getModel3(), getModel4());
+        return new ArrayList<>(subjects);
+    }
+
+    public static List<SubjectDto> getModels2() {
+        List<SubjectDto> subjects = Arrays.asList(getModel1(), getModel2());
         return new ArrayList<>(subjects);
     }
 
