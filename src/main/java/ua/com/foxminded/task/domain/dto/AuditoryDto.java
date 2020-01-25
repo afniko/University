@@ -11,7 +11,9 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import ua.com.foxminded.task.validation.annotation.PropertyValueUnique;
 
-@PropertyValueUnique(message = "Auditory number is already exists!", nameProperty = "auditoryNumber")
+@PropertyValueUnique(message = "Auditory number is already exists!", 
+                     nameProperty = "auditoryNumber",
+                     fieldError = "auditoryNumber")
 @ApiModel(description = "Object with a auditory information")
 public class AuditoryDto {
 

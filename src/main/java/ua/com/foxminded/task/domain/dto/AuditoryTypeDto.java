@@ -7,9 +7,11 @@ import org.hibernate.validator.constraints.Length;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import ua.com.foxminded.task.validation.annotation.PropertyValueUnique;
 
-//@GroupTitleUnique(message = "Title is already exists!")
-//TODO create unique test
+@PropertyValueUnique(message = "Auditory type name is already exists!", 
+                     nameProperty = "type",
+                     fieldError = "type")
 @ApiModel(description = "Object with a audotory type information")
 public class AuditoryTypeDto {
 

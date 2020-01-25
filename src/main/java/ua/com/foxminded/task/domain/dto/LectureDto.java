@@ -10,9 +10,11 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import ua.com.foxminded.task.validation.annotation.PropertyValueUnique;
 
-//@GroupTitleUnique(message = "Title is already exists!")
-//TODO create unique test
+@PropertyValueUnique(message = "Lecture number is already exists!", 
+                     nameProperty = "number",
+                     fieldError = "number")
 @ApiModel(description = "Object with a lecture time information")
 public class LectureDto {
 

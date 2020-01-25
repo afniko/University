@@ -14,9 +14,11 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import ua.com.foxminded.task.validation.annotation.PropertyValueUnique;
 
-//@StudentIdFeesUnique(message = "Id fees is already exists!")
-//TODO StudentIdFees set as teacher
+@PropertyValueUnique(message = "Teacher id fees is already exists!", 
+                     nameProperty = "idFees",
+                     fieldError = "idFees")
 @ApiModel(description = "Object with a teacher and department information")
 public class TeacherDto {
 
