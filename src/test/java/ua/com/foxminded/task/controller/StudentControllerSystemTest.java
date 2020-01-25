@@ -200,7 +200,7 @@ public class StudentControllerSystemTest {
                 .andExpect(status().isOk())
                 .andExpect(view().name(PATH_HTML_STUDENT_EDIT))
                 .andExpect(content().string(allOf(containsString("<div>" + EXPECTED_ERROR_MESSAGE + "</div>"))))
-                .andExpect(model().attributeHasFieldErrorCode("studentDto", "idFees", "StudentIdFeesUnique"))
+                .andExpect(model().attributeHasFieldErrorCode("studentDto", "idFees", "PropertyValueUnique"))
                 .andExpect(model().attributeHasFieldErrorCode("studentDto", "idGroup", "MaxStudentsInGroupLimit"))
                 .andDo(print());
     }

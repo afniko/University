@@ -11,7 +11,9 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import ua.com.foxminded.task.validation.annotation.PropertyValueUnique;
 
-@PropertyValueUnique(message = "Title is already exists!", nameProperty = "title")
+@PropertyValueUnique(message = "Title is already exists!", 
+                     nameProperty = "title", 
+                     fieldError = "title")
 @ApiModel(description = "Object with a group information")
 public class GroupDto {
 

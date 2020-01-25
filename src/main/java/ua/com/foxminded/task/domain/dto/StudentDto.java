@@ -13,10 +13,12 @@ import org.springframework.format.annotation.DateTimeFormat;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import ua.com.foxminded.task.validation.annotation.MaxStudentsInGroupLimit;
-import ua.com.foxminded.task.validation.annotation.StudentIdFeesUnique;
+import ua.com.foxminded.task.validation.annotation.PropertyValueUnique;
 
 @MaxStudentsInGroupLimit
-@StudentIdFeesUnique(message = "Id fees is already exists!")
+@PropertyValueUnique(message = "Id fees is already exists!", 
+                     nameProperty = "idFees", 
+                     fieldError = "idFees")
 @ApiModel(description = "Object with a student and group information")
 public class StudentDto {
 
