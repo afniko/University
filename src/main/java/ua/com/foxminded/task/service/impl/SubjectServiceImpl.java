@@ -84,6 +84,12 @@ public class SubjectServiceImpl implements SubjectService {
         return ConverterToDtoService.convert(subjectUpdated);
     }
 
+    @Override
+    public Subject findByTitle(String title) {
+        logger.debug("findByTitle() [title:{}]", title);
+        return subjectRepository.findByTitle(title);
+    }
+
     private Subject retriveObjectFromDto(SubjectDto subjectDto) {
         Subject subject = (subjectDto.getId() != 0) ? subjectRepository.getOne(subjectDto.getId()) : new Subject();
         subject.setTitle(subjectDto.getTitle());

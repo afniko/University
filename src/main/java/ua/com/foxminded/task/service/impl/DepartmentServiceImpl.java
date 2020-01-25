@@ -90,6 +90,12 @@ public class DepartmentServiceImpl implements DepartmentService {
         return ConverterToDtoService.convert(departmentUpdated);
     }
 
+    @Override
+    public Department findByTitle(String title) {
+        logger.debug("findByTitle() [title:{}]", title);
+        return departmentRepository.findByTitle(title);
+    }
+
     private Department retriveObjectFromDto(DepartmentDto departmentDto) {
         Department department = (departmentDto.getId() != 0) ? departmentRepository.getOne(departmentDto.getId()) : new Department();
         Faculty faculty = (departmentDto.getIdFaculty() != 0) ? facultyRepository.getOne(departmentDto.getIdFaculty()) : null;

@@ -84,9 +84,16 @@ public class AuditoryTypeServiceImpl implements AuditoryTypeService {
         return ConverterToDtoService.convert(auditoryTypeUpdated);
     }
 
+    @Override
+    public AuditoryType findByType(String type) {
+        logger.debug("findByType() [type:{}]", type);
+        return auditoryTypeRepository.findByType(type);
+    }
+
     private AuditoryType retriveObjectFromDto(AuditoryTypeDto auditoryTypeDto) {
         AuditoryType auditoryType = (auditoryTypeDto.getId() != 0) ? auditoryTypeRepository.getOne(auditoryTypeDto.getId()) : new AuditoryType();
         auditoryType.setType(auditoryTypeDto.getType());
         return auditoryType;
     }
+
 }

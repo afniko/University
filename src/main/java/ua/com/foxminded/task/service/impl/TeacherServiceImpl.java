@@ -95,6 +95,12 @@ public class TeacherServiceImpl implements TeacherService {
         return ConverterToDtoService.convert(teacherUpdated);
     }
 
+    @Override
+    public Teacher findByIdFees(Integer idFees) {
+        logger.debug("findByIdFees() [idFees:{}]", idFees);
+        return teacherRepository.findByIdFees(idFees);
+    }
+
     private Teacher retriveObjectFromDto(TeacherDto teacherDto) {
         Teacher teacher = (teacherDto.getId() != 0) ? teacherRepository.getOne(teacherDto.getId()) : new Teacher();
         Department department = (teacherDto.getIdDepartment() != 0) ? departmentRepository.getOne(teacherDto.getIdDepartment()) : null;

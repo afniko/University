@@ -84,6 +84,12 @@ public class LectureServiceImpl implements LectureService {
         return ConverterToDtoService.convert(lectureUpdated);
     }
 
+    @Override
+    public Lecture findByNumber(String number) {
+        logger.debug("findByNumber() [number:{}]", number);
+        return lectureRepository.findByNumber(number);
+    }
+
     private Lecture retriveObjectFromDto(LectureDto lectureDto) {
         Lecture lecture = (lectureDto.getId() != 0) ? lectureRepository.getOne(lectureDto.getId()) : new Lecture();
         lecture.setNumber(lectureDto.getNumber());

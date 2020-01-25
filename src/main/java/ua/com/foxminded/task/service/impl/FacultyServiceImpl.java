@@ -84,6 +84,12 @@ public class FacultyServiceImpl implements FacultyService {
         return ConverterToDtoService.convert(facultyUpdated);
     }
 
+    @Override
+    public Faculty findByTitle(String title) {
+        logger.debug("findByTitle() [title:{}]", title);
+        return facultyRepository.findByTitle(title);
+    }
+
     private Faculty retriveObjectFromDto(FacultyDto facultyDto) {
         Faculty faculty = (facultyDto.getId() != 0) ? facultyRepository.getOne(facultyDto.getId()) : new Faculty();
         faculty.setTitle(facultyDto.getTitle());
