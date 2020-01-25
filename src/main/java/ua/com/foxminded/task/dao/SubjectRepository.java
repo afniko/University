@@ -11,4 +11,6 @@ import ua.com.foxminded.task.domain.Subject;
 public interface SubjectRepository extends JpaRepository<Subject, Integer> {
 
     public boolean existsById(Integer id);
+
+    public Subject findByTitle(String title);
 }

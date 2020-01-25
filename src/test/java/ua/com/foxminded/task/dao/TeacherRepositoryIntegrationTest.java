@@ -66,15 +66,15 @@ public class TeacherRepositoryIntegrationTest {
         assertThat(expectedTeacher).isEqualToComparingFieldByField(actuallyTeacher);
     }
 
-//    @Test
-//    @DataSet(value = "student/students.yml", 
-//             cleanBefore = true, 
-//             skipCleaningFor = "flyway_schema_history")
-//    public void whenFindByIdFees_thenGetExitsStudent() {
-//        int idFees = 111111113;
-//        Student studentActually = teacherRepository.findByIdFees(idFees);
-//        assertThat(studentActually.getIdFees()).isEqualTo(idFees);
-//    }
+    @Test
+    @DataSet(value = "teacher/teachers.yml", 
+             cleanBefore = true, 
+             skipCleaningFor = "flyway_schema_history")
+    public void whenFindByIdFees_thenGetExitsTeacher() {
+        int idFees = 333111111;
+        Teacher teacherActually = teacherRepository.findByIdFees(idFees);
+        assertThat(teacherActually.getIdFees()).isEqualTo(idFees);
+    }
     
     @Test
     @DataSet(cleanBefore = true, skipCleaningFor = "flyway_schema_history")

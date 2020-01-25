@@ -11,4 +11,6 @@ import ua.com.foxminded.task.domain.Teacher;
 public interface TeacherRepository extends JpaRepository<Teacher, Integer> {
 
     public boolean existsById(Integer id);
+
+    public Teacher findByIdFees(Integer idFees);
 }

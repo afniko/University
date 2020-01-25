@@ -58,15 +58,15 @@ public class DepartmentRepositoryIntegrationTest {
         assertThat(expectedDepartment).isEqualTo(actuallyDepartment);
     }
 
-//    @Test
-//    @DataSet(value = "group/groups.yml", 
-//             cleanBefore = true, 
-//             skipCleaningFor = "flyway_schema_history")
-//    public void whenFindByTitle_thenGetExitsGroup() {
-//        String title = "group2";
-//        Group groupActually = groupRepository.findByTitle(title);
-//        assertThat(groupActually.getTitle()).isNotNull().isEqualTo(title);
-//    }
+    @Test
+    @DataSet(value = "department/departments.yml", 
+             cleanBefore = true, 
+             skipCleaningFor = "flyway_schema_history")
+    public void whenFindByTitle_thenGetExitsDepartment() {
+        String title = "department2";
+        Department departmentActually = departmentRepository.findByTitle(title);
+        assertThat(departmentActually.getTitle()).isNotNull().isEqualTo(title);
+    }
 
     @Test
     @DataSet(cleanBefore = true, skipCleaningFor = "flyway_schema_history")

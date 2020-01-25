@@ -11,4 +11,6 @@ import ua.com.foxminded.task.domain.Department;
 public interface DepartmentRepository extends JpaRepository<Department, Integer> {
 
     public boolean existsById(Integer id);
+
+    public Department findByTitle(String title);
 }

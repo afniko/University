@@ -11,4 +11,6 @@ import ua.com.foxminded.task.domain.AuditoryType;
 public interface AuditoryTypeRepository extends JpaRepository<AuditoryType, Integer> {
 
     public boolean existsById(Integer id);
+
+    public AuditoryType findByType(String type);
 }

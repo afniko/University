@@ -11,4 +11,6 @@ import ua.com.foxminded.task.domain.Lecture;
 public interface LectureRepository extends JpaRepository<Lecture, Integer> {
 
     public boolean existsById(Integer id);
+
+    public Lecture findByNumber(String number);
 }
