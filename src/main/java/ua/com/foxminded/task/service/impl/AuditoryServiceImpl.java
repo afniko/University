@@ -90,6 +90,12 @@ public class AuditoryServiceImpl implements AuditoryService {
         return ConverterToDtoService.convert(auditoryUpdated);
     }
 
+    @Override
+    public Auditory findByAuditoryNumber(String auditoryNumber) {
+        logger.debug("findByAuditoryNumber() [auditoryNumber:{}]", auditoryNumber);
+        return auditoryRepository.findByAuditoryNumber(auditoryNumber);
+    }
+
     private Auditory retriveObjectFromDto(AuditoryDto auditoryDto) {
         Auditory auditory = (auditoryDto.getId() != 0) ? auditoryRepository.getOne(auditoryDto.getId()) : new Auditory();
         AuditoryType auditoryType = (auditoryDto.getIdAuditoryType() != 0) ? auditoryTypeRepository.getOne(auditoryDto.getIdAuditoryType()) : null;
@@ -99,4 +105,5 @@ public class AuditoryServiceImpl implements AuditoryService {
         auditory.setDescription(auditoryDto.getDescription());
         return auditory;
     }
+
 }

@@ -58,15 +58,15 @@ public class AuditoryRepositoryIntegrationTest {
         assertThat(expectedAuditory).isEqualTo(actuallyAuditory);
     }
 
-//    @Test
-//    @DataSet(value = "group/groups.yml", 
-//             cleanBefore = true, 
-//             skipCleaningFor = "flyway_schema_history")
-//    public void whenFindByTitle_thenGetExitsGroup() {
-//        String title = "group2";
-//        Group groupActually = groupRepository.findByTitle(title);
-//        assertThat(groupActually.getTitle()).isNotNull().isEqualTo(title);
-//    }
+    @Test
+    @DataSet(value = "auditory/auditories.yml", 
+             cleanBefore = true, 
+             skipCleaningFor = "flyway_schema_history")
+    public void whenFindByTitle_thenGetExitsGroup() {
+        String auditoryNumber = "103a";
+        Auditory auditoryActually = auditoryRepository.findByAuditoryNumber(auditoryNumber);
+        assertThat(auditoryActually.getAuditoryNumber()).isNotNull().isEqualTo(auditoryNumber);
+    }
 
     @Test
     @DataSet(cleanBefore = true, 

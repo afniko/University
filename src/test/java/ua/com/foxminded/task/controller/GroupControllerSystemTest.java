@@ -164,7 +164,7 @@ public class GroupControllerSystemTest {
                 .andExpect(status().isOk())
                 .andExpect(view().name(PATH_HTML_GROUP_EDIT))
                 .andExpect(content().string(allOf(containsString("<div>" + EXPECTED_ERROR_MESSAGE + "</div>"))))
-                .andExpect(model().attributeHasFieldErrorCode("groupDto", "title", "GroupTitleUnique"))
+                .andExpect(model().attributeHasFieldErrorCode("groupDto", "title", "PropertyValueUnique"))
                 .andExpect(model().attributeHasFieldErrorCode("groupDto", "yearEntry", "Max"))
                 .andDo(print());
     }

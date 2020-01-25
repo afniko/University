@@ -31,6 +31,7 @@ import ua.com.foxminded.task.dao.exception.EntityAlreadyExistsException;
 import ua.com.foxminded.task.dao.exception.EntityNotValidException;
 import ua.com.foxminded.task.domain.dto.GroupDto;
 import ua.com.foxminded.task.domain.repository.dto.GroupDtoModelRepository;
+import ua.com.foxminded.task.service.AuditoryService;
 import ua.com.foxminded.task.service.GroupService;
 
 @WebMvcTest(GroupController.class)
@@ -42,6 +43,9 @@ public class GroupControllerIntegrationTest {
 
     @MockBean
     private GroupService groupService;
+
+    @MockBean
+    private AuditoryService auditoryService;
 
     private static final String PATH_HTML_GROUP = "group/group";
     private static final String PATH_HTML_GROUPS = "group/groups";

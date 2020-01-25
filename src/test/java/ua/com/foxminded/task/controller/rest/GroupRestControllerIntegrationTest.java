@@ -29,6 +29,7 @@ import org.springframework.web.context.WebApplicationContext;
 import ua.com.foxminded.task.config.TestMvcConfig;
 import ua.com.foxminded.task.domain.dto.GroupDto;
 import ua.com.foxminded.task.domain.repository.dto.GroupDtoModelRepository;
+import ua.com.foxminded.task.service.AuditoryService;
 import ua.com.foxminded.task.service.GroupService;
 
 @WebMvcTest(GroupController.class)
@@ -39,7 +40,9 @@ public class GroupRestControllerIntegrationTest {
     private WebApplicationContext context;
     @MockBean
     private GroupService groupService;
-
+    @MockBean
+    private AuditoryService auditoryService;
+    
     private static GroupDto GROUP_DTO1 = GroupDtoModelRepository.getModel1();
     private static GroupDto GROUP_DTO2 = GroupDtoModelRepository.getModel2();
 

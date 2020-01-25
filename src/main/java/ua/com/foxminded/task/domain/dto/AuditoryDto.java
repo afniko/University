@@ -9,10 +9,9 @@ import org.hibernate.validator.constraints.Length;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import ua.com.foxminded.task.validation.annotation.GroupTitleUnique;
+import ua.com.foxminded.task.validation.annotation.PropertyValueUnique;
 
-@GroupTitleUnique(message = "Title is already exists!")
-//TODO create unique filter
+@PropertyValueUnique(message = "Auditory number is already exists!", nameProperty = "auditoryNumber")
 @ApiModel(description = "Object with a auditory information")
 public class AuditoryDto {
 

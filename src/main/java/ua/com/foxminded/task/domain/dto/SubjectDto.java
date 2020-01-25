@@ -7,9 +7,8 @@ import org.hibernate.validator.constraints.Length;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import ua.com.foxminded.task.validation.annotation.GroupTitleUnique;
 
-@GroupTitleUnique(message = "Title is already exists!")
+//@GroupTitleUnique(message = "Title is already exists!")
 //TODO create unique test
 @ApiModel(description = "Object with a subject information")
 public class SubjectDto {

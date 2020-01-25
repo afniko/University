@@ -9,9 +9,9 @@ import org.hibernate.validator.constraints.Length;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import ua.com.foxminded.task.validation.annotation.GroupTitleUnique;
+import ua.com.foxminded.task.validation.annotation.PropertyValueUnique;
 
-@GroupTitleUnique(message = "Title is already exists!")
+@PropertyValueUnique(message = "Title is already exists!", nameProperty = "title")
 @ApiModel(description = "Object with a group information")
 public class GroupDto {
 
