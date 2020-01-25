@@ -30,7 +30,14 @@ import ua.com.foxminded.task.config.TestMvcConfig;
 import ua.com.foxminded.task.domain.dto.GroupDto;
 import ua.com.foxminded.task.domain.repository.dto.GroupDtoModelRepository;
 import ua.com.foxminded.task.service.AuditoryService;
+import ua.com.foxminded.task.service.AuditoryTypeService;
+import ua.com.foxminded.task.service.DepartmentService;
+import ua.com.foxminded.task.service.FacultyService;
 import ua.com.foxminded.task.service.GroupService;
+import ua.com.foxminded.task.service.LectureService;
+import ua.com.foxminded.task.service.StudentService;
+import ua.com.foxminded.task.service.SubjectService;
+import ua.com.foxminded.task.service.TeacherService;
 
 @WebMvcTest(GroupController.class)
 @Import(TestMvcConfig.class)
@@ -39,9 +46,23 @@ public class GroupRestControllerIntegrationTest {
     @Autowired
     private WebApplicationContext context;
     @MockBean
+    private AuditoryService auditoryService;
+    @MockBean
+    private AuditoryTypeService auditoryTypeService;
+    @MockBean
+    private DepartmentService departmentService;
+    @MockBean
+    private FacultyService facultyService;
+    @MockBean
     private GroupService groupService;
     @MockBean
-    private AuditoryService auditoryService;
+    private LectureService lectureService;
+    @MockBean
+    private StudentService studentService;
+    @MockBean
+    private SubjectService subjectService;
+    @MockBean
+    private TeacherService teacherService;
     
     private static GroupDto GROUP_DTO1 = GroupDtoModelRepository.getModel1();
     private static GroupDto GROUP_DTO2 = GroupDtoModelRepository.getModel2();

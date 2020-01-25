@@ -18,7 +18,14 @@ import ua.com.foxminded.task.validation.validator.PropertyUniqueValidator;
  * Supported types are:
  * <ul>
  * <li>{@code AuditoryDto}</li>
+ * <li>{@code AuditoryTypeDto}</li>
+ * <li>{@code DepartmentDto}</li>
+ * <li>{@code FacultyDto}</li>
  * <li>{@code GroupDto}</li>
+ * <li>{@code LectureDto}</li>
+ * <li>{@code StudentDto}</li>
+ * <li>{@code SubjectDto}</li>
+ * <li>{@code TeacherDto}</li>
  * </ul>
  * <p>
  *

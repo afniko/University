@@ -17,8 +17,17 @@ import ua.com.foxminded.task.domain.Faculty;
 import ua.com.foxminded.task.domain.Group;
 import ua.com.foxminded.task.domain.Lecture;
 import ua.com.foxminded.task.domain.Student;
+import ua.com.foxminded.task.domain.Subject;
+import ua.com.foxminded.task.domain.Teacher;
 import ua.com.foxminded.task.domain.dto.AuditoryDto;
+import ua.com.foxminded.task.domain.dto.AuditoryTypeDto;
+import ua.com.foxminded.task.domain.dto.DepartmentDto;
+import ua.com.foxminded.task.domain.dto.FacultyDto;
 import ua.com.foxminded.task.domain.dto.GroupDto;
+import ua.com.foxminded.task.domain.dto.LectureDto;
+import ua.com.foxminded.task.domain.dto.StudentDto;
+import ua.com.foxminded.task.domain.dto.SubjectDto;
+import ua.com.foxminded.task.domain.dto.TeacherDto;
 import ua.com.foxminded.task.service.AuditoryService;
 import ua.com.foxminded.task.service.AuditoryTypeService;
 import ua.com.foxminded.task.service.DepartmentService;
@@ -77,10 +86,31 @@ public class PropertyUniqueValidator implements ConstraintValidator<PropertyValu
             if (value instanceof AuditoryDto) {
                 result = checkAuditory(idField, uniqueField);
             }
+            if (value instanceof AuditoryTypeDto) {
+                result = checkAuditoryType(idField, uniqueField);
+            }
+            if (value instanceof DepartmentDto) {
+                result = checkDepartment(idField, uniqueField);
+            }
+            if (value instanceof FacultyDto) {
+                result = checkFaculty(idField, uniqueField);
+            }
             if (value instanceof GroupDto) {
                 result = checkGroup(idField, uniqueField);
             }
-
+            if (value instanceof LectureDto) {
+                result = checkLecture(idField, uniqueField);
+            }
+            if (value instanceof StudentDto) {
+                result = checkStudent(idField, uniqueField);
+            }
+            if (value instanceof SubjectDto) {
+                result = checkSubject(idField, uniqueField);
+            }
+            if (value instanceof TeacherDto) {
+                result = checkTeacher(idField, uniqueField);
+            }
+            
             if (!result) {
                 context.disableDefaultConstraintViolation();
                 context.buildConstraintViolationWithTemplate(message).addPropertyNode(fieldError).addConstraintViolation();
@@ -154,18 +184,18 @@ public class PropertyUniqueValidator implements ConstraintValidator<PropertyValu
         return result;
     }
 
-//    private boolean checkSubject(String idField, String uniqueField) {
-//        boolean result = true;
-//        Subject objectExist = subjectRepository
-//        if (!Objects.isNull(objectExist)) {
-//            result = (objectExist.getId() == Integer.valueOf(idField));
-//        }
-//        return result;
-//    }
+    private boolean checkSubject(String idField, String uniqueField) {
+        boolean result = true;
+        Subject objectExist = subjectService.findByTitle(uniqueField);
+        if (!Objects.isNull(objectExist)) {
+            result = (objectExist.getId() == Integer.valueOf(idField));
+        }
+        return result;
+    }
 
     private boolean checkTeacher(String idField, String uniqueField) {
         boolean result = true;
-        AuditoryType objectExist = auditoryTypeService.findByType(uniqueField);
+        Teacher objectExist = teacherService.findByIdFees(Integer.valueOf(uniqueField));
         if (!Objects.isNull(objectExist)) {
             result = (objectExist.getId() == Integer.valueOf(idField));
         }

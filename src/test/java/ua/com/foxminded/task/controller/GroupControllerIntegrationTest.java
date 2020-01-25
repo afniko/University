@@ -32,7 +32,14 @@ import ua.com.foxminded.task.dao.exception.EntityNotValidException;
 import ua.com.foxminded.task.domain.dto.GroupDto;
 import ua.com.foxminded.task.domain.repository.dto.GroupDtoModelRepository;
 import ua.com.foxminded.task.service.AuditoryService;
+import ua.com.foxminded.task.service.AuditoryTypeService;
+import ua.com.foxminded.task.service.DepartmentService;
+import ua.com.foxminded.task.service.FacultyService;
 import ua.com.foxminded.task.service.GroupService;
+import ua.com.foxminded.task.service.LectureService;
+import ua.com.foxminded.task.service.StudentService;
+import ua.com.foxminded.task.service.SubjectService;
+import ua.com.foxminded.task.service.TeacherService;
 
 @WebMvcTest(GroupController.class)
 @Import(TestMvcConfig.class)
@@ -42,10 +49,23 @@ public class GroupControllerIntegrationTest {
     private MockMvc mockMvc;
 
     @MockBean
-    private GroupService groupService;
-
-    @MockBean
     private AuditoryService auditoryService;
+    @MockBean
+    private AuditoryTypeService auditoryTypeService;
+    @MockBean
+    private DepartmentService departmentService;
+    @MockBean
+    private FacultyService facultyService;
+    @MockBean
+    private GroupService groupService;
+    @MockBean
+    private LectureService lectureService;
+    @MockBean
+    private StudentService studentService;
+    @MockBean
+    private SubjectService subjectService;
+    @MockBean
+    private TeacherService teacherService;
 
     private static final String PATH_HTML_GROUP = "group/group";
     private static final String PATH_HTML_GROUPS = "group/groups";
