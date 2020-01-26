@@ -48,7 +48,7 @@ public class AuditoryServiceImplTest {
     }
 
     @Test
-    public void whenFindById_thenFindObject() {
+    public void whenFindById_thenFindEntity() {
         Auditory expectedAuditory = AuditoryModelRepository.getModel1();
         doReturn(expectedAuditory).when(auditoryRepository).getOne(1);
 
@@ -59,7 +59,7 @@ public class AuditoryServiceImplTest {
     }
 
     @Test
-    public void whenFindById_thenFindObjectAndConvertItToDto() {
+    public void whenFindById_thenFindEntityAndConvertItToDto() {
         Auditory auditory = AuditoryModelRepository.getModel1();
         AuditoryDto auditoryDtoExpected = AuditoryDtoModelRepository.getModel1();
         doReturn(auditory).when(auditoryRepository).getOne(1);
@@ -71,7 +71,7 @@ public class AuditoryServiceImplTest {
     }
 
     @Test
-    public void whenFindByAll_thenFindObjectsAndConvertItToDto() {
+    public void whenFindByAll_thenFindEntitiesAndConvertItToDto() {
         List<Auditory> auditories = AuditoryModelRepository.getModels();
         List<AuditoryDto> auditoryDtosExpected = AuditoryDtoModelRepository.getModels();
         doReturn(auditories).when(auditoryRepository).findAll();
