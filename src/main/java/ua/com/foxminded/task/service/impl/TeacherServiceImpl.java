@@ -39,6 +39,7 @@ public class TeacherServiceImpl implements TeacherService {
         this.logger = logger;
         this.teacherRepository = teacherRepository;
         this.departmentRepository = departmentRepository;
+        this.subjectRepository = subjectRepository;
     }
 
     public Teacher findById(int id) {

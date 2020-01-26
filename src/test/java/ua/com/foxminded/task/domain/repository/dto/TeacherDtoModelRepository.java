@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
 
+import ua.com.foxminded.task.domain.Department;
 import ua.com.foxminded.task.domain.dto.TeacherDto;
 import ua.com.foxminded.task.domain.repository.DepartmentModelRepository;
 
@@ -44,13 +45,16 @@ public class TeacherDtoModelRepository {
 
     public static TeacherDto getModel1() {
         TeacherDto teacher = new TeacherDto();
+        Department department = DepartmentModelRepository.getModel1();
+        department.setId(1);
+        teacher.setDepartmentTitle(department.getTitle());
+        teacher.setIdDepartment(department.getId());
         teacher.setFirstName("firstNameTe1");
         teacher.setMiddleName("middleNameTe1");
         teacher.setLastName("lastNameTe1");
         teacher.setBirthday(LocalDate.of(1980, 06, 25));
         teacher.setIdFees(1111111161);
         teacher.setSubjects(SubjectDtoModelRepository.getModels1());
-        teacher.setDepartmentTitle(DepartmentModelRepository.getModel1().getTitle());
         return teacher;
     }
 
