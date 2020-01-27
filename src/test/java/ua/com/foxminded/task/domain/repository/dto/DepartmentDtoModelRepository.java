@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import ua.com.foxminded.task.domain.Faculty;
 import ua.com.foxminded.task.domain.dto.DepartmentDto;
 import ua.com.foxminded.task.domain.repository.FacultyModelRepository;
 
@@ -40,9 +41,12 @@ public class DepartmentDtoModelRepository {
 
     public static DepartmentDto getModel1() {
         DepartmentDto department = new DepartmentDto();
+        Faculty faculty = FacultyModelRepository.getModel1();
+        faculty.setId(1);
+        department.setFacultyTitle(faculty.getTitle());
+        department.setIdFaculty(faculty.getId());
         department.setTitle("department1");
         department.setDescription("bla bla bla 1");
-        department.setFacultyTitle(FacultyModelRepository.getModel1().getTitle());
         return department;
     }
 
