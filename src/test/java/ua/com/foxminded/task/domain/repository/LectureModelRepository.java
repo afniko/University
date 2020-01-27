@@ -1,6 +1,8 @@
 package ua.com.foxminded.task.domain.repository;
 
 import java.time.LocalTime;
+import java.util.Arrays;
+import java.util.List;
 
 import ua.com.foxminded.task.domain.Lecture;
 
@@ -55,6 +57,10 @@ public class LectureModelRepository {
         lecture.setStartTime(LocalTime.of(16,40));
         lecture.setEndTime(LocalTime.of(18,15));
         return lecture;
+    }
+
+    public static List<Lecture> getModels() {
+        return Arrays.asList(getModel1(), getModel2(), getModel3(), getModel4());
     }
 
 }
