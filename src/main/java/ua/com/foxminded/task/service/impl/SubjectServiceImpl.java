@@ -53,7 +53,7 @@ public class SubjectServiceImpl implements SubjectService {
         logger.debug("create() [subjectDto:{}]", subjectDto);
         if (subjectDto.getId() != 0) {
             logger.warn("create() [subjectDto:{}]", subjectDto);
-            throw new EntityAlreadyExistsException("create() groupDto: " + subjectDto);
+            throw new EntityAlreadyExistsException("create() subjectDto: " + subjectDto);
         }
         Subject subject = retriveObjectFromDto(subjectDto);
         Subject subjectResult = null;
