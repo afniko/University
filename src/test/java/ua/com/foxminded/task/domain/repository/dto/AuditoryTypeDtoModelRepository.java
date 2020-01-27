@@ -1,5 +1,8 @@
 package ua.com.foxminded.task.domain.repository.dto;
 
+import java.util.Arrays;
+import java.util.List;
+
 import ua.com.foxminded.task.domain.dto.AuditoryTypeDto;
 
 public class AuditoryTypeDtoModelRepository {
@@ -41,6 +44,10 @@ public class AuditoryTypeDtoModelRepository {
         AuditoryTypeDto auditoryType = new AuditoryTypeDto();
         auditoryType.setType("Recriation");
         return auditoryType;
+    }
+
+    public static List<AuditoryTypeDto> getModels() {
+        return Arrays.asList(getModel1(), getModel2(), getModel3(), getModel4());
     }
 
 }

@@ -1,5 +1,8 @@
 package ua.com.foxminded.task.domain.repository;
 
+import java.util.Arrays;
+import java.util.List;
+
 import ua.com.foxminded.task.domain.AuditoryType;
 
 public class AuditoryTypeModelRepository {
@@ -41,6 +44,10 @@ public class AuditoryTypeModelRepository {
         AuditoryType auditoryType = new AuditoryType();
         auditoryType.setType("Recriation");
         return auditoryType;
+    }
+
+    public static List<AuditoryType> getModels() {
+        return Arrays.asList(getModel1(), getModel2(), getModel3(), getModel4());
     }
 
 }
