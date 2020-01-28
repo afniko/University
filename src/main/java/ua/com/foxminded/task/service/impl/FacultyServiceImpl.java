@@ -55,7 +55,7 @@ public class FacultyServiceImpl implements FacultyService {
             logger.warn("create() [facultyDto:{}]", facultyDto);
             throw new EntityAlreadyExistsException("create() facultyDto: " + facultyDto);
         }
-        Faculty faculty = retriveObjectFromDto(facultyDto);
+        Faculty faculty = retriveEntityFromDto(facultyDto);
         Faculty facultyResult = null;
         try {
             facultyResult = facultyRepository.saveAndFlush(faculty);
@@ -73,7 +73,7 @@ public class FacultyServiceImpl implements FacultyService {
         if (!facultyRepository.existsById(facultyId)) {
             throw new EntityNotFoundException("Faculty not exist!");
         }
-        Faculty faculty = retriveObjectFromDto(facultyDto);
+        Faculty faculty = retriveEntityFromDto(facultyDto);
         Faculty facultyUpdated = null;
         try {
             facultyUpdated = facultyRepository.saveAndFlush(faculty);
@@ -90,7 +90,7 @@ public class FacultyServiceImpl implements FacultyService {
         return facultyRepository.findByTitle(title);
     }
 
-    private Faculty retriveObjectFromDto(FacultyDto facultyDto) {
+    private Faculty retriveEntityFromDto(FacultyDto facultyDto) {
         Faculty faculty = (facultyDto.getId() != 0) ? facultyRepository.getOne(facultyDto.getId()) : new Faculty();
         faculty.setTitle(facultyDto.getTitle());
         return faculty;

@@ -67,7 +67,7 @@ public class TeacherServiceImpl implements TeacherService {
             logger.warn("create() [teacherDto:{}]", teacherDto);
             throw new EntityAlreadyExistsException("create() teacherDto: " + teacherDto);
         }
-        Teacher teacher = retriveObjectFromDto(teacherDto);
+        Teacher teacher = retriveEntityFromDto(teacherDto);
         Teacher teacherResult = null;
         try {
             teacherResult = teacherRepository.saveAndFlush(teacher);
@@ -85,7 +85,7 @@ public class TeacherServiceImpl implements TeacherService {
         if (!teacherRepository.existsById(teacherId)) {
             throw new EntityNotFoundException("Teacher not exist!");
         }
-        Teacher teacher = retriveObjectFromDto(teacherDto);
+        Teacher teacher = retriveEntityFromDto(teacherDto);
         Teacher teacherUpdated = null;
         try {
             teacherUpdated = teacherRepository.saveAndFlush(teacher);
@@ -102,7 +102,7 @@ public class TeacherServiceImpl implements TeacherService {
         return teacherRepository.findByIdFees(idFees);
     }
 
-    private Teacher retriveObjectFromDto(TeacherDto teacherDto) {
+    private Teacher retriveEntityFromDto(TeacherDto teacherDto) {
         Teacher teacher = (teacherDto.getId() != 0) ? teacherRepository.getOne(teacherDto.getId()) : new Teacher();
         Department department = (teacherDto.getDepartmentId() != 0) ? departmentRepository.getOne(teacherDto.getDepartmentId()) : null;
         List<Subject> subjects = retriveSubjectsFromDtos(teacherDto.getSubjects());

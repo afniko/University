@@ -55,7 +55,7 @@ public class LectureServiceImpl implements LectureService {
             logger.warn("create() [lectureDto:{}]", lectureDto);
             throw new EntityAlreadyExistsException("create() lectureDto: " + lectureDto);
         }
-        Lecture lecture = retriveObjectFromDto(lectureDto);
+        Lecture lecture = retriveEntityFromDto(lectureDto);
         Lecture lectureResult = null;
         try {
             lectureResult = lectureRepository.saveAndFlush(lecture);
@@ -73,7 +73,7 @@ public class LectureServiceImpl implements LectureService {
         if (!lectureRepository.existsById(lectureId)) {
             throw new EntityNotFoundException("Lecture not exist!");
         }
-        Lecture lecture = retriveObjectFromDto(lectureDto);
+        Lecture lecture = retriveEntityFromDto(lectureDto);
         Lecture lectureUpdated = null;
         try {
             lectureUpdated = lectureRepository.saveAndFlush(lecture);
@@ -90,7 +90,7 @@ public class LectureServiceImpl implements LectureService {
         return lectureRepository.findByNumber(number);
     }
 
-    private Lecture retriveObjectFromDto(LectureDto lectureDto) {
+    private Lecture retriveEntityFromDto(LectureDto lectureDto) {
         Lecture lecture = (lectureDto.getId() != 0) ? lectureRepository.getOne(lectureDto.getId()) : new Lecture();
         lecture.setNumber(lectureDto.getNumber());
         lecture.setStartTime(lectureDto.getStartTime());

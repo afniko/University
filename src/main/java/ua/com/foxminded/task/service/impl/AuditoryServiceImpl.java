@@ -61,7 +61,7 @@ public class AuditoryServiceImpl implements AuditoryService {
             logger.warn("create() [auditoryDto:{}]", auditoryDto);
             throw new EntityAlreadyExistsException("create() auditoryDto: " + auditoryDto);
         }
-        Auditory auditory = retriveObjectFromDto(auditoryDto);
+        Auditory auditory = retriveEntityFromDto(auditoryDto);
         Auditory auditoryResult = null;
         try {
             auditoryResult = auditoryRepository.saveAndFlush(auditory);
@@ -79,7 +79,7 @@ public class AuditoryServiceImpl implements AuditoryService {
         if (!auditoryRepository.existsById(auditoryId)) {
             throw new EntityNotFoundException("Auditory not exist!");
         }
-        Auditory auditory = retriveObjectFromDto(auditoryDto);
+        Auditory auditory = retriveEntityFromDto(auditoryDto);
         Auditory auditoryUpdated = null;
         try {
             auditoryUpdated = auditoryRepository.saveAndFlush(auditory);
@@ -96,7 +96,7 @@ public class AuditoryServiceImpl implements AuditoryService {
         return auditoryRepository.findByAuditoryNumber(auditoryNumber);
     }
 
-    private Auditory retriveObjectFromDto(AuditoryDto auditoryDto) {
+    private Auditory retriveEntityFromDto(AuditoryDto auditoryDto) {
         Auditory auditory = (auditoryDto.getId() != 0) ? auditoryRepository.getOne(auditoryDto.getId()) : new Auditory();
         AuditoryType auditoryType = (auditoryDto.getAuditoryTypeId() != 0) ? auditoryTypeRepository.getOne(auditoryDto.getAuditoryTypeId()) : null;
         auditory.setAuditoryNumber(auditoryDto.getAuditoryNumber());

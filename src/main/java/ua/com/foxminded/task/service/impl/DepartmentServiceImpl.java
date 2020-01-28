@@ -61,7 +61,7 @@ public class DepartmentServiceImpl implements DepartmentService {
             logger.warn("create() [departmentDto:{}]", departmentDto);
             throw new EntityAlreadyExistsException("create() departmentDto: " + departmentDto);
         }
-        Department department = retriveObjectFromDto(departmentDto);
+        Department department = retriveEntityFromDto(departmentDto);
         Department departmentResult = null;
         try {
             departmentResult = departmentRepository.saveAndFlush(department);
@@ -79,7 +79,7 @@ public class DepartmentServiceImpl implements DepartmentService {
         if (!departmentRepository.existsById(departmentId)) {
             throw new EntityNotFoundException("Department not exist!");
         }
-        Department department = retriveObjectFromDto(departmentDto);
+        Department department = retriveEntityFromDto(departmentDto);
         Department departmentUpdated = null;
         try {
             departmentUpdated = departmentRepository.saveAndFlush(department);
@@ -96,7 +96,7 @@ public class DepartmentServiceImpl implements DepartmentService {
         return departmentRepository.findByTitle(title);
     }
 
-    private Department retriveObjectFromDto(DepartmentDto departmentDto) {
+    private Department retriveEntityFromDto(DepartmentDto departmentDto) {
         Department department = (departmentDto.getId() != 0) ? departmentRepository.getOne(departmentDto.getId()) : new Department();
         Faculty faculty = (departmentDto.getFacultyId() != 0) ? facultyRepository.getOne(departmentDto.getFacultyId()) : null;
         department.setTitle(departmentDto.getTitle());

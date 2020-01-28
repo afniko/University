@@ -55,7 +55,7 @@ public class SubjectServiceImpl implements SubjectService {
             logger.warn("create() [subjectDto:{}]", subjectDto);
             throw new EntityAlreadyExistsException("create() subjectDto: " + subjectDto);
         }
-        Subject subject = retriveObjectFromDto(subjectDto);
+        Subject subject = retriveEntityFromDto(subjectDto);
         Subject subjectResult = null;
         try {
             subjectResult = subjectRepository.saveAndFlush(subject);
@@ -73,7 +73,7 @@ public class SubjectServiceImpl implements SubjectService {
         if (!subjectRepository.existsById(subjectId)) {
             throw new EntityNotFoundException("Subject not exist!");
         }
-        Subject subject = retriveObjectFromDto(subjectDto);
+        Subject subject = retriveEntityFromDto(subjectDto);
         Subject subjectUpdated = null;
         try {
             subjectUpdated = subjectRepository.saveAndFlush(subject);
@@ -90,7 +90,7 @@ public class SubjectServiceImpl implements SubjectService {
         return subjectRepository.findByTitle(title);
     }
 
-    private Subject retriveObjectFromDto(SubjectDto subjectDto) {
+    private Subject retriveEntityFromDto(SubjectDto subjectDto) {
         Subject subject = (subjectDto.getId() != 0) ? subjectRepository.getOne(subjectDto.getId()) : new Subject();
         subject.setTitle(subjectDto.getTitle());
         return subject;

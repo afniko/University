@@ -55,7 +55,7 @@ public class AuditoryTypeServiceImpl implements AuditoryTypeService {
             logger.warn("create() [auditoryTypeDto:{}]", auditoryTypeDto);
             throw new EntityAlreadyExistsException("create() auditoryTypeDto: " + auditoryTypeDto);
         }
-        AuditoryType auditoryType = retriveObjectFromDto(auditoryTypeDto);
+        AuditoryType auditoryType = retriveEntityFromDto(auditoryTypeDto);
         AuditoryType auditoryTypeResult = null;
         try {
             auditoryTypeResult = auditoryTypeRepository.saveAndFlush(auditoryType);
@@ -73,7 +73,7 @@ public class AuditoryTypeServiceImpl implements AuditoryTypeService {
         if (!auditoryTypeRepository.existsById(auditoryTypeId)) {
             throw new EntityNotFoundException("Auditory Type not exist!");
         }
-        AuditoryType auditoryType = retriveObjectFromDto(auditoryTypeDto);
+        AuditoryType auditoryType = retriveEntityFromDto(auditoryTypeDto);
         AuditoryType auditoryTypeUpdated = null;
         try {
             auditoryTypeUpdated = auditoryTypeRepository.saveAndFlush(auditoryType);
@@ -90,7 +90,7 @@ public class AuditoryTypeServiceImpl implements AuditoryTypeService {
         return auditoryTypeRepository.findByType(type);
     }
 
-    private AuditoryType retriveObjectFromDto(AuditoryTypeDto auditoryTypeDto) {
+    private AuditoryType retriveEntityFromDto(AuditoryTypeDto auditoryTypeDto) {
         AuditoryType auditoryType = (auditoryTypeDto.getId() != 0) ? auditoryTypeRepository.getOne(auditoryTypeDto.getId()) : new AuditoryType();
         auditoryType.setType(auditoryTypeDto.getType());
         return auditoryType;

@@ -58,7 +58,7 @@ public class GroupServiceImpl implements GroupService {
             logger.warn("create() [groupDto:{}]", groupDto);
             throw new EntityAlreadyExistsException("create() groupDto: " + groupDto);
         }
-        Group group = retriveObjectFromDto(groupDto);
+        Group group = retriveEntityFromDto(groupDto);
         Group groupResult = null;
         try {
             groupResult = groupRepository.saveAndFlush(group);
@@ -76,7 +76,7 @@ public class GroupServiceImpl implements GroupService {
         if (!groupRepository.existsById(groupId)) {
             throw new EntityNotFoundException("Group not exist!");
         }
-        Group group = retriveObjectFromDto(groupDto);
+        Group group = retriveEntityFromDto(groupDto);
         Group groupUpdated = null;
         try {
             groupUpdated = groupRepository.saveAndFlush(group);
@@ -93,7 +93,7 @@ public class GroupServiceImpl implements GroupService {
         return groupRepository.findByTitle(title);
     }
 
-    private Group retriveObjectFromDto(GroupDto groupDto) {
+    private Group retriveEntityFromDto(GroupDto groupDto) {
         Group group = (groupDto.getId() != 0) ? groupRepository.getOne(groupDto.getId()) : new Group();
         group.setTitle(groupDto.getTitle());
         group.setYearEntry(groupDto.getYearEntry());
