@@ -48,7 +48,7 @@ public class TeacherDtoModelRepository {
         Department department = DepartmentModelRepository.getModel1();
         department.setId(1);
         teacher.setDepartmentTitle(department.getTitle());
-        teacher.setIdDepartment(department.getId());
+        teacher.setDepartmentId(department.getId());
         teacher.setFirstName("firstNameTe1");
         teacher.setMiddleName("middleNameTe1");
         teacher.setLastName("lastNameTe1");

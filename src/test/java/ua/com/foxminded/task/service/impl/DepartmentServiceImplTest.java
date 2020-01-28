@@ -86,18 +86,18 @@ public class DepartmentServiceImplTest {
     @Test
     public void whenCreate_thenInvocCreateDaoClass() {
         DepartmentDto departmentDto = DepartmentDtoModelRepository.getModel1();
-        departmentDto.setIdFaculty(1);
+        departmentDto.setFacultyId(1);
         Department departmentInput = DepartmentModelRepository.getModel1();
         Department departmentExpected = DepartmentModelRepository.getModel1();
         Faculty facultyExpected = FacultyModelRepository.getModel1();
 
         doReturn(departmentExpected).when(departmentRepository).saveAndFlush(any(Department.class));
-        doReturn(facultyExpected).when(facultyRepository).getOne(departmentDto.getIdFaculty());
+        doReturn(facultyExpected).when(facultyRepository).getOne(departmentDto.getFacultyId());
 
         DepartmentDto departmentDtoActually = departmentService.create(departmentDto);
 
         verify(departmentRepository, times(1)).saveAndFlush(departmentInput);
-        verify(facultyRepository, times(1)).getOne(departmentDto.getIdFaculty());
+        verify(facultyRepository, times(1)).getOne(departmentDto.getFacultyId());
         assertEquals(departmentDto, departmentDtoActually);
     }
 
@@ -113,7 +113,7 @@ public class DepartmentServiceImplTest {
         doReturn(department).when(departmentRepository).saveAndFlush(department);
         doReturn(true).when(departmentRepository).existsById(departmentDto.getId());
         doReturn(department).when(departmentRepository).getOne(departmentDto.getId());
-        doReturn(faculty).when(facultyRepository).getOne(departmentDto.getIdFaculty());
+        doReturn(faculty).when(facultyRepository).getOne(departmentDto.getFacultyId());
 
         DepartmentDto departmentDtoActually = departmentService.update(departmentDto);
 
@@ -152,7 +152,7 @@ public class DepartmentServiceImplTest {
         Faculty faculty = FacultyModelRepository.getModel1();
         faculty.setId(1);
         
-        doReturn(faculty).when(facultyRepository).getOne(departmentDto.getIdFaculty());
+        doReturn(faculty).when(facultyRepository).getOne(departmentDto.getFacultyId());
         doThrow(DataIntegrityViolationException.class).when(departmentRepository).saveAndFlush(department);
 
         assertThatThrownBy(() -> departmentService.create(departmentDto))
@@ -167,7 +167,7 @@ public class DepartmentServiceImplTest {
         Faculty faculty = FacultyModelRepository.getModel1();
         faculty.setId(1);
         
-        doReturn(faculty).when(facultyRepository).getOne(departmentDto.getIdFaculty());
+        doReturn(faculty).when(facultyRepository).getOne(departmentDto.getFacultyId());
         doReturn(true).when(departmentRepository).existsById(department.getId());
         doThrow(DataIntegrityViolationException.class).when(departmentRepository).saveAndFlush(department);
 
@@ -183,7 +183,7 @@ public class DepartmentServiceImplTest {
         Faculty faculty = FacultyModelRepository.getModel1();
         faculty.setId(1);
         
-        doReturn(faculty).when(facultyRepository).getOne(departmentDto.getIdFaculty());
+        doReturn(faculty).when(facultyRepository).getOne(departmentDto.getFacultyId());
         doReturn(false).when(departmentRepository).existsById(department.getId());
 
         assertThatThrownBy(() -> departmentService.update(departmentDto))

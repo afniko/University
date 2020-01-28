@@ -54,7 +54,7 @@ public class TeacherDto {
     private String departmentTitle;
 
     @ApiModelProperty(notes = "The unique number of teacher department")
-    private int idDepartment;
+    private int departmentId;
     
     @ApiModelProperty(notes = "The list of subjects by teacher")
     private List<SubjectDto> subjects = new ArrayList<>();
@@ -115,12 +115,12 @@ public class TeacherDto {
         this.departmentTitle = departmentTitle;
     }
 
-    public int getIdDepartment() {
-        return idDepartment;
+    public int getDepartmentId() {
+        return departmentId;
     }
 
-    public void setIdDepartment(int idDepartment) {
-        this.idDepartment = idDepartment;
+    public void setDepartmentId(int departmentId) {
+        this.departmentId = departmentId;
     }
 
     public List<SubjectDto> getSubjects() {
@@ -138,7 +138,7 @@ public class TeacherDto {
         result = prime * result + ((birthday == null) ? 0 : birthday.hashCode());
         result = prime * result + ((departmentTitle == null) ? 0 : departmentTitle.hashCode());
         result = prime * result + ((firstName == null) ? 0 : firstName.hashCode());
-        result = prime * result + idDepartment;
+        result = prime * result + departmentId;
         result = prime * result + idFees;
         result = prime * result + ((lastName == null) ? 0 : lastName.hashCode());
         result = prime * result + ((middleName == null) ? 0 : middleName.hashCode());
@@ -170,7 +170,7 @@ public class TeacherDto {
                 return false;
         } else if (!firstName.equals(other.firstName))
             return false;
-        if (idDepartment != other.idDepartment)
+        if (departmentId != other.departmentId)
             return false;
         if (idFees != other.idFees)
             return false;
@@ -201,7 +201,7 @@ public class TeacherDto {
              + ", birthday=" + birthday 
              + ", idFees=" + idFees 
              + ", departmentTitle=" + departmentTitle 
-             + ", idDepartment=" + idDepartment 
+             + ", departmentId=" + departmentId 
              + ", subjects=" + subjects 
              + "]";
     }

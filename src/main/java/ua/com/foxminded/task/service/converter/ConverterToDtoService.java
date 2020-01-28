@@ -35,7 +35,7 @@ public final class ConverterToDtoService {
         auditoryDto.setAuditoryNumber(auditory.getAuditoryNumber());
         if (nonNull(auditory.getAuditoryType())) {
             auditoryDto.setAuditoryTypeTitle(auditory.getAuditoryType().getType());
-            auditoryDto.setIdAuditoryType(auditory.getAuditoryType().getId());
+            auditoryDto.setAuditoryTypeId(auditory.getAuditoryType().getId());
         }
         auditoryDto.setMaxCapacity(auditory.getMaxCapacity());
         auditoryDto.setDescription(auditory.getDescription());
@@ -56,7 +56,7 @@ public final class ConverterToDtoService {
         departmentDto.setDescription(department.getDescription());
         if (nonNull(department.getFaculty())) {
             departmentDto.setFacultyTitle(department.getFaculty().getTitle());
-            departmentDto.setIdFaculty(department.getFaculty().getId());
+            departmentDto.setFacultyId(department.getFaculty().getId());
         }
         return departmentDto;
     }
@@ -96,7 +96,7 @@ public final class ConverterToDtoService {
         studentDto.setBirthday(student.getBirthday());
         studentDto.setIdFees(student.getIdFees());
         if (nonNull(student.getGroup())) {
-            studentDto.setIdGroup(student.getGroup().getId());
+            studentDto.setGroupId(student.getGroup().getId());
             studentDto.setGroupTitle(student.getGroup().getTitle());
         }
         return studentDto;
@@ -122,7 +122,7 @@ public final class ConverterToDtoService {
         teacherDto.setIdFees(teacher.getIdFees());
         if (nonNull(teacher.getDepartment())) {
             teacherDto.setDepartmentTitle(teacher.getDepartment().getTitle());
-            teacherDto.setIdDepartment(teacher.getDepartment().getId());
+            teacherDto.setDepartmentId(teacher.getDepartment().getId());
         }
         teacherDto.setSubjects(subjectDtos);
         return teacherDto;

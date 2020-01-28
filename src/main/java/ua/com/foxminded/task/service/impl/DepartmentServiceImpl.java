@@ -98,7 +98,7 @@ public class DepartmentServiceImpl implements DepartmentService {
 
     private Department retriveObjectFromDto(DepartmentDto departmentDto) {
         Department department = (departmentDto.getId() != 0) ? departmentRepository.getOne(departmentDto.getId()) : new Department();
-        Faculty faculty = (departmentDto.getIdFaculty() != 0) ? facultyRepository.getOne(departmentDto.getIdFaculty()) : null;
+        Faculty faculty = (departmentDto.getFacultyId() != 0) ? facultyRepository.getOne(departmentDto.getFacultyId()) : null;
         department.setTitle(departmentDto.getTitle());
         department.setDescription(departmentDto.getDescription());
         department.setFaculty(faculty);

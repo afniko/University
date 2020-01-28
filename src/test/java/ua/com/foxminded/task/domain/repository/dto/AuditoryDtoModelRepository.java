@@ -23,7 +23,7 @@ public class AuditoryDtoModelRepository {
         AuditoryType auditoryType = AuditoryTypeModelRepository.getModel1();
         auditoryType.setId(1);
         auditory.setAuditoryTypeTitle(auditoryType.getType());
-        auditory.setIdAuditoryType(auditoryType.getId());
+        auditory.setAuditoryTypeId(auditoryType.getId());
         auditory.setAuditoryNumber("101a");
         auditory.setMaxCapacity(100);
         auditory.setDescription("bla bla bla 1");
@@ -35,7 +35,7 @@ public class AuditoryDtoModelRepository {
         AuditoryType auditoryType = AuditoryTypeModelRepository.getModel2();
         auditoryType.setId(2);
         auditory.setAuditoryTypeTitle(auditoryType.getType());
-        auditory.setIdAuditoryType(auditoryType.getId());
+        auditory.setAuditoryTypeId(auditoryType.getId());
         auditory.setAuditoryNumber("102a");
         auditory.setMaxCapacity(50);
         auditory.setDescription("bla bla bla 2");
@@ -47,7 +47,7 @@ public class AuditoryDtoModelRepository {
         AuditoryType auditoryType = AuditoryTypeModelRepository.getModel3();
         auditoryType.setId(3);
         auditory.setAuditoryTypeTitle(auditoryType.getType());
-        auditory.setIdAuditoryType(auditoryType.getId());
+        auditory.setAuditoryTypeId(auditoryType.getId());
         auditory.setAuditoryNumber("201a");
         auditory.setMaxCapacity(10);
         auditory.setDescription("bla bla bla 3");
@@ -59,7 +59,7 @@ public class AuditoryDtoModelRepository {
         AuditoryType auditoryType = AuditoryTypeModelRepository.getModel4();
         auditoryType.setId(4);
         auditory.setAuditoryTypeTitle(auditoryType.getType());
-        auditory.setIdAuditoryType(auditoryType.getId());
+        auditory.setAuditoryTypeId(auditoryType.getId());
         auditory.setAuditoryNumber("103a");
         auditory.setMaxCapacity(30);
         auditory.setDescription("bla bla bla 4");
@@ -71,7 +71,7 @@ public class AuditoryDtoModelRepository {
         AuditoryType auditoryType = AuditoryTypeModelRepository.getModel1();
         auditoryType.setId(1);
         auditory.setAuditoryTypeTitle(auditoryType.getType());
-        auditory.setIdAuditoryType(auditoryType.getId());
+        auditory.setAuditoryTypeId(auditoryType.getId());
         auditory.setAuditoryNumber("405a");
         auditory.setMaxCapacity(14);
         auditory.setDescription("bla bla bla 5");
@@ -83,7 +83,7 @@ public class AuditoryDtoModelRepository {
         AuditoryType auditoryType = AuditoryTypeModelRepository.getModel2();
         auditoryType.setId(2);
         auditory.setAuditoryTypeTitle(auditoryType.getType());
-        auditory.setIdAuditoryType(auditoryType.getId());
+        auditory.setAuditoryTypeId(auditoryType.getId());
         auditory.setAuditoryNumber("161a");
         auditory.setMaxCapacity(20);
         auditory.setDescription("bla bla bla 6");

@@ -106,7 +106,7 @@ public class StudentServiceImpl implements StudentService {
     private Student retriveObjectFromDto(StudentDto studentDto) {
         Student student = (studentDto.getId() != 0) ? studentRepository.getOne(studentDto.getId()) : new Student();
 
-        Group group = studentDto.getIdGroup() != 0 ? groupRepository.getOne(Integer.valueOf(studentDto.getIdGroup())) : null;
+        Group group = studentDto.getGroupId() != 0 ? groupRepository.getOne(Integer.valueOf(studentDto.getGroupId())) : null;
         student.setGroup(group);
         student.setFirstName(studentDto.getFirstName());
         student.setMiddleName(studentDto.getMiddleName());

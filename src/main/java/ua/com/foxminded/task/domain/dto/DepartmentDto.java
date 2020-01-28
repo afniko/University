@@ -33,7 +33,7 @@ public class DepartmentDto {
     private String facultyTitle;
 
     @ApiModelProperty(notes = "The unique number of faculty")
-    private int idFaculty;
+    private int facultyId;
 
     public int getId() {
         return id;
@@ -67,12 +67,12 @@ public class DepartmentDto {
         this.facultyTitle = facultyTitle;
     }
 
-    public int getIdFaculty() {
-        return idFaculty;
+    public int getFacultyId() {
+        return facultyId;
     }
 
-    public void setIdFaculty(int idFaculty) {
-        this.idFaculty = idFaculty;
+    public void setFacultyId(int facultyId) {
+        this.facultyId = facultyId;
     }
 
     @Override
@@ -81,7 +81,7 @@ public class DepartmentDto {
         int result = 1;
         result = prime * result + ((description == null) ? 0 : description.hashCode());
         result = prime * result + ((facultyTitle == null) ? 0 : facultyTitle.hashCode());
-        result = prime * result + idFaculty;
+        result = prime * result + facultyId;
         result = prime * result + ((title == null) ? 0 : title.hashCode());
         return result;
     }
@@ -105,7 +105,7 @@ public class DepartmentDto {
                 return false;
         } else if (!facultyTitle.equals(other.facultyTitle))
             return false;
-        if (idFaculty != other.idFaculty)
+        if (facultyId != other.facultyId)
             return false;
         if (title == null) {
             if (other.title != null)
@@ -121,7 +121,7 @@ public class DepartmentDto {
              + ", title=" + title 
              + ", description=" + description 
              + ", facultyTitle=" + facultyTitle 
-             + ", idFaculty=" + idFaculty 
+             + ", facultyId=" + facultyId 
              + "]";
     }
 

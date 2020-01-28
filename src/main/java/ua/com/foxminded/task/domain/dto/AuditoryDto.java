@@ -31,7 +31,7 @@ public class AuditoryDto {
     private String auditoryTypeTitle;
 
     @ApiModelProperty(notes = "The unique number of students group")
-    private int idAuditoryType;
+    private int auditoryTypeId;
     
     @NotNull(message = "Year of entry can`t be blank or not numeric!")
     @Pattern(regexp = "^\\d+$", message = "Max capacity must be numeric")
@@ -66,12 +66,12 @@ public class AuditoryDto {
         this.auditoryTypeTitle = auditoryTypeTitle;
     }
 
-    public int getIdAuditoryType() {
-        return idAuditoryType;
+    public int getAuditoryTypeId() {
+        return auditoryTypeId;
     }
 
-    public void setIdAuditoryType(int idAuditoryType) {
-        this.idAuditoryType = idAuditoryType;
+    public void setAuditoryTypeId(int auditoryTypeId) {
+        this.auditoryTypeId = auditoryTypeId;
     }
 
     public Integer getMaxCapacity() {
@@ -97,7 +97,7 @@ public class AuditoryDto {
         result = prime * result + ((auditoryNumber == null) ? 0 : auditoryNumber.hashCode());
         result = prime * result + ((auditoryTypeTitle == null) ? 0 : auditoryTypeTitle.hashCode());
         result = prime * result + ((description == null) ? 0 : description.hashCode());
-        result = prime * result + idAuditoryType;
+        result = prime * result + auditoryTypeId;
         result = prime * result + ((maxCapacity == null) ? 0 : maxCapacity.hashCode());
         return result;
     }
@@ -126,7 +126,7 @@ public class AuditoryDto {
                 return false;
         } else if (!description.equals(other.description))
             return false;
-        if (idAuditoryType != other.idAuditoryType)
+        if (auditoryTypeId != other.auditoryTypeId)
             return false;
         if (maxCapacity == null) {
             if (other.maxCapacity != null)
@@ -141,7 +141,7 @@ public class AuditoryDto {
         return "AuditoryDto [id=" + id 
              + ", auditoryNumber=" + auditoryNumber 
              + ", auditoryTypeTitle=" + auditoryTypeTitle 
-             + ", idAuditoryType=" + idAuditoryType 
+             + ", auditoryTypeId=" + auditoryTypeId 
              + ", maxCapacity=" + maxCapacity
              + ", description=" + description 
              + "]";

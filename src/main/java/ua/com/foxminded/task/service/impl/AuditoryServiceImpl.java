@@ -98,7 +98,7 @@ public class AuditoryServiceImpl implements AuditoryService {
 
     private Auditory retriveObjectFromDto(AuditoryDto auditoryDto) {
         Auditory auditory = (auditoryDto.getId() != 0) ? auditoryRepository.getOne(auditoryDto.getId()) : new Auditory();
-        AuditoryType auditoryType = (auditoryDto.getIdAuditoryType() != 0) ? auditoryTypeRepository.getOne(auditoryDto.getIdAuditoryType()) : null;
+        AuditoryType auditoryType = (auditoryDto.getAuditoryTypeId() != 0) ? auditoryTypeRepository.getOne(auditoryDto.getAuditoryTypeId()) : null;
         auditory.setAuditoryNumber(auditoryDto.getAuditoryNumber());
         auditory.setType(auditoryType);
         auditory.setMaxCapacity(auditoryDto.getMaxCapacity());

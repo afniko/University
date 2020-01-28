@@ -31,7 +31,7 @@ public class MaxStudentsInGroupLimitValidator implements ConstraintValidator<Max
     public boolean isValid(StudentDto studentDto, ConstraintValidatorContext context) {
         boolean result = true;
         int studentId = studentDto.getId();
-        int idGroup = studentDto.getIdGroup();
+        int idGroup = studentDto.getGroupId();
 
         long countStudentsInGroup = studentService.countByGroupId(idGroup);
 

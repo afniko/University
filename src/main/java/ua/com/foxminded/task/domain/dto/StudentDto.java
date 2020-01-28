@@ -54,7 +54,7 @@ public class StudentDto {
     private String groupTitle;
 
     @ApiModelProperty(notes = "The unique number of students group")
-    private int idGroup;
+    private int groupId;
 
     public int getId() {
         return id;
@@ -112,12 +112,12 @@ public class StudentDto {
         this.groupTitle = groupTitle;
     }
 
-    public int getIdGroup() {
-        return idGroup;
+    public int getGroupId() {
+        return groupId;
     }
 
-    public void setIdGroup(int idGroup) {
-        this.idGroup = idGroup;
+    public void setGroupId(int groupId) {
+        this.groupId = groupId;
     }
 
     @Override
@@ -127,7 +127,7 @@ public class StudentDto {
         result = prime * result + ((birthday == null) ? 0 : birthday.hashCode());
         result = prime * result + ((firstName == null) ? 0 : firstName.hashCode());
         result = prime * result + idFees;
-        result = prime * result + idGroup;
+        result = prime * result + groupId;
         result = prime * result + ((lastName == null) ? 0 : lastName.hashCode());
         result = prime * result + ((middleName == null) ? 0 : middleName.hashCode());
         return result;
@@ -154,7 +154,7 @@ public class StudentDto {
             return false;
         if (idFees != other.idFees)
             return false;
-        if (idGroup != other.idGroup)
+        if (groupId != other.groupId)
             return false;
         if (lastName == null) {
             if (other.lastName != null)
@@ -178,7 +178,7 @@ public class StudentDto {
              + ", birthday=" + birthday 
              + ", idFees=" + idFees 
              + ", groupTitle=" + groupTitle 
-             + ", idGroup=" + idGroup 
+             + ", groupId=" + groupId 
              + "]";
     }
 

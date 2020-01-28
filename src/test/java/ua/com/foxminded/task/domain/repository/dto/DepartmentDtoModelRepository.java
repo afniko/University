@@ -44,7 +44,7 @@ public class DepartmentDtoModelRepository {
         Faculty faculty = FacultyModelRepository.getModel1();
         faculty.setId(1);
         department.setFacultyTitle(faculty.getTitle());
-        department.setIdFaculty(faculty.getId());
+        department.setFacultyId(faculty.getId());
         department.setTitle("department1");
         department.setDescription("bla bla bla 1");
         return department;

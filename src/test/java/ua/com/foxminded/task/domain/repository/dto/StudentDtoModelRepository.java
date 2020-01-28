@@ -44,7 +44,7 @@ public class StudentDtoModelRepository {
         student.setBirthday(LocalDate.parse("1999-06-25"));
         student.setIdFees(111111111);
         student.setGroupTitle(group.getTitle());
-        student.setIdGroup(group.getId());
+        student.setGroupId(group.getId());
         return student;
     }
 
@@ -58,7 +58,7 @@ public class StudentDtoModelRepository {
         student.setBirthday(LocalDate.parse("1998-06-25"));
         student.setIdFees(222211111);
         student.setGroupTitle(group.getTitle());
-        student.setIdGroup(group.getId());
+        student.setGroupId(group.getId());
         return student;
     }
 
@@ -72,7 +72,7 @@ public class StudentDtoModelRepository {
         student.setBirthday(LocalDate.parse("2001-07-25"));
         student.setIdFees(111133331);
         student.setGroupTitle(group.getTitle());
-        student.setIdGroup(group.getId());
+        student.setGroupId(group.getId());
         return student;
     }
 
@@ -86,7 +86,7 @@ public class StudentDtoModelRepository {
         student.setBirthday(LocalDate.parse("1999-06-25"));
         student.setIdFees(411111141);
         student.setGroupTitle(group.getTitle());
-        student.setIdGroup(group.getId());;
+        student.setGroupId(group.getId());;
         return student;
     }
 
@@ -100,7 +100,7 @@ public class StudentDtoModelRepository {
         student.setBirthday(LocalDate.parse("1998-01-20"));
         student.setIdFees(111111551);
         student.setGroupTitle(group.getTitle());
-        student.setIdGroup(group.getId());
+        student.setGroupId(group.getId());
         return student;
     }
 
@@ -114,7 +114,7 @@ public class StudentDtoModelRepository {
         student.setBirthday(LocalDate.parse("1997-02-15"));
         student.setIdFees(111111661);
         student.setGroupTitle(group.getTitle());
-        student.setIdGroup(group.getId());
+        student.setGroupId(group.getId());
         return student;
     }
 
@@ -128,7 +128,7 @@ public class StudentDtoModelRepository {
         student.setBirthday(LocalDate.parse("1997-02-15"));
         student.setIdFees(111111667);
         student.setGroupTitle(group.getTitle());
-        student.setIdGroup(group.getId());
+        student.setGroupId(group.getId());
         return student;
     }
 }

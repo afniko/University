@@ -90,12 +90,12 @@ public class AuditoryServiceImplTest {
         AuditoryType auditoryTypeExpected = AuditoryTypeModelRepository.getModel1();
 
         doReturn(auditoryExpected).when(auditoryRepository).saveAndFlush(any(Auditory.class));
-        doReturn(auditoryTypeExpected).when(auditoryTypeRepository).getOne(auditoryDto.getIdAuditoryType());
+        doReturn(auditoryTypeExpected).when(auditoryTypeRepository).getOne(auditoryDto.getAuditoryTypeId());
 
         AuditoryDto auditoryDtoActually = auditoryService.create(auditoryDto);
 
         verify(auditoryRepository, times(1)).saveAndFlush(auditoryInput);
-        verify(auditoryTypeRepository, times(1)).getOne(auditoryDto.getIdAuditoryType());
+        verify(auditoryTypeRepository, times(1)).getOne(auditoryDto.getAuditoryTypeId());
         assertEquals(auditoryDto, auditoryDtoActually);
     }
 
@@ -111,7 +111,7 @@ public class AuditoryServiceImplTest {
         doReturn(auditory).when(auditoryRepository).saveAndFlush(auditory);
         doReturn(true).when(auditoryRepository).existsById(auditoryDto.getId());
         doReturn(auditory).when(auditoryRepository).getOne(auditoryDto.getId());
-        doReturn(auditoryType).when(auditoryTypeRepository).getOne(auditoryDto.getIdAuditoryType());
+        doReturn(auditoryType).when(auditoryTypeRepository).getOne(auditoryDto.getAuditoryTypeId());
 
         AuditoryDto groupDtoActually = auditoryService.update(auditoryDto);
 
@@ -150,7 +150,7 @@ public class AuditoryServiceImplTest {
         AuditoryType auditoryType = AuditoryTypeModelRepository.getModel1();
         auditoryType.setId(1);
         
-        doReturn(auditoryType).when(auditoryTypeRepository).getOne(auditoryDto.getIdAuditoryType());
+        doReturn(auditoryType).when(auditoryTypeRepository).getOne(auditoryDto.getAuditoryTypeId());
         doThrow(DataIntegrityViolationException.class).when(auditoryRepository).saveAndFlush(auditory);
 
         assertThatThrownBy(() -> auditoryService.create(auditoryDto))
@@ -165,7 +165,7 @@ public class AuditoryServiceImplTest {
         AuditoryType auditoryType = AuditoryTypeModelRepository.getModel1();
         auditoryType.setId(1);
         
-        doReturn(auditoryType).when(auditoryTypeRepository).getOne(auditoryDto.getIdAuditoryType());
+        doReturn(auditoryType).when(auditoryTypeRepository).getOne(auditoryDto.getAuditoryTypeId());
         doReturn(true).when(auditoryRepository).existsById(auditory.getId());
         doThrow(DataIntegrityViolationException.class).when(auditoryRepository).saveAndFlush(auditory);
 
@@ -181,7 +181,7 @@ public class AuditoryServiceImplTest {
         AuditoryType auditoryType = AuditoryTypeModelRepository.getModel1();
         auditoryType.setId(1);
         
-        doReturn(auditoryType).when(auditoryTypeRepository).getOne(auditoryDto.getIdAuditoryType());
+        doReturn(auditoryType).when(auditoryTypeRepository).getOne(auditoryDto.getAuditoryTypeId());
         doReturn(false).when(auditoryRepository).existsById(auditory.getId());
 
         assertThatThrownBy(() -> auditoryService.update(auditoryDto))
