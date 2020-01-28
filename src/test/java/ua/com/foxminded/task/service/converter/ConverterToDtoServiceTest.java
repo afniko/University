@@ -44,7 +44,7 @@ import ua.com.foxminded.task.domain.repository.dto.TeacherDtoModelRepository;
 public class ConverterToDtoServiceTest {
 
     @Test
-    void WhenConvertAuditory_thenRetriveDtoObject() {
+    void whenConvertAuditory_thenRetriveDtoObject() {
         Auditory auditory = AuditoryModelRepository.getModel1();
         AuditoryDto auditoryExpected = AuditoryDtoModelRepository.getModel1();
         AuditoryDto auditoryActually = ConverterToDtoService.convert(auditory);
@@ -52,7 +52,7 @@ public class ConverterToDtoServiceTest {
     }
 
     @Test
-    void WhenConvertAuditoryType_thenRetriveDtoObject() {
+    void whenConvertAuditoryType_thenRetriveDtoObject() {
         AuditoryType auditoryType = AuditoryTypeModelRepository.getModel1();
         AuditoryTypeDto auditoryTypeExpected = AuditoryTypeDtoModelRepository.getModel1();
         AuditoryTypeDto auditoryTypeActually = ConverterToDtoService.convert(auditoryType);
@@ -60,7 +60,7 @@ public class ConverterToDtoServiceTest {
     }
 
     @Test
-    void WhenConvertDepartment_thenRetriveDtoObject() {
+    void whenConvertDepartment_thenRetriveDtoObject() {
         Department department = DepartmentModelRepository.getModel1();
         DepartmentDto departmentExpected = DepartmentDtoModelRepository.getModel1();
         DepartmentDto departmentActually = ConverterToDtoService.convert(department);
@@ -68,7 +68,7 @@ public class ConverterToDtoServiceTest {
     }
 
     @Test
-    void WhenConvertFaculty_thenRetriveDtoObject() {
+    void whenConvertFaculty_thenRetriveDtoObject() {
         Faculty faculty = FacultyModelRepository.getModel1();
         FacultyDto facultyExpected = FacultyDtoModelRepository.getModel1();
         FacultyDto facultyActually = ConverterToDtoService.convert(faculty);
@@ -76,7 +76,7 @@ public class ConverterToDtoServiceTest {
     }
 
     @Test
-    void WhenConvertGroup_thenRetriveGroupDtoObject() {
+    void whenConvertGroup_thenRetriveGroupDtoObject() {
         Group group = GroupModelRepository.getModel1();
         GroupDto groupExpected = GroupDtoModelRepository.getModel1();
         GroupDto groupActual = ConverterToDtoService.convert(group);
@@ -84,7 +84,7 @@ public class ConverterToDtoServiceTest {
     }
 
     @Test
-    void WhenConvertLecture_thenRetriveDtoObject() {
+    void whenConvertLecture_thenRetriveDtoObject() {
         Lecture lecture = LectureModelRepository.getModel1();
         LectureDto lectureExpected = LectureDtoModelRepository.getModel1();
         LectureDto lectureActually = ConverterToDtoService.convert(lecture);
@@ -92,7 +92,7 @@ public class ConverterToDtoServiceTest {
     }
 
     @Test
-    void WhenConvertStudent_thenRetriveDtoObject() {
+    void whenConvertStudent_thenRetriveDtoObject() {
         Student student = StudentModelRepository.getModel1();
         StudentDto studentExpected = StudentDtoModelRepository.getModel1();
         StudentDto studentActual = ConverterToDtoService.convert(student);
@@ -100,7 +100,7 @@ public class ConverterToDtoServiceTest {
     }
 
     @Test
-    void WhenConvertSubject_thenRetriveDtoObject() {
+    void whenConvertSubject_thenRetriveDtoObject() {
         Subject subject = SubjectModelRepository.getModel1();
         SubjectDto subjectExpected = SubjectDtoModelRepository.getModel1();
         SubjectDto subjectActually = ConverterToDtoService.convert(subject);
@@ -108,7 +108,7 @@ public class ConverterToDtoServiceTest {
     }
 
     @Test
-    void WhenConvertTeacher_thenRetriveDtoObject() {
+    void whenConvertTeacher_thenRetriveDtoObject() {
         Teacher teacher = TeacherModelRepository.getModel1();
         TeacherDto teacherExpected = TeacherDtoModelRepository.getModel1();
         TeacherDto teacherActually = ConverterToDtoService.convert(teacher);
