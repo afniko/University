@@ -61,7 +61,7 @@ public class SubjectRepositoryIntegrationTest {
     @DataSet(value = "subject/subjects.yml", 
              cleanBefore = true, 
              skipCleaningFor = "flyway_schema_history")
-    public void whenFindByTitle_thenGetExitsSubject() {
+    public void whenFindByTitle_thenSubjectReturned() {
         String title = "Mathmatics";
         Subject subjectActually = subjectRepository.findByTitle(title);
         assertThat(subjectActually.getTitle()).isNotNull().isEqualTo(title);

@@ -62,7 +62,7 @@ public class LectureRepositoryIntegrationTest {
     @DataSet(value = "lecture/lectures.yml", 
              cleanBefore = true, 
              skipCleaningFor = "flyway_schema_history")
-    public void whenFindByNumber_thenGetExitsLecture() {
+    public void whenFindByNumber_thenLectureReturned() {
         String number = "3";
         Lecture lectureActually = lectureRepository.findByNumber(number);
         assertThat(lectureActually.getNumber()).isNotNull().isEqualTo(number);

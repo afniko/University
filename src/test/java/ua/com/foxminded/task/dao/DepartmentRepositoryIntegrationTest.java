@@ -62,7 +62,7 @@ public class DepartmentRepositoryIntegrationTest {
     @DataSet(value = "department/departments.yml", 
              cleanBefore = true, 
              skipCleaningFor = "flyway_schema_history")
-    public void whenFindByTitle_thenGetExitsDepartment() {
+    public void whenFindByTitle_thenDepartmentReturned() {
         String title = "department2";
         Department departmentActually = departmentRepository.findByTitle(title);
         assertThat(departmentActually.getTitle()).isNotNull().isEqualTo(title);

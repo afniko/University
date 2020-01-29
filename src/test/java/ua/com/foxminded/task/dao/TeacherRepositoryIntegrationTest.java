@@ -70,7 +70,7 @@ public class TeacherRepositoryIntegrationTest {
     @DataSet(value = "teacher/teachers.yml", 
              cleanBefore = true, 
              skipCleaningFor = "flyway_schema_history")
-    public void whenFindByIdFees_thenGetExitsTeacher() {
+    public void whenFindByIdFees_thenTeacherReturned() {
         int idFees = 333111111;
         Teacher teacherActually = teacherRepository.findByIdFees(idFees);
         assertThat(teacherActually.getIdFees()).isEqualTo(idFees);

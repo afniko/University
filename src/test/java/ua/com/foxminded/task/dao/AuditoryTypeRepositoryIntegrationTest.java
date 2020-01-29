@@ -61,7 +61,7 @@ public class AuditoryTypeRepositoryIntegrationTest {
     @DataSet(value = "auditory-type/auditorytypes.yml", 
              cleanBefore = true, 
              skipCleaningFor = "flyway_schema_history")
-    public void whenFindByType_thenGetExitsAuditoryType() {
+    public void whenFindByType_thenAuditoryTypeReturned() {
         String type = "Laboratory";
         AuditoryType auditoryTypeActually = auditoryTypeRepository.findByType(type);
         assertThat(auditoryTypeActually.getType()).isNotNull().isEqualTo(type);

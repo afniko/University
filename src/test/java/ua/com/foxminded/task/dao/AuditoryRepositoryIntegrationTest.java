@@ -62,7 +62,7 @@ public class AuditoryRepositoryIntegrationTest {
     @DataSet(value = "auditory/auditories.yml", 
              cleanBefore = true, 
              skipCleaningFor = "flyway_schema_history")
-    public void whenFindByTitle_thenGetExitsAuditory() {
+    public void whenFindByAuditoryNumber_thenAuditoryReturned() {
         String auditoryNumber = "103a";
         Auditory auditoryActually = auditoryRepository.findByAuditoryNumber(auditoryNumber);
         assertThat(auditoryActually.getAuditoryNumber()).isNotNull().isEqualTo(auditoryNumber);

@@ -61,7 +61,7 @@ public class FacultyRepositoryIntegrationTest {
     @DataSet(value = "faculty/faculties.yml", 
              cleanBefore = true, 
              skipCleaningFor = "flyway_schema_history")
-    public void whenFindByTitle_thenGetExitsFaculty() {
+    public void whenFindByTitle_thenFacultyReturned() {
         String title = "faculty3";
         Faculty facultyActually = facultyRepository.findByTitle(title);
         assertThat(facultyActually.getTitle()).isNotNull().isEqualTo(title);
