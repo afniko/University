@@ -1,7 +1,9 @@
 package ua.com.foxminded.task.validation.validator;
 
+import static java.util.Objects.nonNull;
+
 import java.lang.reflect.InvocationTargetException;
-import java.util.Objects;
+import java.util.Map;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
@@ -10,34 +12,9 @@ import org.apache.commons.beanutils.BeanUtils;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import ua.com.foxminded.task.domain.Auditory;
-import ua.com.foxminded.task.domain.AuditoryType;
-import ua.com.foxminded.task.domain.Department;
-import ua.com.foxminded.task.domain.Faculty;
-import ua.com.foxminded.task.domain.Group;
-import ua.com.foxminded.task.domain.Lecture;
-import ua.com.foxminded.task.domain.Student;
-import ua.com.foxminded.task.domain.Subject;
-import ua.com.foxminded.task.domain.Teacher;
-import ua.com.foxminded.task.domain.dto.AuditoryDto;
-import ua.com.foxminded.task.domain.dto.AuditoryTypeDto;
-import ua.com.foxminded.task.domain.dto.DepartmentDto;
-import ua.com.foxminded.task.domain.dto.FacultyDto;
-import ua.com.foxminded.task.domain.dto.GroupDto;
-import ua.com.foxminded.task.domain.dto.LectureDto;
-import ua.com.foxminded.task.domain.dto.StudentDto;
-import ua.com.foxminded.task.domain.dto.SubjectDto;
-import ua.com.foxminded.task.domain.dto.TeacherDto;
-import ua.com.foxminded.task.service.AuditoryService;
-import ua.com.foxminded.task.service.AuditoryTypeService;
-import ua.com.foxminded.task.service.DepartmentService;
-import ua.com.foxminded.task.service.FacultyService;
-import ua.com.foxminded.task.service.GroupService;
-import ua.com.foxminded.task.service.LectureService;
-import ua.com.foxminded.task.service.StudentService;
-import ua.com.foxminded.task.service.SubjectService;
-import ua.com.foxminded.task.service.TeacherService;
 import ua.com.foxminded.task.validation.annotation.PropertyValueUnique;
+import ua.com.foxminded.task.validation.validator.property.unique.Command;
+import ua.com.foxminded.task.validation.validator.property.unique.Switcher;
 
 public class PropertyUniqueValidator implements ConstraintValidator<PropertyValueUnique, Object> {
 
@@ -46,23 +23,7 @@ public class PropertyUniqueValidator implements ConstraintValidator<PropertyValu
     private String nameProperty;
 
     @Autowired
-    private AuditoryService auditoryService;
-    @Autowired
-    private AuditoryTypeService auditoryTypeService;
-    @Autowired
-    private DepartmentService departmentService;
-    @Autowired
-    private FacultyService facultyService;
-    @Autowired
-    private GroupService groupService;
-    @Autowired
-    private LectureService lectureService;
-    @Autowired
-    private StudentService studentService;
-    @Autowired
-    private SubjectService subjectService;
-    @Autowired
-    private TeacherService teacherService;
+    private Switcher switcher;
     @Autowired
     private Logger logger;
 
@@ -78,126 +39,24 @@ public class PropertyUniqueValidator implements ConstraintValidator<PropertyValu
         boolean result = true;
         String uniqueField;
         String idField;
+        Map<String, Command> commandMap = switcher.getCommandMap();
 
         try {
             uniqueField = BeanUtils.getProperty(value, nameProperty);
             idField = BeanUtils.getProperty(value, "id");
+            Command command = commandMap.get(value.getClass().getName());
+            if (nonNull(command)) {
+                result = command.check(idField, uniqueField);
+            } else {
+                throw new IllegalAccessException("isValid() Annotation not usabilety for this entity!");
+            }
 
-            if (value instanceof AuditoryDto) {
-                result = checkAuditory(idField, uniqueField);
-            }
-            if (value instanceof AuditoryTypeDto) {
-                result = checkAuditoryType(idField, uniqueField);
-            }
-            if (value instanceof DepartmentDto) {
-                result = checkDepartment(idField, uniqueField);
-            }
-            if (value instanceof FacultyDto) {
-                result = checkFaculty(idField, uniqueField);
-            }
-            if (value instanceof GroupDto) {
-                result = checkGroup(idField, uniqueField);
-            }
-            if (value instanceof LectureDto) {
-                result = checkLecture(idField, uniqueField);
-            }
-            if (value instanceof StudentDto) {
-                result = checkStudent(idField, uniqueField);
-            }
-            if (value instanceof SubjectDto) {
-                result = checkSubject(idField, uniqueField);
-            }
-            if (value instanceof TeacherDto) {
-                result = checkTeacher(idField, uniqueField);
-            }
-            
             if (!result) {
                 context.disableDefaultConstraintViolation();
                 context.buildConstraintViolationWithTemplate(message).addPropertyNode(fieldError).addConstraintViolation();
             }
         } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
-            logger.debug("isValid() [Object:{}]", value);
-        }
-        return result;
-    }
-
-    private boolean checkAuditory(String idField, String uniqueField) {
-        boolean result = true;
-        Auditory objectExist = auditoryService.findByAuditoryNumber(uniqueField);
-        if (!Objects.isNull(objectExist)) {
-            result = (objectExist.getId() == Integer.valueOf(idField));
-        }
-        return result;
-    }
-
-    private boolean checkAuditoryType(String idField, String uniqueField) {
-        boolean result = true;
-        AuditoryType objectExist = auditoryTypeService.findByType(uniqueField);
-        if (!Objects.isNull(objectExist)) {
-            result = (objectExist.getId() == Integer.valueOf(idField));
-        }
-        return result;
-    }
-
-    private boolean checkDepartment(String idField, String uniqueField) {
-        boolean result = true;
-        Department objectExist = departmentService.findByTitle(uniqueField); 
-        if (!Objects.isNull(objectExist)) {
-            result = (objectExist.getId() == Integer.valueOf(idField));
-        }
-        return result;
-    }
-
-    private boolean checkFaculty(String idField, String uniqueField) {
-        boolean result = true;
-        Faculty objectExist = facultyService.findByTitle(uniqueField);
-        if (!Objects.isNull(objectExist)) {
-            result = (objectExist.getId() == Integer.valueOf(idField));
-        }
-        return result;
-    }
-
-    private boolean checkGroup(String idField, String uniqueField) {
-        boolean result = true;
-        Group objectExist = groupService.findByTitle(uniqueField);
-        if (!Objects.isNull(objectExist)) {
-            result = (objectExist.getId() == Integer.valueOf(idField));
-        }
-        return result;
-    }
-
-    private boolean checkLecture(String idField, String uniqueField) {
-        boolean result = true;
-        Lecture objectExist = lectureService.findByNumber(uniqueField);
-        if (!Objects.isNull(objectExist)) {
-            result = (objectExist.getId() == Integer.valueOf(idField));
-        }
-        return result;
-    }
-
-    private boolean checkStudent(String idField, String uniqueField) {
-        boolean result = true;
-        Student objectExist = studentService.findByIdFees(Integer.valueOf(uniqueField));
-        if (!Objects.isNull(objectExist)) {
-            result = (objectExist.getId() == Integer.valueOf(idField));
-        }
-        return result;
-    }
-
-    private boolean checkSubject(String idField, String uniqueField) {
-        boolean result = true;
-        Subject objectExist = subjectService.findByTitle(uniqueField);
-        if (!Objects.isNull(objectExist)) {
-            result = (objectExist.getId() == Integer.valueOf(idField));
-        }
-        return result;
-    }
-
-    private boolean checkTeacher(String idField, String uniqueField) {
-        boolean result = true;
-        Teacher objectExist = teacherService.findByIdFees(Integer.valueOf(uniqueField));
-        if (!Objects.isNull(objectExist)) {
-            result = (objectExist.getId() == Integer.valueOf(idField));
+            logger.debug("isValid() [Object:{}], {}", value, e);
         }
         return result;
     }

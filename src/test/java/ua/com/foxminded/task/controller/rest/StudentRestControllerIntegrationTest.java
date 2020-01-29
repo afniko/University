@@ -31,15 +31,8 @@ import org.springframework.web.context.WebApplicationContext;
 import ua.com.foxminded.task.config.TestMvcConfig;
 import ua.com.foxminded.task.domain.dto.StudentDto;
 import ua.com.foxminded.task.domain.repository.dto.StudentDtoModelRepository;
-import ua.com.foxminded.task.service.AuditoryService;
-import ua.com.foxminded.task.service.AuditoryTypeService;
-import ua.com.foxminded.task.service.DepartmentService;
-import ua.com.foxminded.task.service.FacultyService;
-import ua.com.foxminded.task.service.GroupService;
-import ua.com.foxminded.task.service.LectureService;
 import ua.com.foxminded.task.service.StudentService;
-import ua.com.foxminded.task.service.SubjectService;
-import ua.com.foxminded.task.service.TeacherService;
+import ua.com.foxminded.task.validation.validator.property.unique.Switcher;
 
 @WebMvcTest(StudentController.class)
 @Import(TestMvcConfig.class)
@@ -48,23 +41,9 @@ public class StudentRestControllerIntegrationTest {
     @Autowired
     private WebApplicationContext context;
     @MockBean
-    private AuditoryService auditoryService;
-    @MockBean
-    private AuditoryTypeService auditoryTypeService;
-    @MockBean
-    private DepartmentService departmentService;
-    @MockBean
-    private FacultyService facultyService;
-    @MockBean
-    private GroupService groupService;
-    @MockBean
-    private LectureService lectureService;
-    @MockBean
     private StudentService studentService;
     @MockBean
-    private SubjectService subjectService;
-    @MockBean
-    private TeacherService teacherService;
+    private Switcher switcher;
 
     private static StudentDto STUDENT_DTO1 = StudentDtoModelRepository.getModel1();
     private static StudentDto STUDENT_DTO2 = StudentDtoModelRepository.getModel2();
