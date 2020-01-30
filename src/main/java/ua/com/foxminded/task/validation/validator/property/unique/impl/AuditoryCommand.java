@@ -2,18 +2,17 @@ package ua.com.foxminded.task.validation.validator.property.unique.impl;
 
 import java.util.Objects;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-
 import ua.com.foxminded.task.domain.Auditory;
 import ua.com.foxminded.task.service.AuditoryService;
 import ua.com.foxminded.task.validation.validator.property.unique.Command;
 
-@Component
 public class AuditoryCommand implements Command {
 
-    @Autowired
     private AuditoryService auditoryService;
+
+    public AuditoryCommand(AuditoryService auditoryService) {
+        this.auditoryService = auditoryService;
+    }
 
     @Override
     public boolean check(String fieldId, String fieldUnique) {

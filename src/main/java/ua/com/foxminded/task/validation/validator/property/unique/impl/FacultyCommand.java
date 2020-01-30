@@ -2,18 +2,17 @@ package ua.com.foxminded.task.validation.validator.property.unique.impl;
 
 import java.util.Objects;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-
 import ua.com.foxminded.task.domain.Faculty;
 import ua.com.foxminded.task.service.FacultyService;
 import ua.com.foxminded.task.validation.validator.property.unique.Command;
 
-@Component
 public class FacultyCommand implements Command {
 
-    @Autowired
     private FacultyService facultyService;
+
+    public FacultyCommand(FacultyService facultyService) {
+        this.facultyService = facultyService;
+    }
 
     @Override
     public boolean check(String fieldId, String fieldUnique) {

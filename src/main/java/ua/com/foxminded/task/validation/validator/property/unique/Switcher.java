@@ -17,6 +17,15 @@ import ua.com.foxminded.task.domain.dto.LectureDto;
 import ua.com.foxminded.task.domain.dto.StudentDto;
 import ua.com.foxminded.task.domain.dto.SubjectDto;
 import ua.com.foxminded.task.domain.dto.TeacherDto;
+import ua.com.foxminded.task.service.AuditoryService;
+import ua.com.foxminded.task.service.AuditoryTypeService;
+import ua.com.foxminded.task.service.DepartmentService;
+import ua.com.foxminded.task.service.FacultyService;
+import ua.com.foxminded.task.service.GroupService;
+import ua.com.foxminded.task.service.LectureService;
+import ua.com.foxminded.task.service.StudentService;
+import ua.com.foxminded.task.service.SubjectService;
+import ua.com.foxminded.task.service.TeacherService;
 import ua.com.foxminded.task.validation.validator.property.unique.impl.AuditoryCommand;
 import ua.com.foxminded.task.validation.validator.property.unique.impl.AuditoryTypeCommand;
 import ua.com.foxminded.task.validation.validator.property.unique.impl.DepartmentCommand;
@@ -24,6 +33,7 @@ import ua.com.foxminded.task.validation.validator.property.unique.impl.FacultyCo
 import ua.com.foxminded.task.validation.validator.property.unique.impl.GroupCommand;
 import ua.com.foxminded.task.validation.validator.property.unique.impl.LectureCommand;
 import ua.com.foxminded.task.validation.validator.property.unique.impl.StudentCommand;
+import ua.com.foxminded.task.validation.validator.property.unique.impl.SubjectCommand;
 import ua.com.foxminded.task.validation.validator.property.unique.impl.TeacherCommand;
 
 @Configuration
@@ -32,37 +42,37 @@ public class Switcher {
     private Map<String, Command> uniqueValidationCommandMap;
 
     @Autowired
-    private AuditoryCommand auditoryCommand;
+    private AuditoryService auditoryService;
     @Autowired
-    private AuditoryTypeCommand auditoryTypeCommand;
+    private AuditoryTypeService auditoryTypeService;
     @Autowired
-    private DepartmentCommand departmentCommand;
+    private DepartmentService departmentService;
     @Autowired
-    private FacultyCommand facultyCommand;
+    private FacultyService facultyService;
     @Autowired
-    private GroupCommand groupCommand;
+    private GroupService groupService;
     @Autowired
-    private LectureCommand lectureCommand;
+    private LectureService lectureService;
     @Autowired
-    private StudentCommand studentCommand;
+    private StudentService studentService;
     @Autowired
-    private SubjectCommand subjectCommand;
+    private SubjectService subjectService;
     @Autowired
-    private TeacherCommand teacherCommand;
+    private TeacherService teacherService;
 
     @Bean
     @Qualifier("uniqueValidationCommandMap")
     public Map<String, Command> getUniqueValidationCommandMap() {
         uniqueValidationCommandMap = new HashMap<>();
-        uniqueValidationCommandMap.put(AuditoryDto.class.getName(), auditoryCommand);
-        uniqueValidationCommandMap.put(AuditoryTypeDto.class.getName(), auditoryTypeCommand);
-        uniqueValidationCommandMap.put(DepartmentDto.class.getName(), departmentCommand);
-        uniqueValidationCommandMap.put(FacultyDto.class.getName(), facultyCommand);
-        uniqueValidationCommandMap.put(GroupDto.class.getName(), groupCommand);
-        uniqueValidationCommandMap.put(LectureDto.class.getName(), lectureCommand);
-        uniqueValidationCommandMap.put(StudentDto.class.getName(), studentCommand);
-        uniqueValidationCommandMap.put(SubjectDto.class.getName(), subjectCommand);
-        uniqueValidationCommandMap.put(TeacherDto.class.getName(), teacherCommand);
+        uniqueValidationCommandMap.put(AuditoryDto.class.getName(), new AuditoryCommand(auditoryService));
+        uniqueValidationCommandMap.put(AuditoryTypeDto.class.getName(), new AuditoryTypeCommand(auditoryTypeService));
+        uniqueValidationCommandMap.put(DepartmentDto.class.getName(), new DepartmentCommand(departmentService));
+        uniqueValidationCommandMap.put(FacultyDto.class.getName(), new FacultyCommand(facultyService));
+        uniqueValidationCommandMap.put(GroupDto.class.getName(), new GroupCommand(groupService));
+        uniqueValidationCommandMap.put(LectureDto.class.getName(), new LectureCommand(lectureService));
+        uniqueValidationCommandMap.put(StudentDto.class.getName(), new StudentCommand(studentService));
+        uniqueValidationCommandMap.put(SubjectDto.class.getName(), new SubjectCommand(subjectService));
+        uniqueValidationCommandMap.put(TeacherDto.class.getName(), new TeacherCommand(teacherService));
         return uniqueValidationCommandMap;
     }
 

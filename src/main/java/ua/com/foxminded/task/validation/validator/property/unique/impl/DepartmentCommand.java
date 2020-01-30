@@ -15,6 +15,10 @@ public class DepartmentCommand implements Command {
     @Autowired
     private DepartmentService departmentService;
 
+    public DepartmentCommand(DepartmentService departmentService) {
+        this.departmentService = departmentService;
+    }
+
     @Override
     public boolean check(String fieldId, String fieldUnique) {
         boolean result = true;

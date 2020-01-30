@@ -1,18 +1,18 @@
-package ua.com.foxminded.task.validation.validator.property.unique;
+package ua.com.foxminded.task.validation.validator.property.unique.impl;
 
 import java.util.Objects;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-
 import ua.com.foxminded.task.domain.Subject;
 import ua.com.foxminded.task.service.SubjectService;
+import ua.com.foxminded.task.validation.validator.property.unique.Command;
 
-@Component
 public class SubjectCommand implements Command {
 
-    @Autowired
     private SubjectService subjectService;
+
+    public SubjectCommand(SubjectService subjectService) {
+        this.subjectService = subjectService;
+    }
 
     @Override
     public boolean check(String fieldId, String fieldUnique) {
