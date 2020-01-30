@@ -1,7 +1,5 @@
 package ua.com.foxminded.task.validation.validator;
 
-import static java.util.Objects.nonNull;
-
 import java.lang.reflect.InvocationTargetException;
 import java.util.Map;
 
@@ -38,15 +36,16 @@ public class PropertyUniqueValidator implements ConstraintValidator<PropertyValu
     @Override
     public boolean isValid(Object value, ConstraintValidatorContext context) {
         boolean result = true;
-        String uniqueField;
-        String idField;
+        String fieldUnique;
+        String fieldId;
+        String className = value.getClass().getName();
 
         try {
-            uniqueField = BeanUtils.getProperty(value, nameProperty);
-            idField = BeanUtils.getProperty(value, "id");
-            Command command = uniqueValidationCommandMap.get(value.getClass().getName());
-            if (nonNull(command)) {
-                result = command.check(idField, uniqueField);
+            fieldUnique = BeanUtils.getProperty(value, nameProperty);
+            fieldId = BeanUtils.getProperty(value, "id");
+            if (uniqueValidationCommandMap.containsKey(className)) {
+                Command command = uniqueValidationCommandMap.get(className);
+                result = command.check(fieldId, fieldUnique);
             } else {
                 throw new IllegalAccessException("isValid() Annotation not usabilety for this entity!");
             }
@@ -56,7 +55,7 @@ public class PropertyUniqueValidator implements ConstraintValidator<PropertyValu
                 context.buildConstraintViolationWithTemplate(message).addPropertyNode(fieldError).addConstraintViolation();
             }
         } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
-            logger.debug("isValid() [Object:{}], {}", value, e);
+            logger.warn("isValid() [Object:{}], {}", value, e);
         }
         return result;
     }
