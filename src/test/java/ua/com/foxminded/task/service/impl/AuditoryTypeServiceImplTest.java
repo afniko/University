@@ -2,7 +2,6 @@ package ua.com.foxminded.task.service.impl;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.doThrow;
@@ -84,7 +83,7 @@ public class AuditoryTypeServiceImplTest {
         AuditoryType auditoryTypeInput = AuditoryTypeModelRepository.getModel1();
         AuditoryType auditoryTypeExpected = AuditoryTypeModelRepository.getModel1();
 
-        doReturn(auditoryTypeExpected).when(auditoryTypeRepository).saveAndFlush(any(AuditoryType.class));
+        doReturn(auditoryTypeExpected).when(auditoryTypeRepository).saveAndFlush(auditoryTypeInput);
 
         AuditoryTypeDto auditoryTypeDtoActually = auditoryTypeService.create(auditoryTypeDto);
 

@@ -2,7 +2,6 @@ package ua.com.foxminded.task.service.impl;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.doThrow;
@@ -84,7 +83,7 @@ public class SubjectServiceImplTest {
         Subject subjectInput = SubjectModelRepository.getModel1();
         Subject subjectExpected = SubjectModelRepository.getModel1();
 
-        doReturn(subjectExpected).when(subjectRepository).saveAndFlush(any(Subject.class));
+        doReturn(subjectExpected).when(subjectRepository).saveAndFlush(subjectInput);
 
         SubjectDto subjectDtoActually = subjectService.create(subjectDto);
 

@@ -2,7 +2,6 @@ package ua.com.foxminded.task.service.impl;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.doThrow;
@@ -91,7 +90,7 @@ public class DepartmentServiceImplTest {
         Department departmentExpected = DepartmentModelRepository.getModel1();
         Faculty facultyExpected = FacultyModelRepository.getModel1();
 
-        doReturn(departmentExpected).when(departmentRepository).saveAndFlush(any(Department.class));
+        doReturn(departmentExpected).when(departmentRepository).saveAndFlush(departmentInput);
         doReturn(facultyExpected).when(facultyRepository).getOne(departmentDto.getFacultyId());
 
         DepartmentDto departmentDtoActually = departmentService.create(departmentDto);

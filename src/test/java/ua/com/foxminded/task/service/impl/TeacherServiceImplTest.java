@@ -1,7 +1,6 @@
 package ua.com.foxminded.task.service.impl;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.doThrow;
@@ -58,7 +57,7 @@ public class TeacherServiceImplTest {
 
         TeacherDto teacherDtoActually = teacherService.findByIdDto(1);
 
-        verify(teacherRepository, times(1)).getOne(any(Integer.class));
+        verify(teacherRepository, times(1)).getOne(anyInt());
         assertEquals(teacherDtoExpected, teacherDtoActually);
     }
 
@@ -107,7 +106,7 @@ public class TeacherServiceImplTest {
         
         doReturn(true).when(teacherRepository).existsById(teacherDto.getId());
         doReturn(subject2, subject3, subject4).when(subjectRepository).getOne(anyInt());
-        doReturn(teacher).when(teacherRepository).saveAndFlush(any(Teacher.class));
+        doReturn(teacher).when(teacherRepository).saveAndFlush(teacher);
         doReturn(teacher.getDepartment()).when(departmentRepository).getOne(teacher.getDepartment().getId());
         doReturn(teacher).when(teacherRepository).getOne(teacher.getId());
 

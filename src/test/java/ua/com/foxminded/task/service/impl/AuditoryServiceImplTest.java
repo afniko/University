@@ -2,7 +2,7 @@ package ua.com.foxminded.task.service.impl;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.times;
@@ -54,7 +54,7 @@ public class AuditoryServiceImplTest {
 
         Auditory actuallyAuditory = auditoryService.findById(1);
 
-        verify(auditoryRepository, times(1)).getOne(any(Integer.class));
+        verify(auditoryRepository, times(1)).getOne(anyInt());
         assertEquals(expectedAuditory, actuallyAuditory);
     }
 
@@ -66,7 +66,7 @@ public class AuditoryServiceImplTest {
 
         AuditoryDto auditoryDtoActually = auditoryService.findByIdDto(1);
 
-        verify(auditoryRepository, times(1)).getOne(any(Integer.class));
+        verify(auditoryRepository, times(1)).getOne(anyInt());
         assertEquals(auditoryDtoExpected, auditoryDtoActually);
     }
 
@@ -89,7 +89,7 @@ public class AuditoryServiceImplTest {
         Auditory auditoryExpected = AuditoryModelRepository.getModel1();
         AuditoryType auditoryTypeExpected = AuditoryTypeModelRepository.getModel1();
 
-        doReturn(auditoryExpected).when(auditoryRepository).saveAndFlush(any(Auditory.class));
+        doReturn(auditoryExpected).when(auditoryRepository).saveAndFlush(auditoryInput);
         doReturn(auditoryTypeExpected).when(auditoryTypeRepository).getOne(auditoryDto.getAuditoryTypeId());
 
         AuditoryDto auditoryDtoActually = auditoryService.create(auditoryDto);

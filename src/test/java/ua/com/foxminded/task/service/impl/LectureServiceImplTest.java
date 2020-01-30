@@ -2,7 +2,6 @@ package ua.com.foxminded.task.service.impl;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.doThrow;
@@ -84,7 +83,7 @@ public class LectureServiceImplTest {
         Lecture lectureInput = LectureModelRepository.getModel1();
         Lecture lectureExpected = LectureModelRepository.getModel1();
 
-        doReturn(lectureExpected).when(lectureRepository).saveAndFlush(any(Lecture.class));
+        doReturn(lectureExpected).when(lectureRepository).saveAndFlush(lectureInput);
 
         LectureDto lectureDtoActually = lectureService.create(lectureDto);
 
