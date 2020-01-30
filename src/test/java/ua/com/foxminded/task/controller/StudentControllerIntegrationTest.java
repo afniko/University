@@ -14,11 +14,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.persistence.EntityNotFoundException;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
@@ -34,7 +36,7 @@ import ua.com.foxminded.task.domain.repository.dto.GroupDtoModelRepository;
 import ua.com.foxminded.task.domain.repository.dto.StudentDtoModelRepository;
 import ua.com.foxminded.task.service.GroupService;
 import ua.com.foxminded.task.service.StudentService;
-import ua.com.foxminded.task.validation.validator.property.unique.Switcher;
+import ua.com.foxminded.task.validation.validator.property.unique.Command;
 
 @WebMvcTest(StudentController.class)
 @Import(TestMvcConfig.class)
@@ -48,7 +50,8 @@ public class StudentControllerIntegrationTest {
     @MockBean
     private StudentService studentService;
     @MockBean
-    private Switcher switcher;
+    @Qualifier("uniqueValidationCommandMap")
+    private Map<String, Command> uniqueValidationCommandMap;
 
     private static final String PATH_HTML_STUDENT = "student/student";
     private static final String PATH_HTML_STUDENTS = "student/students";

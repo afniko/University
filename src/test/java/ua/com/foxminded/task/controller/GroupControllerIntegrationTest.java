@@ -15,11 +15,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 import javax.persistence.EntityNotFoundException;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
@@ -32,7 +34,7 @@ import ua.com.foxminded.task.dao.exception.EntityNotValidException;
 import ua.com.foxminded.task.domain.dto.GroupDto;
 import ua.com.foxminded.task.domain.repository.dto.GroupDtoModelRepository;
 import ua.com.foxminded.task.service.GroupService;
-import ua.com.foxminded.task.validation.validator.property.unique.Switcher;
+import ua.com.foxminded.task.validation.validator.property.unique.Command;
 
 @WebMvcTest(GroupController.class)
 @Import(TestMvcConfig.class)
@@ -44,7 +46,8 @@ public class GroupControllerIntegrationTest {
     @MockBean
     private GroupService groupService;
     @MockBean
-    private Switcher switcher;
+    @Qualifier("uniqueValidationCommandMap")
+    private Map<String, Command> uniqueValidationCommandMap;
 
     private static final String PATH_HTML_GROUP = "group/group";
     private static final String PATH_HTML_GROUPS = "group/groups";

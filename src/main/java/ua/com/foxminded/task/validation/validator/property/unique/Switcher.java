@@ -4,7 +4,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
 import ua.com.foxminded.task.domain.dto.AuditoryDto;
 import ua.com.foxminded.task.domain.dto.AuditoryTypeDto;
@@ -15,9 +17,19 @@ import ua.com.foxminded.task.domain.dto.LectureDto;
 import ua.com.foxminded.task.domain.dto.StudentDto;
 import ua.com.foxminded.task.domain.dto.SubjectDto;
 import ua.com.foxminded.task.domain.dto.TeacherDto;
+import ua.com.foxminded.task.validation.validator.property.unique.impl.AuditoryCommand;
+import ua.com.foxminded.task.validation.validator.property.unique.impl.AuditoryTypeCommand;
+import ua.com.foxminded.task.validation.validator.property.unique.impl.DepartmentCommand;
+import ua.com.foxminded.task.validation.validator.property.unique.impl.FacultyCommand;
+import ua.com.foxminded.task.validation.validator.property.unique.impl.GroupCommand;
+import ua.com.foxminded.task.validation.validator.property.unique.impl.LectureCommand;
+import ua.com.foxminded.task.validation.validator.property.unique.impl.StudentCommand;
+import ua.com.foxminded.task.validation.validator.property.unique.impl.TeacherCommand;
 
-@Component
+@Configuration
 public class Switcher {
+
+    private Map<String, Command> uniqueValidationCommandMap;
 
     @Autowired
     private AuditoryCommand auditoryCommand;
@@ -38,23 +50,20 @@ public class Switcher {
     @Autowired
     private TeacherCommand teacherCommand;
 
-    private Map<String, Command> commandMap = new HashMap<>();
-
-    public Map<String, Command> getCommandMap() {
-        commandMap.put(AuditoryDto.class.getName(), auditoryCommand);
-        commandMap.put(AuditoryTypeDto.class.getName(), auditoryTypeCommand);
-        commandMap.put(DepartmentDto.class.getName(), departmentCommand);
-        commandMap.put(FacultyDto.class.getName(), facultyCommand);
-        commandMap.put(GroupDto.class.getName(), groupCommand);
-        commandMap.put(LectureDto.class.getName(), lectureCommand);
-        commandMap.put(StudentDto.class.getName(), studentCommand);
-        commandMap.put(SubjectDto.class.getName(), subjectCommand);
-        commandMap.put(TeacherDto.class.getName(), teacherCommand);
-        return commandMap;
-    }
-
-    public void setCommandMap(Map<String, Command> commandMap) {
-        this.commandMap = commandMap;
+    @Bean
+    @Qualifier("uniqueValidationCommandMap")
+    public Map<String, Command> getUniqueValidationCommandMap() {
+        uniqueValidationCommandMap = new HashMap<>();
+        uniqueValidationCommandMap.put(AuditoryDto.class.getName(), auditoryCommand);
+        uniqueValidationCommandMap.put(AuditoryTypeDto.class.getName(), auditoryTypeCommand);
+        uniqueValidationCommandMap.put(DepartmentDto.class.getName(), departmentCommand);
+        uniqueValidationCommandMap.put(FacultyDto.class.getName(), facultyCommand);
+        uniqueValidationCommandMap.put(GroupDto.class.getName(), groupCommand);
+        uniqueValidationCommandMap.put(LectureDto.class.getName(), lectureCommand);
+        uniqueValidationCommandMap.put(StudentDto.class.getName(), studentCommand);
+        uniqueValidationCommandMap.put(SubjectDto.class.getName(), subjectCommand);
+        uniqueValidationCommandMap.put(TeacherDto.class.getName(), teacherCommand);
+        return uniqueValidationCommandMap;
     }
 
 }

@@ -16,10 +16,12 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
@@ -32,7 +34,7 @@ import ua.com.foxminded.task.config.TestMvcConfig;
 import ua.com.foxminded.task.domain.dto.StudentDto;
 import ua.com.foxminded.task.domain.repository.dto.StudentDtoModelRepository;
 import ua.com.foxminded.task.service.StudentService;
-import ua.com.foxminded.task.validation.validator.property.unique.Switcher;
+import ua.com.foxminded.task.validation.validator.property.unique.Command;
 
 @WebMvcTest(StudentController.class)
 @Import(TestMvcConfig.class)
@@ -43,7 +45,8 @@ public class StudentRestControllerIntegrationTest {
     @MockBean
     private StudentService studentService;
     @MockBean
-    private Switcher switcher;
+    @Qualifier("uniqueValidationCommandMap")
+    private Map<String, Command> uniqueValidationCommandMap;
 
     private static StudentDto STUDENT_DTO1 = StudentDtoModelRepository.getModel1();
     private static StudentDto STUDENT_DTO2 = StudentDtoModelRepository.getModel2();

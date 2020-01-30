@@ -1,23 +1,24 @@
-package ua.com.foxminded.task.validation.validator.property.unique;
+package ua.com.foxminded.task.validation.validator.property.unique.impl;
 
 import java.util.Objects;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import ua.com.foxminded.task.domain.Auditory;
-import ua.com.foxminded.task.service.AuditoryService;
+import ua.com.foxminded.task.domain.Department;
+import ua.com.foxminded.task.service.DepartmentService;
+import ua.com.foxminded.task.validation.validator.property.unique.Command;
 
 @Component
-public class AuditoryCommand implements Command {
+public class DepartmentCommand implements Command {
 
     @Autowired
-    private AuditoryService auditoryService;
+    private DepartmentService departmentService;
 
     @Override
     public boolean check(String fieldId, String fieldUnique) {
         boolean result = true;
-        Auditory objectExist = auditoryService.findByAuditoryNumber(fieldUnique);
+        Department objectExist = departmentService.findByTitle(fieldUnique);
         if (!Objects.isNull(objectExist)) {
             result = (objectExist.getId() == Integer.valueOf(fieldId));
         }

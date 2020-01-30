@@ -1,4 +1,4 @@
-package ua.com.foxminded.task.validation.validator.property.unique;
+package ua.com.foxminded.task.validation.validator.property.unique.impl;
 
 import java.util.Objects;
 
@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 
 import ua.com.foxminded.task.domain.AuditoryType;
 import ua.com.foxminded.task.service.AuditoryTypeService;
+import ua.com.foxminded.task.validation.validator.property.unique.Command;
 
 @Component
 public class AuditoryTypeCommand implements Command {

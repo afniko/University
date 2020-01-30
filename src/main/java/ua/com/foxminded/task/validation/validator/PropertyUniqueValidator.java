@@ -11,10 +11,10 @@ import javax.validation.ConstraintValidatorContext;
 import org.apache.commons.beanutils.BeanUtils;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 
 import ua.com.foxminded.task.validation.annotation.PropertyValueUnique;
 import ua.com.foxminded.task.validation.validator.property.unique.Command;
-import ua.com.foxminded.task.validation.validator.property.unique.Switcher;
 
 public class PropertyUniqueValidator implements ConstraintValidator<PropertyValueUnique, Object> {
 
@@ -23,7 +23,8 @@ public class PropertyUniqueValidator implements ConstraintValidator<PropertyValu
     private String nameProperty;
 
     @Autowired
-    private Switcher switcher;
+    @Qualifier("uniqueValidationCommandMap")
+    private Map<String, Command> uniqueValidationCommandMap;
     @Autowired
     private Logger logger;
 
@@ -39,12 +40,11 @@ public class PropertyUniqueValidator implements ConstraintValidator<PropertyValu
         boolean result = true;
         String uniqueField;
         String idField;
-        Map<String, Command> commandMap = switcher.getCommandMap();
 
         try {
             uniqueField = BeanUtils.getProperty(value, nameProperty);
             idField = BeanUtils.getProperty(value, "id");
-            Command command = commandMap.get(value.getClass().getName());
+            Command command = uniqueValidationCommandMap.get(value.getClass().getName());
             if (nonNull(command)) {
                 result = command.check(idField, uniqueField);
             } else {
