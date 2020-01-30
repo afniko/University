@@ -56,14 +56,13 @@ public class SubjectServiceImpl implements SubjectService {
             throw new EntityAlreadyExistsException("create() subjectDto: " + subjectDto);
         }
         Subject subject = retriveEntityFromDto(subjectDto);
-        Subject subjectResult = null;
         try {
-            subjectResult = subjectRepository.saveAndFlush(subject);
+            subject = subjectRepository.saveAndFlush(subject);
         } catch (DataIntegrityViolationException e) {
             logger.warn("create() [subject:{}], exception:{}", subject, e);
             throw new EntityNotValidException("create() subject: " + subject, e);
         }
-        return ConverterToDtoService.convert(subjectResult);
+        return ConverterToDtoService.convert(subject);
     }
 
     @Override
@@ -74,14 +73,13 @@ public class SubjectServiceImpl implements SubjectService {
             throw new EntityNotFoundException("Subject not exist!");
         }
         Subject subject = retriveEntityFromDto(subjectDto);
-        Subject subjectUpdated = null;
         try {
-            subjectUpdated = subjectRepository.saveAndFlush(subject);
+            subject = subjectRepository.saveAndFlush(subject);
         } catch (DataIntegrityViolationException e) {
             logger.warn("update() [subject:{}], exception:{}", subject, e);
             throw new EntityNotValidException("update() subject: " + subject, e);
         }
-        return ConverterToDtoService.convert(subjectUpdated);
+        return ConverterToDtoService.convert(subject);
     }
 
     @Override

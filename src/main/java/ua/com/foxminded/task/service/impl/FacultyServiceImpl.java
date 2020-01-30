@@ -56,14 +56,13 @@ public class FacultyServiceImpl implements FacultyService {
             throw new EntityAlreadyExistsException("create() facultyDto: " + facultyDto);
         }
         Faculty faculty = retriveEntityFromDto(facultyDto);
-        Faculty facultyResult = null;
         try {
-            facultyResult = facultyRepository.saveAndFlush(faculty);
+            faculty = facultyRepository.saveAndFlush(faculty);
         } catch (DataIntegrityViolationException e) {
             logger.warn("create() [faculty:{}], exception:{}", faculty, e);
             throw new EntityNotValidException("create() faculty: " + faculty, e);
         }
-        return ConverterToDtoService.convert(facultyResult);
+        return ConverterToDtoService.convert(faculty);
     }
 
     @Override
@@ -74,14 +73,13 @@ public class FacultyServiceImpl implements FacultyService {
             throw new EntityNotFoundException("Faculty not exist!");
         }
         Faculty faculty = retriveEntityFromDto(facultyDto);
-        Faculty facultyUpdated = null;
         try {
-            facultyUpdated = facultyRepository.saveAndFlush(faculty);
+            faculty = facultyRepository.saveAndFlush(faculty);
         } catch (DataIntegrityViolationException e) {
             logger.warn("update() [faculty:{}], exception:{}", faculty, e);
             throw new EntityNotValidException("update() faculty: " + faculty, e);
         }
-        return ConverterToDtoService.convert(facultyUpdated);
+        return ConverterToDtoService.convert(faculty);
     }
 
     @Override

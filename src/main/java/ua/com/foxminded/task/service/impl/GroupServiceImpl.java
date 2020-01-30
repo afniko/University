@@ -59,14 +59,13 @@ public class GroupServiceImpl implements GroupService {
             throw new EntityAlreadyExistsException("create() groupDto: " + groupDto);
         }
         Group group = retriveEntityFromDto(groupDto);
-        Group groupResult = null;
         try {
-            groupResult = groupRepository.saveAndFlush(group);
+            group = groupRepository.saveAndFlush(group);
         } catch (DataIntegrityViolationException e) {
             logger.warn("create() [group:{}], exception:{}", group, e);
             throw new EntityNotValidException("create() group: " + group, e);
         }
-        return ConverterToDtoService.convert(groupResult);
+        return ConverterToDtoService.convert(group);
     }
 
     @Override
@@ -77,14 +76,13 @@ public class GroupServiceImpl implements GroupService {
             throw new EntityNotFoundException("Group not exist!");
         }
         Group group = retriveEntityFromDto(groupDto);
-        Group groupUpdated = null;
         try {
-            groupUpdated = groupRepository.saveAndFlush(group);
+            group = groupRepository.saveAndFlush(group);
         } catch (DataIntegrityViolationException e) {
             logger.warn("update() [group:{}], exception:{}", group, e);
             throw new EntityNotValidException("update() group: " + group, e);
         }
-        return ConverterToDtoService.convert(groupUpdated);
+        return ConverterToDtoService.convert(group);
     }
 
     @Override

@@ -68,14 +68,13 @@ public class TeacherServiceImpl implements TeacherService {
             throw new EntityAlreadyExistsException("create() teacherDto: " + teacherDto);
         }
         Teacher teacher = retriveEntityFromDto(teacherDto);
-        Teacher teacherResult = null;
         try {
-            teacherResult = teacherRepository.saveAndFlush(teacher);
+            teacher = teacherRepository.saveAndFlush(teacher);
         } catch (DataIntegrityViolationException e) {
             logger.warn("create() [teacher:{}], exception:{}", teacher, e);
             throw new EntityNotValidException("create() teacher: " + teacher, e);
         }
-        return ConverterToDtoService.convert(teacherResult);
+        return ConverterToDtoService.convert(teacher);
     }
 
     @Override

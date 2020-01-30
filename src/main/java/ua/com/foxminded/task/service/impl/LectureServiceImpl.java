@@ -56,14 +56,13 @@ public class LectureServiceImpl implements LectureService {
             throw new EntityAlreadyExistsException("create() lectureDto: " + lectureDto);
         }
         Lecture lecture = retriveEntityFromDto(lectureDto);
-        Lecture lectureResult = null;
         try {
-            lectureResult = lectureRepository.saveAndFlush(lecture);
+            lecture = lectureRepository.saveAndFlush(lecture);
         } catch (DataIntegrityViolationException e) {
             logger.warn("create() [lecture:{}], exception:{}", lecture, e);
             throw new EntityNotValidException("create() lecture: " + lecture, e);
         }
-        return ConverterToDtoService.convert(lectureResult);
+        return ConverterToDtoService.convert(lecture);
     }
 
     @Override
@@ -74,14 +73,13 @@ public class LectureServiceImpl implements LectureService {
             throw new EntityNotFoundException("Lecture not exist!");
         }
         Lecture lecture = retriveEntityFromDto(lectureDto);
-        Lecture lectureUpdated = null;
         try {
-            lectureUpdated = lectureRepository.saveAndFlush(lecture);
+            lecture = lectureRepository.saveAndFlush(lecture);
         } catch (DataIntegrityViolationException e) {
             logger.warn("update() [lecture:{}], exception:{}", lecture, e);
             throw new EntityNotValidException("update() lecture: " + lecture, e);
         }
-        return ConverterToDtoService.convert(lectureUpdated);
+        return ConverterToDtoService.convert(lecture);
     }
 
     @Override

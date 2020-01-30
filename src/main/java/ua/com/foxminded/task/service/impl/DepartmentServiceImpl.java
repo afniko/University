@@ -62,14 +62,13 @@ public class DepartmentServiceImpl implements DepartmentService {
             throw new EntityAlreadyExistsException("create() departmentDto: " + departmentDto);
         }
         Department department = retriveEntityFromDto(departmentDto);
-        Department departmentResult = null;
         try {
-            departmentResult = departmentRepository.saveAndFlush(department);
+            department = departmentRepository.saveAndFlush(department);
         } catch (DataIntegrityViolationException e) {
             logger.warn("create() [department:{}], exception:{}", department, e);
             throw new EntityNotValidException("create() department: " + department, e);
         }
-        return ConverterToDtoService.convert(departmentResult);
+        return ConverterToDtoService.convert(department);
     }
 
     @Override
@@ -80,14 +79,13 @@ public class DepartmentServiceImpl implements DepartmentService {
             throw new EntityNotFoundException("Department not exist!");
         }
         Department department = retriveEntityFromDto(departmentDto);
-        Department departmentUpdated = null;
         try {
-            departmentUpdated = departmentRepository.saveAndFlush(department);
+            department = departmentRepository.saveAndFlush(department);
         } catch (DataIntegrityViolationException e) {
             logger.warn("update() [department:{}], exception:{}", department, e);
             throw new EntityNotValidException("update() department: " + department, e);
         }
-        return ConverterToDtoService.convert(departmentUpdated);
+        return ConverterToDtoService.convert(department);
     }
 
     @Override

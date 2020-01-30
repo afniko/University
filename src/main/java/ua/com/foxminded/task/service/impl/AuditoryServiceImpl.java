@@ -62,14 +62,13 @@ public class AuditoryServiceImpl implements AuditoryService {
             throw new EntityAlreadyExistsException("create() auditoryDto: " + auditoryDto);
         }
         Auditory auditory = retriveEntityFromDto(auditoryDto);
-        Auditory auditoryResult = null;
         try {
-            auditoryResult = auditoryRepository.saveAndFlush(auditory);
+            auditory = auditoryRepository.saveAndFlush(auditory);
         } catch (DataIntegrityViolationException e) {
             logger.warn("create() [auditory:{}], exception:{}", auditory, e);
             throw new EntityNotValidException("create() auditory: " + auditory, e);
         }
-        return ConverterToDtoService.convert(auditoryResult);
+        return ConverterToDtoService.convert(auditory);
     }
 
     @Override
@@ -80,14 +79,13 @@ public class AuditoryServiceImpl implements AuditoryService {
             throw new EntityNotFoundException("Auditory not exist!");
         }
         Auditory auditory = retriveEntityFromDto(auditoryDto);
-        Auditory auditoryUpdated = null;
         try {
-            auditoryUpdated = auditoryRepository.saveAndFlush(auditory);
+            auditory = auditoryRepository.saveAndFlush(auditory);
         } catch (DataIntegrityViolationException e) {
             logger.warn("update() [auditory:{}], exception:{}", auditory, e);
             throw new EntityNotValidException("update() auditory: " + auditory, e);
         }
-        return ConverterToDtoService.convert(auditoryUpdated);
+        return ConverterToDtoService.convert(auditory);
     }
 
     @Override

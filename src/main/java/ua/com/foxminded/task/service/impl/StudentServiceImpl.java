@@ -57,14 +57,13 @@ public class StudentServiceImpl implements StudentService {
             throw new EntityAlreadyExistsException("create() studentDto: " + studentDto);
         }
         Student student = retriveEntityFromDto(studentDto);
-        Student studentResult = null;
         try {
-            studentResult = studentRepository.saveAndFlush(student);
+            student = studentRepository.saveAndFlush(student);
         } catch (DataIntegrityViolationException e) {
             logger.warn("create() [student:{}], exception:{}", student, e);
             throw new EntityNotValidException("create() student: " + student, e);
         }
-        return ConverterToDtoService.convert(studentResult);
+        return ConverterToDtoService.convert(student);
     }
 
     @Override
@@ -75,14 +74,13 @@ public class StudentServiceImpl implements StudentService {
             throw new EntityNotFoundException("Student not exist!");
         }
         Student student = retriveEntityFromDto(studentDto);
-        Student studenUpdated = null;
         try {
-            studenUpdated = studentRepository.saveAndFlush(student);
+            student = studentRepository.saveAndFlush(student);
         } catch (DataIntegrityViolationException e) {
             logger.warn("update() [student:{}], exception:{}", student, e);
             throw new EntityNotValidException("update() student: " + student, e);
         }
-        return ConverterToDtoService.convert(studenUpdated);
+        return ConverterToDtoService.convert(student);
     }
 
     @Override
