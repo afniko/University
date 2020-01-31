@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import ua.com.foxminded.task.domain.Department;
+import ua.com.foxminded.task.domain.Faculty;
 
 public class DepartmentModelRepository {
 
@@ -39,9 +40,11 @@ public class DepartmentModelRepository {
 
     public static Department getModel1() {
         Department department = new Department();
+        Faculty faculty = FacultyModelRepository.getModel1();
+        faculty.setId(1);
+        department.setFaculty(faculty);
         department.setTitle("department1");
         department.setDescription("bla bla bla 1");
-        department.setFaculty(FacultyModelRepository.getModel1());
         return department;
     }
 

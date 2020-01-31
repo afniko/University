@@ -10,6 +10,8 @@ import ua.com.foxminded.task.domain.Group;
 @Transactional
 public interface GroupRepository extends JpaRepository<Group, Integer> {
 
+    public boolean existsById(Integer id);
+    
     public Group findByTitle(String title);
 
 }

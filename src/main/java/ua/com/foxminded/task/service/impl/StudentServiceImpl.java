@@ -56,15 +56,14 @@ public class StudentServiceImpl implements StudentService {
             logger.warn("create() [studentDto:{}]", studentDto);
             throw new EntityAlreadyExistsException("create() studentDto: " + studentDto);
         }
-        Student student = retriveStudentFromDto(studentDto);
-        Student studentResult = null;
+        Student student = retriveEntityFromDto(studentDto);
         try {
-            studentResult = studentRepository.saveAndFlush(student);
+            student = studentRepository.saveAndFlush(student);
         } catch (DataIntegrityViolationException e) {
             logger.warn("create() [student:{}], exception:{}", student, e);
             throw new EntityNotValidException("create() student: " + student, e);
         }
-        return ConverterToDtoService.convert(studentResult);
+        return ConverterToDtoService.convert(student);
     }
 
     @Override
@@ -74,15 +73,14 @@ public class StudentServiceImpl implements StudentService {
         if (!studentRepository.existsById(studentId)) {
             throw new EntityNotFoundException("Student not exist!");
         }
-        Student student = retriveStudentFromDto(studentDto);
-        Student studenUpdated = null;
+        Student student = retriveEntityFromDto(studentDto);
         try {
-            studenUpdated = studentRepository.saveAndFlush(student);
+            student = studentRepository.saveAndFlush(student);
         } catch (DataIntegrityViolationException e) {
             logger.warn("update() [student:{}], exception:{}", student, e);
             throw new EntityNotValidException("update() student: " + student, e);
         }
-        return ConverterToDtoService.convert(studenUpdated);
+        return ConverterToDtoService.convert(student);
     }
 
     @Override
@@ -103,10 +101,10 @@ public class StudentServiceImpl implements StudentService {
         return studentRepository.existsStudentByIdAndGroupId(studentId, groupId);
     }
 
-    private Student retriveStudentFromDto(StudentDto studentDto) {
+    private Student retriveEntityFromDto(StudentDto studentDto) {
         Student student = (studentDto.getId() != 0) ? studentRepository.getOne(studentDto.getId()) : new Student();
 
-        Group group = studentDto.getIdGroup() != 0 ? groupRepository.getOne(Integer.valueOf(studentDto.getIdGroup())) : null;
+        Group group = studentDto.getGroupId() != 0 ? groupRepository.getOne(Integer.valueOf(studentDto.getGroupId())) : null;
         student.setGroup(group);
         student.setFirstName(studentDto.getFirstName());
         student.setMiddleName(studentDto.getMiddleName());

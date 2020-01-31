@@ -10,4 +10,7 @@ import ua.com.foxminded.task.domain.Lecture;
 @Transactional
 public interface LectureRepository extends JpaRepository<Lecture, Integer> {
 
+    public boolean existsById(Integer id);
+
+    public Lecture findByNumber(String number);
 }

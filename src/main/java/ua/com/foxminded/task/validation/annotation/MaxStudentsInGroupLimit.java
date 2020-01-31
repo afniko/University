@@ -19,7 +19,7 @@ public @interface MaxStudentsInGroupLimit {
 
     String message() default "Max participant in group!";
 
-    String fieldName() default "idGroup";
+    String fieldName() default "groupId";
     
     Class<?>[] groups() default {};
 

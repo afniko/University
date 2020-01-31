@@ -194,14 +194,14 @@ public class StudentControllerSystemTest {
         studentDto.setId(7);
         int idFeesExist = StudentDtoModelRepository.getModel6().getIdFees();
         studentDto.setIdFees(idFeesExist);
-        studentDto.setIdGroup(2);
+        studentDto.setGroupId(2);
         String httpRequest = "/student_edit";
         this.mockMvc.perform(post(httpRequest).accept(MediaType.TEXT_HTML_VALUE).flashAttr("studentDto", studentDto))
                 .andExpect(status().isOk())
                 .andExpect(view().name(PATH_HTML_STUDENT_EDIT))
                 .andExpect(content().string(allOf(containsString("<div>" + EXPECTED_ERROR_MESSAGE + "</div>"))))
-                .andExpect(model().attributeHasFieldErrorCode("studentDto", "idFees", "StudentIdFeesUnique"))
-                .andExpect(model().attributeHasFieldErrorCode("studentDto", "idGroup", "MaxStudentsInGroupLimit"))
+                .andExpect(model().attributeHasFieldErrorCode("studentDto", "idFees", "PropertyValueUnique"))
+                .andExpect(model().attributeHasFieldErrorCode("studentDto", "groupId", "MaxStudentsInGroupLimit"))
                 .andDo(print());
     }
 

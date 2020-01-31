@@ -57,15 +57,15 @@ public class SubjectRepositoryIntegrationTest {
         assertThat(expectedSubject).isEqualTo(actuallySubject);
     }
 
-//    @Test
-//    @DataSet(value = "group/groups.yml", 
-//             cleanBefore = true, 
-//             skipCleaningFor = "flyway_schema_history")
-//    public void whenFindByTitle_thenGetExitsGroup() {
-//        String title = "group2";
-//        Group groupActually = groupRepository.findByTitle(title);
-//        assertThat(groupActually.getTitle()).isNotNull().isEqualTo(title);
-//    }
+    @Test
+    @DataSet(value = "subject/subjects.yml", 
+             cleanBefore = true, 
+             skipCleaningFor = "flyway_schema_history")
+    public void whenFindByTitle_thenSubjectReturned() {
+        String title = "Mathmatics";
+        Subject subjectActually = subjectRepository.findByTitle(title);
+        assertThat(subjectActually.getTitle()).isNotNull().isEqualTo(title);
+    }
 
     @Test
     @DataSet(cleanBefore = true, skipCleaningFor = "flyway_schema_history")

@@ -16,10 +16,12 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
@@ -32,6 +34,7 @@ import ua.com.foxminded.task.config.TestMvcConfig;
 import ua.com.foxminded.task.domain.dto.StudentDto;
 import ua.com.foxminded.task.domain.repository.dto.StudentDtoModelRepository;
 import ua.com.foxminded.task.service.StudentService;
+import ua.com.foxminded.task.validation.validator.property.unique.Command;
 
 @WebMvcTest(StudentController.class)
 @Import(TestMvcConfig.class)
@@ -41,6 +44,9 @@ public class StudentRestControllerIntegrationTest {
     private WebApplicationContext context;
     @MockBean
     private StudentService studentService;
+    @MockBean
+    @Qualifier("uniqueValidationCommandMap")
+    private Map<String, Command> uniqueValidationCommandMap;
 
     private static StudentDto STUDENT_DTO1 = StudentDtoModelRepository.getModel1();
     private static StudentDto STUDENT_DTO2 = StudentDtoModelRepository.getModel2();
@@ -72,7 +78,7 @@ public class StudentRestControllerIntegrationTest {
                 .andExpect(jsonPath("$[0].birthday", is("1999-06-25")))
                 .andExpect(jsonPath("$[0].idFees", is(111111111)))
                 .andExpect(jsonPath("$[0].groupTitle", is("group11")))
-                .andExpect(jsonPath("$[0].idGroup", is(1)))
+                .andExpect(jsonPath("$[0].groupId", is(1)))
                 .andExpect(jsonPath("$[1].id", is(2)))
                 .andExpect(jsonPath("$[1].firstName", is("firstName2")))
                 .andExpect(jsonPath("$[1].middleName", is("middleName2")))
@@ -80,7 +86,7 @@ public class StudentRestControllerIntegrationTest {
                 .andExpect(jsonPath("$[1].birthday", is("1998-06-25")))
                 .andExpect(jsonPath("$[1].idFees", is(222211111)))
                 .andExpect(jsonPath("$[1].groupTitle", is("group11")))
-                .andExpect(jsonPath("$[1].idGroup", is(1)));
+                .andExpect(jsonPath("$[1].groupId", is(1)));
     }
 
     @Test
@@ -101,7 +107,7 @@ public class StudentRestControllerIntegrationTest {
                 .andExpect(jsonPath("$.birthday", is("1998-06-25")))
                 .andExpect(jsonPath("$.idFees", is(222211111)))
                 .andExpect(jsonPath("$.groupTitle", is("group11")))
-                .andExpect(jsonPath("$.idGroup", is(1)));
+                .andExpect(jsonPath("$.groupId", is(1)));
     }
 
     @Test
@@ -112,7 +118,7 @@ public class StudentRestControllerIntegrationTest {
                        + "\"birthday\":\"1997-06-25\"," 
                        + "\"idFees\":232211111,"
                        + "\"groupTitle\":\"group1\"," 
-                       + "\"idGroup\":0}";
+                       + "\"groupId\":0}";
         StudentDto studentDto = new StudentDto();
         studentDto.setId(2);
         studentDto.setFirstName("firstName2");
@@ -121,7 +127,7 @@ public class StudentRestControllerIntegrationTest {
         studentDto.setBirthday(LocalDate.parse("1997-06-25"));
         studentDto.setIdFees(232211111);
         studentDto.setGroupTitle(null);
-        studentDto.setIdGroup(0);
+        studentDto.setGroupId(0);
 
         when(studentService.update(any(StudentDto.class))).thenReturn(studentDto);
 
@@ -136,7 +142,7 @@ public class StudentRestControllerIntegrationTest {
                 .andExpect(jsonPath("$.birthday", is("1997-06-25")))
                 .andExpect(jsonPath("$.idFees", is(232211111)))
                 .andExpect(jsonPath("$.groupTitle", is(nullValue())))
-                .andExpect(jsonPath("$.idGroup", is(0)));
+                .andExpect(jsonPath("$.groupId", is(0)));
     }
 
     @Test
@@ -147,7 +153,7 @@ public class StudentRestControllerIntegrationTest {
                        + "\"birthday\":\"1997-06-25\"," 
                        + "\"idFees\":232211111,"
                        + "\"groupTitle\":\"group2\"," 
-                       + "\"idGroup\":3}";
+                       + "\"groupId\":3}";
         StudentDto studentDto = new StudentDto();
         studentDto.setId(7);
         studentDto.setFirstName("firstName7");
@@ -156,7 +162,7 @@ public class StudentRestControllerIntegrationTest {
         studentDto.setBirthday(LocalDate.parse("1997-06-25"));
         studentDto.setIdFees(232211111);
         studentDto.setGroupTitle("group3");
-        studentDto.setIdGroup(3);
+        studentDto.setGroupId(3);
 
         when(studentService.create(any(StudentDto.class))).thenReturn(studentDto);
 
@@ -171,7 +177,7 @@ public class StudentRestControllerIntegrationTest {
                 .andExpect(jsonPath("$.birthday", is("1997-06-25")))
                 .andExpect(jsonPath("$.idFees", is(232211111)))
                 .andExpect(jsonPath("$.groupTitle", is("group3")))
-                .andExpect(jsonPath("$.idGroup", is(3)));
+                .andExpect(jsonPath("$.groupId", is(3)));
     }
 
     @Test
@@ -182,7 +188,7 @@ public class StudentRestControllerIntegrationTest {
                        + "\"birthday\":\"1997-06-25\"," 
                        + "\"idFees\":1212121212,"
                        + "\"groupTitle\":\"group2\"," 
-                       + "\"idGroup\":3}";
+                       + "\"groupId\":3}";
         this.mockMvc.perform(post("/api/students").content(student).contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isBadRequest())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
@@ -200,7 +206,7 @@ public class StudentRestControllerIntegrationTest {
                        + "\"birthday\":\"1997-06-25\"," 
                        + "\"idFees\":12121212," 
                        + "\"groupTitle\":\"qwertyuiopasdfghjklzxcvbnm\"," 
-                       + "\"idGroup\":3}";
+                       + "\"groupId\":3}";
         this.mockMvc.perform(post("/api/students").content(student).contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isBadRequest())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))

@@ -58,15 +58,15 @@ public class LectureRepositoryIntegrationTest {
         assertThat(expectedLecture).isEqualTo(actuallyLecture);
     }
 
-//    @Test
-//    @DataSet(value = "group/groups.yml", 
-//             cleanBefore = true, 
-//             skipCleaningFor = "flyway_schema_history")
-//    public void whenFindByTitle_thenGetExitsGroup() {
-//        String title = "group2";
-//        Group groupActually = groupRepository.findByTitle(title);
-//        assertThat(groupActually.getTitle()).isNotNull().isEqualTo(title);
-//    }
+    @Test
+    @DataSet(value = "lecture/lectures.yml", 
+             cleanBefore = true, 
+             skipCleaningFor = "flyway_schema_history")
+    public void whenFindByNumber_thenLectureReturned() {
+        String number = "3";
+        Lecture lectureActually = lectureRepository.findByNumber(number);
+        assertThat(lectureActually.getNumber()).isNotNull().isEqualTo(number);
+    }
 
     @Test
     @DataSet(cleanBefore = true, 

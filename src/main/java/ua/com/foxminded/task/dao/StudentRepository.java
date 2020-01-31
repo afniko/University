@@ -12,6 +12,8 @@ import ua.com.foxminded.task.domain.Student;
 @Transactional
 public interface StudentRepository extends JpaRepository<Student, Integer> {
 
+    public boolean existsById(Integer id);
+    
     public List<Student> findAllByGroupId(Integer id);
 
     public Student findByIdFees(Integer idFees);

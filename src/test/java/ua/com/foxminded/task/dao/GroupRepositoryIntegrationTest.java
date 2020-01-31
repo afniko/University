@@ -64,7 +64,7 @@ public class GroupRepositoryIntegrationTest {
     @DataSet(value = "group/groups.yml", 
              cleanBefore = true, 
              skipCleaningFor = "flyway_schema_history")
-    public void whenFindByTitle_thenGetExitsGroup() {
+    public void whenFindByTitle_thenGroupReturned() {
         String title = "group2";
         Group groupActually = groupRepository.findByTitle(title);
         assertThat(groupActually.getTitle()).isNotNull().isEqualTo(title);

@@ -54,7 +54,7 @@ public class StudentRestControllerSystemTest {
                 .andExpect(jsonPath("$[0].birthday", is("1999-06-25")))
                 .andExpect(jsonPath("$[0].idFees", is(111111111)))
                 .andExpect(jsonPath("$[0].groupTitle", is("group11")))
-                .andExpect(jsonPath("$[0].idGroup", is(1)))
+                .andExpect(jsonPath("$[0].groupId", is(1)))
                 .andExpect(jsonPath("$[1].id", is(2)))
                 .andExpect(jsonPath("$[1].firstName", is("firstName2")))
                 .andExpect(jsonPath("$[1].middleName", is("middleName2")))
@@ -62,7 +62,7 @@ public class StudentRestControllerSystemTest {
                 .andExpect(jsonPath("$[1].birthday", is("1998-06-25")))
                 .andExpect(jsonPath("$[1].idFees", is(222211111)))
                 .andExpect(jsonPath("$[1].groupTitle", is("group11")))
-                .andExpect(jsonPath("$[1].idGroup", is(1)));
+                .andExpect(jsonPath("$[1].groupId", is(1)));
     }
 
     @Test
@@ -82,7 +82,7 @@ public class StudentRestControllerSystemTest {
                   .andExpect(jsonPath("$.birthday", is("1998-06-25")))
                   .andExpect(jsonPath("$.idFees", is(222211111)))
                   .andExpect(jsonPath("$.groupTitle", is("group11")))
-                  .andExpect(jsonPath("$.idGroup", is(1)));
+                  .andExpect(jsonPath("$.groupId", is(1)));
     }
 
     @Test
@@ -96,7 +96,7 @@ public class StudentRestControllerSystemTest {
                      + "\"birthday\":\"1997-06-25\","
                      + "\"idFees\":232211111,"
                      + "\"groupTitle\":\"group1\","
-                     + "\"idGroup\":0}";
+                     + "\"groupId\":0}";
       this.mockMvc.perform(post("/api/students")
                 .content(student)
                 .contentType(MediaType.APPLICATION_JSON))
@@ -111,7 +111,7 @@ public class StudentRestControllerSystemTest {
                 .andExpect(jsonPath("$.birthday", is("1997-06-25")))
                 .andExpect(jsonPath("$.idFees", is(232211111)))
                 .andExpect(jsonPath("$.groupTitle", is(nullValue())))
-                .andExpect(jsonPath("$.idGroup", is(0)));
+                .andExpect(jsonPath("$.groupId", is(0)));
   }
 
     @Test
@@ -125,7 +125,7 @@ public class StudentRestControllerSystemTest {
                      + "\"birthday\":\"1997-06-25\","
                      + "\"idFees\":232211111,"
                      + "\"groupTitle\":\"group2\","
-                     + "\"idGroup\":3}";
+                     + "\"groupId\":3}";
       this.mockMvc.perform(post("/api/students")
                 .content(student)
                 .contentType(MediaType.APPLICATION_JSON))
@@ -139,7 +139,7 @@ public class StudentRestControllerSystemTest {
                 .andExpect(jsonPath("$.birthday", is("1997-06-25")))
                 .andExpect(jsonPath("$.idFees", is(232211111)))
                 .andExpect(jsonPath("$.groupTitle", is("group3")))
-                .andExpect(jsonPath("$.idGroup", is(3)));
+                .andExpect(jsonPath("$.groupId", is(3)));
   }
 
     @Test
@@ -150,7 +150,7 @@ public class StudentRestControllerSystemTest {
                      + "\"birthday\":\"1997-06-25\","
                      + "\"idFees\":1212121212,"
                      + "\"groupTitle\":\"group2\","
-                     + "\"idGroup\":3}";
+                     + "\"groupId\":3}";
       this.mockMvc.perform(post("/api/students")
                 .content(student)
                 .contentType(MediaType.APPLICATION_JSON))
@@ -170,7 +170,7 @@ public class StudentRestControllerSystemTest {
                      + "\"birthday\":\"1997-06-25\","
                      + "\"idFees\":12121212,"
                      + "\"groupTitle\":\"qwertyuiopasdfghjklzxcvbnm\","
-                     + "\"idGroup\":3}";
+                     + "\"groupId\":3}";
       this.mockMvc.perform(post("/api/students")
                 .content(student)
                 .contentType(MediaType.APPLICATION_JSON))
@@ -196,7 +196,7 @@ public class StudentRestControllerSystemTest {
                      + "\"birthday\":\"1997-06-25\","
                      + "\"idFees\":111111111,"
                      + "\"groupTitle\":\"group2\","
-                     + "\"idGroup\":2}";
+                     + "\"groupId\":2}";
       this.mockMvc.perform(post("/api/students")
                 .content(student)
                 .contentType(MediaType.APPLICATION_JSON))       
@@ -205,7 +205,7 @@ public class StudentRestControllerSystemTest {
                 .andDo(print())
                 .andExpect(jsonPath("$.errors", aMapWithSize(2)))
                 .andExpect(jsonPath("$.errors.idFees", is("Id fees is already exists!")))
-                .andExpect(jsonPath("$.errors.idGroup", is("Max participant in group!")));
+                .andExpect(jsonPath("$.errors.groupId", is("Max participant in group!")));
   }
   
 }
