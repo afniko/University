@@ -1,4 +1,4 @@
-package ua.com.foxminded.task.validation.validator.property.unique;
+package ua.com.foxminded.task.config;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -26,6 +26,7 @@ import ua.com.foxminded.task.service.LectureService;
 import ua.com.foxminded.task.service.StudentService;
 import ua.com.foxminded.task.service.SubjectService;
 import ua.com.foxminded.task.service.TeacherService;
+import ua.com.foxminded.task.validation.validator.property.unique.Command;
 import ua.com.foxminded.task.validation.validator.property.unique.impl.AuditoryCommand;
 import ua.com.foxminded.task.validation.validator.property.unique.impl.AuditoryTypeCommand;
 import ua.com.foxminded.task.validation.validator.property.unique.impl.DepartmentCommand;
@@ -37,9 +38,7 @@ import ua.com.foxminded.task.validation.validator.property.unique.impl.SubjectCo
 import ua.com.foxminded.task.validation.validator.property.unique.impl.TeacherCommand;
 
 @Configuration
-public class Switcher {
-
-    private Map<String, Command> uniqueValidationCommandMap;
+public class ApplicationBeans {
 
     @Autowired
     private AuditoryService auditoryService;
@@ -63,7 +62,7 @@ public class Switcher {
     @Bean
     @Qualifier("uniqueValidationCommandMap")
     public Map<String, Command> getUniqueValidationCommandMap() {
-        uniqueValidationCommandMap = new HashMap<>();
+        Map<String, Command> uniqueValidationCommandMap = new HashMap<>();
         uniqueValidationCommandMap.put(AuditoryDto.class.getName(), new AuditoryCommand(auditoryService));
         uniqueValidationCommandMap.put(AuditoryTypeDto.class.getName(), new AuditoryTypeCommand(auditoryTypeService));
         uniqueValidationCommandMap.put(DepartmentDto.class.getName(), new DepartmentCommand(departmentService));
