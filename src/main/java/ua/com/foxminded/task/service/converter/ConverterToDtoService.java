@@ -14,6 +14,7 @@ import ua.com.foxminded.task.domain.Lecture;
 import ua.com.foxminded.task.domain.Student;
 import ua.com.foxminded.task.domain.Subject;
 import ua.com.foxminded.task.domain.Teacher;
+import ua.com.foxminded.task.domain.TimetableItem;
 import ua.com.foxminded.task.domain.dto.AuditoryDto;
 import ua.com.foxminded.task.domain.dto.AuditoryTypeDto;
 import ua.com.foxminded.task.domain.dto.DepartmentDto;
@@ -23,6 +24,7 @@ import ua.com.foxminded.task.domain.dto.LectureDto;
 import ua.com.foxminded.task.domain.dto.StudentDto;
 import ua.com.foxminded.task.domain.dto.SubjectDto;
 import ua.com.foxminded.task.domain.dto.TeacherDto;
+import ua.com.foxminded.task.domain.dto.TimetableItemDto;
 
 public final class ConverterToDtoService {
 
@@ -126,6 +128,33 @@ public final class ConverterToDtoService {
         }
         teacherDto.setSubjects(subjectDtos);
         return teacherDto;
+    }
+
+    public static TimetableItemDto convert(TimetableItem timetableItem) {
+        TimetableItemDto timetableItemDto = new TimetableItemDto();
+        timetableItemDto.setId(timetableItem.getId());
+        if (nonNull(timetableItem.getSubject())) {
+            timetableItemDto.setSubjectTitle(timetableItem.getSubject().getTitle());
+            timetableItemDto.setSubjectId(timetableItem.getSubject().getId());
+        }
+        if (nonNull(timetableItem.getAuditory())) {
+            timetableItemDto.setAuditoryTitle(timetableItem.getAuditory().getAuditoryNumber());
+            timetableItemDto.setAuditoryId(timetableItem.getAuditory().getId());
+        }
+        List<GroupDto> groupDtos = timetableItem.getGroups().stream()
+                                                            .map(ConverterToDtoService::convert)
+                                                            .collect(Collectors.toList());
+        timetableItemDto.setGroups(groupDtos);
+        if (nonNull(timetableItem.getLecture())) {
+            timetableItemDto.setLectureTitle(timetableItem.getLecture().getNumber());
+            timetableItemDto.setLectureId(timetableItem.getLecture().getId());
+        }
+        timetableItemDto.setDate(timetableItem.getDate());
+        if (nonNull(timetableItem.getTeacher())) {
+            timetableItemDto.setTeacherTitle(timetableItem.getTeacher().getFirstName());
+            timetableItemDto.setTeacherId(timetableItem.getTeacher().getId());
+        }
+        return timetableItemDto;
     }
 
 }
