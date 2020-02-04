@@ -11,7 +11,6 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import ua.com.foxminded.task.dao.AuditoryRepository;
-import ua.com.foxminded.task.dao.DepartmentRepository;
 import ua.com.foxminded.task.dao.GroupRepository;
 import ua.com.foxminded.task.dao.LectureRepository;
 import ua.com.foxminded.task.dao.SubjectRepository;
