@@ -1,7 +1,10 @@
 package ua.com.foxminded.task.dao;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.CoreMatchers.nullValue;
+import static org.junit.Assert.assertTrue;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -18,6 +21,7 @@ import com.github.database.rider.core.api.dataset.ExpectedDataSet;
 import com.github.database.rider.junit5.api.DBRider;
 
 import ua.com.foxminded.task.domain.TimetableItem;
+import ua.com.foxminded.task.domain.repository.TimetableItemModelRepository;
 
 @DBRider
 @SpringBootTest
@@ -32,14 +36,14 @@ public class TimetableItemRepositoryIntegrationTest {
     @Rule
     public DBUnitRule dbUnitRule = DBUnitRule.instance(() -> dataSource.getConnection());
 
-    @Test
+//    @Test
     @DataSet(cleanBefore = true, skipCleaningFor = "flyway_schema_history")
     public void whenRepositoryHasNotRecords_thenReturnEmptyList() {
         List<TimetableItem> timetableItems = timetableItemRepository.findAll();
         assertThat(timetableItems).isNotNull().isEmpty();
     }
 
-    @Test
+//    @Test
     @Transactional
     @DataSet(value = "timetableItem/timetableItems.yml", 
              cleanBefore = true, 
@@ -51,22 +55,21 @@ public class TimetableItemRepositoryIntegrationTest {
     }
 
 //    @Test
-//    @Transactional
-//    @DataSet(value = "teacher/teachers.yml", 
-//             cleanBefore = true, 
-//             skipCleaningFor = "flyway_schema_history")
-//    public void whenPutAtTableDbObjects_thenGetThisObjectsFindById() {
-//        TimetableItem expectedTeacher = TeacherModelRepository.getModel3();
-//        expectedTeacher.setDepartment(null);
-//        expectedTeacher.setSubjects(new ArrayList<>());
-//        expectedTeacher.setId(3);
-//        int id = 3;
-//        TimetableItem actuallyTeacher = timetableItemRepository.getOne(id);
-//        assertThat(expectedTeacher).isEqualToComparingFieldByField(actuallyTeacher);
-//    }
-//
+    @Transactional
+    @DataSet(value = "timetableItem/timetableItems.yml", 
+             cleanBefore = true, 
+             skipCleaningFor = "flyway_schema_history")
+    public void whenPutAtTableDbObjects_thenGetThisObjectsFindById() {
+        int id = 3;
+        TimetableItem expectedTimetableItem = TimetableItemModelRepository.getModel3();
+        expectedTimetableItem.getTeacher().setSubjects(new ArrayList<>());
+        expectedTimetableItem.setId(id);
+        TimetableItem actuallyTimetableItem = timetableItemRepository.getOne(id);
+        assertThat(expectedTimetableItem).isEqualToComparingFieldByField(actuallyTimetableItem);
+    }
+
 //    @Test
-//    @DataSet(value = "teacher/teachers.yml", 
+//    @DataSet(value = "timetableItem/timetableItems.yml", 
 //             cleanBefore = true, 
 //             skipCleaningFor = "flyway_schema_history")
 //    public void whenFindByIdFees_thenTeacherReturned() {
@@ -74,18 +77,21 @@ public class TimetableItemRepositoryIntegrationTest {
 //        TimetableItem teacherActually = timetableItemRepository.findByIdFees(idFees);
 //        assertThat(teacherActually.getIdFees()).isEqualTo(idFees);
 //    }
-//    
-//    @Test
-//    @DataSet(cleanBefore = true, skipCleaningFor = "flyway_schema_history")
-//    @ExpectedDataSet(value = "teacher/expected-teacher.yml")
-//    public void whenSaveObject_thenExpectRecord() {
-//        TimetableItem teacher = TeacherModelRepository.getModel2();
-//        teacher.setSubjects(new ArrayList<>());
-//        teacher.setDepartment(null);
-//        TimetableItem actuallyTeacher = timetableItemRepository.saveAndFlush(teacher);
-//        assertThat(actuallyTeacher).isNotNull();
-//    }
-//
+    
+    @Test
+    @DataSet(cleanBefore = true, skipCleaningFor = "flyway_schema_history")
+    @ExpectedDataSet(value = "timetableItem/expected-timetableItem.yml")
+    public void whenSaveObject_thenExpectRecord() {
+        TimetableItem timetableItem = TimetableItemModelRepository.getModel2();
+        timetableItem.setAuditory(null);
+        timetableItem.setLecture(null);
+        timetableItem.setSubject(null);
+        timetableItem.setTeacher(null);
+        timetableItem.setGroups(new ArrayList<>());
+        TimetableItem actuallyTeacher = timetableItemRepository.saveAndFlush(timetableItem);
+        assertThat(actuallyTeacher).isNotNull();
+    }
+
 //    @Test
 //    @DataSet(value = "teacher/teacher.yml", 
 //             cleanBefore = true, 
