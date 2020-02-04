@@ -10,6 +10,4 @@ import ua.com.foxminded.task.domain.TimetableItem;
 @Transactional
 public interface TimetableItemRepository extends JpaRepository<TimetableItem, Integer> {
 
-    public boolean existsById(Integer id);
-
 }
