@@ -2,7 +2,6 @@ package ua.com.foxminded.task.dao;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -18,9 +17,7 @@ import com.github.database.rider.core.api.dataset.DataSet;
 import com.github.database.rider.core.api.dataset.ExpectedDataSet;
 import com.github.database.rider.junit5.api.DBRider;
 
-import ua.com.foxminded.task.domain.Teacher;
 import ua.com.foxminded.task.domain.TimetableItem;
-import ua.com.foxminded.task.domain.repository.TeacherModelRepository;
 
 @DBRider
 @SpringBootTest
