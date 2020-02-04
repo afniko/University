@@ -76,8 +76,8 @@ public class TimetableItemRepositoryIntegrationTest {
         timetableItem.setSubject(null);
         timetableItem.setTeacher(null);
         timetableItem.setGroups(new ArrayList<>());
-        TimetableItem actuallyTeacher = timetableItemRepository.saveAndFlush(timetableItem);
-        assertThat(actuallyTeacher).isNotNull();
+        TimetableItem actuallyTimetableItem = timetableItemRepository.saveAndFlush(timetableItem);
+        assertThat(actuallyTimetableItem).isNotNull();
     }
 
     @Test
@@ -93,8 +93,8 @@ public class TimetableItemRepositoryIntegrationTest {
         timetableItem.setSubject(null);
         timetableItem.setTeacher(null);
         timetableItem.setGroups(new ArrayList<>());
-        TimetableItem studentActually = timetableItemRepository.saveAndFlush(timetableItem);
-        assertThat(studentActually).isNotNull();
+        TimetableItem actuallyTimetableItem = timetableItemRepository.saveAndFlush(timetableItem);
+        assertThat(actuallyTimetableItem).isNotNull();
     }
 
 }
