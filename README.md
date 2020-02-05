@@ -138,5 +138,9 @@ Branch: task104
 Create DAO layer (TimetableItem). Create tests for dao.
 Branch: task106
 
+#### Issue#7 Create service layer(TimetableItem)
+Create service layer and tests
+Branch: task107
+
 ## Author
 With best regards, Mykola Afanasiev!
