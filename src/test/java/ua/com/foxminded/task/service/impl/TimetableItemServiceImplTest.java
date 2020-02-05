@@ -111,12 +111,12 @@ public class TimetableItemServiceImplTest {
 
         TimetableItemDto timetableItemDtoActually = timetableItemService.create(timetableItemDto);
 
-        verify(timetableItemRepository, times(1)).saveAndFlush(timetableItem);
         verify(subjectRepository, times(1)).getOne(1);
         verify(auditoryRepository, times(1)).getOne(1);
         verify(lectureRepository, times(1)).getOne(1);
         verify(teacherRepository, times(1)).getOne(1);
         verify(groupRepository, times(2)).getOne(anyInt());
+        verify(timetableItemRepository, times(1)).saveAndFlush(timetableItem);
         assertEquals(timetableItemDto, timetableItemDtoActually);
     }
 
@@ -143,12 +143,12 @@ public class TimetableItemServiceImplTest {
 
         verify(timetableItemRepository, times(1)).existsById(1);
         verify(timetableItemRepository, times(1)).getOne(1);
-        verify(timetableItemRepository, times(1)).saveAndFlush(timetableItem);
         verify(subjectRepository, times(1)).getOne(1);
         verify(auditoryRepository, times(1)).getOne(1);
         verify(lectureRepository, times(1)).getOne(1);
         verify(teacherRepository, times(1)).getOne(1);
         verify(groupRepository, times(2)).getOne(anyInt());
+        verify(timetableItemRepository, times(1)).saveAndFlush(timetableItem);
         assertEquals(timetableItemDto, timetableItemDtoActually);
     }
     
