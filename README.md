@@ -126,5 +126,17 @@ Branch: task101
 Fix model based on University UML diagram. Create tests for model.
 Branch: task102
 
+#### Issue#3 Create DAO layer (Faculty, Teacher, Department, Subject, Lecture, Auditory, Auditory Type)
+Create dao layer and tests for (Faculty, Teacher, Department, Subject, Lecture, Auditory, Auditory Type). Create tests for dao.
+Branch: task103
+
+#### Issue#4 Create service layer (Faculty, Teacher, Department, Subject, Lecture, Auditory, Auditory Type)
+Create service layer and tests for (Faculty, Teacher, Department, Subject, Lecture, Auditory, Auditory Type). Create tests for services.
+Branch: task104
+
+#### Issue#6 Create DAO layer (TimetableItem)
+Create DAO layer (TimetableItem). Create tests for dao.
+Branch: task106
+
 ## Author
 With best regards, Mykola Afanasiev!

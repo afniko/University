@@ -4,14 +4,49 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "timetable_items")
 public class TimetableItem {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private int id;
+    
+    @ManyToOne
+    @JoinColumn(name = "subject_id")
     private Subject subject;
+    
+    @ManyToOne
+    @JoinColumn(name = "auditory_id")
     private Auditory auditory;
+    
+    @OneToMany
+    @JoinTable(
+            name = "groups_timetable_items", 
+            joinColumns = @JoinColumn(name = "timetable_item_id"), 
+            inverseJoinColumns = @JoinColumn(name = "group_id"))
     private List<Group> groups = new ArrayList<>();
+    
+    @ManyToOne
+    @JoinColumn(name = "lecture_id")
     private Lecture lecture;
+    
     private LocalDate date;
+    
+    @ManyToOne
+    @JoinColumn(name = "teacher_id")
     private Teacher teacher;
 
     public void addGroup(Group group) {
