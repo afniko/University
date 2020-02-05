@@ -18,8 +18,13 @@ public class TimetableItemModelRepository {
                                                     getModel2(), 
                                                     getModel3(), 
                                                     getModel4(), 
-                                                    getModel5(), 
-                                                    getModel6());
+                                                    getModel5(),
+                                                    getModel5(),
+                                                    getModel6(),
+                                                    getModel7(),
+                                                    getModel8(),
+                                                    getModel9(),
+                                                    getModel10());
         return new ArrayList<>(timetableItems);
     }
 

@@ -179,7 +179,5 @@ public class TimetableItem {
              + ", teacher=" + teacher 
              + "]";
     }
-
-   
    
 }

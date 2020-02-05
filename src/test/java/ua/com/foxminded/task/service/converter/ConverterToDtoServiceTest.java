@@ -13,6 +13,7 @@ import ua.com.foxminded.task.domain.Lecture;
 import ua.com.foxminded.task.domain.Student;
 import ua.com.foxminded.task.domain.Subject;
 import ua.com.foxminded.task.domain.Teacher;
+import ua.com.foxminded.task.domain.TimetableItem;
 import ua.com.foxminded.task.domain.dto.AuditoryDto;
 import ua.com.foxminded.task.domain.dto.AuditoryTypeDto;
 import ua.com.foxminded.task.domain.dto.DepartmentDto;
@@ -22,6 +23,7 @@ import ua.com.foxminded.task.domain.dto.LectureDto;
 import ua.com.foxminded.task.domain.dto.StudentDto;
 import ua.com.foxminded.task.domain.dto.SubjectDto;
 import ua.com.foxminded.task.domain.dto.TeacherDto;
+import ua.com.foxminded.task.domain.dto.TimetableItemDto;
 import ua.com.foxminded.task.domain.repository.AuditoryModelRepository;
 import ua.com.foxminded.task.domain.repository.AuditoryTypeModelRepository;
 import ua.com.foxminded.task.domain.repository.DepartmentModelRepository;
@@ -31,6 +33,7 @@ import ua.com.foxminded.task.domain.repository.LectureModelRepository;
 import ua.com.foxminded.task.domain.repository.StudentModelRepository;
 import ua.com.foxminded.task.domain.repository.SubjectModelRepository;
 import ua.com.foxminded.task.domain.repository.TeacherModelRepository;
+import ua.com.foxminded.task.domain.repository.TimetableItemModelRepository;
 import ua.com.foxminded.task.domain.repository.dto.AuditoryDtoModelRepository;
 import ua.com.foxminded.task.domain.repository.dto.AuditoryTypeDtoModelRepository;
 import ua.com.foxminded.task.domain.repository.dto.DepartmentDtoModelRepository;
@@ -40,6 +43,7 @@ import ua.com.foxminded.task.domain.repository.dto.LectureDtoModelRepository;
 import ua.com.foxminded.task.domain.repository.dto.StudentDtoModelRepository;
 import ua.com.foxminded.task.domain.repository.dto.SubjectDtoModelRepository;
 import ua.com.foxminded.task.domain.repository.dto.TeacherDtoModelRepository;
+import ua.com.foxminded.task.domain.repository.dto.TimetableItemDtoModelRepository;
 
 public class ConverterToDtoServiceTest {
 
@@ -113,5 +117,13 @@ public class ConverterToDtoServiceTest {
         TeacherDto teacherExpected = TeacherDtoModelRepository.getModel1();
         TeacherDto teacherActually = ConverterToDtoService.convert(teacher);
         assertEquals(teacherExpected, teacherActually);
+    }
+    
+    @Test
+    void whenConvertTimetableItem_thenRetriveDtoObject() {
+        TimetableItem timetableItem = TimetableItemModelRepository.getModel1();
+        TimetableItemDto timetableItemDtoExpected = TimetableItemDtoModelRepository.getModel1();
+        TimetableItemDto timetableItemDtoActually = ConverterToDtoService.convert(timetableItem);
+        assertEquals(timetableItemDtoExpected, timetableItemDtoActually);
     }
 }
