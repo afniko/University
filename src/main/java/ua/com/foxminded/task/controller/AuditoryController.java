@@ -106,8 +106,8 @@ public class AuditoryController {
 
     @PostMapping("/auditory_edit")
     public String editPostEntity(@Valid @ModelAttribute("auditoryDto") AuditoryDto auditoryDto, 
-            BindingResult bindingResult, 
-            Model model) {
+                                 BindingResult bindingResult, 
+                                 Model model) {
         logger.debug("editPost()");
         String errorMessage = null;
         String successMessage = null;
