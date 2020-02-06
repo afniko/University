@@ -16,9 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import ua.com.foxminded.task.domain.dto.AuditoryDto;
-import ua.com.foxminded.task.domain.dto.StudentDto;
 import ua.com.foxminded.task.service.AuditoryService;
-import ua.com.foxminded.task.service.StudentService;
 
 @RestController("auditoryRestController")
 @RequestMapping("/api")
