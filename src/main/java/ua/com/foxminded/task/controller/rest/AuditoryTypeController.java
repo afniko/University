@@ -27,9 +27,9 @@ public class AuditoryTypeController {
     private AuditoryTypeService auditoryTypeService;
 
     @Autowired
-    public AuditoryTypeController(Logger logger, AuditoryTypeService studentService) {
+    public AuditoryTypeController(Logger logger, AuditoryTypeService auditoryTypeService) {
         this.logger = logger;
-        this.auditoryTypeService = studentService;
+        this.auditoryTypeService = auditoryTypeService;
     }
 
     @GetMapping(path = "/auditory-types", produces = "application/json")
