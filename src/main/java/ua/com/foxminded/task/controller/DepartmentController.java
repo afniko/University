@@ -107,7 +107,7 @@ public class DepartmentController {
     }
 
     @PostMapping("/department_edit")
-    public String editPostEntity(@Valid @ModelAttribute("auditoryDto") DepartmentDto departmentDto, 
+    public String editPostEntity(@Valid @ModelAttribute("departmentDto") DepartmentDto departmentDto, 
                                  BindingResult bindingResult, 
                                  Model model) {
         logger.debug("editPost()");
