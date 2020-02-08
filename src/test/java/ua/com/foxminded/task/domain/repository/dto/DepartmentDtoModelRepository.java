@@ -52,9 +52,12 @@ public class DepartmentDtoModelRepository {
 
     public static DepartmentDto getModel2() {
         DepartmentDto department = new DepartmentDto();
+        Faculty faculty = FacultyModelRepository.getModel1();
+        faculty.setId(2);
+        department.setFacultyTitle(faculty.getTitle());
+        department.setFacultyId(faculty.getId());
         department.setTitle("department2");
         department.setDescription("bla bla bla 2");
-        department.setFacultyTitle(FacultyModelRepository.getModel1().getTitle());
         return department;
     }
 
