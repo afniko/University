@@ -3,7 +3,6 @@ package ua.com.foxminded.task.domain.dto;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.Length;
 
@@ -34,7 +33,6 @@ public class AuditoryDto {
     private int auditoryTypeId;
     
     @NotNull(message = "Year of entry can`t be blank or not numeric!")
-    @Pattern(regexp = "^\\d+$", message = "Max capacity must be numeric")
     @ApiModelProperty(notes = "The max capacity students in auditory. Value must be numeric.")
     private Integer maxCapacity;
     
