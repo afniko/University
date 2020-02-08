@@ -1,4 +1,17 @@
-﻿  INSERT INTO groups (title, department_id, yearEntry) VALUES
+  INSERT INTO faculties (title) VALUES
+    ('faculty1'),
+    ('faculty2'),
+    ('faculty3'),
+    ('faculty4');
+
+  INSERT INTO departments (title, description, faculty_id) VALUES
+    ('department1', 'bla bla bla 1', 1),
+    ('department2', 'bla bla bla 2', 1),
+    ('department3', 'bla bla bla 3', 1),
+    ('department4', 'bla bla bla 4', 2),
+    ('department5', 'bla bla bla 5', 2);
+
+  INSERT INTO groups (title, department_id, yearEntry) VALUES
     ('G151', 1, 2015),
     ('G152', 1, 2015),
     ('G153', 1, 2015),
@@ -39,19 +52,6 @@
     ('Phisics'),
     ('Mathmatics'),
     ('Biologic');
-
-  INSERT INTO faculties (title) VALUES
-    ('faculty1'),
-    ('faculty2'),
-    ('faculty3'),
-    ('faculty4');
-
-  INSERT INTO departments (title, description, faculty_id) VALUES
-    ('department1', 'bla bla bla 1', 1),
-    ('department2', 'bla bla bla 2', 1),
-    ('department3', 'bla bla bla 3', 1),
-    ('department4', 'bla bla bla 4', 2),
-    ('department5', 'bla bla bla 5', 2);
 
 
   INSERT INTO persons (first_name, last_name, middle_name, birthday, idfees) VALUES
@@ -134,16 +134,16 @@
     ('161a', 2, 20, 'bla bla bla 6');
 
   INSERT INTO timetable_items (subject_id, auditory_id, lecture_id, date, teacher_id) VALUES
-    (1, 1, 1, '2020-06-25', 1),
-    (2, 2, 1, '2020-06-25', 2),
-    (2, 2, 2, '2020-06-25', 2),
-    (3, 3, 2, '2020-06-25', 3),
-    (3, 3, 3, '2020-06-25', 3),
-    (4, 4, 1, '2020-06-25', 3),
-    (4, 4, 2, '2020-06-25', 3),
-    (1, 5, 5, '2020-06-25', 1),
-    (2, 4, 5, '2020-06-25', 2),
-    (3, 3, 6, '2020-06-25', 3);
+    (1, 1, 1, '2020-06-25', 11),
+    (2, 2, 1, '2020-06-25', 12),
+    (2, 2, 2, '2020-06-25', 12),
+    (3, 3, 2, '2020-06-25', 13),
+    (3, 3, 3, '2020-06-25', 13),
+    (4, 4, 1, '2020-06-25', 13),
+    (4, 4, 2, '2020-06-25', 13),
+    (1, 5, 5, '2020-06-25', 11),
+    (2, 4, 5, '2020-06-25', 12),
+    (3, 3, 6, '2020-06-25', 13);
 
   INSERT INTO groups_timetable_items (group_id, timetable_item_id) VALUES
     (1, 1),
