@@ -63,13 +63,11 @@ public class DepartmentController {
         logger.debug("getEntityById()");
         String errorMessage = null;
         DepartmentDto departmentDto = null;
-        List<FacultyDto> faculties = null;
         int id = 0;
         try {
             if (checkId(idString)) {
                 id = Integer.valueOf(idString);
                 departmentDto = departmentService.findByIdDto(id);
-                faculties = facultyService.findAllDto();
             } else {
                 errorMessage = "You id is blank";
             }
@@ -80,7 +78,6 @@ public class DepartmentController {
         }
         model.addAttribute(ATTRIBUTE_HTML_TITLE, "Department");
         model.addAttribute(ATTRIBUTE_HTML_DEPARTMENT, departmentDto);
-        model.addAttribute(ATTRIBUTE_HTML_FACULTIES, faculties);
         model.addAttribute(ATTRIBUTE_HTML_ERROR_MESSAGE, errorMessage);
         return PATH_HTML_DEPARTMENT;
     }

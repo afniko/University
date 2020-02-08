@@ -61,13 +61,11 @@ public class TeacherController {
         logger.debug("getEntityById()");
         String errorMessage = null;
         TeacherDto teacherDto = null;
-        List<DepartmentDto> departments= null;
         int id = 0;
         try {
             if (checkId(idString)) {
                 id = Integer.valueOf(idString);
                 teacherDto = teacherService.findByIdDto(id);
-                departments = departmentService.findAllDto();
             } else {
                 errorMessage = "You id is blank";
             }
@@ -78,7 +76,6 @@ public class TeacherController {
         }
         model.addAttribute(ATTRIBUTE_HTML_TITLE, "Teacher");
         model.addAttribute(ATTRIBUTE_HTML_TEACHER, teacherDto);
-        model.addAttribute(ATTRIBUTE_HTML_DEPARTMENTS, departments);
         model.addAttribute(ATTRIBUTE_HTML_ERROR_MESSAGE, errorMessage);
         return PATH_HTML_TEACHER;
     }

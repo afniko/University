@@ -61,13 +61,11 @@ public class AuditoryController {
         logger.debug("getEntityById()");
         String errorMessage = null;
         AuditoryDto auditoryDto = null;
-        List<AuditoryTypeDto> auditorytypes = null;
         int id = 0;
         try {
             if (checkId(idString)) {
                 id = Integer.valueOf(idString);
                 auditoryDto = auditoryService.findByIdDto(id);
-                auditorytypes = auditoryTypeService.findAllDto();
             } else {
                 errorMessage = "You id is blank";
             }
@@ -78,7 +76,6 @@ public class AuditoryController {
         }
         model.addAttribute(ATTRIBUTE_HTML_TITLE, "Auditory");
         model.addAttribute(ATTRIBUTE_HTML_AUDITORY, auditoryDto);
-        model.addAttribute(ATTRIBUTE_HTML_AUDITORYTYPE, auditorytypes);
         model.addAttribute(ATTRIBUTE_HTML_ERROR_MESSAGE, errorMessage);
         return PATH_HTML_AUDITORY;
     }
