@@ -139,7 +139,7 @@ public class AuditoryController {
             auditorytypes = auditoryTypeService.findAllDto();
         }
 
-        model.addAttribute(ATTRIBUTE_HTML_TITLE, "Student edit");
+        model.addAttribute(ATTRIBUTE_HTML_TITLE, "Auditory edit");
         model.addAttribute(ATTRIBUTE_HTML_AUDITORY, auditoryDto);
         model.addAttribute(ATTRIBUTE_HTML_AUDITORYTYPE, auditorytypes);
         model.addAttribute(ATTRIBUTE_HTML_ERROR_MESSAGE, errorMessage);
