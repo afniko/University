@@ -65,15 +65,15 @@
     ('firstname8', 'lastname8', 'middlename8', '1998-02-08', 111111118),
     ('firstname9', 'lastname9', 'middlename9', '1999-02-09', 111111119),
     ('firstname10', 'lastname10', 'middlename10', '2000-02-10', 111111120),
-    ('firstNameTe1', 'lastNameTe1', 'middleNameTe1', '1980-06-25', 1111111161),
-    ('firstNameTe2', 'lastNameTe2', 'middleNameTe2', '1966-06-25', 2111111111),
-    ('firstNameTe3', 'lastNameTe3', 'middleNameTe3', '1950-06-25', 333111111),
-    ('firstNameTe4', 'lastNameTe4', 'middleNameTe4', '1971-06-25', 411111331),
-    ('firstNameTe5', 'lastNameTe5', 'middleNameTe5', '1975-06-25', 511111331),
-    ('firstNameTe6', 'lastNameTe6', 'middleNameTe6', '1976-06-25', 611111331),
-    ('firstNameTe7', 'lastNameTe7', 'middleNameTe7', '1977-06-25', 711111331),
-    ('firstNameTe8', 'lastNameTe8', 'middleNameTe8', '1978-06-25', 811111331),
-    ('firstNameTe9', 'lastNameTe9', 'middleNameTe9', '1979-06-25', 911111331);
+    ('firstNameTe1', 'lastNameTe1', 'middleNameTe1', '1980-06-25', 111111166),
+    ('firstNameTe2', 'lastNameTe2', 'middleNameTe2', '1966-06-25', 211111111),
+    ('firstNameTe3', 'lastNameTe3', 'middleNameTe3', '1950-06-25', 33311111),
+    ('firstNameTe4', 'lastNameTe4', 'middleNameTe4', '1971-06-25', 41111133),
+    ('firstNameTe5', 'lastNameTe5', 'middleNameTe5', '1975-06-25', 51111133),
+    ('firstNameTe6', 'lastNameTe6', 'middleNameTe6', '1976-06-25', 61111133),
+    ('firstNameTe7', 'lastNameTe7', 'middleNameTe7', '1977-06-25', 71111133),
+    ('firstNameTe8', 'lastNameTe8', 'middleNameTe8', '1978-06-25', 81111133),
+    ('firstNameTe9', 'lastNameTe9', 'middleNameTe9', '1979-06-25', 91111133);
 
   INSERT INTO students (person_id, group_id) VALUES
     (1,1),
