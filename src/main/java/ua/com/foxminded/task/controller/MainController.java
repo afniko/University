@@ -21,7 +21,7 @@ public class MainController {
     @GetMapping
     public String main(Model model) {
         logger.debug("main()");
-        model.addAttribute("title", "Thymeleaf+SpringMVC University");
+        model.addAttribute("title", "University timetable project");
         return "main";
     }
 }
