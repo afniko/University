@@ -2,20 +2,20 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <script>
-	function buttonClicked(value) {
-		location.href = "student_edit?id=" + value;
-	}
+    function buttonClicked(value) {
+        location.href = "teacher_edit?id=" + value;
+    }
 </script>
 </head>
 <body>
-    <div th:replace="fragments/header">groups header</div>
+    <div th:replace="fragments/header">header</div>
 
     <div class="container-fluid">
         <th:block th:if="${errorMessage != null}">
             <div class="alert alert-danger" th:text="${errorMessage}">Error!!</div>
             <br />
         </th:block>
-        <th:block th:if="${studentDto != null}">
+        <th:block th:if="${teacherDto != null}">
             <th:block th:if="${successMessage != null}">
                 <div class="alert alert-success" th:text="${successMessage}">Success</div>
                 <br />
@@ -23,30 +23,40 @@
             <table class="table table-bordered">
                 <tr class="success">
                     <th>First name</th>
-                    <td th:text=${studentDto.firstName}></td>
+                    <td th:text=${teacherDto.firstName}></td>
                 </tr>
                 <tr>
                     <th>Last name</th>
-                    <td th:text=${studentDto.lastName}></td>
+                    <td th:text=${teacherDto.lastName}></td>
                 </tr>
                 <tr>
                     <th>Middle name</th>
-                    <td th:text=${studentDto.middleName}></td>
+                    <td th:text=${teacherDto.middleName}></td>
                 </tr>
                 <tr>
                     <th>Birthday</th>
-                    <td th:text=${studentDto.birthday}></td>
+                    <td th:text=${teacherDto.birthday}></td>
                 </tr>
                 <tr>
                     <th>Id fees</th>
-                    <td th:text=${studentDto.idFees}></td>
+                    <td th:text=${teacherDto.idFees}></td>
                 </tr>
                 <tr>
-                    <th>Group title</th>
-                    <td th:text=${studentDto.groupTitle}></td>
+                    <th>Department title</th>
+                    <td th:text=${teacherDto.departmentTitle}></td>
                 </tr>
+
+                    <table class="table table-hover">
+                        <tr>
+                            <th>Subject title</th>
+                        </tr>
+                        <tr th:each="subject : ${teacherDto.subjects}">
+                            <td th:text="${subject.title}">Subject title</td>
+                        </tr>
+                    </table>
+
             </table>
-            <button type="button" class="btn btn-info" th:onclick="'javascript:buttonClicked(\'' + ${studentDto.id} + '\');'">Edit record</button>
+            <button type="button" class="btn btn-info" th:onclick="'javascript:buttonClicked(\'' + ${teacherDto.id} + '\');'">Edit record</button>
         </th:block>
     </div>
 
