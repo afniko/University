@@ -37,7 +37,7 @@
                 <label for="auditoryTypeId" class="col-sm-2 control-label">Auditory type</label>
                 <div class="col-sm-10">
                     <select class="selectpicker" data-live-search="true" th:field="*{auditoryTypeId}">
-                        <option value=0 th:text="${auditoryDto.auditoryTypeTitle}==null ? 'Choose auditory':'Remove auditory'"></option>
+                        <option value=0 th:text="${auditoryDto.auditoryTypeTitle}==null ? 'Choose type':'Remove type'"></option>
                         <option th:each="auditory : ${auditorytypes}" th:value="${auditory.id}" th:text=${auditory.type} th:selected="${auditoryDto.auditoryTypeId}==${auditory.id}"></option>
                     </select> 
                     <small class="text-danger" th:if="${#fields.hasErrors('auditoryTypeId')}" th:errors="*{auditoryTypeId}">Error</small>

@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <body>
-    <div th:replace="fragments/header">groups header</div>
+    <div th:replace="fragments/header">header</div>
 
     <div class="container-fluid">
         <th:block th:if="${errorMessage != null}">
@@ -17,18 +17,12 @@
     <br />
 
     <div class="container-fluid">
-        <form class="form-horizontal" action="#" th:action="@{/group_edit}" method="post" th:object="${groupDto}">
+        <form class="form-horizontal" action="#" th:action="@{/auditorytype_edit}" method="post" th:object="${auditoryTypeDto}">
             <div class="form-group">
-                <label for="title" class="col-sm-3 control-label">Title</label>
+                <label for="type" class="col-sm-3 control-label">Type</label>
                 <div class="col-sm-9">
-                    <input type="text" class="form-control" th:field="*{title}" placeholder="Enter title" required> 
-                    <small class="text-danger" th:if="${#fields.hasErrors('title')}" th:errors="*{title}">Error</small>
-                </div>
-
-                <label for="yearEntry" class="col-sm-3 control-label">Year of entry</label>
-                <div class="col-sm-9">
-                    <input type="text" class="form-control" th:field="*{yearEntry}" placeholder="YYYY" required> 
-                    <small class="text-danger" th:if="${#fields.hasErrors('yearEntry')}" th:errors="*{yearEntry}">Error</small>
+                    <input type="text" class="form-control" th:field="*{type}" placeholder="Enter type" required> 
+                    <small class="text-danger" th:if="${#fields.hasErrors('type')}" th:errors="*{type}">Error</small>
                 </div>
             </div>
 
