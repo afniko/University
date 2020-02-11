@@ -74,7 +74,7 @@ public class TeacherModelRepository {
         teacher.setMiddleName("middleNameTe3");
         teacher.setLastName("lastNameTe3");
         teacher.setBirthday(LocalDate.of(1950, 06, 25));
-        teacher.setIdFees(33311111);
+        teacher.setIdFees(333111111);
         teacher.setSubjects(SubjectModelRepository.getModels1());
         teacher.setDepartment(DepartmentModelRepository.getModel1());
         return teacher;
@@ -86,7 +86,7 @@ public class TeacherModelRepository {
         teacher.setMiddleName("middleNameTe4");
         teacher.setLastName("lastNameTe4");
         teacher.setBirthday(LocalDate.of(1971, 06, 25));
-        teacher.setIdFees(41111133);
+        teacher.setIdFees(411111333);
         teacher.setSubjects(SubjectModelRepository.getModels1());
         teacher.setDepartment(DepartmentModelRepository.getModel2());
         return teacher;
@@ -98,7 +98,7 @@ public class TeacherModelRepository {
         teacher.setMiddleName("middleNameTe5");
         teacher.setLastName("lastNameTe5");
         teacher.setBirthday(LocalDate.of(1975, 06, 25));
-        teacher.setIdFees(51111133);
+        teacher.setIdFees(511111333);
         teacher.setSubjects(SubjectModelRepository.getModels1());
         teacher.setDepartment(DepartmentModelRepository.getModel1());
         return teacher;
@@ -110,7 +110,7 @@ public class TeacherModelRepository {
         teacher.setMiddleName("middleNameTe6");
         teacher.setLastName("lastNameTe6");
         teacher.setBirthday(LocalDate.of(1976, 06, 25));
-        teacher.setIdFees(61111133);
+        teacher.setIdFees(611111333);
         teacher.setSubjects(SubjectModelRepository.getModels2());
         teacher.setDepartment(DepartmentModelRepository.getModel3());
         return teacher;
@@ -122,7 +122,7 @@ public class TeacherModelRepository {
         teacher.setMiddleName("middleNameTe7");
         teacher.setLastName("lastNameTe7");
         teacher.setBirthday(LocalDate.of(1977, 06, 25));
-        teacher.setIdFees(71111133);
+        teacher.setIdFees(711111333);
         teacher.setSubjects(SubjectModelRepository.getModels2());
         teacher.setDepartment(DepartmentModelRepository.getModel3());
         return teacher;
@@ -134,7 +134,7 @@ public class TeacherModelRepository {
         teacher.setMiddleName("middleNameTe8");
         teacher.setLastName("lastNameTe8");
         teacher.setBirthday(LocalDate.of(1978, 06, 25));
-        teacher.setIdFees(81111133);
+        teacher.setIdFees(811111333);
         teacher.setSubjects(SubjectModelRepository.getModels2());
         teacher.setDepartment(DepartmentModelRepository.getModel1());
         return teacher;
@@ -146,7 +146,7 @@ public class TeacherModelRepository {
         teacher.setMiddleName("middleNameTe9");
         teacher.setLastName("lastNameTe9");
         teacher.setBirthday(LocalDate.of(1979, 06, 25));
-        teacher.setIdFees(91111133);
+        teacher.setIdFees(911111333);
         teacher.setSubjects(SubjectModelRepository.getModels2());
         teacher.setDepartment(DepartmentModelRepository.getModel2());
         return teacher;

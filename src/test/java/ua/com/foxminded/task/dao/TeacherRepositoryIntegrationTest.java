@@ -71,7 +71,7 @@ public class TeacherRepositoryIntegrationTest {
              cleanBefore = true, 
              skipCleaningFor = "flyway_schema_history")
     public void whenFindByIdFees_thenTeacherReturned() {
-        int idFees = 33311111;
+        int idFees = 333111111;
         Teacher teacherActually = teacherRepository.findByIdFees(idFees);
         assertThat(teacherActually.getIdFees()).isEqualTo(idFees);
     }
