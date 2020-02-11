@@ -19,8 +19,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import ua.com.foxminded.task.dao.exception.EntityAlreadyExistsException;
 import ua.com.foxminded.task.dao.exception.EntityNotValidException;
 import ua.com.foxminded.task.domain.dto.DepartmentDto;
+import ua.com.foxminded.task.domain.dto.SubjectDto;
 import ua.com.foxminded.task.domain.dto.TeacherDto;
 import ua.com.foxminded.task.service.DepartmentService;
+import ua.com.foxminded.task.service.SubjectService;
 import ua.com.foxminded.task.service.TeacherService;
 
 @Controller
@@ -33,17 +35,23 @@ public class TeacherController {
     private static final String ATTRIBUTE_HTML_TEACHER = "teacherDto";
     private static final String ATTRIBUTE_HTML_TEACHERS = "teachers";
     private static final String ATTRIBUTE_HTML_DEPARTMENTS = "departments";
+    private static final String ATTRIBUTE_HTML_SUBJECTS = "subjectDtos";
     private static final String ATTRIBUTE_HTML_ERROR_MESSAGE = "errorMessage";
     private static final String ATTRIBUTE_HTML_SUCCESS_MESSAGE = "successMessage";
     private Logger logger;
     private TeacherService teacherService;
     private DepartmentService departmentService;
-
+    private SubjectService subjectService;
+    
     @Autowired
-    public TeacherController(Logger logger, TeacherService teacherService, DepartmentService departmentService) {
+    public TeacherController(Logger logger, 
+                             TeacherService teacherService, 
+                             DepartmentService departmentService, 
+                             SubjectService subjectService) {
         this.logger = logger;
         this.teacherService = teacherService;
         this.departmentService = departmentService;
+        this.subjectService = subjectService;
     }
 
     @GetMapping("/teachers")
@@ -93,10 +101,12 @@ public class TeacherController {
             errorMessage = "Problem with finding teacher";
         }
         List<DepartmentDto> departments = departmentService.findAllDto();
+        List<SubjectDto> subjectDtos = subjectService.findAllDto();
 
         model.addAttribute(ATTRIBUTE_HTML_TITLE, "Teacher edit");
         model.addAttribute(ATTRIBUTE_HTML_TEACHER, teacherDto);
         model.addAttribute(ATTRIBUTE_HTML_DEPARTMENTS, departments);
+        model.addAttribute(ATTRIBUTE_HTML_SUBJECTS, subjectDtos);
         model.addAttribute(ATTRIBUTE_HTML_ERROR_MESSAGE, errorMessage);
         return PATH_HTML_TEACHER_EDIT;
     }
@@ -109,6 +119,7 @@ public class TeacherController {
         String errorMessage = null;
         String successMessage = null;
         List<DepartmentDto> departments = null;
+        List<SubjectDto> subjectDtos = null;
         String path = PATH_HTML_TEACHER;
 
         if (!bindingResult.hasErrors()) {
@@ -134,11 +145,13 @@ public class TeacherController {
             errorMessage = "You enter incorrect data!";
             path = PATH_HTML_TEACHER_EDIT;
             departments = departmentService.findAllDto();
+            subjectDtos = subjectService.findAllDto();
         }
 
         model.addAttribute(ATTRIBUTE_HTML_TITLE, "Teacher edit");
         model.addAttribute(ATTRIBUTE_HTML_TEACHER, teacherDto);
         model.addAttribute(ATTRIBUTE_HTML_DEPARTMENTS, departments);
+        model.addAttribute(ATTRIBUTE_HTML_SUBJECTS, subjectDtos);
         model.addAttribute(ATTRIBUTE_HTML_ERROR_MESSAGE, errorMessage);
         model.addAttribute(ATTRIBUTE_HTML_SUCCESS_MESSAGE, successMessage);
         return path;
