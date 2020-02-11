@@ -52,12 +52,17 @@
                     </select> 
                     <small class="text-danger" th:if="${#fields.hasErrors('departmentId')}" th:errors="*{departmentId}">Error</small>
                 </div>
+                
+                
             </div>
             <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">
                     <th:block th:if="${departmentTitle!=null}">
                         <input type="hidden" th:field="*{departmentTitle}" />
                     </th:block>
+                    <!-- <th:block th:if="*{!subjects.empty}">
+                        <input type="hidden" th:field="${teacherDto.subjects}" />
+                    </th:block> -->
                     <input type="hidden" th:field="*{id}" />
                     <button type="submit" class="btn btn-default" th:text="*{id}==0 ? 'Create' : 'Update'"></button>
                 </div>

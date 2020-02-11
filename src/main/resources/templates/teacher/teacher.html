@@ -2,9 +2,9 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <script>
-    function buttonClicked(value) {
-        location.href = "teacher_edit?id=" + value;
-    }
+	function buttonClicked(value) {
+		location.href = "teacher_edit?id=" + value;
+	}
 </script>
 </head>
 <body>
@@ -46,6 +46,7 @@
                     <td th:text=${teacherDto.departmentTitle}></td>
                 </tr>
 
+                <th:block th:if="${!teacherDto.subjects.empty}">
                     <table class="table table-hover">
                         <tr>
                             <th>Subject title</th>
@@ -54,6 +55,7 @@
                             <td th:text="${subject.title}">Subject title</td>
                         </tr>
                     </table>
+                </th:block>
 
             </table>
             <button type="button" class="btn btn-info" th:onclick="'javascript:buttonClicked(\'' + ${teacherDto.id} + '\');'">Edit record</button>
