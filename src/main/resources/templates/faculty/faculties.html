@@ -3,28 +3,26 @@
 <head>
 <script>
     function rowClicked(value) {
-        location.href = "group?id=" + value;
+        location.href = "faculty?id=" + value;
     }
 </script>
 </head>
 <body>
-    <div th:replace="fragments/header">groups header</div>
+    <div th:replace="fragments/header">header</div>
 
     <div class="container-fluid">
         <th:block th:if="${errorMessage != null}">
             <div class="alert alert-danger" th:text="${errorMessage}">Error!!</div>
             <br />
         </th:block>
-        <th:block th:if="${groups != null}">
+        <th:block th:if="${faculties != null}">
             <table class="table table-hover">
                 <tr>
                     <th>Title</th>
-                    <th>Year of entry</th>
                 </tr>
-                <tr th:each="group : ${groups}"
-                    th:onclick="'javascript:rowClicked(\'' + ${group.id} + '\');'">
-                    <td th:text="${group.title}">Title</td>
-                    <td th:text="${group.yearEntry}">Year of entry</td>
+                <tr th:each="faculty : ${faculties}"
+                    th:onclick="'javascript:rowClicked(\'' + ${faculty.id} + '\');'">
+                    <td th:text="${faculty.title}">Title</td>
                 </tr>
             </table>
         </th:block>
