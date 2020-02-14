@@ -27,13 +27,13 @@
 
                 <label for="startTime" class="col-sm-3 control-label">Start time</label>
                 <div class="col-sm-9">
-                    <input type="text" class="form-control" th:field="*{startTime}" placeholder="hh:mm:ss" required> 
+                    <input type="time" class="form-control" th:field="*{startTime}" placeholder="HH:mm:ss" required> 
                     <small class="text-danger" th:if="${#fields.hasErrors('startTime')}" th:errors="*{startTime}">Error</small>
                 </div>
 
                 <label for="endTime" class="col-sm-3 control-label">End time</label>
                 <div class="col-sm-9">
-                    <input type="text" class="form-control" th:field="*{endTime}" placeholder="hh:mm:ss" required> 
+                    <input type="time" class="form-control" th:field="*{endTime}" placeholder="HH:mm:ss" required> 
                     <small class="text-danger" th:if="${#fields.hasErrors('endTime')}" th:errors="*{endTime}">Error</small>
                 </div>
             </div>
