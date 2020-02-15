@@ -35,7 +35,7 @@ public class TeacherController {
     private static final String ATTRIBUTE_HTML_TEACHER = "teacherDto";
     private static final String ATTRIBUTE_HTML_TEACHERS = "teachers";
     private static final String ATTRIBUTE_HTML_DEPARTMENTS = "departments";
-    private static final String ATTRIBUTE_HTML_SUBJECTS = "subjectDtos";
+    private static final String ATTRIBUTE_HTML_SUBJECTS = "allSubjects";
     private static final String ATTRIBUTE_HTML_ERROR_MESSAGE = "errorMessage";
     private static final String ATTRIBUTE_HTML_SUCCESS_MESSAGE = "successMessage";
     private Logger logger;
@@ -101,12 +101,12 @@ public class TeacherController {
             errorMessage = "Problem with finding teacher";
         }
         List<DepartmentDto> departments = departmentService.findAllDto();
-        List<SubjectDto> subjectDtos = subjectService.findAllDto();
+        List<SubjectDto> allSubjects = subjectService.findAllDto();
 
         model.addAttribute(ATTRIBUTE_HTML_TITLE, "Teacher edit");
         model.addAttribute(ATTRIBUTE_HTML_TEACHER, teacherDto);
         model.addAttribute(ATTRIBUTE_HTML_DEPARTMENTS, departments);
-        model.addAttribute(ATTRIBUTE_HTML_SUBJECTS, subjectDtos);
+        model.addAttribute(ATTRIBUTE_HTML_SUBJECTS, allSubjects);
         model.addAttribute(ATTRIBUTE_HTML_ERROR_MESSAGE, errorMessage);
         return PATH_HTML_TEACHER_EDIT;
     }

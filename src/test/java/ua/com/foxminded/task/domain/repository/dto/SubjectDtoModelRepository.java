@@ -20,7 +20,7 @@ public class SubjectDtoModelRepository {
         List<SubjectDto> subjects = Arrays.asList(getModel1(), getModel2());
         return new ArrayList<>(subjects);
     }
-
+    
     public static SubjectDto getModel1() {
         SubjectDto subject = new SubjectDto();
         subject.setTitle("Programming");

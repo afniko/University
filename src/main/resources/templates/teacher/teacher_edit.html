@@ -51,24 +51,27 @@
                         <option th:each="department : ${departments}" th:value="${department.id}" th:text=${department.title} th:selected="${teacherDto.departmentId}==${department.id}"></option>
                     </select> <small class="text-danger" th:if="${#fields.hasErrors('departmentId')}" th:errors="*{departmentId}">Error</small>
                 </div>
-
-
             </div>
+
+            <th:block th:if="${not #lists.isEmpty(allSubjects)}">
+                <div class="form-group">
+                    <label class="control-label col-sm-2">Select subject</label>
+                    <div class="col-sm-6">
+                        <ul>
+                            <li th:each="subjectDto : ${allSubjects}">
+                            <input type="checkbox" th:field="*{subjects}"  th:value="${subjectDto}" /> 
+                            <label th:for="${#ids.prev('subjects')}" th:text="${subjectDto.title}">Title subject</label>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </th:block>
+
             <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">
                     <th:block th:if="${departmentTitle!=null}">
                         <input type="hidden" th:field="*{departmentTitle}" />
                     </th:block>
-                    <th:block th:if="*{!subjects.empty}">
-                        <tr th:each="subject, itemStat : *{subjects}">
-                            <td><input hidden th:field="*{subjects[__${itemStat.index}__].id}" /></td>
-                            <td><input th:field="*{subjects[__${itemStat.index}__].title}" /></td>
-                        </tr>
-                    </th:block>
-                    <select class="selectpicker" data-live-search="true" th:field="*{subjects[1].id}">
-                        <option value=0 th:text="'Choose subject'"></option>
-                        <option th:each="subjectDto : ${subjectDtos}" th:value="${subjectDto.id}" th:text=${subjectDto.title}></option>
-                    </select>
                     <input type="hidden" th:field="*{id}" />
                     <button type="submit" class="btn btn-default" th:text="*{id}==0 ? 'Create' : 'Update'"></button>
                 </div>
