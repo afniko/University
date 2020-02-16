@@ -1,4 +1,4 @@
-package ua.com.foxminded.task.config;
+package ua.com.foxminded.task.config.converterdto;
 
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;

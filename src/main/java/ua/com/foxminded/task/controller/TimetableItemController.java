@@ -42,7 +42,7 @@ public class TimetableItemController {
     private static final String ATTRIBUTE_HTML_TIMETABLEITEMS = "timetableItems";
     private static final String ATTRIBUTE_HTML_SUBJECTS = "subjects";
     private static final String ATTRIBUTE_HTML_AUDITORIES = "auditories";
-    private static final String ATTRIBUTE_HTML_GROUPS = "groups";
+    private static final String ATTRIBUTE_HTML_GROUPS = "allGroups";
     private static final String ATTRIBUTE_HTML_LECTURIES = "lecturies";
     private static final String ATTRIBUTE_HTML_TEACHERS = "teachers";
     private static final String ATTRIBUTE_HTML_ERROR_MESSAGE = "errorMessage";
