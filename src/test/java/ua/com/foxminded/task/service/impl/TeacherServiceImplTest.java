@@ -29,6 +29,7 @@ import ua.com.foxminded.task.domain.Teacher;
 import ua.com.foxminded.task.domain.dto.TeacherDto;
 import ua.com.foxminded.task.domain.repository.SubjectModelRepository;
 import ua.com.foxminded.task.domain.repository.TeacherModelRepository;
+import ua.com.foxminded.task.domain.repository.dto.SubjectDtoModelRepository;
 import ua.com.foxminded.task.domain.repository.dto.TeacherDtoModelRepository;
 
 public class TeacherServiceImplTest {
@@ -81,6 +82,7 @@ public class TeacherServiceImplTest {
         Subject subject4 = SubjectModelRepository.getModel4();
         
         TeacherDto teacherDto = TeacherDtoModelRepository.getModel1();
+        teacherDto.setSubjects(SubjectDtoModelRepository.getModelsWithId1());
         
         doReturn(subject2, subject3, subject4).when(subjectRepository).getOne(anyInt());
         doReturn(teacher).when(teacherRepository).saveAndFlush(teacher);
@@ -103,6 +105,7 @@ public class TeacherServiceImplTest {
         
         TeacherDto teacherDto = TeacherDtoModelRepository.getModel1();
         teacherDto.setId(1);
+        teacherDto.setSubjects(SubjectDtoModelRepository.getModelsWithId1());
         
         doReturn(true).when(teacherRepository).existsById(teacherDto.getId());
         doReturn(subject2, subject3, subject4).when(subjectRepository).getOne(anyInt());
@@ -147,6 +150,7 @@ public class TeacherServiceImplTest {
         Subject subject4 = SubjectModelRepository.getModel4();
         
         TeacherDto teacherDto = TeacherDtoModelRepository.getModel1();
+        teacherDto.setSubjects(SubjectDtoModelRepository.getModelsWithId1());
         
         doReturn(subject2, subject3, subject4).when(subjectRepository).getOne(anyInt());
         doReturn(teacher).when(teacherRepository).saveAndFlush(teacher);

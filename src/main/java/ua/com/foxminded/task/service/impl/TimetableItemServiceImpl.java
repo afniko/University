@@ -126,6 +126,9 @@ public class TimetableItemServiceImpl implements TimetableItemService {
     }
 
     private List<Group> retriveGroupsFromDtos(List<GroupDto> groupDtos) {
-        return groupDtos.stream().map(s -> groupRepository.getOne(s.getId())).collect(Collectors.toList());
+        return groupDtos.stream()
+                        .filter(g -> g.getId() != 0)
+                        .map(s -> groupRepository.getOne(s.getId()))
+                        .collect(Collectors.toList());
     }
 }

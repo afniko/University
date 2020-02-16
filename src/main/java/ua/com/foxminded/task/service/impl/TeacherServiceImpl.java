@@ -116,6 +116,9 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     private List<Subject> retriveSubjectsFromDtos(List<SubjectDto> subjectDtos) {
-        return subjectDtos.stream().map(s -> subjectRepository.getOne(s.getId())).collect(Collectors.toList());
+        return subjectDtos.stream()
+                          .filter(g -> g.getId()!=0)
+                          .map(s -> subjectRepository.getOne(s.getId()))
+                          .collect(Collectors.toList());
     }
 }

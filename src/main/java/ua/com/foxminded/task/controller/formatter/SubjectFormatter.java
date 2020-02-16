@@ -1,21 +1,26 @@
-package ua.com.foxminded.task.config.converterdto;
+package ua.com.foxminded.task.controller.formatter;
 
-import org.springframework.core.convert.converter.Converter;
+import java.text.ParseException;
+import java.util.Locale;
+
+import org.springframework.format.Formatter;
 import org.springframework.stereotype.Component;
 
 import ua.com.foxminded.task.domain.dto.SubjectDto;
 
 @Component
-public class SubjectDtoConverter implements Converter<String, SubjectDto> {
+public class SubjectFormatter implements Formatter<SubjectDto> {
 
     @Override
-    public SubjectDto convert(String subject) {
-        if (!subject.matches("SubjectDto \\[id=\\d+, title=\\w+\\]$")) {
-            return null;
-        }
+    public SubjectDto parse(String subject, Locale locale) throws ParseException {
         return parseSubjectDto(subject);
     }
 
+    @Override
+    public String print(SubjectDto subject, Locale locale) {
+        return subject.toString();
+    }
+    
     private SubjectDto parseSubjectDto(String subject) {
         String removingSequince1 = "SubjectDto \\[id=";
         String removingSequince2 = " title=";
@@ -25,11 +30,15 @@ public class SubjectDtoConverter implements Converter<String, SubjectDto> {
                                        .replaceAll(removingSequince2, "")
                                        .replaceAll(removingSequince3, "")
                                        .split(",");
-        int id = Integer.parseInt(subjectArray[0]);
-        String title = subjectArray[1];
         SubjectDto subjectDto = new SubjectDto();
-        subjectDto.setId(id);
-        subjectDto.setTitle(title);
+        if (subjectArray[0].matches("^\\d+$")) {
+            int id = Integer.parseInt(subjectArray[0]);
+            subjectDto.setId(id);
+        }
+        if (subjectArray.length==3) {
+            String title = subjectArray[1];
+            subjectDto.setTitle(title);
+        }
         return subjectDto;
     }
 }

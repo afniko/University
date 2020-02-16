@@ -20,6 +20,17 @@ public class SubjectDtoModelRepository {
         List<SubjectDto> subjects = Arrays.asList(getModel1(), getModel2());
         return new ArrayList<>(subjects);
     }
+
+    public static List<SubjectDto> getModelsWithId1() {
+        SubjectDto subjectDto2 = getModel2();
+        SubjectDto subjectDto3 = getModel3();
+        SubjectDto subjectDto4 = getModel4();
+        subjectDto2.setId(2);
+        subjectDto3.setId(3);
+        subjectDto4.setId(4);
+        List<SubjectDto> subjects = Arrays.asList(subjectDto2, subjectDto3, subjectDto4);
+        return new ArrayList<>(subjects);
+    }
     
     public static SubjectDto getModel1() {
         SubjectDto subject = new SubjectDto();
