@@ -83,8 +83,7 @@
                         <td class="control-label col-sm-2"><label>Select groups</label></td>
                         <td>
                             <ul>
-                                <li th:each="group : ${allGroups}">
-                                <input type="checkbox" th:field="*{groups}" th:value="${group}" /> 
+                                <li th:each="group : ${allGroups}"><input type="checkbox" th:field="*{groups}" th:value="${{group}}" /> 
                                 <label th:for="${#ids.prev('groups')}" th:text="${group.title}">Title group</label>
                                 </li>
                             </ul>

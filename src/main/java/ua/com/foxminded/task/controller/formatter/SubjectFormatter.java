@@ -12,33 +12,14 @@ import ua.com.foxminded.task.domain.dto.SubjectDto;
 public class SubjectFormatter implements Formatter<SubjectDto> {
 
     @Override
-    public SubjectDto parse(String subject, Locale locale) throws ParseException {
-        return parseSubjectDto(subject);
+    public SubjectDto parse(String id, Locale locale) throws ParseException {
+        SubjectDto subjectDto = new SubjectDto();
+        subjectDto.setId(Integer.parseInt(id));
+        return subjectDto;
     }
 
     @Override
     public String print(SubjectDto subject, Locale locale) {
-        return subject.toString();
-    }
-    
-    private SubjectDto parseSubjectDto(String subject) {
-        String removingSequince1 = "SubjectDto \\[id=";
-        String removingSequince2 = " title=";
-        String removingSequince3 = "\\]";
-
-        String[] subjectArray = subject.replaceAll(removingSequince1, "")
-                                       .replaceAll(removingSequince2, "")
-                                       .replaceAll(removingSequince3, "")
-                                       .split(",");
-        SubjectDto subjectDto = new SubjectDto();
-        if (subjectArray[0].matches("^\\d+$")) {
-            int id = Integer.parseInt(subjectArray[0]);
-            subjectDto.setId(id);
-        }
-        if (subjectArray.length==3) {
-            String title = subjectArray[1];
-            subjectDto.setTitle(title);
-        }
-        return subjectDto;
+        return String.valueOf(subject.getId());
     }
 }
