@@ -30,7 +30,8 @@ public class AuditoryTypeRepositoryIntegrationTest {
     public DBUnitRule dbUnitRule = DBUnitRule.instance(() -> dataSource.getConnection());
     
     @Test
-    @DataSet(cleanBefore = true, skipCleaningFor = "flyway_schema_history")
+    @DataSet(cleanBefore = true, 
+             skipCleaningFor = "flyway_schema_history")
     public void whenRepositoryHasNotRecords_thenReturnEmptyList() {
         List<AuditoryType> auditoryTypes = auditoryTypeRepository.findAll();
         assertThat(auditoryTypes).isNotNull().isEmpty();

@@ -20,6 +20,19 @@ public class GroupDtoModelRepository {
         List<GroupDto> groups = Arrays.asList(getModel11(), getModel12(), getModel13(), getModel14());
         return new ArrayList<>(groups);
     }
+    
+    public static List<GroupDto> getModelDtosWithId() {
+        GroupDto groupDto1 = getModel11();
+        GroupDto groupDto2 = getModel12();
+        GroupDto groupDto3 = getModel13();
+        GroupDto groupDto4 = getModel14();
+        groupDto1.setId(1);
+        groupDto2.setId(2);
+        groupDto3.setId(3);
+        groupDto4.setId(4);
+        List<GroupDto> groups = Arrays.asList(groupDto1, groupDto2, groupDto3, groupDto4);
+        return new ArrayList<>(groups);
+    }
 
     public static List<GroupDto> getModels1() {
         List<GroupDto> groups = Arrays.asList(getModel1(), getModel2());

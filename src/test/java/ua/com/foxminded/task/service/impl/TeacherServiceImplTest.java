@@ -1,4 +1,5 @@
 package ua.com.foxminded.task.service.impl;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.anyInt;
@@ -82,17 +83,16 @@ public class TeacherServiceImplTest {
         Subject subject4 = SubjectModelRepository.getModel4();
         
         TeacherDto teacherDto = TeacherDtoModelRepository.getModel1();
-        teacherDto.setSubjects(SubjectDtoModelRepository.getModelsWithId1());
         
         doReturn(subject2, subject3, subject4).when(subjectRepository).getOne(anyInt());
         doReturn(teacher).when(teacherRepository).saveAndFlush(teacher);
         doReturn(teacher.getDepartment()).when(departmentRepository).getOne(teacher.getDepartment().getId());
 
-        TeacherDto studentDtoActually = teacherService.create(teacherDto);
+        TeacherDto teacherDtoActually = teacherService.create(teacherDto);
 
         verify(teacherRepository, times(1)).saveAndFlush(teacher);
         verify(departmentRepository, times(1)).getOne(teacher.getDepartment().getId());
-        assertEquals(teacherDto, studentDtoActually);
+        assertThat(teacherDto).isEqualToComparingFieldByField(teacherDtoActually);
     }
 
     @Test
@@ -105,7 +105,6 @@ public class TeacherServiceImplTest {
         
         TeacherDto teacherDto = TeacherDtoModelRepository.getModel1();
         teacherDto.setId(1);
-        teacherDto.setSubjects(SubjectDtoModelRepository.getModelsWithId1());
         
         doReturn(true).when(teacherRepository).existsById(teacherDto.getId());
         doReturn(subject2, subject3, subject4).when(subjectRepository).getOne(anyInt());
@@ -113,11 +112,11 @@ public class TeacherServiceImplTest {
         doReturn(teacher.getDepartment()).when(departmentRepository).getOne(teacher.getDepartment().getId());
         doReturn(teacher).when(teacherRepository).getOne(teacher.getId());
 
-        TeacherDto studentDtoActually = teacherService.update(teacherDto);
+        TeacherDto teacherDtoActually = teacherService.update(teacherDto);
 
         verify(teacherRepository, times(1)).saveAndFlush(teacher);
         verify(departmentRepository, times(1)).getOne(teacher.getDepartment().getId());
-        assertEquals(teacherDto, studentDtoActually);
+        assertThat(teacherDto).isEqualToComparingFieldByField(teacherDtoActually);
     }
     
     @Test

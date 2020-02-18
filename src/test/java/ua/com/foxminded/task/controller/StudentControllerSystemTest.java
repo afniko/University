@@ -94,7 +94,7 @@ public class StudentControllerSystemTest {
     void whenRetriveEditExistsStudent_thenExpectFormWithStudentField() throws Exception {
         String expectedTitle = "Student edit";
         StudentDto studentDto = StudentDtoModelRepository.getModel1();
-        List<GroupDto> groups = GroupDtoModelRepository.getModelDtos();
+        List<GroupDto> groups = GroupDtoModelRepository.getModelDtosWithId();
         int id = 1;
         String httpRequest = "/student_edit?id=" + id;
         this.mockMvc.perform(get(httpRequest).accept(MediaType.TEXT_HTML_VALUE))
