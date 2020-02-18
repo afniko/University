@@ -15,7 +15,7 @@ public interface TimetableItemRepository extends JpaRepository<TimetableItem, In
 
     public boolean existsById(Integer id);
     
-    public boolean existsByAuditoryIdAndLectureIdAndDate(Integer auditoryId, Integer lectureId, LocalDate date );
+    public TimetableItem findByAuditoryIdAndLectureIdAndDate(Integer auditoryId, Integer lectureId, LocalDate date );
     
-    public boolean existsByTeacherIdAndLectureIdAndDate(Integer teacherId, Integer lectureId, LocalDate date );
+    public TimetableItem findByTeacherIdAndLectureIdAndDate(Integer teacherId, Integer lectureId, LocalDate date );
 }

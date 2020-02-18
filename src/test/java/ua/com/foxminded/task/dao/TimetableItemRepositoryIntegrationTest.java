@@ -1,8 +1,8 @@
 package ua.com.foxminded.task.dao;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -108,10 +108,10 @@ public class TimetableItemRepositoryIntegrationTest {
     @ExpectedDataSet(value = "timetableItem/expected-timetableItems.yml")
     public void whenRepositoryHasDuplicateAuditoryLectureAndDate_thenReturnBoolean() {
         LocalDate date = LocalDate.of(2020, 06, 25);
-        boolean existTrue = timetableItemRepository.existsByAuditoryIdAndLectureIdAndDate(1, 1, date); 
-        assertTrue(existTrue);
-        boolean existFalse = timetableItemRepository.existsByAuditoryIdAndLectureIdAndDate(2, 3, date); 
-        assertFalse(existFalse);
+        TimetableItem exist = timetableItemRepository.findByAuditoryIdAndLectureIdAndDate(1, 1, date); 
+        assertNotNull(exist);
+        TimetableItem noExist = timetableItemRepository.findByAuditoryIdAndLectureIdAndDate(2, 3, date); 
+        assertNull(noExist);
     }
     
     @Test
@@ -122,10 +122,10 @@ public class TimetableItemRepositoryIntegrationTest {
     @ExpectedDataSet(value = "timetableItem/expected-timetableItems.yml")
     public void whenRepositoryHasDuplicateTeacherLectureAndDate_thenReturnBoolean() {
         LocalDate date = LocalDate.of(2020, 06, 25);
-        boolean existTrue = timetableItemRepository.existsByTeacherIdAndLectureIdAndDate(1, 1, date); 
-        assertTrue(existTrue);
-        boolean existFalse = timetableItemRepository.existsByTeacherIdAndLectureIdAndDate(1, 4, date); 
-        assertFalse(existFalse);
+        TimetableItem exist = timetableItemRepository.findByTeacherIdAndLectureIdAndDate(1, 1, date); 
+        assertNotNull(exist);
+        TimetableItem noExist = timetableItemRepository.findByTeacherIdAndLectureIdAndDate(1, 4, date); 
+        assertNull(noExist);
     }
 
 }

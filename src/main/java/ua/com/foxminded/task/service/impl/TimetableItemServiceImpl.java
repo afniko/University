@@ -111,15 +111,15 @@ public class TimetableItemServiceImpl implements TimetableItemService {
     }
 
     @Override
-    public boolean existsByAuditoryIdAndLectureIdAndDate(Integer auditoryId, Integer lectureId, LocalDate date) {
+    public TimetableItem findByAuditoryIdAndLectureIdAndDate(Integer auditoryId, Integer lectureId, LocalDate date) {
         logger.debug("existsByAuditoryIdAndLectureIdAndDate() [auditoryId:{}, lectureId:{}, date:{}]", auditoryId, lectureId, date);
-        return timetableItemRepository.existsByAuditoryIdAndLectureIdAndDate(auditoryId, lectureId, date);
+        return timetableItemRepository.findByAuditoryIdAndLectureIdAndDate(auditoryId, lectureId, date);
     }
 
     @Override
-    public boolean existsByTeacherIdAndLectureIdAndDate(Integer teacherId, Integer lectureId, LocalDate date) {
+    public TimetableItem findByTeacherIdAndLectureIdAndDate(Integer teacherId, Integer lectureId, LocalDate date) {
         logger.debug("existsByTeacherIdAndLectureIdAndDate() [teacherId:{}, lectureId:{}, date:{}]", teacherId, lectureId, date);
-        return timetableItemRepository.existsByTeacherIdAndLectureIdAndDate(teacherId, lectureId, date);
+        return timetableItemRepository.findByTeacherIdAndLectureIdAndDate(teacherId, lectureId, date);
     }
 
     private TimetableItem retriveEntityFromDto(TimetableItemDto timetableItemDto) {

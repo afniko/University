@@ -59,8 +59,8 @@
                     <div class="col-sm-6">
                         <ul>
                             <li th:each="subjectDto : ${allSubjects}">
-                            <input type="checkbox" th:id="${{subjectDto}}" th:value="${{subjectDto}}" th:field="*{subjects}" /> 
-                            <label th:for="${{subjectDto}}" th:text="${subjectDto.title}">Title subject</label>
+                            <input type="checkbox" th:value="${{subjectDto}}" th:field="*{{subjects}}" /> 
+                            <label th:for="${#ids.prev('subjects')}" th:text="${subjectDto.title}">Title subject</label>
                             </li>
                         </ul>
                     </div>
