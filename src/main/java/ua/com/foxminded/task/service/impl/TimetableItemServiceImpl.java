@@ -1,5 +1,6 @@
 package ua.com.foxminded.task.service.impl;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -107,6 +108,18 @@ public class TimetableItemServiceImpl implements TimetableItemService {
             throw new EntityNotValidException("update() timetableItem: " + timetableItem, e);
         }
         return ConverterToDtoService.convert(timetableItem);
+    }
+
+    @Override
+    public boolean existsByAuditoryIdAndLectureIdAndDate(Integer auditoryId, Integer lectureId, LocalDate date) {
+        logger.debug("existsByAuditoryIdAndLectureIdAndDate() [auditoryId:{}, lectureId:{}, date:{}]", auditoryId, lectureId, date);
+        return timetableItemRepository.existsByAuditoryIdAndLectureIdAndDate(auditoryId, lectureId, date);
+    }
+
+    @Override
+    public boolean existsByTeacherIdAndLectureIdAndDate(Integer teacherId, Integer lectureId, LocalDate date) {
+        logger.debug("existsByTeacherIdAndLectureIdAndDate() [teacherId:{}, lectureId:{}, date:{}]", teacherId, lectureId, date);
+        return timetableItemRepository.existsByTeacherIdAndLectureIdAndDate(teacherId, lectureId, date);
     }
 
     private TimetableItem retriveEntityFromDto(TimetableItemDto timetableItemDto) {
