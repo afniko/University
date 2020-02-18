@@ -12,7 +12,9 @@ import org.springframework.format.annotation.DateTimeFormat;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import ua.com.foxminded.task.validation.annotation.AuditoryAndTimeUnique;
+import ua.com.foxminded.task.validation.annotation.TeacherAndTimeUnique;
 
+@TeacherAndTimeUnique(fieldError = "teacherId")
 @AuditoryAndTimeUnique(fieldError = "auditoryId")
 @ApiModel(description = "Object with a full timetableItem information")
 public class TimetableItemDto {

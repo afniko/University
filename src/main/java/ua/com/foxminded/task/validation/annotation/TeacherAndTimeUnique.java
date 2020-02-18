@@ -9,10 +9,10 @@ import java.lang.annotation.Target;
 import javax.validation.Constraint;
 import javax.validation.Payload;
 
-import ua.com.foxminded.task.validation.validator.AuditoryAndTimeUniqueValidator;
+import ua.com.foxminded.task.validation.validator.TeacherAndTimeUniqueValidator;
 
 /**
- * The annotated element must have the unique next value: auditory, date and number of lection. This is check by
+ * The annotated element must have the unique next value: teacher, date and number of lection. This is check by
  * finding in database
  * <p>
  * Supported types are:
@@ -24,17 +24,17 @@ import ua.com.foxminded.task.validation.validator.AuditoryAndTimeUniqueValidator
  * @author Mykola Afanasiev
  */
 @Documented
-@Constraint(validatedBy = AuditoryAndTimeUniqueValidator.class)
+@Constraint(validatedBy = TeacherAndTimeUniqueValidator.class)
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface AuditoryAndTimeUnique {
+public @interface TeacherAndTimeUnique {
 
-    String message() default "Auditory will be busy at the time!";
+    String message() default "Teacher will be busy at the time!";
 
     /**
      * the name of errors field for html
      */
-    String fieldError() default "auditoryId";
+    String fieldError() default "teacherTitle";
     
     Class<?>[] groups() default {};
 
