@@ -124,5 +124,18 @@ public class TimetableItemRepositoryIntegrationTest {
         TimetableItem noExist = timetableItemRepository.findByTeacherIdAndLectureIdAndDate(1, 4, date); 
         assertNull(noExist);
     }
+    
+    @Test
+    @Transactional
+    @DataSet(value = "timetableItem/timetableItemsExtend.yml", 
+             cleanBefore = true, 
+             skipCleaningFor = "flyway_schema_history")
+    public void whenSetPeriodAndTeacher_thenRetriveRecords() {
+        LocalDate startDate = LocalDate.of(2020, 06, 20);
+        LocalDate endDate = LocalDate.of(2020, 06, 26);
+        int teacherId = 1;
+        List<TimetableItem> timetableItems = timetableItemRepository.findByDateBetweenAndTeacherId(startDate, endDate, teacherId);
+        assertThat(timetableItems).isNotNull().isNotEmpty().hasSize(5);
+    }
 
 }
