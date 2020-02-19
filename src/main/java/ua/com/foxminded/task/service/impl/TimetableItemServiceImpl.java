@@ -1,5 +1,6 @@
 package ua.com.foxminded.task.service.impl;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -109,6 +110,18 @@ public class TimetableItemServiceImpl implements TimetableItemService {
         return ConverterToDtoService.convert(timetableItem);
     }
 
+    @Override
+    public TimetableItem findByAuditoryIdAndLectureIdAndDate(Integer auditoryId, Integer lectureId, LocalDate date) {
+        logger.debug("existsByAuditoryIdAndLectureIdAndDate() [auditoryId:{}, lectureId:{}, date:{}]", auditoryId, lectureId, date);
+        return timetableItemRepository.findByAuditoryIdAndLectureIdAndDate(auditoryId, lectureId, date);
+    }
+
+    @Override
+    public TimetableItem findByTeacherIdAndLectureIdAndDate(Integer teacherId, Integer lectureId, LocalDate date) {
+        logger.debug("existsByTeacherIdAndLectureIdAndDate() [teacherId:{}, lectureId:{}, date:{}]", teacherId, lectureId, date);
+        return timetableItemRepository.findByTeacherIdAndLectureIdAndDate(teacherId, lectureId, date);
+    }
+
     private TimetableItem retriveEntityFromDto(TimetableItemDto timetableItemDto) {
         TimetableItem timetableItem = (timetableItemDto.getId() != 0) ? timetableItemRepository.getOne(timetableItemDto.getId()) : new TimetableItem();
         Subject subject = (timetableItemDto.getSubjectId() != 0) ? subjectRepository.getOne(timetableItemDto.getSubjectId()) : null;
@@ -126,6 +139,8 @@ public class TimetableItemServiceImpl implements TimetableItemService {
     }
 
     private List<Group> retriveGroupsFromDtos(List<GroupDto> groupDtos) {
-        return groupDtos.stream().map(s -> groupRepository.getOne(s.getId())).collect(Collectors.toList());
+        return groupDtos.stream()
+                        .map(s -> groupRepository.getOne(s.getId()))
+                        .collect(Collectors.toList());
     }
 }

@@ -7,6 +7,7 @@ import javax.validation.constraints.NotBlank;
 
 import org.hibernate.validator.constraints.Length;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.DateTimeFormat.ISO;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -27,11 +28,11 @@ public class LectureDto {
     @ApiModelProperty(notes = "The unique number name of lecture. Max length is 5 character")
     private String number;
 
-    @DateTimeFormat(pattern = "hh:mm:ss")
+    @DateTimeFormat(iso = ISO.TIME)
     @ApiModelProperty(notes = "The time of lecture beginning. Format must be 09:20:00")
     private LocalTime startTime;
 
-    @DateTimeFormat(pattern = "hh:mm:ss")
+    @DateTimeFormat(iso = ISO.TIME)
     @ApiModelProperty(notes = "The time of lecture be finished. Format must be 09:20:00")
     private LocalTime endTime;
 

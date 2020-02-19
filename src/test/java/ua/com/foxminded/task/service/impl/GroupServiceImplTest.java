@@ -1,5 +1,6 @@
 package ua.com.foxminded.task.service.impl;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.anyInt;
@@ -80,6 +81,7 @@ public class GroupServiceImplTest {
     @Test
     public void whenCreate_thenInvocCreateDaoClass() {
         GroupDto groupDto = GroupDtoModelRepository.getModel1();
+        
         Group groupInput = GroupModelRepository.getModel1();
         Group groupExpected = GroupModelRepository.getModelWithId();
 
@@ -88,7 +90,8 @@ public class GroupServiceImplTest {
         GroupDto groupDtoActually = groupService.create(groupDto);
 
         verify(groupRepository, times(1)).saveAndFlush(groupInput);
-        assertEquals(groupDto, groupDtoActually);
+        groupDto.setId(1);
+        assertThat(groupDto).isEqualToComparingFieldByField(groupDtoActually);
     }
 
     @Test

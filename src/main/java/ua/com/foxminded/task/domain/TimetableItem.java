@@ -43,6 +43,7 @@ public class TimetableItem {
     @JoinColumn(name = "lecture_id")
     private Lecture lecture;
     
+    @Column(name = "date")
     private LocalDate date;
     
     @ManyToOne

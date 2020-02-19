@@ -1,7 +1,10 @@
 package ua.com.foxminded.task.dao;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -95,6 +98,31 @@ public class TimetableItemRepositoryIntegrationTest {
         timetableItem.setGroups(new ArrayList<>());
         TimetableItem actuallyTimetableItem = timetableItemRepository.saveAndFlush(timetableItem);
         assertThat(actuallyTimetableItem).isNotNull();
+    }
+    
+    @Test
+    @DataSet(value = "timetableItem/timetableItems.yml", 
+             cleanBefore = true, 
+             skipCleaningFor = "flyway_schema_history")
+    public void whenRepositoryHasDuplicateAuditoryLectureAndDate_thenReturnBoolean() {
+        LocalDate date = LocalDate.of(2020, 06, 25);
+        TimetableItem exist = timetableItemRepository.findByAuditoryIdAndLectureIdAndDate(1, 1, date); 
+        assertNotNull(exist);
+        TimetableItem noExist = timetableItemRepository.findByAuditoryIdAndLectureIdAndDate(2, 3, date); 
+        assertNull(noExist);
+    }
+    
+    @Test
+    @DataSet(value = "timetableItem/timetableItems.yml", 
+             cleanBefore = true, 
+             cleanAfter = true,
+             skipCleaningFor = "flyway_schema_history")
+    public void whenRepositoryHasDuplicateTeacherLectureAndDate_thenReturnBoolean() {
+        LocalDate date = LocalDate.of(2020, 06, 25);
+        TimetableItem exist = timetableItemRepository.findByTeacherIdAndLectureIdAndDate(1, 1, date); 
+        assertNotNull(exist);
+        TimetableItem noExist = timetableItemRepository.findByTeacherIdAndLectureIdAndDate(1, 4, date); 
+        assertNull(noExist);
     }
 
 }

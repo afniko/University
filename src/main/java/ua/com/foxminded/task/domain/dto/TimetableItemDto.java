@@ -11,7 +11,11 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import ua.com.foxminded.task.validation.annotation.AuditoryAndTimeUnique;
+import ua.com.foxminded.task.validation.annotation.TeacherAndTimeUnique;
 
+@TeacherAndTimeUnique(fieldError = "teacherId")
+@AuditoryAndTimeUnique(fieldError = "auditoryId")
 @ApiModel(description = "Object with a full timetableItem information")
 public class TimetableItemDto {
 
@@ -36,7 +40,7 @@ public class TimetableItemDto {
     @ApiModelProperty(notes = "The list of groups")
     private List<GroupDto> groups = new ArrayList<>();
 
-    @Length(max = 20, message = "Maximum length of title of lecture is 5!")
+    @Length(max = 5, message = "Maximum length of title of lecture is 5!")
     @ApiModelProperty(notes = "The lecture title. Max length is 5 character")
     private String lectureTitle;
 

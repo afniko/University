@@ -15,7 +15,7 @@ public class SubjectModelRepository {
         List<Subject> subjects = Arrays.asList(getModel2(), getModel3(), getModel4());
         return new ArrayList<>(subjects);
     }
-
+    
     public static List<Subject> getModels2() {
         List<Subject> subjects = Arrays.asList(getModel1(), getModel2());
         return new ArrayList<>(subjects);

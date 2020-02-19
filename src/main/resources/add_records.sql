@@ -1,3 +1,16 @@
+  INSERT INTO faculties (title) VALUES
+    ('faculty1'),
+    ('faculty2'),
+    ('faculty3'),
+    ('faculty4');
+
+  INSERT INTO departments (title, description, faculty_id) VALUES
+    ('department1', 'bla bla bla 1', 1),
+    ('department2', 'bla bla bla 2', 1),
+    ('department3', 'bla bla bla 3', 1),
+    ('department4', 'bla bla bla 4', 2),
+    ('department5', 'bla bla bla 5', 2);
+
   INSERT INTO groups (title, department_id, yearEntry) VALUES
     ('G151', 1, 2015),
     ('G152', 1, 2015),
@@ -40,18 +53,6 @@
     ('Mathmatics'),
     ('Biologic');
 
-  INSERT INTO faculties (title) VALUES
-    ('faculty1'),
-    ('faculty2'),
-    ('faculty3'),
-    ('faculty4');
-
-  INSERT INTO departments (title, description, faculty_id) VALUES
-    ('department1', 'bla bla bla 1', 1),
-    ('department2', 'bla bla bla 2', 1),
-    ('department3', 'bla bla bla 3', 1),
-    ('department4', 'bla bla bla 4', 2),
-    ('department5', 'bla bla bla 5', 2);
 
   INSERT INTO persons (first_name, last_name, middle_name, birthday, idfees) VALUES
     ('firstname1', 'lastname1', 'middlename1', '1991-02-01', 111111111),
@@ -64,15 +65,15 @@
     ('firstname8', 'lastname8', 'middlename8', '1998-02-08', 111111118),
     ('firstname9', 'lastname9', 'middlename9', '1999-02-09', 111111119),
     ('firstname10', 'lastname10', 'middlename10', '2000-02-10', 111111120),
-    ('firstNameTe1', 'lastNameTe1', 'middleNameTe1', '1980-06-25', 1111111161),
-    ('firstNameTe2', 'lastNameTe2', 'middleNameTe2', '1966-06-25', 2111111111),
+    ('firstNameTe1', 'lastNameTe1', 'middleNameTe1', '1980-06-25', 111111166),
+    ('firstNameTe2', 'lastNameTe2', 'middleNameTe2', '1966-06-25', 211111111),
     ('firstNameTe3', 'lastNameTe3', 'middleNameTe3', '1950-06-25', 333111111),
-    ('firstNameTe4', 'lastNameTe4', 'middleNameTe4', '1971-06-25', 411111331),
-    ('firstNameTe5', 'lastNameTe5', 'middleNameTe5', '1975-06-25', 511111331),
-    ('firstNameTe6', 'lastNameTe6', 'middleNameTe6', '1976-06-25', 611111331),
-    ('firstNameTe7', 'lastNameTe7', 'middleNameTe7', '1977-06-25', 711111331),
-    ('firstNameTe8', 'lastNameTe8', 'middleNameTe8', '1978-06-25', 811111331),
-    ('firstNameTe9', 'lastNameTe9', 'middleNameTe9', '1979-06-25', 911111331);
+    ('firstNameTe4', 'lastNameTe4', 'middleNameTe4', '1971-06-25', 411111333),
+    ('firstNameTe5', 'lastNameTe5', 'middleNameTe5', '1975-06-25', 511111333),
+    ('firstNameTe6', 'lastNameTe6', 'middleNameTe6', '1976-06-25', 611111333),
+    ('firstNameTe7', 'lastNameTe7', 'middleNameTe7', '1977-06-25', 711111333),
+    ('firstNameTe8', 'lastNameTe8', 'middleNameTe8', '1978-06-25', 811111333),
+    ('firstNameTe9', 'lastNameTe9', 'middleNameTe9', '1979-06-25', 911111333);
 
   INSERT INTO students (person_id, group_id) VALUES
     (1,1),
@@ -131,3 +132,29 @@
     ('103a', 4, 30, 'bla bla bla 4'),
     ('405a', 1, 14, 'bla bla bla 5'),
     ('161a', 2, 20, 'bla bla bla 6');
+
+  INSERT INTO timetable_items (subject_id, auditory_id, lecture_id, date, teacher_id) VALUES
+    (1, 1, 1, '2020-06-25', 11),
+    (2, 2, 1, '2020-06-25', 12),
+    (2, 2, 2, '2020-06-25', 12),
+    (3, 3, 2, '2020-06-25', 13),
+    (3, 3, 3, '2020-06-25', 13),
+    (4, 4, 1, '2020-06-25', 13),
+    (4, 4, 2, '2020-06-25', 13),
+    (1, 5, 5, '2020-06-25', 11),
+    (2, 4, 5, '2020-06-25', 12),
+    (3, 3, 6, '2020-06-25', 13);
+
+  INSERT INTO groups_timetable_items (group_id, timetable_item_id) VALUES
+    (1, 1),
+    (1, 4),
+    (1, 9),
+    (2, 1),
+    (2, 3),
+    (2, 5),
+    (2, 6),
+    (3, 2),
+    (3, 7),
+    (4, 2),
+    (4, 8),
+    (4, 10);

@@ -1,4 +1,4 @@
-package ua.com.foxminded.task.controller.rest;
+package ua.com.foxminded.task.controller.rest.exception;
 
 import java.io.IOException;
 import java.util.Date;

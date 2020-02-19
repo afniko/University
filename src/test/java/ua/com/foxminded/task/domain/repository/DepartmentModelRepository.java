@@ -50,9 +50,11 @@ public class DepartmentModelRepository {
 
     public static Department getModel2() {
         Department department = new Department();
+        Faculty faculty = FacultyModelRepository.getModel1();
+        faculty.setId(2);
+        department.setFaculty(faculty);
         department.setTitle("department2");
         department.setDescription("bla bla bla 2");
-        department.setFaculty(FacultyModelRepository.getModel1());
         return department;
     }
 

@@ -1,8 +1,9 @@
 package ua.com.foxminded.task.controller;
-
 import static org.hamcrest.CoreMatchers.allOf;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.Matchers.hasProperty;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -62,6 +63,10 @@ public class GroupControllerSystemTest {
              skipCleaningFor = "flyway_schema_history")
     void whenRetriveAllGroups_thenExpectListOfGroups() throws Exception {
         String expectedTitle = "Groups";
+        GROUP_DTO1.setId(1);
+        GROUP_DTO2.setId(2);
+        GROUP_DTO3.setId(3);
+        GROUP_DTO4.setId(4);
         List<GroupDto> groups = Arrays.asList(GROUP_DTO1, GROUP_DTO2, GROUP_DTO3, GROUP_DTO4);
         this.mockMvc.perform(get("/groups").accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
@@ -145,7 +150,8 @@ public class GroupControllerSystemTest {
                 .andExpect(status().isOk())
                 .andExpect(model().attribute(ATTRIBUTE_HTML_TITLE, equalTo(expectedTitle)))
                 .andExpect(model().attribute(ATTRIBUTE_HTML_SUCCESS_MESSAGE, equalTo(expectedSuccessMessage)))
-                .andExpect(model().attribute(ATTRIBUTE_HTML_GROUP, equalTo(groupDto)))
+                .andExpect(model().attribute(ATTRIBUTE_HTML_GROUP, hasProperty("title", is("group27"))))
+                .andExpect(model().attribute(ATTRIBUTE_HTML_GROUP, hasProperty("yearEntry", is(2015))))
                 .andExpect(view().name(PATH_HTML_GROUP))
                 .andDo(print());
     }

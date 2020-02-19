@@ -60,8 +60,7 @@ public class GroupDto {
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + ((title == null) ? 0 : title.hashCode());
-        result = prime * result + ((yearEntry == null) ? 0 : yearEntry.hashCode());
+        result = prime * result + id;
         return result;
     }
 
@@ -74,15 +73,7 @@ public class GroupDto {
         if (getClass() != obj.getClass())
             return false;
         GroupDto other = (GroupDto) obj;
-        if (title == null) {
-            if (other.title != null)
-                return false;
-        } else if (!title.equals(other.title))
-            return false;
-        if (yearEntry == null) {
-            if (other.yearEntry != null)
-                return false;
-        } else if (!yearEntry.equals(other.yearEntry))
+        if (id != other.id)
             return false;
         return true;
     }

@@ -78,7 +78,7 @@ public class TimetableItemServiceImplTest {
 
         TimetableItemDto timetableItemDtoActually = timetableItemService.findByIdDto(1);
 
-        verify(timetableItemRepository, times(1)).getOne(anyInt());
+        verify(timetableItemRepository, times(1)).getOne(1);
         assertEquals(timetableItemDtoExpected, timetableItemDtoActually);
     }
 
