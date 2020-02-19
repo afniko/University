@@ -122,6 +122,13 @@ public class TimetableItemServiceImpl implements TimetableItemService {
         return timetableItemRepository.findByTeacherIdAndLectureIdAndDate(teacherId, lectureId, date);
     }
 
+    @Override
+    public List<TimetableItemDto> findByDateBetweenAndTeacherId(LocalDate startDate, LocalDate endDate, Integer teacherId) {
+        logger.debug("findByDateBetweenAndTeacherId() [startDate:{}, endDate:{}]", startDate, endDate);
+        List<TimetableItem> timetableItems = timetableItemRepository.findByDateBetweenAndTeacherId(startDate, endDate, teacherId);
+        return timetableItems.stream().map(ConverterToDtoService::convert).collect(Collectors.toList());
+    }
+
     private TimetableItem retriveEntityFromDto(TimetableItemDto timetableItemDto) {
         TimetableItem timetableItem = (timetableItemDto.getId() != 0) ? timetableItemRepository.getOne(timetableItemDto.getId()) : new TimetableItem();
         Subject subject = (timetableItemDto.getSubjectId() != 0) ? subjectRepository.getOne(timetableItemDto.getSubjectId()) : null;

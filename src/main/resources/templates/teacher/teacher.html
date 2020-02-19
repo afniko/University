@@ -9,7 +9,6 @@
 </head>
     <div th:replace="fragments/header">header</div>
 <body>
-    <div th:replace="fragments/search_period">search form</div>
 
     <div class="container-fluid">
         <th:block th:if="${errorMessage != null}">
@@ -21,6 +20,7 @@
                 <div class="alert alert-success" th:text="${successMessage}">Success</div>
                 <br />
             </th:block>
+    <div th:replace="fragments/search_period">search form</div>
             <table class="table table-bordered">
                 <tr class="success">
                     <th>First name</th>

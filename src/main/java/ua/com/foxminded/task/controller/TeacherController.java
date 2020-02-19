@@ -1,5 +1,6 @@
 package ua.com.foxminded.task.controller;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.persistence.EntityNotFoundException;
@@ -19,11 +20,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import ua.com.foxminded.task.dao.exception.EntityAlreadyExistsException;
 import ua.com.foxminded.task.dao.exception.EntityNotValidException;
 import ua.com.foxminded.task.domain.dto.DepartmentDto;
+import ua.com.foxminded.task.domain.dto.SearchPeriodDto;
 import ua.com.foxminded.task.domain.dto.SubjectDto;
 import ua.com.foxminded.task.domain.dto.TeacherDto;
+import ua.com.foxminded.task.domain.dto.TimetableItemDto;
 import ua.com.foxminded.task.service.DepartmentService;
 import ua.com.foxminded.task.service.SubjectService;
 import ua.com.foxminded.task.service.TeacherService;
+import ua.com.foxminded.task.service.TimetableItemService;
 
 @Controller
 public class TeacherController {
@@ -31,27 +35,33 @@ public class TeacherController {
     private static final String PATH_HTML_TEACHER = "teacher/teacher";
     private static final String PATH_HTML_TEACHERS = "teacher/teachers";
     private static final String PATH_HTML_TEACHER_EDIT = "teacher/teacher_edit";
+    private static final String PATH_HTML_TIMETABLEITEMS = "timetable-item/timetable-items";
     private static final String ATTRIBUTE_HTML_TITLE = "title";
     private static final String ATTRIBUTE_HTML_TEACHER = "teacherDto";
     private static final String ATTRIBUTE_HTML_TEACHERS = "teachers";
     private static final String ATTRIBUTE_HTML_DEPARTMENTS = "departments";
+    private static final String ATTRIBUTE_HTML_TIMETABLEITEMS = "timetableItems";
     private static final String ATTRIBUTE_HTML_SUBJECTS = "allSubjects";
+    private static final String ATTRIBUTE_HTML_SEARCH_PERIOD = "searchPeriodDto";
     private static final String ATTRIBUTE_HTML_ERROR_MESSAGE = "errorMessage";
     private static final String ATTRIBUTE_HTML_SUCCESS_MESSAGE = "successMessage";
     private Logger logger;
     private TeacherService teacherService;
     private DepartmentService departmentService;
     private SubjectService subjectService;
+    private TimetableItemService timetableItemService;
     
     @Autowired
     public TeacherController(Logger logger, 
                              TeacherService teacherService, 
                              DepartmentService departmentService, 
-                             SubjectService subjectService) {
+                             SubjectService subjectService, 
+                             TimetableItemService timetableItemService) {
         this.logger = logger;
         this.teacherService = teacherService;
         this.departmentService = departmentService;
         this.subjectService = subjectService;
+        this.timetableItemService = timetableItemService;
     }
 
     @GetMapping("/teachers")
@@ -69,11 +79,13 @@ public class TeacherController {
         logger.debug("getEntityById()");
         String errorMessage = null;
         TeacherDto teacherDto = null;
+        SearchPeriodDto searchPeriodDto = null;
         int id = 0;
         try {
             if (checkId(idString)) {
                 id = Integer.valueOf(idString);
                 teacherDto = teacherService.findByIdDto(id);
+                searchPeriodDto = getNewEntity(id);
             } else {
                 errorMessage = "You id is blank";
             }
@@ -82,10 +94,29 @@ public class TeacherController {
         } catch (NumberFormatException e) {
             errorMessage = "Teacher id# must be numeric!";
         }
+        
         model.addAttribute(ATTRIBUTE_HTML_TITLE, "Teacher");
         model.addAttribute(ATTRIBUTE_HTML_TEACHER, teacherDto);
+        model.addAttribute(ATTRIBUTE_HTML_SEARCH_PERIOD, searchPeriodDto);
         model.addAttribute(ATTRIBUTE_HTML_ERROR_MESSAGE, errorMessage);
         return PATH_HTML_TEACHER;
+    }
+    
+    @PostMapping("/teacher")
+    public String getEntityByPeriod(@Valid @ModelAttribute("searchPeriodDto") SearchPeriodDto searchDto, 
+                                BindingResult bindingResult, 
+                                Model model) {
+        logger.debug("getEntities()");
+        int teacherId = searchDto.getId();
+        LocalDate startDate = searchDto.getStartDate();
+        LocalDate endDate = searchDto.getEndDate();
+        
+        List<TimetableItemDto> timetableItems = timetableItemService.findByDateBetweenAndTeacherId(startDate, endDate, teacherId);
+        
+        model.addAttribute(ATTRIBUTE_HTML_TITLE, "Timetable item filtered");
+        model.addAttribute(ATTRIBUTE_HTML_SEARCH_PERIOD, searchDto);
+        model.addAttribute(ATTRIBUTE_HTML_TIMETABLEITEMS, timetableItems);
+        return PATH_HTML_TIMETABLEITEMS;
     }
 
     @GetMapping("/teacher_edit")
@@ -159,6 +190,14 @@ public class TeacherController {
 
     private boolean checkId(String id) {
         return StringUtils.isNoneBlank(id);
+    }
+    
+    private SearchPeriodDto getNewEntity(int teacherId) {
+        SearchPeriodDto searchPeriodDto = new SearchPeriodDto();
+        searchPeriodDto.setId(teacherId);
+        searchPeriodDto.setStartDate(LocalDate.now());
+        searchPeriodDto.setEndDate(LocalDate.now());
+        return searchPeriodDto;
     }
 
 }
