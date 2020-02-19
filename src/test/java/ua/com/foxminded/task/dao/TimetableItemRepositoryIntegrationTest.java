@@ -101,11 +101,9 @@ public class TimetableItemRepositoryIntegrationTest {
     }
     
     @Test
-    @Transactional
     @DataSet(value = "timetableItem/timetableItems.yml", 
              cleanBefore = true, 
              skipCleaningFor = "flyway_schema_history")
-    @ExpectedDataSet(value = "timetableItem/expected-timetableItems.yml")
     public void whenRepositoryHasDuplicateAuditoryLectureAndDate_thenReturnBoolean() {
         LocalDate date = LocalDate.of(2020, 06, 25);
         TimetableItem exist = timetableItemRepository.findByAuditoryIdAndLectureIdAndDate(1, 1, date); 
@@ -115,11 +113,10 @@ public class TimetableItemRepositoryIntegrationTest {
     }
     
     @Test
-    @Transactional
     @DataSet(value = "timetableItem/timetableItems.yml", 
              cleanBefore = true, 
+             cleanAfter = true,
              skipCleaningFor = "flyway_schema_history")
-    @ExpectedDataSet(value = "timetableItem/expected-timetableItems.yml")
     public void whenRepositoryHasDuplicateTeacherLectureAndDate_thenReturnBoolean() {
         LocalDate date = LocalDate.of(2020, 06, 25);
         TimetableItem exist = timetableItemRepository.findByTeacherIdAndLectureIdAndDate(1, 1, date); 
