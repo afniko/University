@@ -1,5 +1,6 @@
 package ua.com.foxminded.task.controller;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.persistence.EntityNotFoundException;
@@ -21,6 +22,7 @@ import ua.com.foxminded.task.dao.exception.EntityNotValidException;
 import ua.com.foxminded.task.domain.dto.AuditoryDto;
 import ua.com.foxminded.task.domain.dto.GroupDto;
 import ua.com.foxminded.task.domain.dto.LectureDto;
+import ua.com.foxminded.task.domain.dto.FiltersDto;
 import ua.com.foxminded.task.domain.dto.SubjectDto;
 import ua.com.foxminded.task.domain.dto.TeacherDto;
 import ua.com.foxminded.task.domain.dto.TimetableItemDto;
@@ -39,6 +41,7 @@ public class TimetableItemController {
     private static final String PATH_HTML_TIMETABLEITEM_EDIT = "timetable-item/timetable-item_edit";
     private static final String ATTRIBUTE_HTML_TITLE = "title";
     private static final String ATTRIBUTE_HTML_TIMETABLEITEM = "timetableItemDto";
+    private static final String ATTRIBUTE_HTML_SEARCH_PERIOD = "filtersDto";
     private static final String ATTRIBUTE_HTML_TIMETABLEITEMS = "timetableItems";
     private static final String ATTRIBUTE_HTML_SUBJECTS = "subjects";
     private static final String ATTRIBUTE_HTML_AUDITORIES = "auditories";
@@ -76,8 +79,33 @@ public class TimetableItemController {
     public String getEntities(Model model) {
         logger.debug("getEntities()");
         List<TimetableItemDto> timetableItems = timetableItemService.findAllDto();
-
+        List<TeacherDto> teachers = teacherService.findAllDto();
+        FiltersDto filtersDto = getNewFilter();
+        
         model.addAttribute(ATTRIBUTE_HTML_TITLE, "Timetable item");
+        model.addAttribute(ATTRIBUTE_HTML_SEARCH_PERIOD, filtersDto);
+        model.addAttribute(ATTRIBUTE_HTML_TEACHERS, teachers);
+        model.addAttribute(ATTRIBUTE_HTML_TIMETABLEITEMS, timetableItems);
+        return PATH_HTML_TIMETABLEITEMS;
+    }
+    
+    
+    @PostMapping("/timetable-items")
+    public String getEntityByPeriod(@Valid @ModelAttribute("searchPeriodDto") FiltersDto filtersDto, 
+                                BindingResult bindingResult, 
+                                Model model) {
+        logger.debug("getEntityByPeriod()");
+        int teacherId = filtersDto.getTeacherId();
+        int studentId = filtersDto.getStudentId();
+        LocalDate startDate = filtersDto.getStartDate();
+        LocalDate endDate = filtersDto.getEndDate();
+        List<TeacherDto> teachers = teacherService.findAllDto();
+        
+        List<TimetableItemDto> timetableItems = timetableItemService.findByDateBetweenAndTeacherId(startDate, endDate, teacherId);
+        
+        model.addAttribute(ATTRIBUTE_HTML_TITLE, "Timetable item filtered");
+        model.addAttribute(ATTRIBUTE_HTML_SEARCH_PERIOD, filtersDto);
+        model.addAttribute(ATTRIBUTE_HTML_TEACHERS, teachers);
         model.addAttribute(ATTRIBUTE_HTML_TIMETABLEITEMS, timetableItems);
         return PATH_HTML_TIMETABLEITEMS;
     }
@@ -192,6 +220,13 @@ public class TimetableItemController {
 
     private boolean checkId(String id) {
         return StringUtils.isNoneBlank(id);
+    }
+    
+    private FiltersDto getNewFilter() {
+        FiltersDto filtersDto = new FiltersDto();
+        filtersDto.setStartDate(LocalDate.now());
+        filtersDto.setEndDate(LocalDate.now());
+        return filtersDto;
     }
 
 }
