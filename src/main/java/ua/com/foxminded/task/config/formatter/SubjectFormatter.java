@@ -1,4 +1,4 @@
-package ua.com.foxminded.task.controller.formatter;
+package ua.com.foxminded.task.config.formatter;
 
 import java.text.ParseException;
 import java.util.Locale;

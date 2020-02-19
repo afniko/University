@@ -22,6 +22,7 @@ import ua.com.foxminded.task.dao.exception.EntityNotValidException;
 import ua.com.foxminded.task.domain.dto.AuditoryDto;
 import ua.com.foxminded.task.domain.dto.GroupDto;
 import ua.com.foxminded.task.domain.dto.LectureDto;
+import ua.com.foxminded.task.domain.dto.StudentDto;
 import ua.com.foxminded.task.domain.dto.FiltersDto;
 import ua.com.foxminded.task.domain.dto.SubjectDto;
 import ua.com.foxminded.task.domain.dto.TeacherDto;
@@ -29,6 +30,7 @@ import ua.com.foxminded.task.domain.dto.TimetableItemDto;
 import ua.com.foxminded.task.service.AuditoryService;
 import ua.com.foxminded.task.service.GroupService;
 import ua.com.foxminded.task.service.LectureService;
+import ua.com.foxminded.task.service.StudentService;
 import ua.com.foxminded.task.service.SubjectService;
 import ua.com.foxminded.task.service.TeacherService;
 import ua.com.foxminded.task.service.TimetableItemService;
@@ -48,6 +50,7 @@ public class TimetableItemController {
     private static final String ATTRIBUTE_HTML_GROUPS = "allGroups";
     private static final String ATTRIBUTE_HTML_LECTURIES = "lecturies";
     private static final String ATTRIBUTE_HTML_TEACHERS = "teachers";
+    private static final String ATTRIBUTE_HTML_STUDENTS = "students";
     private static final String ATTRIBUTE_HTML_ERROR_MESSAGE = "errorMessage";
     private static final String ATTRIBUTE_HTML_SUCCESS_MESSAGE = "successMessage";
     private Logger logger;
@@ -57,6 +60,7 @@ public class TimetableItemController {
     private GroupService groupService;
     private LectureService lectureService;
     private TeacherService teacherService;
+    private StudentService studentService;
 
     @Autowired
     public TimetableItemController(Logger logger, 
@@ -65,7 +69,8 @@ public class TimetableItemController {
                                    AuditoryService auditoryService, 
                                    GroupService groupService,
                                    LectureService lectureService, 
-                                   TeacherService teacherService) {
+                                   TeacherService teacherService,
+                                   StudentService studentService) {
         this.logger = logger;
         this.timetableItemService = timetableItemService;
         this.subjectService = subjectService;
@@ -73,6 +78,7 @@ public class TimetableItemController {
         this.groupService = groupService;
         this.lectureService = lectureService;
         this.teacherService = teacherService;
+        this.studentService = studentService;
     }
     
     @GetMapping("/timetable-items")
@@ -100,12 +106,14 @@ public class TimetableItemController {
         LocalDate startDate = filtersDto.getStartDate();
         LocalDate endDate = filtersDto.getEndDate();
         List<TeacherDto> teachers = teacherService.findAllDto();
+        List<StudentDto> students = studentService.findAllDto();
         
         List<TimetableItemDto> timetableItems = timetableItemService.findByDateBetweenAndTeacherId(startDate, endDate, teacherId);
         
         model.addAttribute(ATTRIBUTE_HTML_TITLE, "Timetable item filtered");
         model.addAttribute(ATTRIBUTE_HTML_SEARCH_PERIOD, filtersDto);
         model.addAttribute(ATTRIBUTE_HTML_TEACHERS, teachers);
+        model.addAttribute(ATTRIBUTE_HTML_STUDENTS, students);
         model.addAttribute(ATTRIBUTE_HTML_TIMETABLEITEMS, timetableItems);
         return PATH_HTML_TIMETABLEITEMS;
     }
