@@ -86,11 +86,13 @@ public class TimetableItemController {
         logger.debug("getEntities()");
         List<TimetableItemDto> timetableItems = timetableItemService.findAllDto();
         List<TeacherDto> teachers = teacherService.findAllDto();
+        List<StudentDto> students = studentService.findAllDto();
         FiltersDto filtersDto = getNewFilter();
         
         model.addAttribute(ATTRIBUTE_HTML_TITLE, "Timetable item");
         model.addAttribute(ATTRIBUTE_HTML_SEARCH_PERIOD, filtersDto);
         model.addAttribute(ATTRIBUTE_HTML_TEACHERS, teachers);
+        model.addAttribute(ATTRIBUTE_HTML_STUDENTS, students);
         model.addAttribute(ATTRIBUTE_HTML_TIMETABLEITEMS, timetableItems);
         return PATH_HTML_TIMETABLEITEMS;
     }
@@ -103,13 +105,24 @@ public class TimetableItemController {
         logger.debug("getEntityByPeriod()");
         int teacherId = filtersDto.getTeacherId();
         int studentId = filtersDto.getStudentId();
+        List<TimetableItemDto> timetableItems = null;
         LocalDate startDate = filtersDto.getStartDate();
         LocalDate endDate = filtersDto.getEndDate();
         List<TeacherDto> teachers = teacherService.findAllDto();
         List<StudentDto> students = studentService.findAllDto();
-        
-        List<TimetableItemDto> timetableItems = timetableItemService.findByDateBetweenAndTeacherId(startDate, endDate, teacherId);
-        
+        if (studentId == 0 && teacherId != 0) {
+            timetableItems = timetableItemService.findByDateBetweenAndTeacherId(startDate, endDate, teacherId);
+        }
+        if (studentId != 0 && teacherId == 0) {
+            timetableItems = timetableItemService.findByDateBetweenAndStudentId(startDate, endDate, studentId);
+        }
+        if (studentId == 0 && teacherId == 0) {
+            timetableItems = timetableItemService.findByDateBetween(startDate, endDate);
+        }
+        if (studentId != 0 && teacherId != 0) {
+            timetableItems = timetableItemService.findByDateBetweenAndTeacherIdAndStudentId(startDate, endDate, teacherId, studentId);
+        }
+
         model.addAttribute(ATTRIBUTE_HTML_TITLE, "Timetable item filtered");
         model.addAttribute(ATTRIBUTE_HTML_SEARCH_PERIOD, filtersDto);
         model.addAttribute(ATTRIBUTE_HTML_TEACHERS, teachers);

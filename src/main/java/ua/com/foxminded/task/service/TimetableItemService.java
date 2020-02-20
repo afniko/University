@@ -13,4 +13,10 @@ public interface TimetableItemService extends ModelService<TimetableItemDto> {
     public TimetableItem findByTeacherIdAndLectureIdAndDate(Integer teacherId, Integer lectureId, LocalDate date);
     
     public List<TimetableItemDto> findByDateBetweenAndTeacherId(LocalDate startDate, LocalDate endDate, Integer teacherId);
+    
+    public List<TimetableItemDto> findByDateBetweenAndStudentId(LocalDate startDate, LocalDate endDate, Integer studentId);
+    
+    public List<TimetableItemDto> findByDateBetween(LocalDate startDate, LocalDate endDate);
+    
+    public List<TimetableItemDto> findByDateBetweenAndTeacherIdAndStudentId(LocalDate startDate, LocalDate endDate, Integer teacherId, Integer studentId);
 }
