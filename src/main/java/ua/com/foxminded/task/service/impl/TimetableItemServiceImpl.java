@@ -9,6 +9,7 @@ import javax.persistence.EntityNotFoundException;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import ua.com.foxminded.task.dao.AuditoryRepository;
@@ -19,12 +20,14 @@ import ua.com.foxminded.task.dao.TeacherRepository;
 import ua.com.foxminded.task.dao.TimetableItemRepository;
 import ua.com.foxminded.task.dao.exception.EntityAlreadyExistsException;
 import ua.com.foxminded.task.dao.exception.EntityNotValidException;
+import ua.com.foxminded.task.dao.filter.TimetableItemSpecification;
 import ua.com.foxminded.task.domain.Auditory;
 import ua.com.foxminded.task.domain.Group;
 import ua.com.foxminded.task.domain.Lecture;
 import ua.com.foxminded.task.domain.Subject;
 import ua.com.foxminded.task.domain.Teacher;
 import ua.com.foxminded.task.domain.TimetableItem;
+import ua.com.foxminded.task.domain.dto.FiltersDto;
 import ua.com.foxminded.task.domain.dto.GroupDto;
 import ua.com.foxminded.task.domain.dto.TimetableItemDto;
 import ua.com.foxminded.task.service.TimetableItemService;
@@ -147,6 +150,15 @@ public class TimetableItemServiceImpl implements TimetableItemService {
     public List<TimetableItemDto> findByDateBetweenAndTeacherIdAndStudentId(LocalDate startDate, LocalDate endDate, Integer teacherId, Integer studentId) {
         logger.debug("findByDateBetweenAndTeacherIdAndStudentId() [startDate:{}, endDate:{}, teacherId:{}, studentId:{}]", startDate, endDate, teacherId, studentId);
         List<TimetableItem> timetableItems = timetableItemRepository.findByDateBetweenAndTeacherIdAndStudentId(startDate, endDate, teacherId, studentId);
+        return timetableItems.stream().map(ConverterToDtoService::convert).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<TimetableItemDto> findByTimetableItemSpecification(FiltersDto filters) {
+        logger.debug("findByTimetableItemSpecification() [filters:{}]", filters);
+        TimetableItemSpecification itemSpecification = new TimetableItemSpecification(filters);
+//        Specification<TimetableItem> spec = Specification.where(itemSpecification).
+        List<TimetableItem> timetableItems =timetableItemRepository.findAll(itemSpecification);
         return timetableItems.stream().map(ConverterToDtoService::convert).collect(Collectors.toList());
     }
 

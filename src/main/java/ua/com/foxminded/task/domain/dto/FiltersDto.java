@@ -1,5 +1,6 @@
 package ua.com.foxminded.task.domain.dto;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
 import javax.validation.constraints.Min;
@@ -10,7 +11,9 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
 @ApiModel(description = "Object for finding period timetableItems")
-public class FiltersDto {
+public class FiltersDto implements Serializable {
+
+    private static final long serialVersionUID = 5672207011636676194L;
 
     @Min(value = 0, message = "Id must be more than zero!")
     @ApiModelProperty(notes = "The teacher id of entity")
