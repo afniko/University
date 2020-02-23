@@ -19,12 +19,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import ua.com.foxminded.task.dao.exception.EntityAlreadyExistsException;
 import ua.com.foxminded.task.dao.exception.EntityNotValidException;
-import ua.com.foxminded.task.dao.filter.TimetableItemSpecification;
 import ua.com.foxminded.task.domain.dto.AuditoryDto;
+import ua.com.foxminded.task.domain.dto.FiltersDto;
 import ua.com.foxminded.task.domain.dto.GroupDto;
 import ua.com.foxminded.task.domain.dto.LectureDto;
 import ua.com.foxminded.task.domain.dto.StudentDto;
-import ua.com.foxminded.task.domain.dto.FiltersDto;
 import ua.com.foxminded.task.domain.dto.SubjectDto;
 import ua.com.foxminded.task.domain.dto.TeacherDto;
 import ua.com.foxminded.task.domain.dto.TimetableItemDto;

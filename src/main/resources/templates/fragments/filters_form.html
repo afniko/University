@@ -3,7 +3,7 @@
 
 <body>
     <th:block th:if="${filtersDto != null}">
-        <form class="navbar-form navbar-left" role="search" action="" method="post" th:object="${filtersDto}">
+        <form class="navbar-form navbar-center" role="search" action="" method="post" th:object="${filtersDto}">
             <div class="form-group">
                 <label for="startDate">From:</label> <input th:type="date" class="form-control" th:field="*{startDate}" required>
             </div>
@@ -11,13 +11,13 @@
                 <label for="endDate">To:</label> <input th:type="date" class="form-control" th:field="*{endDate}" required>
             </div>
             <div class="form-group">
-                <select class="selectpicker" data-live-search="true" th:field="*{teacherId}">
+                <select class="form-control" data-live-search="true" th:field="*{teacherId}">
                     <option value=0 th:text="${filtersDto.teacherId}==0 ? 'Choose teacher':'Remove teacher'"></option>
                     <option th:each="teacher : ${teachers}" th:value="${teacher.id}" th:text=${teacher.firstName} th:selected="${filtersDto.teacherId}==${teacher.id}"></option>
                 </select>
             </div>
             <div class="form-group">
-                <select class="selectpicker" data-live-search="true" th:field="*{studentId}">
+                <select class="form-control" data-live-search="true" th:field="*{studentId}">
                     <option value=0 th:text="${filtersDto.studentId}==0 ? 'Choose student':'Remove student'"></option>
                     <option th:each="student : ${students}" th:value="${student.id}" th:text=${student.firstName} th:selected="${filtersDto.studentId}==${student.id}"></option>
                 </select>

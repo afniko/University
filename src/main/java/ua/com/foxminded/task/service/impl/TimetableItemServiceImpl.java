@@ -9,7 +9,6 @@ import javax.persistence.EntityNotFoundException;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import ua.com.foxminded.task.dao.AuditoryRepository;
@@ -126,38 +125,9 @@ public class TimetableItemServiceImpl implements TimetableItemService {
     }
 
     @Override
-    public List<TimetableItemDto> findByDateBetweenAndTeacherId(LocalDate startDate, LocalDate endDate, Integer teacherId) {
-        logger.debug("findByDateBetweenAndTeacherId() [startDate:{}, endDate:{}, teacherId:{}]", startDate, endDate, teacherId);
-        List<TimetableItem> timetableItems = timetableItemRepository.findByDateBetweenAndTeacherId(startDate, endDate, teacherId);
-        return timetableItems.stream().map(ConverterToDtoService::convert).collect(Collectors.toList());
-    }
-    
-    @Override
-    public List<TimetableItemDto> findByDateBetweenAndStudentId(LocalDate startDate, LocalDate endDate, Integer studentId) {
-        logger.debug("findByDateBetweenAndStudentId() [startDate:{}, endDate:{}, studentId:{}]", startDate, endDate, studentId);
-        List<TimetableItem> timetableItems = timetableItemRepository.findByDateBetweenAndStudentId(startDate, endDate, studentId);
-        return timetableItems.stream().map(ConverterToDtoService::convert).collect(Collectors.toList());
-    }
-
-    @Override
-    public List<TimetableItemDto> findByDateBetween(LocalDate startDate, LocalDate endDate) {
-        logger.debug("findByDateBetween() [startDate:{}, endDate:{}]", startDate, endDate);
-        List<TimetableItem> timetableItems = timetableItemRepository.findByDateBetween(startDate, endDate);
-        return timetableItems.stream().map(ConverterToDtoService::convert).collect(Collectors.toList());
-    }
-
-    @Override
-    public List<TimetableItemDto> findByDateBetweenAndTeacherIdAndStudentId(LocalDate startDate, LocalDate endDate, Integer teacherId, Integer studentId) {
-        logger.debug("findByDateBetweenAndTeacherIdAndStudentId() [startDate:{}, endDate:{}, teacherId:{}, studentId:{}]", startDate, endDate, teacherId, studentId);
-        List<TimetableItem> timetableItems = timetableItemRepository.findByDateBetweenAndTeacherIdAndStudentId(startDate, endDate, teacherId, studentId);
-        return timetableItems.stream().map(ConverterToDtoService::convert).collect(Collectors.toList());
-    }
-
-    @Override
     public List<TimetableItemDto> findByTimetableItemSpecification(FiltersDto filters) {
         logger.debug("findByTimetableItemSpecification() [filters:{}]", filters);
         TimetableItemSpecification itemSpecification = new TimetableItemSpecification(filters);
-//        Specification<TimetableItem> spec = Specification.where(itemSpecification).
         List<TimetableItem> timetableItems =timetableItemRepository.findAll(itemSpecification);
         return timetableItems.stream().map(ConverterToDtoService::convert).collect(Collectors.toList());
     }
