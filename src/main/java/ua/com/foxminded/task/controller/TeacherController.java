@@ -69,6 +69,7 @@ public class TeacherController {
         logger.debug("getEntityById()");
         String errorMessage = null;
         TeacherDto teacherDto = null;
+
         int id = 0;
         try {
             if (checkId(idString)) {
@@ -82,6 +83,7 @@ public class TeacherController {
         } catch (NumberFormatException e) {
             errorMessage = "Teacher id# must be numeric!";
         }
+        
         model.addAttribute(ATTRIBUTE_HTML_TITLE, "Teacher");
         model.addAttribute(ATTRIBUTE_HTML_TEACHER, teacherDto);
         model.addAttribute(ATTRIBUTE_HTML_ERROR_MESSAGE, errorMessage);
@@ -160,5 +162,5 @@ public class TeacherController {
     private boolean checkId(String id) {
         return StringUtils.isNoneBlank(id);
     }
-
+    
 }

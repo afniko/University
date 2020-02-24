@@ -1,5 +1,9 @@
 package ua.com.foxminded.task.controller;
 
+import static java.util.Objects.nonNull;
+
+import java.time.LocalDate;
+import java.time.temporal.TemporalAdjusters;
 import java.util.List;
 
 import javax.persistence.EntityNotFoundException;
@@ -18,15 +22,19 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import ua.com.foxminded.task.dao.exception.EntityAlreadyExistsException;
 import ua.com.foxminded.task.dao.exception.EntityNotValidException;
+import ua.com.foxminded.task.domain.TimetableFilters;
 import ua.com.foxminded.task.domain.dto.AuditoryDto;
 import ua.com.foxminded.task.domain.dto.GroupDto;
 import ua.com.foxminded.task.domain.dto.LectureDto;
+import ua.com.foxminded.task.domain.dto.StudentDto;
 import ua.com.foxminded.task.domain.dto.SubjectDto;
 import ua.com.foxminded.task.domain.dto.TeacherDto;
+import ua.com.foxminded.task.domain.dto.TimetableFiltersDto;
 import ua.com.foxminded.task.domain.dto.TimetableItemDto;
 import ua.com.foxminded.task.service.AuditoryService;
 import ua.com.foxminded.task.service.GroupService;
 import ua.com.foxminded.task.service.LectureService;
+import ua.com.foxminded.task.service.StudentService;
 import ua.com.foxminded.task.service.SubjectService;
 import ua.com.foxminded.task.service.TeacherService;
 import ua.com.foxminded.task.service.TimetableItemService;
@@ -39,6 +47,7 @@ public class TimetableItemController {
     private static final String PATH_HTML_TIMETABLEITEM_EDIT = "timetable-item/timetable-item_edit";
     private static final String ATTRIBUTE_HTML_TITLE = "title";
     private static final String ATTRIBUTE_HTML_TIMETABLEITEM = "timetableItemDto";
+    private static final String ATTRIBUTE_HTML_TIMETABLEITEM_FILTERS = "timetableFiltersDto";
     private static final String ATTRIBUTE_HTML_TIMETABLEITEMS = "timetableItems";
     private static final String ATTRIBUTE_HTML_SUBJECTS = "subjects";
     private static final String ATTRIBUTE_HTML_AUDITORIES = "auditories";
@@ -54,6 +63,7 @@ public class TimetableItemController {
     private GroupService groupService;
     private LectureService lectureService;
     private TeacherService teacherService;
+    private StudentService studentService;
 
     @Autowired
     public TimetableItemController(Logger logger, 
@@ -62,7 +72,8 @@ public class TimetableItemController {
                                    AuditoryService auditoryService, 
                                    GroupService groupService,
                                    LectureService lectureService, 
-                                   TeacherService teacherService) {
+                                   TeacherService teacherService,
+                                   StudentService studentService) {
         this.logger = logger;
         this.timetableItemService = timetableItemService;
         this.subjectService = subjectService;
@@ -70,14 +81,52 @@ public class TimetableItemController {
         this.groupService = groupService;
         this.lectureService = lectureService;
         this.teacherService = teacherService;
+        this.studentService = studentService;
     }
     
     @GetMapping("/timetable-items")
-    public String getEntities(Model model) {
+    public String getEntities(@RequestParam(required = false) String selectedTeacher,
+                              @RequestParam(required = false) String selectedStudent,
+                              Model model) {
         logger.debug("getEntities()");
-        List<TimetableItemDto> timetableItems = timetableItemService.findAllDto();
+        List<StudentDto> students = studentService.findAllDto();
+        List<TeacherDto> teachers = teacherService.findAllDto();
+        TimetableFiltersDto filtersDto = initDefaultFilters();
+        filtersDto.setAvailableStudents(students);
+        filtersDto.setAvailableTeachers(teachers);
+        if (nonNull(selectedTeacher)) {
+            filtersDto.setSelectedTeacher(Integer.valueOf(selectedTeacher));
+        }
+        if (nonNull(selectedStudent)) {
+            filtersDto.setSelectedStudent(Integer.valueOf(selectedStudent));
+        }
+        TimetableFilters filters = convertFilters(filtersDto);
+
+        List<TimetableItemDto> timetableItems = timetableItemService.findAllByFilters(filters);
 
         model.addAttribute(ATTRIBUTE_HTML_TITLE, "Timetable item");
+        model.addAttribute(ATTRIBUTE_HTML_TIMETABLEITEM_FILTERS, filtersDto);
+        model.addAttribute(ATTRIBUTE_HTML_TIMETABLEITEMS, timetableItems);
+        return PATH_HTML_TIMETABLEITEMS;
+    }
+    
+    
+    @PostMapping("/timetable-items")
+    public String getEntityByFilters(@Valid @ModelAttribute("filtersDto") TimetableFiltersDto filtersDto, 
+                                BindingResult bindingResult, 
+                                Model model) {
+        logger.debug("getEntityByPeriod()");
+        TimetableFilters filters = convertFilters(filtersDto);
+        
+        List<TimetableItemDto> timetableItems = timetableItemService.findAllByFilters(filters);
+
+        List<TeacherDto> teachers = teacherService.findAllDto();
+        List<StudentDto> students = studentService.findAllDto();
+        filtersDto.setAvailableStudents(students);
+        filtersDto.setAvailableTeachers(teachers);
+
+        model.addAttribute(ATTRIBUTE_HTML_TITLE, "Timetable item filtered");
+        model.addAttribute(ATTRIBUTE_HTML_TIMETABLEITEM_FILTERS, filtersDto);
         model.addAttribute(ATTRIBUTE_HTML_TIMETABLEITEMS, timetableItems);
         return PATH_HTML_TIMETABLEITEMS;
     }
@@ -192,6 +241,25 @@ public class TimetableItemController {
 
     private boolean checkId(String id) {
         return StringUtils.isNoneBlank(id);
+    }
+
+    private TimetableFiltersDto initDefaultFilters() {
+        TimetableFiltersDto filtersDto = new TimetableFiltersDto();
+        LocalDate date = LocalDate.now();
+        LocalDate firstDayOfYear = date.with(TemporalAdjusters.firstDayOfYear());
+        LocalDate lastDayOfYearDate = date.with(TemporalAdjusters.lastDayOfYear());
+        filtersDto.setStartDate(firstDayOfYear);
+        filtersDto.setEndDate(lastDayOfYearDate);
+        return filtersDto;
+    }
+
+    private TimetableFilters convertFilters(TimetableFiltersDto filtersDto) {
+        TimetableFilters filters = new TimetableFilters();
+        filters.setStartDate(filtersDto.getStartDate());
+        filters.setEndDate(filtersDto.getEndDate());
+        filters.setSelectedStudent(filtersDto.getSelectedStudent());
+        filters.setSelectedTeacher(filtersDto.getSelectedTeacher());
+        return filters;
     }
 
 }

@@ -19,11 +19,13 @@ import ua.com.foxminded.task.dao.TeacherRepository;
 import ua.com.foxminded.task.dao.TimetableItemRepository;
 import ua.com.foxminded.task.dao.exception.EntityAlreadyExistsException;
 import ua.com.foxminded.task.dao.exception.EntityNotValidException;
+import ua.com.foxminded.task.dao.filter.TimetableItemSpecification;
 import ua.com.foxminded.task.domain.Auditory;
 import ua.com.foxminded.task.domain.Group;
 import ua.com.foxminded.task.domain.Lecture;
 import ua.com.foxminded.task.domain.Subject;
 import ua.com.foxminded.task.domain.Teacher;
+import ua.com.foxminded.task.domain.TimetableFilters;
 import ua.com.foxminded.task.domain.TimetableItem;
 import ua.com.foxminded.task.domain.dto.GroupDto;
 import ua.com.foxminded.task.domain.dto.TimetableItemDto;
@@ -120,6 +122,14 @@ public class TimetableItemServiceImpl implements TimetableItemService {
     public TimetableItem findByTeacherIdAndLectureIdAndDate(Integer teacherId, Integer lectureId, LocalDate date) {
         logger.debug("existsByTeacherIdAndLectureIdAndDate() [teacherId:{}, lectureId:{}, date:{}]", teacherId, lectureId, date);
         return timetableItemRepository.findByTeacherIdAndLectureIdAndDate(teacherId, lectureId, date);
+    }
+
+    @Override
+    public List<TimetableItemDto> findAllByFilters(TimetableFilters filters) {
+        logger.debug("findByTimetableItemSpecification() [filters:{}]", filters);
+        TimetableItemSpecification itemSpecification = new TimetableItemSpecification(filters);
+        List<TimetableItem> timetableItems =timetableItemRepository.findAll(itemSpecification);
+        return timetableItems.stream().map(ConverterToDtoService::convert).collect(Collectors.toList());
     }
 
     private TimetableItem retriveEntityFromDto(TimetableItemDto timetableItemDto) {
