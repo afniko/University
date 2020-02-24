@@ -91,7 +91,7 @@ public class TimetableItemController {
         logger.debug("getEntities()");
         List<StudentDto> students = studentService.findAllDto();
         List<TeacherDto> teachers = teacherService.findAllDto();
-        TimetableFiltersDto filtersDto = getTodayFilter();
+        TimetableFiltersDto filtersDto = initDefaultFilters();
         filtersDto.setAvailableStudents(students);
         filtersDto.setAvailableTeachers(teachers);
         if (nonNull(selectedTeacher)) {
@@ -243,7 +243,7 @@ public class TimetableItemController {
         return StringUtils.isNoneBlank(id);
     }
 
-    private TimetableFiltersDto getTodayFilter() {
+    private TimetableFiltersDto initDefaultFilters() {
         TimetableFiltersDto filtersDto = new TimetableFiltersDto();
         LocalDate date = LocalDate.now();
         LocalDate firstDayOfYear = date.with(TemporalAdjusters.firstDayOfYear());
