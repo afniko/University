@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import ua.com.foxminded.task.dao.exception.EntityAlreadyExistsException;
 import ua.com.foxminded.task.dao.exception.EntityNotValidException;
+import ua.com.foxminded.task.domain.TimetableFilters;
 import ua.com.foxminded.task.domain.dto.AuditoryDto;
 import ua.com.foxminded.task.domain.dto.GroupDto;
 import ua.com.foxminded.task.domain.dto.LectureDto;
@@ -83,35 +84,36 @@ public class TimetableItemController {
     @GetMapping("/timetable-items")
     public String getEntities(Model model) {
         logger.debug("getEntities()");
-        List<TimetableItemDto> timetableItems = timetableItemService.findAllDto();
         List<StudentDto> students = studentService.findAllDto();
         List<TeacherDto> teachers = teacherService.findAllDto();
-        TimetableFiltersDto filters = getNewFilter();
-        filters.setAvailableStudents(students);
-        filters.setAvailableTeachers(teachers);
+        TimetableFiltersDto filtersDto = getNewFilter();
+        filtersDto.setAvailableStudents(students);
+        filtersDto.setAvailableTeachers(teachers);
+        List<TimetableItemDto> timetableItems = timetableItemService.findAllDto();
         
         model.addAttribute(ATTRIBUTE_HTML_TITLE, "Timetable item");
-        model.addAttribute(ATTRIBUTE_HTML_TIMETABLEITEM_FILTERS, filters);
+        model.addAttribute(ATTRIBUTE_HTML_TIMETABLEITEM_FILTERS, filtersDto);
         model.addAttribute(ATTRIBUTE_HTML_TIMETABLEITEMS, timetableItems);
         return PATH_HTML_TIMETABLEITEMS;
     }
     
     
     @PostMapping("/timetable-items")
-    public String getEntityByPeriod(@Valid @ModelAttribute("filtersDto") TimetableFiltersDto filters, 
+    public String getEntityByPeriod(@Valid @ModelAttribute("filtersDto") TimetableFiltersDto filtersDto, 
                                 BindingResult bindingResult, 
                                 Model model) {
         logger.debug("getEntityByPeriod()");
+        TimetableFilters filters = convertFilters(filtersDto);
         
         List<TimetableItemDto> timetableItems = timetableItemService.findByTimetableItemSpecification(filters);
 
         List<TeacherDto> teachers = teacherService.findAllDto();
         List<StudentDto> students = studentService.findAllDto();
-        filters.setAvailableStudents(students);
-        filters.setAvailableTeachers(teachers);
+        filtersDto.setAvailableStudents(students);
+        filtersDto.setAvailableTeachers(teachers);
 
         model.addAttribute(ATTRIBUTE_HTML_TITLE, "Timetable item filtered");
-        model.addAttribute(ATTRIBUTE_HTML_TIMETABLEITEM_FILTERS, filters);
+        model.addAttribute(ATTRIBUTE_HTML_TIMETABLEITEM_FILTERS, filtersDto);
         model.addAttribute(ATTRIBUTE_HTML_TIMETABLEITEMS, timetableItems);
         return PATH_HTML_TIMETABLEITEMS;
     }
@@ -233,6 +235,15 @@ public class TimetableItemController {
         filtersDto.setStartDate(LocalDate.now());
         filtersDto.setEndDate(LocalDate.now());
         return filtersDto;
+    }
+
+    private TimetableFilters convertFilters(TimetableFiltersDto filtersDto) {
+        TimetableFilters filters = new TimetableFilters();
+        filters.setStartDate(filtersDto.getStartDate());
+        filters.setEndDate(filtersDto.getEndDate());
+        filters.setSelectedStudent(filtersDto.getSelectedStudent());
+        filters.setSelectedTeacher(filtersDto.getSelectedTeacher());
+        return filters;
     }
 
 }

@@ -25,8 +25,8 @@ import ua.com.foxminded.task.domain.Group;
 import ua.com.foxminded.task.domain.Lecture;
 import ua.com.foxminded.task.domain.Subject;
 import ua.com.foxminded.task.domain.Teacher;
+import ua.com.foxminded.task.domain.TimetableFilters;
 import ua.com.foxminded.task.domain.TimetableItem;
-import ua.com.foxminded.task.domain.dto.TimetableFiltersDto;
 import ua.com.foxminded.task.domain.dto.GroupDto;
 import ua.com.foxminded.task.domain.dto.TimetableItemDto;
 import ua.com.foxminded.task.service.TimetableItemService;
@@ -125,7 +125,7 @@ public class TimetableItemServiceImpl implements TimetableItemService {
     }
 
     @Override
-    public List<TimetableItemDto> findByTimetableItemSpecification(TimetableFiltersDto filters) {
+    public List<TimetableItemDto> findByTimetableItemSpecification(TimetableFilters filters) {
         logger.debug("findByTimetableItemSpecification() [filters:{}]", filters);
         TimetableItemSpecification itemSpecification = new TimetableItemSpecification(filters);
         List<TimetableItem> timetableItems =timetableItemRepository.findAll(itemSpecification);

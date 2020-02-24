@@ -19,17 +19,17 @@ import ua.com.foxminded.task.domain.Person_;
 import ua.com.foxminded.task.domain.Student;
 import ua.com.foxminded.task.domain.Student_;
 import ua.com.foxminded.task.domain.Teacher;
+import ua.com.foxminded.task.domain.TimetableFilters;
 import ua.com.foxminded.task.domain.TimetableItem;
 import ua.com.foxminded.task.domain.TimetableItem_;
-import ua.com.foxminded.task.domain.dto.TimetableFiltersDto;
 
 public class TimetableItemSpecification implements Specification<TimetableItem>{
 
     private static final long serialVersionUID = 8089427019528112580L;
     
-    private TimetableFiltersDto filters; 
+    private TimetableFilters filters; 
 
-    public TimetableItemSpecification(TimetableFiltersDto filters) {
+    public TimetableItemSpecification(TimetableFilters filters) {
         this.filters = filters;
     }
 
