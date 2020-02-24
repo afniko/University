@@ -13,5 +13,5 @@ public interface TimetableItemService extends ModelService<TimetableItemDto> {
 
     public TimetableItem findByTeacherIdAndLectureIdAndDate(Integer teacherId, Integer lectureId, LocalDate date);
     
-    public List<TimetableItemDto> findByTimetableItemSpecification(TimetableFilters filters);
+    public List<TimetableItemDto> findAllByFilters(TimetableFilters filters);
 }

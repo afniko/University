@@ -1,6 +1,9 @@
 package ua.com.foxminded.task.controller;
 
+import static java.util.Objects.nonNull;
+
 import java.time.LocalDate;
+import java.time.temporal.TemporalAdjusters;
 import java.util.List;
 
 import javax.persistence.EntityNotFoundException;
@@ -82,15 +85,25 @@ public class TimetableItemController {
     }
     
     @GetMapping("/timetable-items")
-    public String getEntities(Model model) {
+    public String getEntities(@RequestParam(required = false) String selectedTeacher,
+                              @RequestParam(required = false) String selectedStudent,
+                              Model model) {
         logger.debug("getEntities()");
         List<StudentDto> students = studentService.findAllDto();
         List<TeacherDto> teachers = teacherService.findAllDto();
-        TimetableFiltersDto filtersDto = getNewFilter();
+        TimetableFiltersDto filtersDto = getTodayFilter();
         filtersDto.setAvailableStudents(students);
         filtersDto.setAvailableTeachers(teachers);
-        List<TimetableItemDto> timetableItems = timetableItemService.findAllDto();
-        
+        if (nonNull(selectedTeacher)) {
+            filtersDto.setSelectedTeacher(Integer.valueOf(selectedTeacher));
+        }
+        if (nonNull(selectedStudent)) {
+            filtersDto.setSelectedStudent(Integer.valueOf(selectedStudent));
+        }
+        TimetableFilters filters = convertFilters(filtersDto);
+
+        List<TimetableItemDto> timetableItems = timetableItemService.findAllByFilters(filters);
+
         model.addAttribute(ATTRIBUTE_HTML_TITLE, "Timetable item");
         model.addAttribute(ATTRIBUTE_HTML_TIMETABLEITEM_FILTERS, filtersDto);
         model.addAttribute(ATTRIBUTE_HTML_TIMETABLEITEMS, timetableItems);
@@ -99,13 +112,13 @@ public class TimetableItemController {
     
     
     @PostMapping("/timetable-items")
-    public String getEntityByPeriod(@Valid @ModelAttribute("filtersDto") TimetableFiltersDto filtersDto, 
+    public String getEntityByFilters(@Valid @ModelAttribute("filtersDto") TimetableFiltersDto filtersDto, 
                                 BindingResult bindingResult, 
                                 Model model) {
         logger.debug("getEntityByPeriod()");
         TimetableFilters filters = convertFilters(filtersDto);
         
-        List<TimetableItemDto> timetableItems = timetableItemService.findByTimetableItemSpecification(filters);
+        List<TimetableItemDto> timetableItems = timetableItemService.findAllByFilters(filters);
 
         List<TeacherDto> teachers = teacherService.findAllDto();
         List<StudentDto> students = studentService.findAllDto();
@@ -229,11 +242,14 @@ public class TimetableItemController {
     private boolean checkId(String id) {
         return StringUtils.isNoneBlank(id);
     }
-    
-    private TimetableFiltersDto getNewFilter() {
+
+    private TimetableFiltersDto getTodayFilter() {
         TimetableFiltersDto filtersDto = new TimetableFiltersDto();
-        filtersDto.setStartDate(LocalDate.now());
-        filtersDto.setEndDate(LocalDate.now());
+        LocalDate date = LocalDate.now();
+        LocalDate firstDayOfYear = date.with(TemporalAdjusters.firstDayOfYear());
+        LocalDate lastDayOfYearDate = date.with(TemporalAdjusters.lastDayOfYear());
+        filtersDto.setStartDate(firstDayOfYear);
+        filtersDto.setEndDate(lastDayOfYearDate);
         return filtersDto;
     }
 

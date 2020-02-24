@@ -125,7 +125,7 @@ public class TimetableItemServiceImpl implements TimetableItemService {
     }
 
     @Override
-    public List<TimetableItemDto> findByTimetableItemSpecification(TimetableFilters filters) {
+    public List<TimetableItemDto> findAllByFilters(TimetableFilters filters) {
         logger.debug("findByTimetableItemSpecification() [filters:{}]", filters);
         TimetableItemSpecification itemSpecification = new TimetableItemSpecification(filters);
         List<TimetableItem> timetableItems =timetableItemRepository.findAll(itemSpecification);
