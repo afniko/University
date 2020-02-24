@@ -2,8 +2,8 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <body>
-    <th:block th:if="${filtersDto != null}">
-        <form class="navbar-form navbar-center" role="search" action="" method="post" th:object="${filtersDto}">
+    <th:block th:if="${timetableFiltersDto != null}">
+        <form class="navbar-form navbar-center" role="search" action="" method="post" th:object="${timetableFiltersDto}">
             <div class="form-group">
                 <label for="startDate">From:</label> <input th:type="date" class="form-control" th:field="*{startDate}" required>
             </div>
@@ -11,15 +11,15 @@
                 <label for="endDate">To:</label> <input th:type="date" class="form-control" th:field="*{endDate}" required>
             </div>
             <div class="form-group">
-                <select class="form-control" data-live-search="true" th:field="*{teacherId}">
-                    <option value=0 th:text="${filtersDto.teacherId}==0 ? 'Choose teacher':'Remove teacher'"></option>
-                    <option th:each="teacher : ${teachers}" th:value="${teacher.id}" th:text=${teacher.firstName} th:selected="${filtersDto.teacherId}==${teacher.id}"></option>
+                <select class="form-control" data-live-search="true" th:field="*{selectedTeacher}">
+                    <option value=0 th:text="${timetableFiltersDto.selectedTeacher}==0 ? 'Choose teacher':'Remove teacher'"></option>
+                    <option th:each="teacher : *{availableTeachers}" th:value="${teacher.id}" th:text=${teacher.firstName} th:selected="${timetableFiltersDto.selectedTeacher}==${teacher.id}"></option>
                 </select>
             </div>
             <div class="form-group">
-                <select class="form-control" data-live-search="true" th:field="*{studentId}">
-                    <option value=0 th:text="${filtersDto.studentId}==0 ? 'Choose student':'Remove student'"></option>
-                    <option th:each="student : ${students}" th:value="${student.id}" th:text=${student.firstName} th:selected="${filtersDto.studentId}==${student.id}"></option>
+                <select class="form-control" data-live-search="true" th:field="*{selectedStudent}">
+                    <option value=0 th:text="${timetableFiltersDto.selectedStudent}==0 ? 'Choose student':'Remove student'"></option>
+                    <option th:each="student : *{availableStudents}" th:value="${student.id}" th:text=${student.firstName} th:selected="${timetableFiltersDto.selectedStudent}==${student.id}"></option>
                 </select>
             </div>
 

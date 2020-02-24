@@ -20,12 +20,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import ua.com.foxminded.task.dao.exception.EntityAlreadyExistsException;
 import ua.com.foxminded.task.dao.exception.EntityNotValidException;
 import ua.com.foxminded.task.domain.dto.AuditoryDto;
-import ua.com.foxminded.task.domain.dto.FiltersDto;
 import ua.com.foxminded.task.domain.dto.GroupDto;
 import ua.com.foxminded.task.domain.dto.LectureDto;
 import ua.com.foxminded.task.domain.dto.StudentDto;
 import ua.com.foxminded.task.domain.dto.SubjectDto;
 import ua.com.foxminded.task.domain.dto.TeacherDto;
+import ua.com.foxminded.task.domain.dto.TimetableFiltersDto;
 import ua.com.foxminded.task.domain.dto.TimetableItemDto;
 import ua.com.foxminded.task.service.AuditoryService;
 import ua.com.foxminded.task.service.GroupService;
@@ -43,14 +43,13 @@ public class TimetableItemController {
     private static final String PATH_HTML_TIMETABLEITEM_EDIT = "timetable-item/timetable-item_edit";
     private static final String ATTRIBUTE_HTML_TITLE = "title";
     private static final String ATTRIBUTE_HTML_TIMETABLEITEM = "timetableItemDto";
-    private static final String ATTRIBUTE_HTML_SEARCH_PERIOD = "filtersDto";
+    private static final String ATTRIBUTE_HTML_TIMETABLEITEM_FILTERS = "timetableFiltersDto";
     private static final String ATTRIBUTE_HTML_TIMETABLEITEMS = "timetableItems";
     private static final String ATTRIBUTE_HTML_SUBJECTS = "subjects";
     private static final String ATTRIBUTE_HTML_AUDITORIES = "auditories";
     private static final String ATTRIBUTE_HTML_GROUPS = "allGroups";
     private static final String ATTRIBUTE_HTML_LECTURIES = "lecturies";
     private static final String ATTRIBUTE_HTML_TEACHERS = "teachers";
-    private static final String ATTRIBUTE_HTML_STUDENTS = "students";
     private static final String ATTRIBUTE_HTML_ERROR_MESSAGE = "errorMessage";
     private static final String ATTRIBUTE_HTML_SUCCESS_MESSAGE = "successMessage";
     private Logger logger;
@@ -85,21 +84,21 @@ public class TimetableItemController {
     public String getEntities(Model model) {
         logger.debug("getEntities()");
         List<TimetableItemDto> timetableItems = timetableItemService.findAllDto();
-        List<TeacherDto> teachers = teacherService.findAllDto();
         List<StudentDto> students = studentService.findAllDto();
-        FiltersDto filtersDto = getNewFilter();
+        List<TeacherDto> teachers = teacherService.findAllDto();
+        TimetableFiltersDto filters = getNewFilter();
+        filters.setAvailableStudents(students);
+        filters.setAvailableTeachers(teachers);
         
         model.addAttribute(ATTRIBUTE_HTML_TITLE, "Timetable item");
-        model.addAttribute(ATTRIBUTE_HTML_SEARCH_PERIOD, filtersDto);
-        model.addAttribute(ATTRIBUTE_HTML_TEACHERS, teachers);
-        model.addAttribute(ATTRIBUTE_HTML_STUDENTS, students);
+        model.addAttribute(ATTRIBUTE_HTML_TIMETABLEITEM_FILTERS, filters);
         model.addAttribute(ATTRIBUTE_HTML_TIMETABLEITEMS, timetableItems);
         return PATH_HTML_TIMETABLEITEMS;
     }
     
     
     @PostMapping("/timetable-items")
-    public String getEntityByPeriod(@Valid @ModelAttribute("filtersDto") FiltersDto filters, 
+    public String getEntityByPeriod(@Valid @ModelAttribute("filtersDto") TimetableFiltersDto filters, 
                                 BindingResult bindingResult, 
                                 Model model) {
         logger.debug("getEntityByPeriod()");
@@ -108,11 +107,11 @@ public class TimetableItemController {
 
         List<TeacherDto> teachers = teacherService.findAllDto();
         List<StudentDto> students = studentService.findAllDto();
+        filters.setAvailableStudents(students);
+        filters.setAvailableTeachers(teachers);
 
         model.addAttribute(ATTRIBUTE_HTML_TITLE, "Timetable item filtered");
-        model.addAttribute(ATTRIBUTE_HTML_SEARCH_PERIOD, filters);
-        model.addAttribute(ATTRIBUTE_HTML_TEACHERS, teachers);
-        model.addAttribute(ATTRIBUTE_HTML_STUDENTS, students);
+        model.addAttribute(ATTRIBUTE_HTML_TIMETABLEITEM_FILTERS, filters);
         model.addAttribute(ATTRIBUTE_HTML_TIMETABLEITEMS, timetableItems);
         return PATH_HTML_TIMETABLEITEMS;
     }
@@ -229,8 +228,8 @@ public class TimetableItemController {
         return StringUtils.isNoneBlank(id);
     }
     
-    private FiltersDto getNewFilter() {
-        FiltersDto filtersDto = new FiltersDto();
+    private TimetableFiltersDto getNewFilter() {
+        TimetableFiltersDto filtersDto = new TimetableFiltersDto();
         filtersDto.setStartDate(LocalDate.now());
         filtersDto.setEndDate(LocalDate.now());
         return filtersDto;
