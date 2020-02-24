@@ -5,20 +5,22 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 @Entity
 @Table(name = "groups")
 public class Group {
 
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private int id;
     @Column(name = "title")
     private String title;
-    @Transient
+    @ManyToOne
+    @JoinColumn(name = "department_id")
     private Department department;
     @Column(name = "yearentry")
     private int yearEntry;
@@ -85,7 +87,11 @@ public class Group {
 
     @Override
     public String toString() {
-        return "Group [id=" + id + ", title=" + title + ", department=" + department + ", yearEntry=" + yearEntry + "]";
+        return "Group [id=" + id 
+             + ", title=" + title 
+             + ", department=" + department 
+             + ", yearEntry=" + yearEntry 
+             + "]";
     }
 
 }

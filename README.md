@@ -118,6 +118,29 @@ Branch: task22
 Writed Integration and System tests using Spring Boot Test, H2 DB (it is possible to use Database Rider)
 Branch: task23
 
+#### Issue#1 Analize of decompose University.
+Fix the UML diagram for application. Remove bidirectional links.
+Branch: task101
+
+#### Issue#2 Fix model
+Fix model based on University UML diagram. Create tests for model.
+Branch: task102
+
+#### Issue#3 Create DAO layer (Faculty, Teacher, Department, Subject, Lecture, Auditory, Auditory Type)
+Create dao layer and tests for (Faculty, Teacher, Department, Subject, Lecture, Auditory, Auditory Type). Create tests for dao.
+Branch: task103
+
+#### Issue#4 Create service layer (Faculty, Teacher, Department, Subject, Lecture, Auditory, Auditory Type)
+Create service layer and tests for (Faculty, Teacher, Department, Subject, Lecture, Auditory, Auditory Type). Create tests for services.
+Branch: task104
+
+#### Issue#6 Create DAO layer (TimetableItem)
+Create DAO layer (TimetableItem). Create tests for dao.
+Branch: task106
+
+#### Issue#7 Create service layer(TimetableItem)
+Create service layer and tests
+Branch: task107
 
 ## Author
 With best regards, Mykola Afanasiev!

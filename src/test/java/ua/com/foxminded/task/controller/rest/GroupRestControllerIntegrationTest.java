@@ -14,10 +14,12 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
@@ -30,6 +32,7 @@ import ua.com.foxminded.task.config.TestMvcConfig;
 import ua.com.foxminded.task.domain.dto.GroupDto;
 import ua.com.foxminded.task.domain.repository.dto.GroupDtoModelRepository;
 import ua.com.foxminded.task.service.GroupService;
+import ua.com.foxminded.task.validation.validator.property.unique.Command;
 
 @WebMvcTest(GroupController.class)
 @Import(TestMvcConfig.class)
@@ -39,7 +42,10 @@ public class GroupRestControllerIntegrationTest {
     private WebApplicationContext context;
     @MockBean
     private GroupService groupService;
-
+    @MockBean
+    @Qualifier("uniqueValidationCommandMap")
+    private Map<String, Command> uniqueValidationCommandMap;
+    
     private static GroupDto GROUP_DTO1 = GroupDtoModelRepository.getModel1();
     private static GroupDto GROUP_DTO2 = GroupDtoModelRepository.getModel2();
 

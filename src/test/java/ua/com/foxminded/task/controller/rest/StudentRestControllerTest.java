@@ -75,7 +75,7 @@ public class StudentRestControllerTest {
                 .andExpect(jsonPath("$[0].birthday.[2]", is(25)))
                 .andExpect(jsonPath("$[0].idFees", is(111111111)))
                 .andExpect(jsonPath("$[0].groupTitle", is("group11")))
-                .andExpect(jsonPath("$[0].idGroup", is(1)))
+                .andExpect(jsonPath("$[0].groupId", is(1)))
                 .andExpect(jsonPath("$[1].id", is(2)))
                 .andExpect(jsonPath("$[1].firstName", is("firstName2")))
                 .andExpect(jsonPath("$[1].middleName", is("middleName2")))
@@ -85,7 +85,7 @@ public class StudentRestControllerTest {
                 .andExpect(jsonPath("$[1].birthday.[2]", is(25)))
                 .andExpect(jsonPath("$[1].idFees", is(222211111)))
                 .andExpect(jsonPath("$[1].groupTitle", is("group11")))
-                .andExpect(jsonPath("$[1].idGroup", is(1)));
+                .andExpect(jsonPath("$[1].groupId", is(1)));
     }
 
     @Test
@@ -108,7 +108,7 @@ public class StudentRestControllerTest {
                 .andExpect(jsonPath("$.birthday.[2]", is(25)))
                 .andExpect(jsonPath("$.idFees", is(222211111)))
                 .andExpect(jsonPath("$.groupTitle", is("group11")))
-                .andExpect(jsonPath("$.idGroup", is(1)));
+                .andExpect(jsonPath("$.groupId", is(1)));
     }
 
     @Test
@@ -121,7 +121,7 @@ public class StudentRestControllerTest {
         studentDto.setBirthday(LocalDate.parse("1997-06-25"));
         studentDto.setIdFees(232211111);
         studentDto.setGroupTitle(null);
-        studentDto.setIdGroup(0);
+        studentDto.setGroupId(0);
 
         when(studentService.update(any(StudentDto.class))).thenReturn(studentDto);
 
@@ -141,7 +141,7 @@ public class StudentRestControllerTest {
         studentDto.setBirthday(LocalDate.parse("1997-06-25"));
         studentDto.setIdFees(232211111);
         studentDto.setGroupTitle("group3");
-        studentDto.setIdGroup(3);
+        studentDto.setGroupId(3);
 
         when(studentService.create(any(StudentDto.class))).thenReturn(studentDto);
         

@@ -64,13 +64,11 @@ public class StudentController {
         logger.debug("student()");
         String errorMessage = null;
         StudentDto studentDto = null;
-        List<GroupDto> groups = null;
         int id = 0;
         try {
             if (checkId(idString)) {
                 id = Integer.valueOf(idString);
                 studentDto = studentService.findByIdDto(id);
-                groups = groupService.findAllDto();
             } else {
                 errorMessage = "You id is blank";
             }
@@ -81,7 +79,6 @@ public class StudentController {
         }
         model.addAttribute(ATTRIBUTE_HTML_TITLE, "Student");
         model.addAttribute(ATTRIBUTE_HTML_STUDENT, studentDto);
-        model.addAttribute(ATTRIBUTE_HTML_GROUPS, groups);
         model.addAttribute(ATTRIBUTE_HTML_ERROR_MESSAGE, errorMessage);
         return PATH_HTML_STUDENT;
     }

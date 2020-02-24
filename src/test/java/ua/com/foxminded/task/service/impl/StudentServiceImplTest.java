@@ -1,7 +1,7 @@
 package ua.com.foxminded.task.service.impl;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.times;
@@ -52,7 +52,7 @@ public class StudentServiceImplTest {
 
         StudentDto studentDtoActually = studentService.findByIdDto(1);
 
-        verify(studentRepository, times(1)).getOne(any(Integer.class));
+        verify(studentRepository, times(1)).getOne(anyInt());
         assertEquals(studentDtoExpected, studentDtoActually);
     }
 

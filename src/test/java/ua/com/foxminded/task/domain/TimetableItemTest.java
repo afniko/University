@@ -13,7 +13,7 @@ public class TimetableItemTest {
     @Test
     public void whenAddGroupToTimetableItem_thenTimetableItemContainsGroup() {
         TimetableItem timetableItem = TimetableItemModelRepository.getEmptyModel();
-        Group group = GroupModelRepository.getModel1();
+        Group group = GroupModelRepository.getModel3();
         timetableItem.addGroup(group);
         assertTrue(timetableItem.getGroups().contains(group));
     }

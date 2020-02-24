@@ -31,7 +31,7 @@ public class MainControllerSystemTest {
     @Test
     void whenRetriveMainPage_thenExpectMainView() throws Exception {
         String expectedViewName = "main";
-        String expectedTitle = "Thymeleaf+SpringMVC University";
+        String expectedTitle = "University timetable project";
         this.mockMvc.perform(get("/"))
                 .andExpect(status().isOk())
                 .andExpect(view().name(expectedViewName))
@@ -39,5 +39,5 @@ public class MainControllerSystemTest {
                 .andDo(print())
                 .andReturn();
     }
-
+    
 }

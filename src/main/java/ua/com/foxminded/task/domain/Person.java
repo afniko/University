@@ -17,7 +17,7 @@ import javax.persistence.Table;
 public abstract class Person {
 
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     protected int id;
     @Column(name = "first_name")
@@ -115,7 +115,12 @@ public abstract class Person {
 
     @Override
     public String toString() {
-        return "Person [id=" + id + ", firstName=" + firstName + ", idFees=" + idFees + "]";
+        return "Person [id=" + id 
+             + ", firstName=" + firstName 
+             + ", lastName=" + lastName 
+             + ", middleName=" + middleName 
+             + ", birthday=" + birthday 
+             + ", idFees=" + idFees + "]";
     }
 
 }

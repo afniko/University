@@ -11,9 +11,14 @@
 <!-- Optional theme -->
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap-theme.min.css" integrity="sha384-6pzBo3FDv/PJ8r2KRkGHifhEocL+1X2rVCTTkUfGk7/0pbek5mMa1upzvWbrUbOZ"
     crossorigin="anonymous">
+    
+<!-- Script for collapse navbar  -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
 <!-- Latest compiled and minified JavaScript -->
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
+
+
 
 <title th:text="${title}">Groups</title>
 </head>
@@ -21,21 +26,49 @@
 
 
     <nav class="navbar navbar-default">
-    <div class="container-fluid">
-        <div class="navbar-header">
-            <a href="#" class="navbar-brand" th:text="${title}"></a>
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a href="#" class="navbar-brand" th:text="${title}"></a>
+            </div>
         </div>
-    </div>
 
-    <div>
-        <ul class="nav navbar-nav">
-            <li><a th:href="@{/}">main page</a></li>
-            <li><a th:href="@{/students}">students page</a></li>
-            <li><a th:href="@{/student_edit}">student create page</a></li>
-            <li><a th:href="@{/groups}">groups page</a></li>
-            <li><a th:href="@{/group_edit}">group create page</a></li>
-        </ul>
-    </div>
+        <div class="collapse navbar-collapse" id="">
+            <ul class="nav navbar-nav">
+                <li><a th:href="@{/}">main page</a></li>
+                <li><a th:href="@{/timetable-items}">timetable items page</a></li>
+                <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">View entities<span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a th:href="@{/students}">students</a></li>
+                        <li><a th:href="@{/teachers}">teachers</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a th:href="@{/auditories}">auditory</a></li>
+                        <li><a th:href="@{/auditorytypes}">auditory types</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a th:href="@{/departments}">departments</a></li>
+                        <li><a th:href="@{/faculties}">faculties</a></li>
+                        <li><a th:href="@{/groups}">groups</a></li>
+                        <li><a th:href="@{/lecturies}">lectures</a></li>
+                        <li><a th:href="@{/subjects}">subjects</a></li>
+                    </ul></li>
+                <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Create entities<span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a th:href="@{/student_edit}">student</a></li>
+                        <li><a th:href="@{/teacher_edit}">teacher</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a th:href="@{/auditory_edit}">auditory</a></li>
+                        <li><a th:href="@{/auditorytype_edit}">auditory type</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a th:href="@{/department_edit}">department</a></li>
+                        <li><a th:href="@{/faculty_edit}">faculty</a></li>
+                        <li><a th:href="@{/group_edit}">group</a></li>
+                        <li><a th:href="@{/lecture_edit}">lecture</a></li>
+                        <li><a th:href="@{/subject_edit}">subject</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a th:href="@{/timetable-item_edit}">timetable item</a></li>
+                    </ul></li>
+            </ul>
+        </div>
 
     </nav>
 

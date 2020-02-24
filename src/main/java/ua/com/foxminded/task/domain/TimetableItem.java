@@ -1,17 +1,53 @@
 package ua.com.foxminded.task.domain;
 
-import java.sql.Date;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "timetable_items")
 public class TimetableItem {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private int id;
+    
+    @ManyToOne
+    @JoinColumn(name = "subject_id")
     private Subject subject;
+    
+    @ManyToOne
+    @JoinColumn(name = "auditory_id")
     private Auditory auditory;
+    
+    @OneToMany
+    @JoinTable(
+            name = "groups_timetable_items", 
+            joinColumns = @JoinColumn(name = "timetable_item_id"), 
+            inverseJoinColumns = @JoinColumn(name = "group_id"))
     private List<Group> groups = new ArrayList<>();
+    
+    @ManyToOne
+    @JoinColumn(name = "lecture_id")
     private Lecture lecture;
-    private Date date;
+    
+    @Column(name = "date")
+    private LocalDate date;
+    
+    @ManyToOne
+    @JoinColumn(name = "teacher_id")
     private Teacher teacher;
 
     public void addGroup(Group group) {
@@ -62,11 +98,11 @@ public class TimetableItem {
         this.lecture = lecture;
     }
 
-    public Date getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 
@@ -84,9 +120,10 @@ public class TimetableItem {
         int result = 1;
         result = prime * result + ((auditory == null) ? 0 : auditory.hashCode());
         result = prime * result + ((date == null) ? 0 : date.hashCode());
-        result = prime * result + id;
+        result = prime * result + ((groups == null) ? 0 : groups.hashCode());
         result = prime * result + ((lecture == null) ? 0 : lecture.hashCode());
         result = prime * result + ((subject == null) ? 0 : subject.hashCode());
+        result = prime * result + ((teacher == null) ? 0 : teacher.hashCode());
         return result;
     }
 
@@ -109,7 +146,10 @@ public class TimetableItem {
                 return false;
         } else if (!date.equals(other.date))
             return false;
-        if (id != other.id)
+        if (groups == null) {
+            if (other.groups != null)
+                return false;
+        } else if (!groups.equals(other.groups))
             return false;
         if (lecture == null) {
             if (other.lecture != null)
@@ -121,12 +161,24 @@ public class TimetableItem {
                 return false;
         } else if (!subject.equals(other.subject))
             return false;
+        if (teacher == null) {
+            if (other.teacher != null)
+                return false;
+        } else if (!teacher.equals(other.teacher))
+            return false;
         return true;
     }
 
     @Override
     public String toString() {
-        return "TimetableItem [id=" + id + ", subject=" + subject + ", groups=" + groups + ", date=" + date + "]";
+        return "TimetableItem [id=" + id 
+             + ", subject=" + subject 
+             + ", auditory=" + auditory 
+             + ", groups=" + groups 
+             + ", lecture=" + lecture 
+             + ", date=" + date 
+             + ", teacher=" + teacher 
+             + "]";
     }
    
 }

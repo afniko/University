@@ -1,8 +1,9 @@
 package ua.com.foxminded.task.service.impl;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.times;
@@ -49,7 +50,7 @@ public class GroupServiceImplTest {
 
         Group actuallyGroup = groupService.findById(1);
 
-        verify(groupRepository, times(1)).getOne(any(Integer.class));
+        verify(groupRepository, times(1)).getOne(anyInt());
         assertEquals(expectedGroup, actuallyGroup);
     }
 
@@ -61,7 +62,7 @@ public class GroupServiceImplTest {
 
         GroupDto groupDtoActually = groupService.findByIdDto(1);
 
-        verify(groupRepository, times(1)).getOne(any(Integer.class));
+        verify(groupRepository, times(1)).getOne(anyInt());
         assertEquals(groupDtoExpected, groupDtoActually);
     }
 
@@ -80,6 +81,7 @@ public class GroupServiceImplTest {
     @Test
     public void whenCreate_thenInvocCreateDaoClass() {
         GroupDto groupDto = GroupDtoModelRepository.getModel1();
+        
         Group groupInput = GroupModelRepository.getModel1();
         Group groupExpected = GroupModelRepository.getModelWithId();
 
@@ -88,7 +90,8 @@ public class GroupServiceImplTest {
         GroupDto groupDtoActually = groupService.create(groupDto);
 
         verify(groupRepository, times(1)).saveAndFlush(groupInput);
-        assertEquals(groupDto, groupDtoActually);
+        groupDto.setId(1);
+        assertThat(groupDto).isEqualToComparingFieldByField(groupDtoActually);
     }
 
     @Test

@@ -58,15 +58,14 @@ public class GroupServiceImpl implements GroupService {
             logger.warn("create() [groupDto:{}]", groupDto);
             throw new EntityAlreadyExistsException("create() groupDto: " + groupDto);
         }
-        Group group = retriveGroupFromDto(groupDto);
-        Group groupResult = null;
+        Group group = retriveEntityFromDto(groupDto);
         try {
-            groupResult = groupRepository.saveAndFlush(group);
+            group = groupRepository.saveAndFlush(group);
         } catch (DataIntegrityViolationException e) {
             logger.warn("create() [group:{}], exception:{}", group, e);
             throw new EntityNotValidException("create() group: " + group, e);
         }
-        return ConverterToDtoService.convert(groupResult);
+        return ConverterToDtoService.convert(group);
     }
 
     @Override
@@ -76,15 +75,14 @@ public class GroupServiceImpl implements GroupService {
         if (!groupRepository.existsById(groupId)) {
             throw new EntityNotFoundException("Group not exist!");
         }
-        Group group = retriveGroupFromDto(groupDto);
-        Group groupUpdated = null;
+        Group group = retriveEntityFromDto(groupDto);
         try {
-            groupUpdated = groupRepository.saveAndFlush(group);
+            group = groupRepository.saveAndFlush(group);
         } catch (DataIntegrityViolationException e) {
             logger.warn("update() [group:{}], exception:{}", group, e);
             throw new EntityNotValidException("update() group: " + group, e);
         }
-        return ConverterToDtoService.convert(groupUpdated);
+        return ConverterToDtoService.convert(group);
     }
 
     @Override
@@ -93,7 +91,7 @@ public class GroupServiceImpl implements GroupService {
         return groupRepository.findByTitle(title);
     }
 
-    private Group retriveGroupFromDto(GroupDto groupDto) {
+    private Group retriveEntityFromDto(GroupDto groupDto) {
         Group group = (groupDto.getId() != 0) ? groupRepository.getOne(groupDto.getId()) : new Group();
         group.setTitle(groupDto.getTitle());
         group.setYearEntry(groupDto.getYearEntry());

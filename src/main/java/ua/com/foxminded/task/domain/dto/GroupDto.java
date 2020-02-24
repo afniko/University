@@ -9,9 +9,11 @@ import org.hibernate.validator.constraints.Length;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import ua.com.foxminded.task.validation.annotation.GroupTitleUnique;
+import ua.com.foxminded.task.validation.annotation.PropertyValueUnique;
 
-@GroupTitleUnique(message = "Title is already exists!")
+@PropertyValueUnique(message = "Title is already exists!", 
+                     nameProperty = "title", 
+                     fieldError = "title")
 @ApiModel(description = "Object with a group information")
 public class GroupDto {
 
@@ -58,8 +60,7 @@ public class GroupDto {
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + ((title == null) ? 0 : title.hashCode());
-        result = prime * result + ((yearEntry == null) ? 0 : yearEntry.hashCode());
+        result = prime * result + id;
         return result;
     }
 
@@ -72,17 +73,17 @@ public class GroupDto {
         if (getClass() != obj.getClass())
             return false;
         GroupDto other = (GroupDto) obj;
-        if (title == null) {
-            if (other.title != null)
-                return false;
-        } else if (!title.equals(other.title))
-            return false;
-        if (yearEntry == null) {
-            if (other.yearEntry != null)
-                return false;
-        } else if (!yearEntry.equals(other.yearEntry))
+        if (id != other.id)
             return false;
         return true;
+    }
+
+    @Override
+    public String toString() {
+        return "GroupDto [id=" + id 
+             + ", title=" + title 
+             + ", yearEntry=" + yearEntry 
+             + "]";
     }
 
 }

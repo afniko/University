@@ -64,7 +64,7 @@ public class StudentRepositoryIntegrationTest {
     @DataSet(value = "student/students.yml", 
              cleanBefore = true, 
              skipCleaningFor = "flyway_schema_history")
-    public void whenFindByIdFees_thenGetExitsStudent() {
+    public void whenFindByIdFees_thenStudentReturned() {
         int idFees = 111111113;
         Student studentActually = studentRepository.findByIdFees(idFees);
         assertThat(studentActually.getIdFees()).isEqualTo(idFees);
