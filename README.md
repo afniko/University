@@ -1,7 +1,5 @@
-# Foxminded mentoring course
-
-## Task - University
-Create university web project. Decomposit from student to department. 
+# University CRM
+Customer relationship management for university. Accounting students, teachers and groups, faculty, departments, auditories, subjects. Forming timetable items. 
 
 ## Usage
 
@@ -11,42 +9,47 @@ For compile project put files in folder "src/main/java" Use next command in comm
 mvn compile
 ```
 
-### Create execute war 
-For create execute war file and type in the following command and hit "Enter"
+### Create execute jar 
+For create execute jar file and type in the following command and hit "Enter"
 ```
 mvn clean install
 ```
 
-#### Configure apache tomcat 9 server:
-Add to $Catalina/lib folder library for postgresql (postgresql-42.2.8.jar)
-
-### Starting project:
-For starting project deploy war file on web-server. And follow 
-to web link: http://{ip address web-server:port}/{name of war file}
-```
--For example: http://localhost:8080/task-university-java8-api-0.0.1-SNAPSHOT
-```
-
-### Tests
+### Tests and validate checkstyle
 For starting checkstyle audit 
-Use command and get "Ok" (Audit done)!
+Use command and get "Success" (Audit done)!
 ```
 mvn validate
 ```
-
 For starting unit tests and checkstyle audit
-Use command and get "Ok"!
+Use command and get "Success"!
 ```
 mvn test
 ```
 For starting integration tests, unit tests and checkstyle audit
-Use command and get "Ok"!
+Use command and get "Success"!
 ```
 mvn verify
 ```
 
 ## Libraries
-Use libraries from pom.xml file
+Use libraries from maven pom.xml file. 
+
+### Run project
+For run project type following command
+```
+mvn spring-boot:run
+```
+
+### REST interface
+REST API in JSON format
+ 
+### Swagger
+For display Swagger documentation for the REST interface go to
+link at swagger page: 
+```
+http://localhost:8080/swagger-ui.html
+```
 
 ## History
 #### Task 8 - Decompose university
@@ -108,7 +111,6 @@ Add REST Endpoints to your project. All UI functionality should be available in 
 Branch: task21
 #### Task 22 - Swagger
 Add Swagger documentation to your project. 
-You can use 2 or 3 versions or ask your mentor.
 link to swagger page: 
 ```
 http://localhost:8080/swagger-ui.html
@@ -141,6 +143,14 @@ Branch: task106
 #### Issue#7 Create service layer(TimetableItem)
 Create service layer and tests
 Branch: task107
+
+#### Issue#5 Create UI 
+Create UI (Faculty, Teacher, Department, Subject, Lecture, Auditory, Auditory Type)
+Branch: task105
+
+#### Issue#8 Add to UI finder form 
+Add to UI finder form to timetableItems, teacher, student page
+Branch: task108
 
 ## Author
 With best regards, Mykola Afanasiev!
