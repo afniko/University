@@ -14,8 +14,8 @@ import io.swagger.annotations.ApiModelProperty;
 import ua.com.foxminded.task.validation.annotation.AuditoryAndTimeUnique;
 import ua.com.foxminded.task.validation.annotation.TeacherAndTimeUnique;
 
-@TeacherAndTimeUnique(fieldError = "teacherId")
-@AuditoryAndTimeUnique(fieldError = "auditoryId")
+@TeacherAndTimeUnique(fieldError = "teacherId", message = "Teacher will be busy at the time!")
+@AuditoryAndTimeUnique(fieldError = "auditoryId", message = "Auditory will be busy at the time!")
 @ApiModel(description = "Object with a full timetableItem information")
 public class TimetableItemDto {
 
