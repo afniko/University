@@ -117,7 +117,7 @@ public class LectureRestControllerSystemTest {
     @DataSet(value = "lecture/lectures.yml", 
              cleanBefore = true, 
              skipCleaningFor = "flyway_schema_history")
-    void whenUpdateEntityWithNotCorrectValues_thenExpectError() throws Exception {
+    void whenCreateEntityWithNotCorrectValues_thenExpectError() throws Exception {
       String entity = "{\"id\":0,"
                     + "\"number\":\"2\","
                     + "\"startTime\":\"09:30:00\","
@@ -133,7 +133,7 @@ public class LectureRestControllerSystemTest {
   }
   
     @Test
-    void whenUpdateEntityWithNotCorrectValues_thenExpectError2() throws Exception {
+    void whenCreateEntityWithNotCorrectValues_thenExpectError2() throws Exception {
       String entity = "{\"id\":0,"
                     + "\"number\":\"qwerty\","
                     + "\"startTime\":\"09:30:00\","
@@ -149,7 +149,7 @@ public class LectureRestControllerSystemTest {
   }
   
     @Test
-    void whenUpdateEntityWithNotCorrectTitle_thenExpectError() throws Exception {
+    void whenCreateEntityWithNotCorrectTitle_thenExpectError() throws Exception {
       String entity = "{\"id\":0,"
                     + "\"number\":\"\","
                     + "\"startTime\":\"09:30:00\","

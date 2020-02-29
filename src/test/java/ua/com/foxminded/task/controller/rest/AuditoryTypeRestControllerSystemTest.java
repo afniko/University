@@ -103,7 +103,7 @@ public class AuditoryTypeRestControllerSystemTest {
     @DataSet(value = "auditory-type/auditorytypes.yml", 
              cleanBefore = true, 
              skipCleaningFor = "flyway_schema_history")
-    void whenUpdateEntityWithNotCorrectValues_thenExpectError() throws Exception {
+    void whenCreateEntityWithNotCorrectValues_thenExpectError() throws Exception {
       String entity = "{\"id\":0,"
                     + "\"type\":\"Practic\"}";
       this.mockMvc.perform(post("/api/auditory-types")
@@ -117,7 +117,7 @@ public class AuditoryTypeRestControllerSystemTest {
   }
   
     @Test
-    void whenUpdateEntityWithNotCorrectValues_thenExpectError2() throws Exception {
+    void whenCreateEntityWithNotCorrectValues_thenExpectError2() throws Exception {
       String entity = "{\"id\":0,"
                     + "\"type\":\"qwertyuiopasdfghjklmnbvcxzqwertyuioplkjhgfdsaz\"}";
       this.mockMvc.perform(post("/api/auditory-types")
@@ -131,7 +131,7 @@ public class AuditoryTypeRestControllerSystemTest {
   }
   
     @Test
-    void whenUpdateEntityWithNotCorrectTitle_thenExpectError() throws Exception {
+    void whenCreateEntityWithNotCorrectTitle_thenExpectError() throws Exception {
       String entity = "{\"id\":0,"
                     + "\"type\":\"\"}";
       this.mockMvc.perform(post("/api/auditory-types")
