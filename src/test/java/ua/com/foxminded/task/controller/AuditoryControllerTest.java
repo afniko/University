@@ -218,7 +218,7 @@ public class AuditoryControllerTest {
     }
     
     @Test
-    void whenInvokeCreateExistsStudent_thenExpectErrorMessage() throws Exception {
+    void whenInvokeCreateExistsEntity_thenExpectErrorMessage() throws Exception {
         String expectedErrorMessage = "Record auditory was not created! The record already exists!";
         AuditoryDto auditoryDto = AuditoryDtoModelRepository.getModel1();
         Model model = new ExtendedModelMap();
