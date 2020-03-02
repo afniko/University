@@ -11,4 +11,12 @@ build/
 /.apt_generated_tests/
 **/logs/*
 *.log
+
 .attach*
+.idea/*
+*.class
+
+*.war
+*.jar
+*.ear
+*.iml
