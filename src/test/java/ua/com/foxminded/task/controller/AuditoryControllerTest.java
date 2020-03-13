@@ -68,9 +68,9 @@ public class AuditoryControllerTest {
         auditoryController = new AuditoryController(logger, auditoryService, auditoryTypeService);
         mockMvc = MockMvcBuilders.standaloneSetup(auditoryController).build();
     }
-    
+
     @Test
-    void whenRetriveAllEntity_thenExpectListOfEntities() throws Exception {
+    void whenRetrieveAllEntity_thenExpectListOfEntities() throws Exception {
         List<AuditoryDto> auditoryDtos = AuditoryDtoModelRepository.getModels();
         String expectedTitle = "Auditories";
         String httpRequest = "/auditories";
@@ -86,7 +86,7 @@ public class AuditoryControllerTest {
     }
     
     @Test
-    void whenRetriveTheEntity_thenExpectEntityById() throws Exception {
+    void whenRetrieveTheEntity_thenExpectEntityById() throws Exception {
         AuditoryDto auditoryDto = AuditoryDtoModelRepository.getModel1();
         int id = 1;
         String httpRequest = "/auditory?id=" + id;
@@ -145,7 +145,7 @@ public class AuditoryControllerTest {
     }
     
     @Test
-    void whenRetriveEditExistsEntity_thenExpectFormWithEntityField() throws Exception {
+    void whenRetrieveEditExistsEntity_thenExpectFormWithEntityField() throws Exception {
         AuditoryDto auditoryDto = AuditoryDtoModelRepository.getModel1();
         List<AuditoryTypeDto> auditoryTypeDtos = AuditoryTypeDtoModelRepository.getModels();
         int id = 1;
