@@ -18,6 +18,16 @@
 <!-- Latest compiled and minified JavaScript -->
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
 
+    <script type="text/javascript">
+        $(function () {
+            $('#ukrainian-language-link').click(function (e) {
+                window.location.replace('?lang=uk')
+            });
+            $('#english-language-link').click(function (e) {
+                window.location.replace('?lang=en')
+            });
+        });
+    </script>
 
 
 <title th:text="${title}">Groups</title>
@@ -29,6 +39,19 @@
         <div class="container-fluid">
             <div class="navbar-header">
                 <a href="#" class="navbar-brand" th:text="${title}"></a>
+            </div>
+
+            <div class="nav navbar-nav navbar-right">
+                <li class=" dropdown">
+                    <a href="#" class="dropdown-toggle active" data-toggle="dropdown" role="button" aria-haspopup="true"
+                       aria-expanded="false" th:text="#{messages.templates.header.change.lang}">
+                        <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a id="ukrainian-language-link" th:text="#{messages.templates.header.lang.ua}"></a></li>
+                        <li><a id="english-language-link" th:text="#{messages.templates.header.lang.eng}"></a></li>
+                    </ul>
+                </li>
             </div>
         </div>
 
