@@ -37,7 +37,8 @@ public class TimetableItemRestControllerSystemTest {
 
     @Test
     @DataSet(value = "timetableItem/timetableItemsExtend.yml", 
-             cleanBefore = true, 
+             cleanBefore = true,
+             cleanAfter = true,
              skipCleaningFor = "flyway_schema_history")
     void whenPerformEntitiesRequest_thenExpectListOfEntities() throws Exception {
         this.mockMvc.perform(get("/api/timetable-items").accept(MediaType.APPLICATION_JSON))
@@ -73,7 +74,8 @@ public class TimetableItemRestControllerSystemTest {
 
     @Test
     @DataSet(value = "timetableItem/timetableItemsExtend.yml", 
-             cleanBefore = true, 
+             cleanBefore = true,
+             cleanAfter = true,
              skipCleaningFor = "flyway_schema_history")
     void whenPerformEntityAndIdRequest_thenExpectEntityById() throws Exception {
         this.mockMvc.perform(get("/api/timetable-items/2").accept(MediaType.APPLICATION_JSON))
@@ -97,7 +99,8 @@ public class TimetableItemRestControllerSystemTest {
 
     @Test
     @DataSet(value = "timetableItem/timetableItemsExtend.yml", 
-             cleanBefore = true, 
+             cleanBefore = true,
+             cleanAfter = true,
              skipCleaningFor = "flyway_schema_history")
     void whenPerformPostEntitiesRequest_thenUpdateEntity() throws Exception {
       String entity = "{\"id\":2,"
@@ -135,6 +138,7 @@ public class TimetableItemRestControllerSystemTest {
     @Test
     @DataSet(value = "timetableItem/timetableItems.yml",
              cleanBefore = true,
+             cleanAfter = true,
              skipCleaningFor = "flyway_schema_history")
     void whenPerformPostEntitiesRequestWithIdZero_thenCreateEntity() throws Exception {
       String entity = "{\"id\":0,"
@@ -171,7 +175,8 @@ public class TimetableItemRestControllerSystemTest {
  
     @Test
     @DataSet(value = "timetableItem/timetableItemsExtend.yml", 
-             cleanBefore = true, 
+             cleanBefore = true,
+             cleanAfter = true,
              skipCleaningFor = "flyway_schema_history")
     void whenCreateEntityWithNotCorrectValues_thenExpectError() throws Exception {
       String entity = "{\"id\":0,"
