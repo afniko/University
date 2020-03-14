@@ -30,7 +30,7 @@
     </script>
 
 
-<title th:text="${title}">Groups</title>
+<title th:text="${title}">Title</title>
 </head>
 <body>
 
@@ -38,7 +38,7 @@
     <nav class="navbar navbar-default">
         <div class="container-fluid">
             <div class="navbar-header">
-                <a href="#" class="navbar-brand" th:text="${title}"></a>
+                <a href="#" class="navbar-brand" th:text="#{messages.templates.header.title}"></a>
             </div>
 
             <div class="nav navbar-nav navbar-right">
@@ -57,38 +57,38 @@
 
         <div class="collapse navbar-collapse" id="">
             <ul class="nav navbar-nav">
-                <li><a th:href="@{/}">main page</a></li>
-                <li><a th:href="@{/timetable-items}">timetable items page</a></li>
+                <li><a th:href="@{/}" th:text="#{messages.templates.header.mainpage}">main page</a></li>
+                <li><a th:href="@{/timetable-items}" th:text="#{messages.templates.header.timetableitems}">timetable items page</a></li>
                 <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">View entities<span class="caret"></span></a>
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" th:text="#{messages.templates.header.viewentities}">View entities<span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                        <li><a th:href="@{/students}">students</a></li>
-                        <li><a th:href="@{/teachers}">teachers</a></li>
+                        <li><a th:href="@{/students}" th:text="#{messages.templates.header.students}">students</a></li>
+                        <li><a th:href="@{/teachers}" th:text="#{messages.templates.header.teachers}">teachers</a></li>
                         <li role="separator" class="divider"></li>
-                        <li><a th:href="@{/auditories}">auditory</a></li>
-                        <li><a th:href="@{/auditorytypes}">auditory types</a></li>
+                        <li><a th:href="@{/auditories}" th:text="#{messages.templates.header.auditories}">auditory</a></li>
+                        <li><a th:href="@{/auditorytypes}" th:text="#{messages.templates.header.auditorytypes}">auditory types</a></li>
                         <li role="separator" class="divider"></li>
-                        <li><a th:href="@{/departments}">departments</a></li>
-                        <li><a th:href="@{/faculties}">faculties</a></li>
-                        <li><a th:href="@{/groups}">groups</a></li>
-                        <li><a th:href="@{/lecturies}">lectures</a></li>
-                        <li><a th:href="@{/subjects}">subjects</a></li>
+                        <li><a th:href="@{/departments}" th:text="#{messages.templates.header.departments}">departments</a></li>
+                        <li><a th:href="@{/faculties}" th:text="#{messages.templates.header.faculties}">faculties</a></li>
+                        <li><a th:href="@{/groups}" th:text="#{messages.templates.header.groups}">groups</a></li>
+                        <li><a th:href="@{/lecturies}" th:text="#{messages.templates.header.lectures}">lectures</a></li>
+                        <li><a th:href="@{/subjects}" th:text="#{messages.templates.header.subjects}">subjects</a></li>
                     </ul></li>
-                <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Create entities<span class="caret"></span></a>
+                <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" th:text="#{messages.templates.header.createentities}">Create entities<span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                        <li><a th:href="@{/student_edit}">student</a></li>
-                        <li><a th:href="@{/teacher_edit}">teacher</a></li>
+                        <li><a th:href="@{/student_edit}" th:text="#{messages.templates.header.student}">student</a></li>
+                        <li><a th:href="@{/teacher_edit}" th:text="#{messages.templates.header.teacher}">teacher</a></li>
                         <li role="separator" class="divider"></li>
-                        <li><a th:href="@{/auditory_edit}">auditory</a></li>
-                        <li><a th:href="@{/auditorytype_edit}">auditory type</a></li>
+                        <li><a th:href="@{/auditory_edit}" th:text="#{messages.templates.header.auditory}">auditory</a></li>
+                        <li><a th:href="@{/auditorytype_edit}" th:text="#{messages.templates.header.auditorytype}">auditory type</a></li>
                         <li role="separator" class="divider"></li>
-                        <li><a th:href="@{/department_edit}">department</a></li>
-                        <li><a th:href="@{/faculty_edit}">faculty</a></li>
-                        <li><a th:href="@{/group_edit}">group</a></li>
-                        <li><a th:href="@{/lecture_edit}">lecture</a></li>
-                        <li><a th:href="@{/subject_edit}">subject</a></li>
+                        <li><a th:href="@{/department_edit}" th:text="#{messages.templates.header.department}">department</a></li>
+                        <li><a th:href="@{/faculty_edit}" th:text="#{messages.templates.header.faculty}">faculty</a></li>
+                        <li><a th:href="@{/group_edit}" th:text="#{messages.templates.header.group}">group</a></li>
+                        <li><a th:href="@{/lecture_edit}" th:text="#{messages.templates.header.lecture}">lecture</a></li>
+                        <li><a th:href="@{/subject_edit}" th:text="#{messages.templates.header.subject}">subject</a></li>
                         <li role="separator" class="divider"></li>
-                        <li><a th:href="@{/timetable-item_edit}">timetable item</a></li>
+                        <li><a th:href="@{/timetable-item_edit}" th:text="#{messages.templates.header.timetableitem}">timetable item</a></li>
                     </ul></li>
             </ul>
         </div>
