@@ -154,7 +154,7 @@ public class AuditoryTypeControllerTest {
     }
     
     @Test
-    void whenInvokeEditGroupWithNoEntityNumber_thenExpectErrorMessage() throws Exception {
+    void whenInvokeEditEntityWithNoEntityNumber_thenExpectErrorMessage() throws Exception {
         String expectedErrorMessage = "Problem with finding auditory type";
         int id = 1;
         String httpRequest = "/auditorytype_edit?id=" + id;
@@ -169,7 +169,7 @@ public class AuditoryTypeControllerTest {
     }
     
     @Test
-    void whenSubmitEditFormStudentWithId_thenUpdateStudent() throws Exception {
+    void whenSubmitEditFormEntityWithId_thenUpdateEntity() throws Exception {
         AuditoryTypeDto auditoryTypeDto = AuditoryTypeDtoModelRepository.getModel1();
         auditoryTypeDto.setId(1);
         String expectedTitle = "Auditory type edit";
@@ -188,7 +188,7 @@ public class AuditoryTypeControllerTest {
     }
 
     @Test
-    void whenSubmitEditFormStudentWithoutId_thenCreateStudent() throws Exception {
+    void whenSubmitEditFormEntityWithoutId_thenCreateEntity() throws Exception {
         AuditoryTypeDto auditoryTypeDto = AuditoryTypeDtoModelRepository.getModel6();
         String expectedTitle = "Auditory type edit";
         String expectedSuccessMessage = "Record auditory type was created!";

@@ -133,8 +133,8 @@ public class TimetableItemRestControllerSystemTest {
   }
 
     @Test
-    @DataSet(value = "timetableItem/timetableItemsExtend.yml",
-             cleanBefore = true, 
+    @DataSet(value = "timetableItem/timetableItems.yml",
+             cleanBefore = true,
              skipCleaningFor = "flyway_schema_history")
     void whenPerformPostEntitiesRequestWithIdZero_thenCreateEntity() throws Exception {
       String entity = "{\"id\":0,"

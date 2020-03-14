@@ -14,9 +14,9 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import ua.com.foxminded.task.dao.exception.EntityAlreadyExistsException;
 import ua.com.foxminded.task.dao.exception.EntityNotValidException;
-import ua.com.foxminded.task.domain.dto.LectureDto;
-import ua.com.foxminded.task.domain.repository.dto.LectureDtoModelRepository;
-import ua.com.foxminded.task.service.LectureService;
+import ua.com.foxminded.task.domain.dto.SubjectDto;
+import ua.com.foxminded.task.domain.repository.dto.SubjectDtoModelRepository;
+import ua.com.foxminded.task.service.SubjectService;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
@@ -32,13 +32,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ExtendWith(SpringExtension.class)
-public class LectureControllerTest {
+public class SubjectControllerTest {
 
     private MockMvc mockMvc;
-    private LectureController lectureController;
+    private SubjectController subjectController;
 
     @MockBean
-    private LectureService lectureService;
+    private SubjectService subjectService;
     
     @MockBean
     private Logger logger;
@@ -46,209 +46,209 @@ public class LectureControllerTest {
     @MockBean
     private BindingResult bindingResult;
 
-    private static final String PATH_HTML_LECTURE = "lecture/lecture";
-    private static final String PATH_HTML_LECTURIES = "lecture/lecturies";
-    private static final String PATH_HTML_LECTURE_EDIT = "lecture/lecture_edit";
-    private static final String ATTRIBUTE_HTML_LECTURE = "lectureDto";
-    private static final String ATTRIBUTE_HTML_LECTURIES = "lecturies";
+    private static final String PATH_HTML_SUBJECT = "subject/subject";
+    private static final String PATH_HTML_SUBJECTS = "subject/subjects";
+    private static final String PATH_HTML_SUBJECT_EDIT = "subject/subject_edit";
+    private static final String ATTRIBUTE_HTML_TITLE = "title";
+    private static final String ATTRIBUTE_HTML_SUBJECT = "subjectDto";
+    private static final String ATTRIBUTE_HTML_SUBJECTS = "subjects";
     private static final String ATTRIBUTE_HTML_ERROR_MESSAGE = "errorMessage";
     private static final String ATTRIBUTE_HTML_SUCCESS_MESSAGE = "successMessage";
-    private static final String ATTRIBUTE_HTML_TITLE = "title";
 
     @BeforeEach
     public void init() {
-        lectureController = new LectureController(logger, lectureService);
-        mockMvc = MockMvcBuilders.standaloneSetup(lectureController).build();
+        subjectController = new SubjectController(logger, subjectService);
+        mockMvc = MockMvcBuilders.standaloneSetup(subjectController).build();
     }
-
+    
     @Test
     void whenRetrieveAllEntity_thenExpectListOfEntities() throws Exception {
-        List<LectureDto> lectureDtos = LectureDtoModelRepository.getModels();
-        String expectedTitle = "Lecture";
-        String httpRequest = "/lecturies";
+        List<SubjectDto> subjectDtos = SubjectDtoModelRepository.getModels1();
+        String expectedTitle = "Subject";
+        String httpRequest = "/subjects";
 
-        when(lectureService.findAllDto()).thenReturn(lectureDtos);
+        when(subjectService.findAllDto()).thenReturn(subjectDtos);
 
         this.mockMvc.perform(get(httpRequest).accept(MediaType.TEXT_HTML_VALUE))
                 .andExpect(status().isOk())
                 .andExpect(model().attribute(ATTRIBUTE_HTML_TITLE, equalTo(expectedTitle)))
-                .andExpect(model().attribute(ATTRIBUTE_HTML_LECTURIES, equalTo(lectureDtos)))
-                .andExpect(forwardedUrl(PATH_HTML_LECTURIES))
+                .andExpect(model().attribute(ATTRIBUTE_HTML_SUBJECTS, equalTo(subjectDtos)))
+                .andExpect(forwardedUrl(PATH_HTML_SUBJECTS))
                 .andDo(print());
     }
     
     @Test
-    void whenRetrieveTheEntity_thenExpectEntityById() throws Exception {
-        LectureDto lectureDto = LectureDtoModelRepository.getModel1();
+    void whenRetriveTheEntity_thenExpectEntityById() throws Exception {
+        SubjectDto subjectDto = SubjectDtoModelRepository.getModel1();
         int id = 1;
-        String httpRequest = "/lecture?id=" + id;
-        String expectedTitle = "Lecture";
+        String httpRequest = "/subject?id=" + id;
+        String expectedTitle = "Subject";
 
-        when(lectureService.findByIdDto(id)).thenReturn(lectureDto);
+        when(subjectService.findByIdDto(id)).thenReturn(subjectDto);
 
         this.mockMvc.perform(get(httpRequest).accept(MediaType.TEXT_HTML_VALUE))
                 .andExpect(status().isOk())
                 .andExpect(model().attribute(ATTRIBUTE_HTML_TITLE, equalTo(expectedTitle)))
-                .andExpect(model().attribute(ATTRIBUTE_HTML_LECTURE, equalTo(lectureDto)))
-                .andExpect(forwardedUrl(PATH_HTML_LECTURE))
+                .andExpect(model().attribute(ATTRIBUTE_HTML_SUBJECT, equalTo(subjectDto)))
+                .andExpect(forwardedUrl(PATH_HTML_SUBJECT))
                 .andDo(print());
     }
 
     @Test
     void whenInvokeByBlankId_thenErrorMessage() throws Exception {
         String expectedErrorMessage = "You id is blank";
-        String httpRequest = "/lecture?id=";
+        String httpRequest = "/subject?id=";
 
         this.mockMvc.perform(get(httpRequest).accept(MediaType.TEXT_HTML_VALUE))
                 .andExpect(status().isOk())
                 .andExpect(model().attribute(ATTRIBUTE_HTML_ERROR_MESSAGE, equalTo(expectedErrorMessage)))
-                .andExpect(forwardedUrl(PATH_HTML_LECTURE))
+                .andExpect(forwardedUrl(PATH_HTML_SUBJECT))
                 .andDo(print());
     }
     
     @Test
     void whenInvokeNoFoundEntities_thenErrorMessage() throws Exception {
         int id = 1;
-        String expectedErrorMessage = "Lecture by id#" + id + " not found!";
-        String httpRequest = "/lecture?id=" + id;
+        String expectedErrorMessage = "Subject by id#" + id + " not found!";
+        String httpRequest = "/subject?id=" + id;
         
-        doThrow(EntityNotFoundException.class).when(lectureService).findByIdDto(id);
+        doThrow(EntityNotFoundException.class).when(subjectService).findByIdDto(id);
 
         this.mockMvc.perform(get(httpRequest).accept(MediaType.TEXT_HTML_VALUE))
                 .andExpect(status().isOk())
                 .andExpect(model().attribute(ATTRIBUTE_HTML_ERROR_MESSAGE, equalTo(expectedErrorMessage)))
-                .andExpect(forwardedUrl(PATH_HTML_LECTURE))
+                .andExpect(forwardedUrl(PATH_HTML_SUBJECT))
                 .andDo(print());
     }
     
     @Test
     void whenInvokeEntitiesWithIncorrectNumberFormatId_thenErrorMessage() throws Exception {
         int id = 1;
-        String expectedErrorMessage = "Lecture id# must be numeric!";
-        String httpRequest = "/lecture?id=" + id;
+        String expectedErrorMessage = "Subject id# must be numeric!";
+        String httpRequest = "/subject?id=" + id;
         
-        doThrow(NumberFormatException.class).when(lectureService).findByIdDto(id);
+        doThrow(NumberFormatException.class).when(subjectService).findByIdDto(id);
 
         this.mockMvc.perform(get(httpRequest).accept(MediaType.TEXT_HTML_VALUE))
                 .andExpect(status().isOk())
                 .andExpect(model().attribute(ATTRIBUTE_HTML_ERROR_MESSAGE, equalTo(expectedErrorMessage)))
-                .andExpect(forwardedUrl(PATH_HTML_LECTURE))
+                .andExpect(forwardedUrl(PATH_HTML_SUBJECT))
                 .andDo(print());
     }
     
     @Test
-    void whenRetrieveEditExistsEntity_thenExpectFormWithEntityField() throws Exception {
-        LectureDto lectureDto = LectureDtoModelRepository.getModel1();
+    void whenRetriveEditExistsEntity_thenExpectFormWithEntityField() throws Exception {
+        SubjectDto subjectDto = SubjectDtoModelRepository.getModel1();
         int id = 1;
-        String httpRequest = "/lecture_edit?id=" + id;
-        String expectedTitle = "Lecture edit";
+        String httpRequest = "/subject_edit?id=" + id;
+        String expectedTitle = "Subject edit";
 
-        when(lectureService.findByIdDto(id)).thenReturn(lectureDto);
+        when(subjectService.findByIdDto(id)).thenReturn(subjectDto);
 
         this.mockMvc.perform(get(httpRequest).accept(MediaType.TEXT_HTML_VALUE))
                 .andExpect(status().isOk())
                 .andExpect(model().attribute(ATTRIBUTE_HTML_TITLE, equalTo(expectedTitle)))
-                .andExpect(model().attribute(ATTRIBUTE_HTML_LECTURE, equalTo(lectureDto)))
-                .andExpect(forwardedUrl(PATH_HTML_LECTURE_EDIT))
+                .andExpect(model().attribute(ATTRIBUTE_HTML_SUBJECT, equalTo(subjectDto)))
+                .andExpect(forwardedUrl(PATH_HTML_SUBJECT_EDIT))
                 .andDo(print());
     }
     
     @Test
     void whenInvokeEditEntityWithNoEntityNumber_thenExpectErrorMessage() throws Exception {
-        String expectedErrorMessage = "Problem with finding lecture";
+        String expectedErrorMessage = "Problem with finding subject";
         int id = 1;
-        String httpRequest = "/lecture_edit?id=" + id;
+        String httpRequest = "/subject_edit?id=" + id;
         
-        doThrow(EntityNotFoundException.class).when(lectureService).findByIdDto(id);
+        doThrow(EntityNotFoundException.class).when(subjectService).findByIdDto(id);
 
         this.mockMvc.perform(get(httpRequest).accept(MediaType.TEXT_HTML_VALUE))
                 .andExpect(status().isOk())
                 .andExpect(model().attribute(ATTRIBUTE_HTML_ERROR_MESSAGE, equalTo(expectedErrorMessage)))
-                .andExpect(forwardedUrl(PATH_HTML_LECTURE_EDIT))
+                .andExpect(forwardedUrl(PATH_HTML_SUBJECT_EDIT))
                 .andDo(print());
     }
     
     @Test
     void whenSubmitEditFormEntityWithId_thenUpdateEntity() throws Exception {
-        LectureDto lectureDto = LectureDtoModelRepository.getModel1();
-        lectureDto.setId(1);
-        String expectedTitle = "Lecture edit";
-        String expectedSuccessMessage = "Record lecture was updated!";
+        SubjectDto subjectDto = SubjectDtoModelRepository.getModel1();
+        subjectDto.setId(1);
+        String expectedTitle = "Subject edit";
+        String expectedSuccessMessage = "Record subject was updated!";
         Model model = new ExtendedModelMap();
 
-        when(lectureService.update(lectureDto)).thenReturn(lectureDto);
+        when(subjectService.update(subjectDto)).thenReturn(subjectDto);
         when(bindingResult.hasErrors()).thenReturn(false);
 
-        String actuallyView = lectureController.editPostEntity(lectureDto, bindingResult, model);
+        String actuallyView = subjectController.editPostEntity(subjectDto, bindingResult, model);
         
-        assertThat(PATH_HTML_LECTURE).isEqualTo(actuallyView);
+        assertThat(PATH_HTML_SUBJECT).isEqualTo(actuallyView);
         assertThat(expectedTitle).isEqualTo(model.getAttribute(ATTRIBUTE_HTML_TITLE));
         assertThat(expectedSuccessMessage).isEqualTo(model.getAttribute(ATTRIBUTE_HTML_SUCCESS_MESSAGE));
-        assertThat(lectureDto).isEqualTo(model.getAttribute(ATTRIBUTE_HTML_LECTURE));
+        assertThat(subjectDto).isEqualTo(model.getAttribute(ATTRIBUTE_HTML_SUBJECT));
     }
 
     @Test
     void whenSubmitEditFormEntityWithoutId_thenCreateEntity() throws Exception {
-        LectureDto lectureDto = LectureDtoModelRepository.getModel6();
-        String expectedTitle = "Lecture edit";
-        String expectedSuccessMessage = "Record lecture was created!";
+        SubjectDto subjectDto = SubjectDtoModelRepository.getModel4();
+        String expectedTitle = "Subject edit";
+        String expectedSuccessMessage = "Record subject was created!";
         Model model = new ExtendedModelMap();
 
-        when(lectureService.create(lectureDto)).thenReturn(lectureDto);
+        when(subjectService.create(subjectDto)).thenReturn(subjectDto);
 
-        String actuallyView = lectureController.editPostEntity(lectureDto, bindingResult, model);
+        String actuallyView = subjectController.editPostEntity(subjectDto, bindingResult, model);
 
-        assertThat(PATH_HTML_LECTURE).isEqualTo(actuallyView);
+        assertThat(PATH_HTML_SUBJECT).isEqualTo(actuallyView);
         assertThat(expectedTitle).isEqualTo(model.getAttribute(ATTRIBUTE_HTML_TITLE));
         assertThat(expectedSuccessMessage).isEqualTo(model.getAttribute(ATTRIBUTE_HTML_SUCCESS_MESSAGE));
-        assertThat(lectureDto).isEqualTo(model.getAttribute(ATTRIBUTE_HTML_LECTURE));
+        assertThat(subjectDto).isEqualTo(model.getAttribute(ATTRIBUTE_HTML_SUBJECT));
     }
     
     @Test
     void whenInvokeCreateExistsEntity_thenExpectErrorMessage() throws Exception {
-        String expectedErrorMessage = "Record lecture was not created! The record already exists!";
-        LectureDto lectureDto = LectureDtoModelRepository.getModel1();
+        String expectedErrorMessage = "Record subject was not created! The record already exists!";
+        SubjectDto subjectDto = SubjectDtoModelRepository.getModel1();
         Model model = new ExtendedModelMap();
 
-        doThrow(EntityAlreadyExistsException.class).when(lectureService).create(lectureDto);
+        doThrow(EntityAlreadyExistsException.class).when(subjectService).create(subjectDto);
       
-        String actuallyView = lectureController.editPostEntity(lectureDto, bindingResult, model);
+        String actuallyView = subjectController.editPostEntity(subjectDto, bindingResult, model);
 
-        assertThat(PATH_HTML_LECTURE_EDIT).isEqualTo(actuallyView);
+        assertThat(PATH_HTML_SUBJECT_EDIT).isEqualTo(actuallyView);
         assertThat(expectedErrorMessage).isEqualTo(model.getAttribute(ATTRIBUTE_HTML_ERROR_MESSAGE));
-        assertThat(lectureDto).isEqualTo(model.getAttribute(ATTRIBUTE_HTML_LECTURE));
+        assertThat(subjectDto).isEqualTo(model.getAttribute(ATTRIBUTE_HTML_SUBJECT));
     }
   
     @Test
     void whenInvokeEditNotFoundEntity_thenExpectErrorMessage() throws Exception {
-        LectureDto lectureDto = LectureDtoModelRepository.getModel1();
-        lectureDto.setId(1);
-        String expectedErrorMessage = "Lecture " + lectureDto + " not found!";
+        SubjectDto subjectDto = SubjectDtoModelRepository.getModel1();
+        subjectDto.setId(1);
+        String expectedErrorMessage = "Subject " + subjectDto + " not found!";
         Model model = new ExtendedModelMap();
 
-        doThrow(EntityNotFoundException.class).when(lectureService).update(lectureDto);
+        doThrow(EntityNotFoundException.class).when(subjectService).update(subjectDto);
       
-        String actuallyView = lectureController.editPostEntity(lectureDto, bindingResult, model);
+        String actuallyView = subjectController.editPostEntity(subjectDto, bindingResult, model);
 
-        assertThat(PATH_HTML_LECTURE_EDIT).isEqualTo(actuallyView);
+        assertThat(PATH_HTML_SUBJECT_EDIT).isEqualTo(actuallyView);
         assertThat(expectedErrorMessage).isEqualTo(model.getAttribute(ATTRIBUTE_HTML_ERROR_MESSAGE));
-        assertThat(lectureDto).isEqualTo(model.getAttribute(ATTRIBUTE_HTML_LECTURE));
+        assertThat(subjectDto).isEqualTo(model.getAttribute(ATTRIBUTE_HTML_SUBJECT));
     }
   
     @Test
     void whenInvokeEditNotValidEntity_thenExpectErrorMessage() throws Exception {
-        String expectedErrorMessage = "Record lecture was not updated/created! The data is not valid!";
-        LectureDto lectureDto = LectureDtoModelRepository.getModel1();
-        lectureDto.setId(1);
+        String expectedErrorMessage = "Record subject was not updated/created! The data is not valid!";
+        SubjectDto subjectDto = SubjectDtoModelRepository.getModel1();
+        subjectDto.setId(1);
         Model model = new ExtendedModelMap();
 
-        doThrow(EntityNotValidException.class).when(lectureService).update(lectureDto);
+        doThrow(EntityNotValidException.class).when(subjectService).update(subjectDto);
       
-        String actuallyView = lectureController.editPostEntity(lectureDto, bindingResult, model);
+        String actuallyView = subjectController.editPostEntity(subjectDto, bindingResult, model);
 
-        assertThat(PATH_HTML_LECTURE_EDIT).isEqualTo(actuallyView);
+        assertThat(PATH_HTML_SUBJECT_EDIT).isEqualTo(actuallyView);
         assertThat(expectedErrorMessage).isEqualTo(model.getAttribute(ATTRIBUTE_HTML_ERROR_MESSAGE));
-        assertThat(lectureDto).isEqualTo(model.getAttribute(ATTRIBUTE_HTML_LECTURE));
+        assertThat(subjectDto).isEqualTo(model.getAttribute(ATTRIBUTE_HTML_SUBJECT));
     }
     
 }
