@@ -1,10 +1,5 @@
 package ua.com.foxminded.task.controller;
 
-import java.util.List;
-
-import javax.persistence.EntityNotFoundException;
-import javax.validation.Valid;
-
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,11 +10,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
 import ua.com.foxminded.task.dao.exception.EntityAlreadyExistsException;
 import ua.com.foxminded.task.dao.exception.EntityNotValidException;
 import ua.com.foxminded.task.domain.dto.LectureDto;
 import ua.com.foxminded.task.service.LectureService;
+
+import javax.persistence.EntityNotFoundException;
+import javax.validation.Valid;
+import java.util.List;
 
 @Controller
 public class LectureController {

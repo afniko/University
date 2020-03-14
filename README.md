@@ -22,6 +22,7 @@ Use command and get "Success" (Audit done)!
 mvn validate
 ```
 For starting unit tests and checkstyle audit
+Create test postgresql DB 'University_test' with user:'afniko' password:'078990' 
 Use command and get "Success"!
 ```
 mvn test
@@ -36,6 +37,7 @@ mvn verify
 Use libraries from maven pom.xml file. 
 
 ### Run project
+Create postgresql DB 'University' with user:'afniko' password:'078990' (change in properties)
 For run project type following command
 ```
 mvn spring-boot:run
