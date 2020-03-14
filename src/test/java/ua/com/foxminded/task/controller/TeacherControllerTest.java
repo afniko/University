@@ -15,8 +15,10 @@ import org.springframework.validation.BindingResult;
 import ua.com.foxminded.task.dao.exception.EntityAlreadyExistsException;
 import ua.com.foxminded.task.dao.exception.EntityNotValidException;
 import ua.com.foxminded.task.domain.dto.DepartmentDto;
+import ua.com.foxminded.task.domain.dto.SubjectDto;
 import ua.com.foxminded.task.domain.dto.TeacherDto;
 import ua.com.foxminded.task.domain.repository.dto.DepartmentDtoModelRepository;
+import ua.com.foxminded.task.domain.repository.dto.SubjectDtoModelRepository;
 import ua.com.foxminded.task.domain.repository.dto.TeacherDtoModelRepository;
 import ua.com.foxminded.task.service.DepartmentService;
 import ua.com.foxminded.task.service.SubjectService;
@@ -152,18 +154,22 @@ public class TeacherControllerTest {
     void whenRetrieveEditExistsEntity_thenExpectFormWithEntityField() throws Exception {
         TeacherDto teacherDto = TeacherDtoModelRepository.getModel1();
         List<DepartmentDto> departmentDtos = DepartmentDtoModelRepository.getModels();
+        List<SubjectDto> subjectDtos = SubjectDtoModelRepository.getModels1();
+
         int id = 1;
         String httpRequest = "/teacher_edit?id=" + id;
         String expectedTitle = "Teacher edit";
 
         when(teacherService.findByIdDto(id)).thenReturn(teacherDto);
         when(departmentService.findAllDto()).thenReturn(departmentDtos);
+        when(subjectService.findAllDto()).thenReturn(subjectDtos);
 
         this.mockMvc.perform(get(httpRequest).accept(MediaType.TEXT_HTML_VALUE))
                 .andExpect(status().isOk())
                 .andExpect(model().attribute(ATTRIBUTE_HTML_TITLE, equalTo(expectedTitle)))
                 .andExpect(model().attribute(ATTRIBUTE_HTML_TEACHER, equalTo(teacherDto)))
                 .andExpect(model().attribute(ATTRIBUTE_HTML_DEPARTMENTS, equalTo(departmentDtos)))
+                .andExpect(model().attribute(ATTRIBUTE_HTML_SUBJECTS, equalTo(subjectDtos)))
                 .andExpect(forwardedUrl(PATH_HTML_TEACHER_EDIT))
                 .andDo(print());
     }
@@ -172,11 +178,14 @@ public class TeacherControllerTest {
     void whenInvokeEditEntityWithNoEntityNumber_thenExpectErrorMessage() throws Exception {
         String expectedErrorMessage = "Problem with finding teacher";
         List<DepartmentDto> departmentDtos = DepartmentDtoModelRepository.getModels();
+        List<SubjectDto> subjectDtos = SubjectDtoModelRepository.getModels1();
+
         int id = 1;
         String httpRequest = "/teacher_edit?id=" + id;
         
         doThrow(EntityNotFoundException.class).when(teacherService).findByIdDto(id);
         when(departmentService.findAllDto()).thenReturn(departmentDtos);
+        when(subjectService.findAllDto()).thenReturn(subjectDtos);
 
         this.mockMvc.perform(get(httpRequest).accept(MediaType.TEXT_HTML_VALUE))
                 .andExpect(status().isOk())
