@@ -63,33 +63,33 @@ public class AuditoryTypeControllerTest {
 
     @Test
     void whenRetrieveAllEntity_thenExpectListOfEntities() throws Exception {
-        List<AuditoryTypeDto> auditoryDtos = AuditoryTypeDtoModelRepository.getModels();
+        List<AuditoryTypeDto> auditoryTypeDtos = AuditoryTypeDtoModelRepository.getModels();
         String expectedTitle = "Auditory types";
         String httpRequest = "/auditorytypes";
 
-        when(auditoryTypeService.findAllDto()).thenReturn(auditoryDtos);
+        when(auditoryTypeService.findAllDto()).thenReturn(auditoryTypeDtos);
 
         this.mockMvc.perform(get(httpRequest).accept(MediaType.TEXT_HTML_VALUE))
                 .andExpect(status().isOk())
                 .andExpect(model().attribute(ATTRIBUTE_HTML_TITLE, equalTo(expectedTitle)))
-                .andExpect(model().attribute(ATTRIBUTE_HTML_AUDITORYTYPES, equalTo(auditoryDtos)))
+                .andExpect(model().attribute(ATTRIBUTE_HTML_AUDITORYTYPES, equalTo(auditoryTypeDtos)))
                 .andExpect(forwardedUrl(PATH_HTML_AUDITORYTYPES))
                 .andDo(print());
     }
     
     @Test
     void whenRetrieveTheEntity_thenExpectEntityById() throws Exception {
-        AuditoryTypeDto auditoryDto = AuditoryTypeDtoModelRepository.getModel1();
+        AuditoryTypeDto auditoryTypeDto = AuditoryTypeDtoModelRepository.getModel1();
         int id = 1;
         String httpRequest = "/auditorytype?id=" + id;
         String expectedTitle = "Auditory type";
 
-        when(auditoryTypeService.findByIdDto(id)).thenReturn(auditoryDto);
+        when(auditoryTypeService.findByIdDto(id)).thenReturn(auditoryTypeDto);
 
         this.mockMvc.perform(get(httpRequest).accept(MediaType.TEXT_HTML_VALUE))
                 .andExpect(status().isOk())
                 .andExpect(model().attribute(ATTRIBUTE_HTML_TITLE, equalTo(expectedTitle)))
-                .andExpect(model().attribute(ATTRIBUTE_HTML_AUDITORYTYPE, equalTo(auditoryDto)))
+                .andExpect(model().attribute(ATTRIBUTE_HTML_AUDITORYTYPE, equalTo(auditoryTypeDto)))
                 .andExpect(forwardedUrl(PATH_HTML_AUDITORYTYPE))
                 .andDo(print());
     }
@@ -138,17 +138,17 @@ public class AuditoryTypeControllerTest {
     
     @Test
     void whenRetrieveEditExistsEntity_thenExpectFormWithEntityField() throws Exception {
-        AuditoryTypeDto auditoryDto = AuditoryTypeDtoModelRepository.getModel1();
+        AuditoryTypeDto auditoryTypeDto = AuditoryTypeDtoModelRepository.getModel1();
         int id = 1;
         String httpRequest = "/auditorytype_edit?id=" + id;
         String expectedTitle = "Auditory type edit";
 
-        when(auditoryTypeService.findByIdDto(id)).thenReturn(auditoryDto);
+        when(auditoryTypeService.findByIdDto(id)).thenReturn(auditoryTypeDto);
 
         this.mockMvc.perform(get(httpRequest).accept(MediaType.TEXT_HTML_VALUE))
                 .andExpect(status().isOk())
                 .andExpect(model().attribute(ATTRIBUTE_HTML_TITLE, equalTo(expectedTitle)))
-                .andExpect(model().attribute(ATTRIBUTE_HTML_AUDITORYTYPE, equalTo(auditoryDto)))
+                .andExpect(model().attribute(ATTRIBUTE_HTML_AUDITORYTYPE, equalTo(auditoryTypeDto)))
                 .andExpect(forwardedUrl(PATH_HTML_AUDITORYTYPE_EDIT))
                 .andDo(print());
     }
@@ -170,85 +170,85 @@ public class AuditoryTypeControllerTest {
     
     @Test
     void whenSubmitEditFormStudentWithId_thenUpdateStudent() throws Exception {
-        AuditoryTypeDto auditoryDto = AuditoryTypeDtoModelRepository.getModel1();
-        auditoryDto.setId(1);
+        AuditoryTypeDto auditoryTypeDto = AuditoryTypeDtoModelRepository.getModel1();
+        auditoryTypeDto.setId(1);
         String expectedTitle = "Auditory type edit";
         String expectedSuccessMessage = "Record auditory type was updated!";
         Model model = new ExtendedModelMap();
 
-        when(auditoryTypeService.update(auditoryDto)).thenReturn(auditoryDto);
+        when(auditoryTypeService.update(auditoryTypeDto)).thenReturn(auditoryTypeDto);
         when(bindingResult.hasErrors()).thenReturn(false);
 
-        String actuallyView = auditoryTypeController.editPostEntity(auditoryDto, bindingResult, model);
+        String actuallyView = auditoryTypeController.editPostEntity(auditoryTypeDto, bindingResult, model);
         
         assertThat(PATH_HTML_AUDITORYTYPE).isEqualTo(actuallyView);
         assertThat(expectedTitle).isEqualTo(model.getAttribute(ATTRIBUTE_HTML_TITLE));
         assertThat(expectedSuccessMessage).isEqualTo(model.getAttribute(ATTRIBUTE_HTML_SUCCESS_MESSAGE));
-        assertThat(auditoryDto).isEqualTo(model.getAttribute(ATTRIBUTE_HTML_AUDITORYTYPE));
+        assertThat(auditoryTypeDto).isEqualTo(model.getAttribute(ATTRIBUTE_HTML_AUDITORYTYPE));
     }
 
     @Test
     void whenSubmitEditFormStudentWithoutId_thenCreateStudent() throws Exception {
-        AuditoryTypeDto auditoryDto = AuditoryTypeDtoModelRepository.getModel6();
+        AuditoryTypeDto auditoryTypeDto = AuditoryTypeDtoModelRepository.getModel6();
         String expectedTitle = "Auditory type edit";
         String expectedSuccessMessage = "Record auditory type was created!";
         Model model = new ExtendedModelMap();
 
-        when(auditoryTypeService.create(auditoryDto)).thenReturn(auditoryDto);
+        when(auditoryTypeService.create(auditoryTypeDto)).thenReturn(auditoryTypeDto);
 
-        String actuallyView = auditoryTypeController.editPostEntity(auditoryDto, bindingResult, model);
+        String actuallyView = auditoryTypeController.editPostEntity(auditoryTypeDto, bindingResult, model);
 
         assertThat(PATH_HTML_AUDITORYTYPE).isEqualTo(actuallyView);
         assertThat(expectedTitle).isEqualTo(model.getAttribute(ATTRIBUTE_HTML_TITLE));
         assertThat(expectedSuccessMessage).isEqualTo(model.getAttribute(ATTRIBUTE_HTML_SUCCESS_MESSAGE));
-        assertThat(auditoryDto).isEqualTo(model.getAttribute(ATTRIBUTE_HTML_AUDITORYTYPE));
+        assertThat(auditoryTypeDto).isEqualTo(model.getAttribute(ATTRIBUTE_HTML_AUDITORYTYPE));
     }
     
     @Test
     void whenInvokeCreateExistsEntity_thenExpectErrorMessage() throws Exception {
         String expectedErrorMessage = "Record auditory type was not created! The record already exists!";
-        AuditoryTypeDto auditoryDto = AuditoryTypeDtoModelRepository.getModel1();
+        AuditoryTypeDto auditoryTypeDto = AuditoryTypeDtoModelRepository.getModel1();
         Model model = new ExtendedModelMap();
 
-        doThrow(EntityAlreadyExistsException.class).when(auditoryTypeService).create(auditoryDto);
+        doThrow(EntityAlreadyExistsException.class).when(auditoryTypeService).create(auditoryTypeDto);
       
-        String actuallyView = auditoryTypeController.editPostEntity(auditoryDto, bindingResult, model);
+        String actuallyView = auditoryTypeController.editPostEntity(auditoryTypeDto, bindingResult, model);
 
         assertThat(PATH_HTML_AUDITORYTYPE_EDIT).isEqualTo(actuallyView);
         assertThat(expectedErrorMessage).isEqualTo(model.getAttribute(ATTRIBUTE_HTML_ERROR_MESSAGE));
-        assertThat(auditoryDto).isEqualTo(model.getAttribute(ATTRIBUTE_HTML_AUDITORYTYPE));
+        assertThat(auditoryTypeDto).isEqualTo(model.getAttribute(ATTRIBUTE_HTML_AUDITORYTYPE));
     }
   
     @Test
     void whenInvokeEditNotFoundEntity_thenExpectErrorMessage() throws Exception {
-        AuditoryTypeDto auditoryDto = AuditoryTypeDtoModelRepository.getModel1();
-        auditoryDto.setId(1);
-        String expectedErrorMessage = "Auditory type " + auditoryDto + " not found!";
+        AuditoryTypeDto auditoryTypeDto = AuditoryTypeDtoModelRepository.getModel1();
+        auditoryTypeDto.setId(1);
+        String expectedErrorMessage = "Auditory type " + auditoryTypeDto + " not found!";
         Model model = new ExtendedModelMap();
 
-        doThrow(EntityNotFoundException.class).when(auditoryTypeService).update(auditoryDto);
+        doThrow(EntityNotFoundException.class).when(auditoryTypeService).update(auditoryTypeDto);
       
-        String actuallyView = auditoryTypeController.editPostEntity(auditoryDto, bindingResult, model);
+        String actuallyView = auditoryTypeController.editPostEntity(auditoryTypeDto, bindingResult, model);
 
         assertThat(PATH_HTML_AUDITORYTYPE_EDIT).isEqualTo(actuallyView);
         assertThat(expectedErrorMessage).isEqualTo(model.getAttribute(ATTRIBUTE_HTML_ERROR_MESSAGE));
-        assertThat(auditoryDto).isEqualTo(model.getAttribute(ATTRIBUTE_HTML_AUDITORYTYPE));
+        assertThat(auditoryTypeDto).isEqualTo(model.getAttribute(ATTRIBUTE_HTML_AUDITORYTYPE));
     }
   
     @Test
     void whenInvokeEditNotValidEntity_thenExpectErrorMessage() throws Exception {
         String expectedErrorMessage = "Record auditory type was not updated/created! The data is not valid!";
-        AuditoryTypeDto auditoryDto = AuditoryTypeDtoModelRepository.getModel1();
-        auditoryDto.setId(1);
+        AuditoryTypeDto auditoryTypeDto = AuditoryTypeDtoModelRepository.getModel1();
+        auditoryTypeDto.setId(1);
         Model model = new ExtendedModelMap();
 
-        doThrow(EntityNotValidException.class).when(auditoryTypeService).update(auditoryDto);
+        doThrow(EntityNotValidException.class).when(auditoryTypeService).update(auditoryTypeDto);
       
-        String actuallyView = auditoryTypeController.editPostEntity(auditoryDto, bindingResult, model);
+        String actuallyView = auditoryTypeController.editPostEntity(auditoryTypeDto, bindingResult, model);
 
         assertThat(PATH_HTML_AUDITORYTYPE_EDIT).isEqualTo(actuallyView);
         assertThat(expectedErrorMessage).isEqualTo(model.getAttribute(ATTRIBUTE_HTML_ERROR_MESSAGE));
-        assertThat(auditoryDto).isEqualTo(model.getAttribute(ATTRIBUTE_HTML_AUDITORYTYPE));
+        assertThat(auditoryTypeDto).isEqualTo(model.getAttribute(ATTRIBUTE_HTML_AUDITORYTYPE));
     }
     
 }
