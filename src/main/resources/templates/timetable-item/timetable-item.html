@@ -22,28 +22,28 @@
             </th:block>
             <table class="table table-bordered">
                 <tr>
-                    <th>Subject</th>
+                    <th th:text="#{messages.templates.timetableitem.subject}">Subject</th>
                     <td th:text=${timetableItemDto.subjectTitle}></td>
                 </tr>
                 <tr>
-                    <th>Auditory</th>
+                    <th th:text="#{messages.templates.timetableitem.auditory}">Auditory</th>
                     <td th:text=${timetableItemDto.auditoryTitle}></td>
                 </tr>
                 <tr>
-                    <th>Lecture</th>
+                    <th th:text="#{messages.templates.timetableitem.lecture}">Lecture</th>
                     <td th:text=${timetableItemDto.lectureTitle}></td>
                 </tr>
                 <tr>
-                    <th>Date</th>
+                    <th th:text="#{messages.templates.timetableitem.date}">Date</th>
                     <td th:text=${timetableItemDto.date}></td>
                 </tr>
                 <tr>
-                    <th>Teacher</th>
+                    <th th:text="#{messages.templates.timetableitem.teacher}">Teacher</th>
                     <td th:text=${timetableItemDto.teacherTitle}></td>
                 </tr>
 
                 <tr th:if="${not #lists.isEmpty(timetableItemDto.groups)}">
-                    <th>Groups</th>
+                    <th th:text="#{messages.templates.timetableitem.groups}">Groups</th>
                     <td>
                         <ul>
                             <li th:each="group : ${timetableItemDto.groups}" th:text="${group.title}"></li>
@@ -52,7 +52,7 @@
                 </tr>
 
             </table>
-            <button type="button" class="btn btn-info" th:onclick="'javascript:buttonClicked(\'' + ${timetableItemDto.id} + '\');'">Edit record</button>
+            <button type="button" class="btn btn-info" th:onclick="'javascript:buttonClicked(\'' + ${timetableItemDto.id} + '\');'" th:text="#{messages.templates.button.edit}">Edit record</button>
         </th:block>
     </div>
 

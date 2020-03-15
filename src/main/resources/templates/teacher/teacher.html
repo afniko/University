@@ -26,34 +26,34 @@
             </th:block>
             <table class="table table-bordered">
                 <tr class="success">
-                    <th>First name</th>
+                    <th th:text="#{messages.templates.teacher.firstname}">First name</th>
                     <td th:text=${teacherDto.firstName}></td>
                 </tr>
                 <tr>
-                    <th>Last name</th>
+                    <th th:text="#{messages.templates.teacher.lastname}">Last name</th>
                     <td th:text=${teacherDto.lastName}></td>
                 </tr>
                 <tr>
-                    <th>Middle name</th>
+                    <th th:text="#{messages.templates.teacher.middlename}">Middle name</th>
                     <td th:text=${teacherDto.middleName}></td>
                 </tr>
                 <tr>
-                    <th>Birthday</th>
+                    <th th:text="#{messages.templates.teacher.birthday}">Birthday</th>
                     <td th:text=${teacherDto.birthday}></td>
                 </tr>
                 <tr>
-                    <th>Id fees</th>
+                    <th th:text="#{messages.templates.teacher.idfees}">Id fees</th>
                     <td th:text=${teacherDto.idFees}></td>
                 </tr>
                 <tr>
-                    <th>Department title</th>
+                    <th th:text="#{messages.templates.teacher.departmenttitle}">Department title</th>
                     <td th:text=${teacherDto.departmentTitle}></td>
                 </tr>
 
                 <th:block th:if="${!teacherDto.subjects.empty}">
                     <table class="table table-hover">
                         <tr>
-                            <th>Subject title</th>
+                            <th th:text="#{messages.templates.teacher.subjecttitle}">Subject title</th>
                         </tr>
                         <tr th:each="subject : ${teacherDto.subjects}">
                             <td th:text="${subject.title}">Subject title</td>
@@ -62,7 +62,7 @@
                 </th:block>
 
             </table>
-            <button type="button" class="btn btn-info" th:onclick="'javascript:buttonClicked(\'' + ${teacherDto.id} + '\');'">Edit record</button>
+            <button type="button" class="btn btn-info" th:onclick="'javascript:buttonClicked(\'' + ${teacherDto.id} + '\');'" th:text="#{messages.templates.button.edit}">Edit record</button>
         </th:block>
     </div>
 

@@ -19,35 +19,35 @@
     <div class="container-fluid">
         <form class="form-horizontal" action="#" th:action="@{/teacher_edit}" method="post" th:object="${teacherDto}">
             <div class="form-group">
-                <label for="firstName" class="col-sm-2 control-label">First name</label>
+                <label for="firstName" class="col-sm-2 control-label" th:text="#{messages.templates.teacher.firstname}">First name</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" th:field="*{firstName}" placeholder="Enter first name" required> <small class="text-danger"
+                    <input type="text" class="form-control" th:field="*{firstName}" th:placeholder="#{messages.templates.teacher.placeholder.firstname}" required> <small class="text-danger"
                         th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}">Error</small>
                 </div>
-                <label for="lastName" class="col-sm-2 control-label">Last name</label>
+                <label for="lastName" class="col-sm-2 control-label" th:text="#{messages.templates.teacher.lastname}">Last name</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" th:field="*{lastName}" placeholder="Enter last name"> <small class="text-danger" th:if="${#fields.hasErrors('lastName')}"
+                    <input type="text" class="form-control" th:field="*{lastName}" th:placeholder="#{messages.templates.teacher.placeholder.lastname}"> <small class="text-danger" th:if="${#fields.hasErrors('lastName')}"
                         th:errors="*{lastName}">Error</small>
                 </div>
-                <label for="middleName" class="col-sm-2 control-label">Middle name</label>
+                <label for="middleName" class="col-sm-2 control-label" th:text="#{messages.templates.teacher.middlename}">Middle name</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" th:field="*{middleName}" placeholder="Enter middle name"> <small class="text-danger" th:if="${#fields.hasErrors('middleName')}"
+                    <input type="text" class="form-control" th:field="*{middleName}" th:placeholder="#{messages.templates.teacher.placeholder.middlename}"> <small class="text-danger" th:if="${#fields.hasErrors('middleName')}"
                         th:errors="*{middleName}">Error</small>
                 </div>
-                <label for="birthday" class="col-sm-2 control-label">Birthday</label>
+                <label for="birthday" class="col-sm-2 control-label" th:text="#{messages.templates.teacher.birthday}">Birthday</label>
                 <div class="col-sm-10">
                     <input th:type="date" class="form-control" th:field="*{birthday}" placeholder="YYYY-MM-DD" required> <small class="text-danger" th:if="${#fields.hasErrors('birthday')}"
                         th:errors="*{birthday}">Error</small>
                 </div>
-                <label for="idFees" class="col-sm-2 control-label">Id fees</label>
+                <label for="idFees" class="col-sm-2 control-label" th:text="#{messages.templates.teacher.idfees}">Id fees</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" id="idFees" name="idFees" th:value="${teacherDto.idFees}>0 ? ${teacherDto.idFees} : null" placeholder="XXXXXXXXX - 9 number" required>
+                    <input type="text" class="form-control" id="idFees" name="idFees" th:value="${teacherDto.idFees}>0 ? ${teacherDto.idFees} : null" th:placeholder="#{messages.templates.teacher.placeholder.idfees}" required>
                     <small class="text-danger" th:if="${#fields.hasErrors('idFees')}" th:errors="*{idFees}">Error</small>
                 </div>
-                <label for="departmentId" class="col-sm-2 control-label">Department</label>
+                <label for="departmentId" class="col-sm-2 control-label" th:text="#{messages.templates.teacher.departmenttitle}">Department</label>
                 <div class="col-sm-10">
                     <select class="selectpicker" data-live-search="true" th:field="*{departmentId}">
-                        <option value=0 th:text="${teacherDto.departmentTitle}==null ? 'Choose department':'Remove department'"></option>
+                        <option value=0 th:text="${teacherDto.departmentTitle}==null ? #{messages.templates.select.choose}:#{messages.templates.select.remove}"></option>
                         <option th:each="department : ${departments}" th:value="${department.id}" th:text=${department.title} th:selected="${teacherDto.departmentId}==${department.id}"></option>
                     </select> <small class="text-danger" th:if="${#fields.hasErrors('departmentId')}" th:errors="*{departmentId}">Error</small>
                 </div>
@@ -55,7 +55,7 @@
 
             <th:block th:if="${not #lists.isEmpty(allSubjects)}">
                 <div class="form-group">
-                    <label class="control-label col-sm-2">Select subject</label>
+                    <label class="control-label col-sm-2" th:text="#{messages.templates.teacher.selectsubjects}">Select subject</label>
                     <div class="col-sm-6">
                         <ul>
                             <li th:each="subjectDto : ${allSubjects}">
@@ -73,7 +73,7 @@
                         <input type="hidden" th:field="*{departmentTitle}" />
                     </th:block>
                     <input type="hidden" th:field="*{id}" />
-                    <button type="submit" class="btn btn-default" th:text="*{id}==0 ? 'Create' : 'Update'"></button>
+                    <button type="submit" class="btn btn-default" th:text="*{id}==0 ? #{messages.templates.button.create} : #{messages.templates.button.update}"></button>
                 </div>
             </div>
         </form>
