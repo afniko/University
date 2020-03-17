@@ -11,7 +11,7 @@
 <body>
 
     <div class="col-sm-12">
-    <a th:href="@{/timetable-items(selectedTeacher=${teacherDto.id})}" class="btn btn-success col-sm-2 ">&nbsp;Go to timetable items</a>
+    <a th:href="@{/timetable-items(selectedTeacher=${teacherDto.id})}" class="btn btn-success col-sm-2 " th:text="#{messages.templates.button.gototimetableitems}">&nbsp;Go to timetable items</a>
     </div>
 
     <div class="container-fluid">
