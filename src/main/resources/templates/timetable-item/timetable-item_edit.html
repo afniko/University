@@ -27,10 +27,10 @@
             <table class="table table-bordered">
 
                 <tr>
-                    <td class="control-label col-sm-2"><label for="subjectId" class="col-sm-2 control-label">Subject</label></td>
+                    <td class="control-label col-sm-2"><label for="subjectId" class="col-sm-2 control-label" th:text="#{messages.templates.timetableitem.subject}">Subject</label></td>
                     <td>
                     <select class="selectpicker" data-live-search="true" th:field="*{subjectId}">
-                            <option value=0 th:text="${timetableItemDto.subjectTitle}==null ? 'Choose subject':'Remove subject'"></option>
+                            <option value=0 th:text="${timetableItemDto.subjectTitle}==null ? #{messages.templates.select.choose}:#{messages.templates.select.remove}"></option>
                             <option th:each="subject : ${subjects}" th:value="${subject.id}" th:text=${subject.title} th:selected="${timetableItemDto.subjectId}==${subject.id}"></option>
                     </select> 
                     <small class="text-danger" th:if="${#fields.hasErrors('subjectId')}" th:errors="*{subjectId}">Error</small>
@@ -38,10 +38,10 @@
                 </tr>
 
                 <tr>
-                    <td class="control-label col-sm-2"><label for="auditoryId" class="col-sm-2 control-label">Auditory</label></td>
+                    <td class="control-label col-sm-2"><label for="auditoryId" class="col-sm-2 control-label" th:text="#{messages.templates.timetableitem.auditory}">Auditory</label></td>
                     <td>
                     <select class="selectpicker" data-live-search="true" th:field="*{auditoryId}">
-                            <option value=0 th:text="${timetableItemDto.auditoryTitle}==null ? 'Choose auditory':'Remove auditory'"></option>
+                            <option value=0 th:text="${timetableItemDto.auditoryTitle}==null ? #{messages.templates.select.choose}:#{messages.templates.select.remove}"></option>
                             <option th:each="auditory : ${auditories}" th:value="${auditory.id}" th:text=${auditory.auditoryNumber} th:selected="${timetableItemDto.auditoryId}==${auditory.id}"></option>
                     </select> 
                     <small class="text-danger" th:if="${#fields.hasErrors('auditoryId')}" th:errors="*{auditoryId}">Error</small>
@@ -49,10 +49,10 @@
                 </tr>
 
                 <tr>
-                    <td class="control-label col-sm-2"><label for="lectureId" class="col-sm-2 control-label">Lecture</label></td>
+                    <td class="control-label col-sm-2"><label for="lectureId" class="col-sm-2 control-label" th:text="#{messages.templates.timetableitem.lecture}">Lecture</label></td>
                     <td>
                     <select class="selectpicker" data-live-search="true" th:field="*{lectureId}">
-                            <option value=0 th:text="${timetableItemDto.lectureTitle}==null ? 'Choose lecture':'Remove lecture'"></option>
+                            <option value=0 th:text="${timetableItemDto.lectureTitle}==null ? #{messages.templates.select.choose}:#{messages.templates.select.remove}"></option>
                             <option th:each="lectury : ${lecturies}" th:value="${lectury.id}" th:text=${lectury.number} th:selected="${timetableItemDto.lectureId}==${lectury.id}"></option>
                     </select> 
                     <small class="text-danger" th:if="${#fields.hasErrors('lectureId')}" th:errors="*{lectureId}">Error</small>
@@ -60,7 +60,7 @@
                 </tr>
 
                 <tr>
-                    <td class="control-label col-sm-2"><label for="date" class="col-sm-2 control-label">Date</label></td>
+                    <td class="control-label col-sm-2"><label for="date" class="col-sm-2 control-label" th:text="#{messages.templates.timetableitem.date}">Date</label></td>
                     <td>
                     <input th:type="date" class="form-control" th:field="*{date}" placeholder="YYYY-MM-DD" required> 
                     <small class="text-danger" th:if="${#fields.hasErrors('date')}" th:errors="*{date}">Error</small>
@@ -68,10 +68,10 @@
                 </tr>
 
                 <tr>
-                    <td class="control-label col-sm-2"><label for="teacherId" class="col-sm-2 control-label">Teacher</label></td>
+                    <td class="control-label col-sm-2"><label for="teacherId" class="col-sm-2 control-label" th:text="#{messages.templates.timetableitem.teacher}">Teacher</label></td>
                     <td>
                     <select class="selectpicker" data-live-search="true" th:field="*{teacherId}">
-                            <option value=0 th:text="${timetableItemDto.teacherTitle}==null ? 'Choose teacher':'Remove teacher'"></option>
+                            <option value=0 th:text="${timetableItemDto.teacherTitle}==null ? #{messages.templates.select.choose}:#{messages.templates.select.remove}"></option>
                             <option th:each="teacher : ${teachers}" th:value="${teacher.id}" th:text=${teacher.firstName} th:selected="${timetableItemDto.teacherId}==${teacher.id}"></option>
                     </select> 
                     <small class="text-danger" th:if="${#fields.hasErrors('teacherId')}" th:errors="*{teacherId}">Error</small>
@@ -81,7 +81,7 @@
                 <th:block th:if="${not #lists.isEmpty(allGroups)}">
                     <tr>
                         <td class="control-label col-sm-2">
-                            <label>Select groups</label></td>
+                            <label for="allGroups" th:text="#{messages.templates.timetableitem.selectgroups}">Select groups</label></td>
                         <td>
                             <ul>
                                 <li th:each="group : ${allGroups}">
@@ -97,7 +97,7 @@
             <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">
                     <input type="hidden" th:field="*{id}" />
-                    <button type="submit" class="btn btn-default" th:text="*{id}==0 ? 'Create' : 'Update'"></button>
+                    <button type="submit" class="btn btn-default" th:text="*{id}==0 ? #{messages.templates.button.create} : #{messages.templates.button.update}"></button>
                 </div>
             </div>
         </form>

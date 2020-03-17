@@ -19,19 +19,19 @@
     <div class="container-fluid">
         <form class="form-horizontal" action="#" th:action="@{/lecture_edit}" method="post" th:object="${lectureDto}">
             <div class="form-group">
-                <label for="number" class="col-sm-3 control-label">Number</label>
+                <label for="number" class="col-sm-3 control-label" th:text="#{messages.templates.lecture.number}">Number</label>
                 <div class="col-sm-9">
-                    <input type="text" class="form-control" th:field="*{number}" placeholder="Enter number" required> 
+                    <input type="text" class="form-control" th:field="*{number}" th:placeholder="#{messages.templates.lecture.placeholder.number}" required>
                     <small class="text-danger" th:if="${#fields.hasErrors('number')}" th:errors="*{number}">Error</small>
                 </div>
 
-                <label for="startTime" class="col-sm-3 control-label">Start time</label>
+                <label for="startTime" class="col-sm-3 control-label" th:text="#{messages.templates.lecture.starttime}">Start time</label>
                 <div class="col-sm-9">
                     <input type="time" class="form-control" th:field="*{startTime}" placeholder="HH:mm:ss" required> 
                     <small class="text-danger" th:if="${#fields.hasErrors('startTime')}" th:errors="*{startTime}">Error</small>
                 </div>
 
-                <label for="endTime" class="col-sm-3 control-label">End time</label>
+                <label for="endTime" class="col-sm-3 control-label" th:text="#{messages.templates.lecture.endtime}">End time</label>
                 <div class="col-sm-9">
                     <input type="time" class="form-control" th:field="*{endTime}" placeholder="HH:mm:ss" required> 
                     <small class="text-danger" th:if="${#fields.hasErrors('endTime')}" th:errors="*{endTime}">Error</small>
@@ -41,7 +41,7 @@
             <div class="form-group">
                 <div class="col-sm-offset-3 col-sm-9">
                         <input type="hidden" th:field="*{id}" />
-                        <button type="submit" class="btn btn-danger" th:text="*{id}==0 ? 'Create' : 'Update'"></button>
+                        <button type="submit" class="btn btn-danger" th:text="*{id}==0 ? #{messages.templates.button.create} : #{messages.templates.button.update}"></button>
                 </div>
             </div>
         </form>

@@ -19,20 +19,20 @@
     <div class="container-fluid">
         <form class="form-horizontal" action="#" th:action="@{/department_edit}" method="post" th:object="${departmentDto}">
             <div class="form-group">
-                <label for="title" class="col-sm-2 control-label">Title</label>
+                <label for="title" class="col-sm-2 control-label" th:text="#{messages.templates.department.title}">Title</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" th:field="*{title}" placeholder="Enter title" required> 
+                    <input type="text" class="form-control" th:field="*{title}" th:placeholder="#{messages.templates.department.placeholder.title}" required>
                     <small class="text-danger" th:if="${#fields.hasErrors('title')}" th:errors="*{title}">Error</small>
                 </div>
-                <label for="description" class="col-sm-2 control-label">Description</label>
+                <label for="description" class="col-sm-2 control-label" th:text="#{messages.templates.department.description}">Description</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" th:field="*{description}" placeholder="Enter description"> 
+                    <input type="text" class="form-control" th:field="*{description}" th:placeholder="#{messages.templates.department.placeholder.description}">
                     <small class="text-danger" th:if="${#fields.hasErrors('description')}" th:errors="*{description}">Error</small>
                 </div>
-                <label for="facultyId" class="col-sm-2 control-label">Faculty</label>
+                <label for="facultyId" class="col-sm-2 control-label" th:text="#{messages.templates.department.facultyname}">Faculty</label>
                 <div class="col-sm-10">
                     <select class="selectpicker" data-live-search="true" th:field="*{facultyId}">
-                        <option value=0 th:text="${departmentDto.facultyTitle}==null ? 'Choose faculty':'Remove faculty'"></option>
+                        <option value=0 th:text="${departmentDto.facultyTitle}==null ? #{messages.templates.select.choose}:#{messages.templates.select.remove}"></option>
                         <option th:each="faculty : ${faculties}" th:value="${faculty.id}" th:text=${faculty.title} th:selected="${departmentDto.facultyId}==${faculty.id}"></option>
                     </select> 
                     <small class="text-danger" th:if="${#fields.hasErrors('facultyId')}" th:errors="*{facultyId}">Error</small>
@@ -44,7 +44,7 @@
                         <input type="hidden" th:field="*{facultyTitle}" />
                     </th:block>
                     <input type="hidden" th:field="*{id}" />
-                    <button type="submit" class="btn btn-default" th:text="*{id}==0 ? 'Create' : 'Update'"></button>
+                    <button type="submit" class="btn btn-default" th:text="*{id}==0 ? #{messages.templates.button.create} : #{messages.templates.button.update}"></button>
                 </div>
             </div>
         </form>

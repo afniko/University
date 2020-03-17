@@ -18,7 +18,7 @@
         <th:block th:if="${auditorytypes != null}">
             <table class="table table-hover">
                 <tr>
-                    <th>Type</th>
+                    <th th:text="#{messages.templates.auditorytype.type}">Type</th>
                 </tr>
                 <tr th:each="auditorytype : ${auditorytypes}"
                     th:onclick="'javascript:rowClicked(\'' + ${auditorytype.id} + '\');'">

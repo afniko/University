@@ -22,19 +22,19 @@
             </th:block>
             <table class="table table-bordered">
                 <tr class="success">
-                    <th>Title</th>
+                    <th th:text="#{messages.templates.department.title}">Title</th>
                     <td th:text=${departmentDto.title}></td>
                 </tr>
                 <tr>
-                    <th>Faculty name</th>
+                    <th th:text="#{messages.templates.department.facultyname}">Faculty name</th>
                     <td th:text=${departmentDto.facultyTitle}></td>
                 </tr>
                 <tr>
-                    <th>Description</th>
+                    <th th:text="#{messages.templates.department.description}">Description</th>
                     <td th:text=${departmentDto.description}></td>
                 </tr>
             </table>
-            <button type="button" class="btn btn-info" th:onclick="'javascript:buttonClicked(\'' + ${departmentDto.id} + '\');'">Edit record</button>
+            <button type="button" class="btn btn-info" th:onclick="'javascript:buttonClicked(\'' + ${departmentDto.id} + '\');'" th:text="#{messages.templates.button.edit}">Edit record</button>
         </th:block>
     </div>
 

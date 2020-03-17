@@ -154,5 +154,9 @@ Branch: task105
 Add to UI finder form to timetableItems, teacher, student page
 Branch: task108
 
+#### Issue#9 Add localization
+Add to front-end localization files
+Branch: issue9
+
 ## Author
 With best regards, Mykola Afanasiev!

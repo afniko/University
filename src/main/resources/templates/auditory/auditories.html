@@ -18,10 +18,10 @@
         <th:block th:if="${auditories != null}">
             <table class="table table-hover">
                 <tr>
-                    <th>Auditory name</th>
-                    <th>Auditory type</th>
-                    <th>Maximum capacity</th>
-                    <th>Description</th>
+                    <th th:text="#{messages.templates.auditory.auditoryname}">Auditory name</th>
+                    <th th:text="#{messages.templates.auditory.auditorytype}">Auditory type</th>
+                    <th th:text="#{messages.templates.auditory.auditorycapacity}">Maximum capacity</th>
+                    <th th:text="#{messages.templates.auditory.auditorydescription}">Description</th>
                 </tr>
                 <tr th:each="auditory : ${auditories}"
                     th:onclick="'javascript:rowClicked(\'' + ${auditory.id} + '\');'">

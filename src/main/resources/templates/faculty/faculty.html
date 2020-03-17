@@ -22,11 +22,11 @@
             </th:block>
             <table class="table table-bordered">
                 <tr class="success">
-                    <th>Title</th>
+                    <th th:text="#{messages.templates.faculty.title}">Title</th>
                     <td th:text="${facultyDto.title}">Title</td>
                 </tr>
             </table>
-            <button type="button" class="btn btn-info" th:onclick="'javascript:buttonClicked(\'' + ${facultyDto.id} + '\');'">Edit record</button>
+            <button type="button" class="btn btn-info" th:onclick="'javascript:buttonClicked(\'' + ${facultyDto.id} + '\');'" th:text="#{messages.templates.button.edit}">Edit record</button>
         </th:block>
     </div>
     <br />
