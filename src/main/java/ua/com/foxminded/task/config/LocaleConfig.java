@@ -1,5 +1,6 @@
 package ua.com.foxminded.task.config;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.LocaleResolver;
@@ -13,10 +14,13 @@ import java.util.Locale;
 @Configuration
 public class LocaleConfig implements WebMvcConfigurer {
 
+    @Value("${default.locale.language}")
+    private String localeLanguage;
+
     @Bean
     public LocaleResolver localeResolver() {
         SessionLocaleResolver sessionLocaleResolver = new SessionLocaleResolver();
-        sessionLocaleResolver.setDefaultLocale(Locale.UK);
+        sessionLocaleResolver.setDefaultLocale(Locale.forLanguageTag(localeLanguage));
         return sessionLocaleResolver;
     }
 
