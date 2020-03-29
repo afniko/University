@@ -11,7 +11,7 @@
     <div th:replace="fragments/header">groups header</div>
     
     <div class="col-sm-12">
-    <a th:href="@{/timetable-items(selectedStudent=${studentDto.id})}" class="btn btn-success col-sm-2 ">&nbsp;Go to timetable items</a>
+    <a th:href="@{/timetable-items(selectedStudent=${studentDto.id})}" class="btn btn-success col-sm-2 " th:text="#{messages.templates.button.gototimetableitems}">&nbsp;Go to timetable items</a>
     </div>
 
     <div class="container-fluid">
@@ -26,31 +26,31 @@
             </th:block>
             <table class="table table-bordered">
                 <tr class="success">
-                    <th>First name</th>
+                    <th th:text="#{messages.templates.student.firstname}">First name</th>
                     <td th:text=${studentDto.firstName}></td>
                 </tr>
                 <tr>
-                    <th>Last name</th>
+                    <th th:text="#{messages.templates.student.lastname}">Last name</th>
                     <td th:text=${studentDto.lastName}></td>
                 </tr>
                 <tr>
-                    <th>Middle name</th>
+                    <th th:text="#{messages.templates.student.middlename}">Middle name</th>
                     <td th:text=${studentDto.middleName}></td>
                 </tr>
                 <tr>
-                    <th>Birthday</th>
+                    <th th:text="#{messages.templates.student.birthday}">Birthday</th>
                     <td th:text=${studentDto.birthday}></td>
                 </tr>
                 <tr>
-                    <th>Id fees</th>
+                    <th th:text="#{messages.templates.student.idfees}">Id fees</th>
                     <td th:text=${studentDto.idFees}></td>
                 </tr>
                 <tr>
-                    <th>Group title</th>
+                    <th th:text="#{messages.templates.student.grouptitle}">Group title</th>
                     <td th:text=${studentDto.groupTitle}></td>
                 </tr>
             </table>
-            <button type="button" class="btn btn-info" th:onclick="'javascript:buttonClicked(\'' + ${studentDto.id} + '\');'">Edit record</button>
+            <button type="button" class="btn btn-info" th:onclick="'javascript:buttonClicked(\'' + ${studentDto.id} + '\');'" th:text="#{messages.templates.button.edit}">Edit record</button>
         </th:block>
     </div>
 

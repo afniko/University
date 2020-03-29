@@ -18,7 +18,7 @@
         <th:block th:if="${faculties != null}">
             <table class="table table-hover">
                 <tr>
-                    <th>Title</th>
+                    <th th:text="#{messages.templates.faculty.title}">Title</th>
                 </tr>
                 <tr th:each="faculty : ${faculties}"
                     th:onclick="'javascript:rowClicked(\'' + ${faculty.id} + '\');'">

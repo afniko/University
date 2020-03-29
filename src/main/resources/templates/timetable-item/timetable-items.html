@@ -19,11 +19,11 @@
         <th:block th:if="${timetableItems != null}">
             <table class="table table-hover">
                 <tr>
-                    <th>Subject</th>
-                    <th>Auditory</th>
-                    <th>Lecture</th>
-                    <th>Date</th>
-                    <th>Teacher</th>
+                    <th th:text="#{messages.templates.timetableitem.subject}">Subject</th>
+                    <th th:text="#{messages.templates.timetableitem.auditory}">Auditory</th>
+                    <th th:text="#{messages.templates.timetableitem.lecture}">Lecture</th>
+                    <th th:text="#{messages.templates.timetableitem.date}">Date</th>
+                    <th th:text="#{messages.templates.timetableitem.teacher}">Teacher</th>
                 </tr>
                 <tr th:each="timetableItem : ${timetableItems}" th:onclick="'javascript:rowClicked(\'' + ${timetableItem.id} + '\');'">
                     <td th:text="${timetableItem.subjectTitle}">Subject</td>

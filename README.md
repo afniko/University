@@ -21,9 +21,7 @@ Use command and get "Success" (Audit done)!
 ```
 mvn validate
 ```
-For starting unit tests and checkstyle audit
-Create test postgresql DB 'University_test' with user:'afniko' password:'078990' 
-Use command and get "Success"!
+For test use command and get "Success"!
 ```
 mvn test
 ```
@@ -32,12 +30,14 @@ Use command and get "Success"!
 ```
 mvn verify
 ```
+## Database
+Database located in file 'university' in H2 type. Test database in memory H2 and named 'university_test'
+Login and password in application.properties file
 
 ## Libraries
 Use libraries from maven pom.xml file. 
 
 ### Run project
-Create postgresql DB 'University' with user:'afniko' password:'078990' (change in properties)
 For run project type following command
 ```
 mvn spring-boot:run
@@ -153,6 +153,14 @@ Branch: task105
 #### Issue#8 Add to UI finder form 
 Add to UI finder form to timetableItems, teacher, student page
 Branch: task108
+
+#### Issue#9 Add localization
+Add to front-end localization files
+Branch: issue9
+
+#### Issue#6 in GitHub Migrate to H2 database
+Migrate to H2 database
+Branch: issue6
 
 ## Author
 With best regards, Mykola Afanasiev!

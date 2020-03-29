@@ -18,11 +18,11 @@
         <th:block th:if="${students != null}">
             <table class="table table-hover">
                 <tr>
-                    <th>First name</th>
-                    <th>Middle name</th>
-                    <th>Birthday</th>
-                    <th>Id fees</th>
-                    <th>Group title</th>
+                    <th th:text="#{messages.templates.student.firstname}">First name</th>
+                    <th th:text="#{messages.templates.student.middlename}">Middle name</th>
+                    <th th:text="#{messages.templates.student.birthday}">Birthday</th>
+                    <th th:text="#{messages.templates.student.idfees}">Id fees</th>
+                    <th th:text="#{messages.templates.student.grouptitle}">Group title</th>
                 </tr>
                 <tr th:each="student : ${students}"
                     th:onclick="'javascript:rowClicked(\'' + ${student.id} + '\');'">

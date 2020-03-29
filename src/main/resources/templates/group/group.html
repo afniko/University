@@ -22,15 +22,15 @@
             </th:block>
             <table class="table table-bordered">
                 <tr class="success">
-                    <th>Title</th>
+                    <th th:text="#{messages.templates.group.title}">Title</th>
                     <td th:text="${groupDto.title}">Title</td>
                 </tr>
                 <tr>
-                    <th>Year of entry</th>
+                    <th th:text="#{messages.templates.group.yearofentry}">Year of entry</th>
                     <td th:text="${groupDto.yearEntry}">Year of entry</td>
                 </tr>
             </table>
-            <button type="button" class="btn btn-info" th:onclick="'javascript:buttonClicked(\'' + ${groupDto.id} + '\');'">Edit record</button>
+            <button type="button" class="btn btn-info" th:onclick="'javascript:buttonClicked(\'' + ${groupDto.id} + '\');'" th:text="#{messages.templates.button.edit}">Edit record</button>
         </th:block>
     </div>
     <br />

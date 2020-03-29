@@ -22,23 +22,23 @@
             </th:block>
             <table class="table table-bordered">
                 <tr class="success">
-                    <th>Auditory name</th>
+                    <th th:text="#{messages.templates.auditory.auditoryname}">Auditory name</th>
                     <td th:text=${auditoryDto.auditoryNumber}></td>
                 </tr>
                 <tr>
-                    <th>Auditory type</th>
+                    <th th:text="#{messages.templates.auditory.auditorytype}">Auditory type</th>
                     <td th:text=${auditoryDto.auditoryTypeTitle}></td>
                 </tr>
                 <tr>
-                    <th>Maximum capacity</th>
+                    <th th:text="#{messages.templates.auditory.auditorycapacity}">Maximum capacity</th>
                     <td th:text=${auditoryDto.maxCapacity}></td>
                 </tr>
                 <tr>
-                    <th>Description</th>
+                    <th th:text="#{messages.templates.auditory.auditorydescription}">Description</th>
                     <td th:text=${auditoryDto.description}></td>
                 </tr>
             </table>
-            <button type="button" class="btn btn-info" th:onclick="'javascript:buttonClicked(\'' + ${auditoryDto.id} + '\');'">Edit record</button>
+            <button type="button" class="btn btn-info" th:onclick="'javascript:buttonClicked(\'' + ${auditoryDto.id} + '\');'" th:text="#{messages.templates.button.edit}">Edit record</button>
         </th:block>
     </div>
 

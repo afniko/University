@@ -18,8 +18,8 @@
         <th:block th:if="${groups != null}">
             <table class="table table-hover">
                 <tr>
-                    <th>Title</th>
-                    <th>Year of entry</th>
+                    <th th:text="#{messages.templates.group.title}">Title</th>
+                    <th th:text="#{messages.templates.group.yearofentry}">Year of entry</th>
                 </tr>
                 <tr th:each="group : ${groups}"
                     th:onclick="'javascript:rowClicked(\'' + ${group.id} + '\');'">
