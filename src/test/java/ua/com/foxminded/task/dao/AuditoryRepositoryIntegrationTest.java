@@ -1,23 +1,20 @@
 package ua.com.foxminded.task.dao;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-import java.util.List;
-
-import javax.sql.DataSource;
-
-import org.junit.Rule;
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-
 import com.github.database.rider.core.DBUnitRule;
 import com.github.database.rider.core.api.dataset.DataSet;
 import com.github.database.rider.core.api.dataset.ExpectedDataSet;
 import com.github.database.rider.junit5.api.DBRider;
-
+import org.junit.Rule;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 import ua.com.foxminded.task.domain.Auditory;
 import ua.com.foxminded.task.domain.repository.AuditoryModelRepository;
+
+import javax.sql.DataSource;
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 @DBRider
 @SpringBootTest
