@@ -3,7 +3,7 @@
 
 <body>
     <th:block th:if="${timetableFiltersDto != null}">
-        <form class="navbar-form navbar-center" role="search" action="" method="post" th:object="${timetableFiltersDto}">
+        <form class="navbar-form navbar-center" role="search" th:action="@{/timetable-items}" method="post" th:object="${timetableFiltersDto}">
             <div class="form-group">
                 <label for="startDate" th:text="#{messages.templates.fragments.filterform.from}">From:</label> <input th:type="date" class="form-control" th:field="*{startDate}" required>
             </div>
