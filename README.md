@@ -165,5 +165,9 @@ Branch: issue9
 Migrate to H2 database
 Branch: issue6
 
+#### Issue#14 create executable jar file
+Create executable jar file
+Branch: issue14
+
 ## Author
 With best regards, Mykola Afanasiev!
