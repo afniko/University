@@ -42,7 +42,10 @@ For run project type following command
 ```
 mvn spring-boot:run
 ```
-
+Link to local web browser:
+```
+http://localhost:8080/
+```
 ### REST interface
 REST API in JSON format
  
