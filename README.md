@@ -42,7 +42,10 @@ For run project type following command
 ```
 mvn spring-boot:run
 ```
-
+Link to local web browser:
+```
+http://localhost:8080/
+```
 ### REST interface
 REST API in JSON format
  
@@ -161,6 +164,10 @@ Branch: issue9
 #### Issue#6 in GitHub Migrate to H2 database
 Migrate to H2 database
 Branch: issue6
+
+#### Issue#14 create executable jar file
+Create executable jar file
+Branch: issue14
 
 ## Author
 With best regards, Mykola Afanasiev!
