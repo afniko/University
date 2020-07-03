@@ -10,7 +10,7 @@ mvn compile
 ```
 
 ### Create execute jar 
-For create execute jar file and type in the following command and hit "Enter"
+For create execute jar file and type in the following command and hit "Enter" Then get jar file
 ```
 mvn clean install
 ```
@@ -38,11 +38,15 @@ Login and password in application.properties file
 Use libraries from maven pom.xml file. 
 
 ### Run project
-For run project type following command
+For run project type following command by maven
 ```
 mvn spring-boot:run
 ```
-Link to local web browser:
+For run project type following command by console
+```
+java -jar task-university-java8-api-0.0.1-SNAPSHOT.jar
+```
+Link to start on localhost in web browser:
 ```
 http://localhost:8080/
 ```
