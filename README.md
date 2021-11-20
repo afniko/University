@@ -59,6 +59,17 @@ link at swagger page:
 ```
 http://localhost:8080/swagger-ui.html
 ```
+## Docker
+For build and deployment by Docker should use general commands for Docker-compose:
+```
+docker-compose build --no-cache
+docker-compose up
+docker-compose down
+```
+After deployment will expose:
+```
+port:8080
+```
 
 ## History
 #### Task 8 - Decompose university
@@ -172,6 +183,10 @@ Branch: issue6
 #### Issue#14 create executable jar file
 Create executable jar file
 Branch: issue14
+
+### Issue#20 Need to deploy by Docker.
+Added docker compose for build and deployment.
+Branch: issue20
 
 ## Author
 With best regards, Mykola Afanasiev!
