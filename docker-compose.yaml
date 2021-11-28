@@ -1,13 +1,37 @@
 version: '3.5'
 
 services:
-  university:
+  univer_tomcat:
     build:
       context: .
-      dockerfile: docker/university/Dockerfile
-    image: university
-    container_name: university
+      dockerfile: docker/tomcat/Dockerfile
+    image: univer_tomcat
+    container_name: univer_tomcat
+    depends_on:
+      - db
     ports:
       - 8080:8080
     healthcheck:
       test: "exit 0"
+
+  db:
+    image: postgres:14
+    container_name: univer_db
+    ports:
+      - 54321:5432
+    environment:
+      POSTGRES_DB: "univer_db"
+      POSTGRES_USER: "afniko"
+      POSTGRES_PASSWORD: "test_pwd"
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U afniko -d univer_db" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          cpus: '1'
+          memory: 1G
