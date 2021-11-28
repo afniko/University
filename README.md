@@ -3,8 +3,8 @@ Customer relationship management for university. Accounting students, teachers a
 
 ## Usage
 
-### Approaches to deployment
-Project has two approaches to deployment.
+### Approaches
+Project has two approaches. 
 The first one located in 'master' branch. It combines tomcat and H2 DB as one part, and it starts (deploy) together. DB is H2-file type.
 The second one located in 'docker_postgres' branch. It approaches based on deployment two separate part for tomcat and postgres DB. DB is Postgres type.
 
@@ -26,24 +26,34 @@ Use command and get "Success" (Audit done)!
 ```
 mvn validate
 ```
-For test use command and get "Success"!
+For test use command and get "Success"! During testing use DB H2 in memory type.
 ```
 mvn test
 ```
-For starting integration tests, unit tests and checkstyle audit
+For starting integration tests, unit tests and checkstyle audit.
 Use command and get "Success"!
+During testing use DB H2 in memory type.
 ```
 mvn verify
 ```
 ## Database
-Database located in file 'university' in H2 type. Test database in memory H2 and named 'university_test'
-Login and password in application.properties file
+Database should be Postgres ver 10 or later.
+Login and password in application.properties file.
+If you use docker-compose deployment then you could use external connection to DB.
+Use the next parameters for external connection to DB:
+```
+POSTGRES_DB: "univer_db"
+POSTGRES_USER: "afniko"
+POSTGRES_PASSWORD: "test_pwd"
+POSTGRES_HOST: //localhost:54321
+```
 
 ## Libraries
 Use libraries from maven pom.xml file. 
 
 ### Run project
-For run project type following command by maven
+For run project type following command by maven.
+#### Attention! In this way should use external Postgres DB ver 10 or later. And set actual DB connection parameters by application.properties file.
 ```
 mvn spring-boot:run
 ```
@@ -68,12 +78,14 @@ http://localhost:8080/swagger-ui.html
 For build and deployment by Docker should use general commands for Docker-compose:
 ```
 docker-compose build --no-cache
+docker-compose up --build
 docker-compose up
 docker-compose down
 ```
 After deployment will expose:
 ```
-port:8080
+tomcat port:8080
+postgres port:54321
 ```
 
 ## History
@@ -192,6 +204,10 @@ Branch: issue14
 ### Issue#20 Need to deploy by Docker.
 Added docker compose for build and deployment.
 Branch: issue20
+
+###  Issue#23 Create separate Postgres DB. And deploy it in docker-compose.
+Added docker Postgres DB with parameters. Exclude H2 DB for deployment. Use H2 DB for tests.
+Branch: docker_postgres
 
 ## Author
 With best regards, Mykola Afanasiev!
