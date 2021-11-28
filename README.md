@@ -3,6 +3,11 @@ Customer relationship management for university. Accounting students, teachers a
 
 ## Usage
 
+### Approaches to deployment
+Project has two approaches to deployment.
+The first one located in 'master' branch. It combines tomcat and H2 DB as one part, and it starts (deploy) together. DB is H2-file type.
+The second one located in 'docker_postgres' branch. It approaches based on deployment two separate part for tomcat and postgres DB. DB is Postgres type.
+
 ### Compile project
 For compile project put files in folder "src/main/java" Use next command in command line:
 ```
