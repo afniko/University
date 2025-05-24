@@ -2,26 +2,24 @@ package ua.com.foxminded.task.domain.dto;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
-import org.hibernate.validator.constraints.Length;
-
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import ua.com.foxminded.task.validation.annotation.PropertyValueUnique;
 
-@PropertyValueUnique(message = "Faculty title is already exists!", 
-                     nameProperty = "title",
-                     fieldError = "title")
-@ApiModel(description = "Object with a faculty information")
+@PropertyValueUnique(message = "Faculty title is already exists!",
+    nameProperty = "title",
+    fieldError = "title")
+@Schema(description = "Object with a faculty information")
 public class FacultyDto {
 
     @Min(value = 0, message = "Id must be more than zero!")
-    @ApiModelProperty(notes = "The database generated faculty id")
+    @Schema(description = "The database generated faculty id")
     private int id;
 
     @NotBlank(message = "Title can`t be blank!")
-    @Length(max = 20, message = "Maximum length is 20!")
-    @ApiModelProperty(notes = "The unique name of faculty. Max length is 20 character")
+    @Size(max = 20, message = "Maximum length is 20!")
+    @Schema(description = "The unique name of faculty. Max length is 20 character")
     private String title;
 
     public int getId() {
@@ -50,26 +48,30 @@ public class FacultyDto {
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj)
+        if (this == obj) {
             return true;
-        if (obj == null)
+        }
+        if (obj == null) {
             return false;
-        if (getClass() != obj.getClass())
+        }
+        if (getClass() != obj.getClass()) {
             return false;
+        }
         FacultyDto other = (FacultyDto) obj;
         if (title == null) {
-            if (other.title != null)
+            if (other.title != null) {
                 return false;
-        } else if (!title.equals(other.title))
+            }
+        } else if (!title.equals(other.title)) {
             return false;
+        }
         return true;
     }
 
     @Override
     public String toString() {
-        return "FacultyDto [id=" + id 
-             + ", title=" + title 
-             + "]";
+        return "FacultyDto [id=" + id
+            + ", title=" + title
+            + "]";
     }
-
 }

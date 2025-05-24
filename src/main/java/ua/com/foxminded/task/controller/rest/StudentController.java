@@ -1,9 +1,5 @@
 package ua.com.foxminded.task.controller.rest;
 
-import java.util.List;
-
-import javax.validation.Valid;
-
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,14 +9,18 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import java.util.List;
+
+import javax.validation.Valid;
+
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import ua.com.foxminded.task.domain.dto.StudentDto;
 import ua.com.foxminded.task.service.StudentService;
 
 @RestController("studentRestController")
 @RequestMapping("/api")
-@Api(description = "Student management System", produces = "application/json", consumes = "application/json")
+@Tag(name = "Student", description = "Student management System")
 public class StudentController {
 
     private Logger logger;
@@ -33,21 +33,21 @@ public class StudentController {
     }
 
     @GetMapping(path = "/students", produces = "application/json")
-    @ApiOperation(value = "View a list of available students")
+    @Operation(description = "View a list of available students")
     public List<StudentDto> getStudents() {
         logger.debug("students()");
         return studentService.findAllDto();
     }
 
     @GetMapping(path = "/students/{id}", produces = "application/json")
-    @ApiOperation(value = "View a student by id")
+    @Operation(description = "View a student by id")
     public StudentDto getStudentById(@PathVariable("id") int id) {
         logger.debug("studentById()");
         return studentService.findByIdDto(id);
     }
 
     @PostMapping(path = "/students", produces = "application/json")
-    @ApiOperation(value = "Create (if id=0) or update a student")
+    @Operation(description = "Create (if id=0) or update a student")
     public StudentDto saveStudent(@Valid @RequestBody StudentDto studentDto) {
         logger.debug("editPost()");
         if (studentDto.getId() != 0) {
@@ -57,5 +57,4 @@ public class StudentController {
         }
         return studentDto;
     }
-
 }

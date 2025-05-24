@@ -49,7 +49,7 @@ mvn spring-boot:run
 ```
 For run project type following command by console
 ```
-java -jar task-university-java8-api-0.0.1-SNAPSHOT.jar
+java -jar task-university-java11-api-0.0.1-SNAPSHOT.jar
 ```
 Link to start on localhost in web browser:
 ```
@@ -75,6 +75,10 @@ After deployment will expose:
 ```
 port:8080
 ```
+
+## System Requirements
+- Java 11 or higher
+- Maven 3.6.0 or higher
 
 ## History
 #### Task 8 - Decompose university
@@ -192,6 +196,13 @@ Branch: issue14
 ### Issue#20 Need to deploy by Docker.
 Added docker compose for build and deployment.
 Branch: issue20
+
+### Issue#21 Upgrade to Java 11 and update dependencies
+- Upgraded from Java 8 to Java 11
+- Updated Spring Boot from 2.2.1 to 2.7.18
+- Replaced Springfox with SpringDoc OpenAPI for API documentation
+- Updated all dependencies to secure versions
+- Updated documentation
 
 ## Author
 With best regards, Mykola Afanasiev!

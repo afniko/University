@@ -2,19 +2,15 @@ package ua.com.foxminded.task.dao;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import java.util.List;
+import com.github.database.rider.core.api.dataset.DataSet;
+import com.github.database.rider.core.api.dataset.ExpectedDataSet;
+import com.github.database.rider.junit5.api.DBRider;
 
-import javax.sql.DataSource;
-
-import org.junit.Rule;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.github.database.rider.core.DBUnitRule;
-import com.github.database.rider.core.api.dataset.DataSet;
-import com.github.database.rider.core.api.dataset.ExpectedDataSet;
-import com.github.database.rider.junit5.api.DBRider;
+import java.util.List;
 
 import ua.com.foxminded.task.domain.Lecture;
 import ua.com.foxminded.task.domain.repository.LectureModelRepository;
@@ -22,14 +18,10 @@ import ua.com.foxminded.task.domain.repository.LectureModelRepository;
 @DBRider
 @SpringBootTest
 public class LectureRepositoryIntegrationTest {
-    
+
     @Autowired
     private LectureRepository lectureRepository;
-    @Autowired
-    private DataSource dataSource;
-    @Rule
-    public DBUnitRule dbUnitRule = DBUnitRule.instance(() -> dataSource.getConnection());
-    
+
     @Test
     @DataSet(cleanBefore = true, skipCleaningFor = "flyway_schema_history")
     public void whenRepositoryHasNotRecords_thenReturnEmptyList() {
@@ -38,9 +30,9 @@ public class LectureRepositoryIntegrationTest {
     }
 
     @Test
-    @DataSet(value = "lecture/lectures.yml", 
-             cleanBefore = true, 
-             skipCleaningFor = "flyway_schema_history")
+    @DataSet(value = "lecture/lectures.yml",
+        cleanBefore = true,
+        skipCleaningFor = "flyway_schema_history")
     @ExpectedDataSet(value = "lecture/expected-lectures.yml")
     public void whenRepositoryHasRecords_thenReturnNonEmptyList() {
         List<Lecture> lectures = lectureRepository.findAll();
@@ -48,9 +40,9 @@ public class LectureRepositoryIntegrationTest {
     }
 
     @Test
-    @DataSet(value = "lecture/lectures.yml", 
-             cleanBefore = true, 
-             skipCleaningFor = "flyway_schema_history")
+    @DataSet(value = "lecture/lectures.yml",
+        cleanBefore = true,
+        skipCleaningFor = "flyway_schema_history")
     public void whenPutAtTableDbObjects_thenGetThisObjectsFindById() {
         Lecture expectedLecture = LectureModelRepository.getModel3();
         int id = 3;
@@ -59,9 +51,9 @@ public class LectureRepositoryIntegrationTest {
     }
 
     @Test
-    @DataSet(value = "lecture/lectures.yml", 
-             cleanBefore = true, 
-             skipCleaningFor = "flyway_schema_history")
+    @DataSet(value = "lecture/lectures.yml",
+        cleanBefore = true,
+        skipCleaningFor = "flyway_schema_history")
     public void whenFindByNumber_thenLectureReturned() {
         String number = "3";
         Lecture lectureActually = lectureRepository.findByNumber(number);
@@ -69,8 +61,8 @@ public class LectureRepositoryIntegrationTest {
     }
 
     @Test
-    @DataSet(cleanBefore = true, 
-             skipCleaningFor = "flyway_schema_history")
+    @DataSet(cleanBefore = true,
+        skipCleaningFor = "flyway_schema_history")
     @ExpectedDataSet(value = "lecture/expected-lecture.yml")
     public void whenSaveObject_thenExpectRecord() {
         Lecture lecture = LectureModelRepository.getModel2();
@@ -79,9 +71,9 @@ public class LectureRepositoryIntegrationTest {
     }
 
     @Test
-    @DataSet(value = "lecture/lecture.yml", 
-             cleanBefore = true, 
-             skipCleaningFor = "flyway_schema_history")
+    @DataSet(value = "lecture/lecture.yml",
+        cleanBefore = true,
+        skipCleaningFor = "flyway_schema_history")
     @ExpectedDataSet(value = "lecture/expected-lecture.yml")
     public void whenUpdateObject_thenExpectUpdatedRecord() {
         Lecture lecture = LectureModelRepository.getModel2();

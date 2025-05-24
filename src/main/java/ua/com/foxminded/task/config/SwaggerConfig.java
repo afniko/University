@@ -1,40 +1,39 @@
 package ua.com.foxminded.task.config;
 
+import org.springdoc.core.GroupedOpenApi;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import springfox.documentation.builders.ApiInfoBuilder;
-import springfox.documentation.builders.PathSelectors;
-import springfox.documentation.builders.RequestHandlerSelectors;
-import springfox.documentation.service.ApiInfo;
-import springfox.documentation.service.Contact;
-import springfox.documentation.spi.DocumentationType;
-import springfox.documentation.spring.web.plugins.Docket;
-import springfox.documentation.swagger2.annotations.EnableSwagger2;
+import io.swagger.v3.oas.models.OpenAPI;
+import io.swagger.v3.oas.models.info.Contact;
+import io.swagger.v3.oas.models.info.Info;
+import io.swagger.v3.oas.models.info.License;
 
 @Configuration
-@EnableSwagger2
 public class SwaggerConfig {
 
     @Bean
-    public Docket api() {
-        return new Docket(DocumentationType.SWAGGER_2)
-                .select()
-                .apis(RequestHandlerSelectors.basePackage("ua.com.foxminded.task.controller"))
-                .paths(PathSelectors.regex("/api/.*"))
-                .build()
-                .apiInfo(apiEndPointsInfo());
-    }
-
-    private ApiInfo apiEndPointsInfo() {
-        return new ApiInfoBuilder()
+    public OpenAPI customOpenAPI() {
+        return new OpenAPI()
+            .info(new Info()
                 .title("University Spring Boot REST API")
                 .description("University Management REST API")
-                .contact(new Contact("Afanasiev Mykola", "www.any.com", "afniko@gmail.com"))
-                .license("Apache 2.0")
-                .licenseUrl("http://www.apache.org/licenses/LICENSE-2.0.html")
                 .version("0.0.1-SNAPSHOT")
-                .build();
+                .contact(new Contact()
+                    .name("Afanasiev Mykola")
+                    .url("www.any.com")
+                    .email("afniko@gmail.com"))
+                .license(new License()
+                    .name("Apache 2.0")
+                    .url("http://www.apache.org/licenses/LICENSE-2.0.html")));
     }
 
+    @Bean
+    public GroupedOpenApi apiGroup() {
+        return GroupedOpenApi.builder()
+            .group("api")
+            .pathsToMatch("/api/**")
+            .packagesToScan("ua.com.foxminded.task.controller")
+            .build();
+    }
 }

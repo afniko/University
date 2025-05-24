@@ -2,19 +2,15 @@ package ua.com.foxminded.task.dao;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import java.util.List;
+import com.github.database.rider.core.api.dataset.DataSet;
+import com.github.database.rider.core.api.dataset.ExpectedDataSet;
+import com.github.database.rider.junit5.api.DBRider;
 
-import javax.sql.DataSource;
-
-import org.junit.Rule;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.github.database.rider.core.DBUnitRule;
-import com.github.database.rider.core.api.dataset.DataSet;
-import com.github.database.rider.core.api.dataset.ExpectedDataSet;
-import com.github.database.rider.junit5.api.DBRider;
+import java.util.List;
 
 import ua.com.foxminded.task.domain.Subject;
 import ua.com.foxminded.task.domain.repository.SubjectModelRepository;
@@ -24,11 +20,7 @@ import ua.com.foxminded.task.domain.repository.SubjectModelRepository;
 public class SubjectRepositoryIntegrationTest {
     @Autowired
     private SubjectRepository subjectRepository;
-    @Autowired
-    private DataSource dataSource;
-    @Rule
-    public DBUnitRule dbUnitRule = DBUnitRule.instance(() -> dataSource.getConnection());
-    
+
     @Test
     @DataSet(cleanBefore = true, skipCleaningFor = "flyway_schema_history")
     public void whenRepositoryHasNotRecords_thenReturnEmptyList() {
@@ -37,9 +29,9 @@ public class SubjectRepositoryIntegrationTest {
     }
 
     @Test
-    @DataSet(value = "subject/subjects.yml", 
-             cleanBefore = true, 
-             skipCleaningFor = "flyway_schema_history")
+    @DataSet(value = "subject/subjects.yml",
+        cleanBefore = true,
+        skipCleaningFor = "flyway_schema_history")
     @ExpectedDataSet(value = "subject/expected-subjects.yml")
     public void whenRepositoryHasRecords_thenReturnNonEmptyList() {
         List<Subject> subjects = subjectRepository.findAll();
@@ -47,9 +39,9 @@ public class SubjectRepositoryIntegrationTest {
     }
 
     @Test
-    @DataSet(value = "subject/subjects.yml", 
-             cleanBefore = true, 
-             skipCleaningFor = "flyway_schema_history")
+    @DataSet(value = "subject/subjects.yml",
+        cleanBefore = true,
+        skipCleaningFor = "flyway_schema_history")
     public void whenPutAtTableDbObjects_thenGetThisObjectsFindById() {
         Subject expectedSubject = SubjectModelRepository.getModel3();
         int id = 3;
@@ -58,9 +50,9 @@ public class SubjectRepositoryIntegrationTest {
     }
 
     @Test
-    @DataSet(value = "subject/subjects.yml", 
-             cleanBefore = true, 
-             skipCleaningFor = "flyway_schema_history")
+    @DataSet(value = "subject/subjects.yml",
+        cleanBefore = true,
+        skipCleaningFor = "flyway_schema_history")
     public void whenFindByTitle_thenSubjectReturned() {
         String title = "Mathmatics";
         Subject subjectActually = subjectRepository.findByTitle(title);
@@ -77,9 +69,9 @@ public class SubjectRepositoryIntegrationTest {
     }
 
     @Test
-    @DataSet(value = "subject/subject.yml", 
-             cleanBefore = true, 
-             skipCleaningFor = "flyway_schema_history")
+    @DataSet(value = "subject/subject.yml",
+        cleanBefore = true,
+        skipCleaningFor = "flyway_schema_history")
     @ExpectedDataSet(value = "subject/expected-subject.yml")
     public void whenUpdateObject_thenExpectUpdatedRecord() {
         Subject subject = SubjectModelRepository.getModel2();

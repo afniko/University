@@ -1,4 +1,5 @@
 package ua.com.foxminded.task.service.impl;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -8,10 +9,6 @@ import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
-import java.util.List;
-
-import javax.persistence.EntityNotFoundException;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -19,6 +16,10 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.slf4j.Logger;
 import org.springframework.dao.DataIntegrityViolationException;
+
+import java.util.List;
+
+import javax.persistence.EntityNotFoundException;
 
 import ua.com.foxminded.task.dao.DepartmentRepository;
 import ua.com.foxminded.task.dao.SubjectRepository;
@@ -33,7 +34,7 @@ import ua.com.foxminded.task.domain.repository.TeacherModelRepository;
 import ua.com.foxminded.task.domain.repository.dto.SubjectDtoModelRepository;
 import ua.com.foxminded.task.domain.repository.dto.TeacherDtoModelRepository;
 
-public class TeacherServiceImplTest {
+class TeacherServiceImplTest {
 
     @Mock
     private Logger logger;
@@ -47,8 +48,8 @@ public class TeacherServiceImplTest {
     private TeacherServiceImpl teacherService;
 
     @BeforeEach
-    public void initMocks() {
-        MockitoAnnotations.initMocks(this);
+    void initMocks() {
+        MockitoAnnotations.openMocks(this);
     }
 
     @Test
@@ -81,9 +82,9 @@ public class TeacherServiceImplTest {
         Subject subject2 = SubjectModelRepository.getModel2();
         Subject subject3 = SubjectModelRepository.getModel3();
         Subject subject4 = SubjectModelRepository.getModel4();
-        
+
         TeacherDto teacherDto = TeacherDtoModelRepository.getModel1();
-        
+
         doReturn(subject2, subject3, subject4).when(subjectRepository).getOne(anyInt());
         doReturn(teacher).when(teacherRepository).saveAndFlush(teacher);
         doReturn(teacher.getDepartment()).when(departmentRepository).getOne(teacher.getDepartment().getId());
@@ -102,10 +103,10 @@ public class TeacherServiceImplTest {
         Subject subject2 = SubjectModelRepository.getModel2();
         Subject subject3 = SubjectModelRepository.getModel3();
         Subject subject4 = SubjectModelRepository.getModel4();
-        
+
         TeacherDto teacherDto = TeacherDtoModelRepository.getModel1();
         teacherDto.setId(1);
-        
+
         doReturn(true).when(teacherRepository).existsById(teacherDto.getId());
         doReturn(subject2, subject3, subject4).when(subjectRepository).getOne(anyInt());
         doReturn(teacher).when(teacherRepository).saveAndFlush(teacher);
@@ -118,60 +119,60 @@ public class TeacherServiceImplTest {
         verify(departmentRepository, times(1)).getOne(teacher.getDepartment().getId());
         assertThat(teacherDto).isEqualToComparingFieldByField(teacherDtoActually);
     }
-    
+
     @Test
-    public void whenFindByIdFees_thenInvokeMethod() {
+    void whenFindByIdFees_thenInvokeMethod() {
         Teacher expectedTeacher = TeacherModelRepository.getModel1();
         Integer expectedIdFees = expectedTeacher.getIdFees();
         doReturn(expectedTeacher).when(teacherRepository).findByIdFees(expectedIdFees);
-        
+
         Teacher actuallyStudent = teacherService.findByIdFees(expectedIdFees);
-        
+
         verify(teacherRepository, times(1)).findByIdFees(expectedIdFees);
         assertEquals(expectedIdFees, actuallyStudent.getIdFees());
     }
 
     @Test
-    public void whenCreateRecordEntityWithId_thenThrowException() {
+    void whenCreateRecordEntityWithId_thenThrowException() {
         TeacherDto teacherDto = new TeacherDto();
         teacherDto.setId(1);
 
         assertThatThrownBy(() -> teacherService.create(teacherDto))
-             .isInstanceOf(EntityAlreadyExistsException.class)
-             .hasMessage("create() teacherDto: %s", teacherDto);
+            .isInstanceOf(EntityAlreadyExistsException.class)
+            .hasMessage("create() teacherDto: %s", teacherDto);
     }
-    
+
     @Test
-    public void whenCreateRecordWithNotValidEntity_thenThrowException() {
+    void whenCreateRecordWithNotValidEntity_thenThrowException() {
         Teacher teacher = TeacherModelRepository.getModel1();
         Subject subject2 = SubjectModelRepository.getModel2();
         Subject subject3 = SubjectModelRepository.getModel3();
         Subject subject4 = SubjectModelRepository.getModel4();
-        
+
         TeacherDto teacherDto = TeacherDtoModelRepository.getModel1();
         teacherDto.setSubjects(SubjectDtoModelRepository.getModelsWithId1());
-        
+
         doReturn(subject2, subject3, subject4).when(subjectRepository).getOne(anyInt());
         doReturn(teacher).when(teacherRepository).saveAndFlush(teacher);
         doReturn(teacher.getDepartment()).when(departmentRepository).getOne(teacher.getDepartment().getId());
         doThrow(DataIntegrityViolationException.class).when(teacherRepository).saveAndFlush(teacher);
 
         assertThatThrownBy(() -> teacherService.create(teacherDto))
-             .isInstanceOf(EntityNotValidException.class)
-             .hasMessageContaining("create() teacher: " + teacher);
+            .isInstanceOf(EntityNotValidException.class)
+            .hasMessageContaining("create() teacher: " + teacher);
     }
-    
+
     @Test
-    public void whenUpdateRecordWithNotValidEntity_thenThrowException() {
+    void whenUpdateRecordWithNotValidEntity_thenThrowException() {
         Teacher teacher = TeacherModelRepository.getModel1();
         teacher.setId(1);
         Subject subject2 = SubjectModelRepository.getModel2();
         Subject subject3 = SubjectModelRepository.getModel3();
         Subject subject4 = SubjectModelRepository.getModel4();
-        
+
         TeacherDto teacherDto = TeacherDtoModelRepository.getModel1();
         teacherDto.setId(1);
-        
+
         doReturn(true).when(teacherRepository).existsById(teacherDto.getId());
         doReturn(subject2, subject3, subject4).when(subjectRepository).getOne(anyInt());
         doReturn(teacher.getDepartment()).when(departmentRepository).getOne(teacher.getDepartment().getId());
@@ -180,18 +181,18 @@ public class TeacherServiceImplTest {
         doReturn(true).when(teacherRepository).existsById(teacher.getId());
 
         assertThatThrownBy(() -> teacherService.update(teacherDto))
-             .isInstanceOf(EntityNotValidException.class)
-             .hasMessageContaining("update() teacher: " + teacher);
+            .isInstanceOf(EntityNotValidException.class)
+            .hasMessageContaining("update() teacher: " + teacher);
     }
-    
+
     @Test
-    public void whenUpdateRecordNotFpund_thenThrowException() {
+    void whenUpdateRecordNotFpund_thenThrowException() {
         TeacherDto studentDto = TeacherDtoModelRepository.getModel1();
         Teacher student = TeacherModelRepository.getModel1();
         doReturn(false).when(teacherRepository).existsById(student.getId());
 
         assertThatThrownBy(() -> teacherService.update(studentDto))
-             .isInstanceOf(EntityNotFoundException.class)
-             .hasMessageContaining("Teacher not exist!");
+            .isInstanceOf(EntityNotFoundException.class)
+            .hasMessageContaining("Teacher not exist!");
     }
 }

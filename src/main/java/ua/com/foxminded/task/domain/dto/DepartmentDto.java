@@ -2,37 +2,35 @@ package ua.com.foxminded.task.domain.dto;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
-import org.hibernate.validator.constraints.Length;
-
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import ua.com.foxminded.task.validation.annotation.PropertyValueUnique;
 
-@PropertyValueUnique(message = "Department title is already exists!", 
-                     nameProperty = "title",
-                     fieldError = "title")
-@ApiModel(description = "Object with a department information")
+@PropertyValueUnique(message = "Department title is already exists!",
+    nameProperty = "title",
+    fieldError = "title")
+@Schema(description = "Object with a department information")
 public class DepartmentDto {
 
     @Min(value = 0, message = "Id must be more than zero!")
-    @ApiModelProperty(notes = "The database generated department id")
+    @Schema(description = "The database generated department id")
     private int id;
-    
+
     @NotBlank(message = "Title can`t be blank!")
-    @Length(max = 20, message = "Maximum length is 20!")
-    @ApiModelProperty(notes = "The unique name of department. Max length is 20 character")
+    @Size(max = 20, message = "Maximum length is 20!")
+    @Schema(description = "The unique name of department. Max length is 20 character")
     private String title;
 
-    @Length(max = 200, message = "Maximum length of department description is 200!")
-    @ApiModelProperty(notes = "The description of department. Max length is 200 character")
+    @Size(max = 200, message = "Maximum length of department description is 200!")
+    @Schema(description = "The description of department. Max length is 200 character")
     private String description;
 
-    @Length(max = 20, message = "Maximum length of faculty title is 20!")
-    @ApiModelProperty(notes = "The faculty title. Max length is 20 character")
+    @Size(max = 20, message = "Maximum length of faculty title is 20!")
+    @Schema(description = "The faculty title. Max length is 20 character")
     private String facultyTitle;
 
-    @ApiModelProperty(notes = "The unique number of faculty")
+    @Schema(description = "The unique number of faculty")
     private int facultyId;
 
     public int getId() {
@@ -88,41 +86,50 @@ public class DepartmentDto {
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj)
+        if (this == obj) {
             return true;
-        if (obj == null)
+        }
+        if (obj == null) {
             return false;
-        if (getClass() != obj.getClass())
+        }
+        if (getClass() != obj.getClass()) {
             return false;
+        }
         DepartmentDto other = (DepartmentDto) obj;
         if (description == null) {
-            if (other.description != null)
+            if (other.description != null) {
                 return false;
-        } else if (!description.equals(other.description))
+            }
+        } else if (!description.equals(other.description)) {
             return false;
+        }
         if (facultyTitle == null) {
-            if (other.facultyTitle != null)
+            if (other.facultyTitle != null) {
                 return false;
-        } else if (!facultyTitle.equals(other.facultyTitle))
+            }
+        } else if (!facultyTitle.equals(other.facultyTitle)) {
             return false;
-        if (facultyId != other.facultyId)
+        }
+        if (facultyId != other.facultyId) {
             return false;
+        }
         if (title == null) {
-            if (other.title != null)
+            if (other.title != null) {
                 return false;
-        } else if (!title.equals(other.title))
+            }
+        } else if (!title.equals(other.title)) {
             return false;
+        }
         return true;
     }
 
     @Override
     public String toString() {
-        return "DepartmentDto [id=" + id 
-             + ", title=" + title 
-             + ", description=" + description 
-             + ", facultyTitle=" + facultyTitle 
-             + ", facultyId=" + facultyId 
-             + "]";
+        return "DepartmentDto [id=" + id
+            + ", title=" + title
+            + ", description=" + description
+            + ", facultyTitle=" + facultyTitle
+            + ", facultyId=" + facultyId
+            + "]";
     }
-
 }

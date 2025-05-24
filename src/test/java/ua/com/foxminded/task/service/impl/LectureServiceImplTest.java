@@ -8,10 +8,6 @@ import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
-import java.util.List;
-
-import javax.persistence.EntityNotFoundException;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -19,6 +15,10 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.slf4j.Logger;
 import org.springframework.dao.DataIntegrityViolationException;
+
+import java.util.List;
+
+import javax.persistence.EntityNotFoundException;
 
 import ua.com.foxminded.task.dao.LectureRepository;
 import ua.com.foxminded.task.dao.exception.EntityAlreadyExistsException;
@@ -28,7 +28,7 @@ import ua.com.foxminded.task.domain.dto.LectureDto;
 import ua.com.foxminded.task.domain.repository.LectureModelRepository;
 import ua.com.foxminded.task.domain.repository.dto.LectureDtoModelRepository;
 
-public class LectureServiceImplTest {
+class LectureServiceImplTest {
 
     @Mock
     private Logger logger;
@@ -38,12 +38,12 @@ public class LectureServiceImplTest {
     private LectureServiceImpl lectureService;
 
     @BeforeEach
-    public void initMocks() {
-        MockitoAnnotations.initMocks(this);
+    void initMocks() {
+        MockitoAnnotations.openMocks(this);
     }
 
     @Test
-    public void whenFindById_thenFindEntity() {
+    void whenFindById_thenFindEntity() {
         Lecture expectedLecture = LectureModelRepository.getModel1();
         doReturn(expectedLecture).when(lectureRepository).getOne(1);
 
@@ -54,7 +54,7 @@ public class LectureServiceImplTest {
     }
 
     @Test
-    public void whenFindById_thenFindEntityAndConvertItToDto() {
+    void whenFindById_thenFindEntityAndConvertItToDto() {
         Lecture lecture = LectureModelRepository.getModel1();
         LectureDto lectureDtoExpected = LectureDtoModelRepository.getModel1();
         doReturn(lecture).when(lectureRepository).getOne(1);
@@ -66,7 +66,7 @@ public class LectureServiceImplTest {
     }
 
     @Test
-    public void whenFindByAll_thenFindEntitiesAndConvertItToDto() {
+    void whenFindByAll_thenFindEntitiesAndConvertItToDto() {
         List<Lecture> lectures = LectureModelRepository.getModels();
         List<LectureDto> lectureDtosExpected = LectureDtoModelRepository.getModels();
         doReturn(lectures).when(lectureRepository).findAll();
@@ -78,7 +78,7 @@ public class LectureServiceImplTest {
     }
 
     @Test
-    public void whenCreate_thenInvocCreateDaoClass() {
+    void whenCreate_thenInvocCreateDaoClass() {
         LectureDto lectureDto = LectureDtoModelRepository.getModel1();
         Lecture lectureInput = LectureModelRepository.getModel1();
         Lecture lectureExpected = LectureModelRepository.getModel1();
@@ -92,12 +92,12 @@ public class LectureServiceImplTest {
     }
 
     @Test
-    public void whenUpdate_thenInvocUpdateDaoClass() {
+    void whenUpdate_thenInvocUpdateDaoClass() {
         LectureDto lectureDto = LectureDtoModelRepository.getModel1();
         lectureDto.setId(1);
         Lecture lecture = LectureModelRepository.getModel1();
         lecture.setId(1);
-        
+
         doReturn(lecture).when(lectureRepository).saveAndFlush(lecture);
         doReturn(true).when(lectureRepository).existsById(lectureDto.getId());
         doReturn(lecture).when(lectureRepository).getOne(lectureDto.getId());
@@ -110,62 +110,62 @@ public class LectureServiceImplTest {
     }
 
     @Test
-    public void whenFindByNumber_thenInvokeMethod() {
+    void whenFindByNumber_thenInvokeMethod() {
         Lecture lecture = LectureModelRepository.getModel1();
         lecture.setId(1);
         String expectedNumber = lecture.getNumber();
         doReturn(lecture).when(lectureRepository).findByNumber(expectedNumber);
-        
+
         Lecture actuallyLecture = lectureService.findByNumber(expectedNumber);
-        
+
         verify(lectureRepository, times(1)).findByNumber(expectedNumber);
         assertEquals(expectedNumber, actuallyLecture.getNumber());
     }
-    
+
     @Test
-    public void whenCreateRecordEntityWithId_thenThrowException() {
+    void whenCreateRecordEntityWithId_thenThrowException() {
         LectureDto lectureDto = new LectureDto();
         lectureDto.setId(1);
 
         assertThatThrownBy(() -> lectureService.create(lectureDto))
-             .isInstanceOf(EntityAlreadyExistsException.class)
-             .hasMessage("create() lectureDto: %s", lectureDto);
+            .isInstanceOf(EntityAlreadyExistsException.class)
+            .hasMessage("create() lectureDto: %s", lectureDto);
     }
-    
+
     @Test
-    public void whenCreateRecordWithNotValidEntity_thenThrowException() {
+    void whenCreateRecordWithNotValidEntity_thenThrowException() {
         LectureDto lectureDto = LectureDtoModelRepository.getModel1();
         Lecture lecture = LectureModelRepository.getModel1();
-        
+
         doThrow(DataIntegrityViolationException.class).when(lectureRepository).saveAndFlush(lecture);
 
         assertThatThrownBy(() -> lectureService.create(lectureDto))
-             .isInstanceOf(EntityNotValidException.class)
-             .hasMessageContaining("create() lecture: " + lecture);
+            .isInstanceOf(EntityNotValidException.class)
+            .hasMessageContaining("create() lecture: " + lecture);
     }
 
     @Test
-    public void whenUpdateRecordWithNotValidEntity_thenThrowException() {
+    void whenUpdateRecordWithNotValidEntity_thenThrowException() {
         LectureDto lectureDto = LectureDtoModelRepository.getModel1();
         Lecture lecture = LectureModelRepository.getModel1();
-        
+
         doReturn(true).when(lectureRepository).existsById(lecture.getId());
         doThrow(DataIntegrityViolationException.class).when(lectureRepository).saveAndFlush(lecture);
 
         assertThatThrownBy(() -> lectureService.update(lectureDto))
-             .isInstanceOf(EntityNotValidException.class)
-             .hasMessageContaining("update() lecture: " + lecture);
+            .isInstanceOf(EntityNotValidException.class)
+            .hasMessageContaining("update() lecture: " + lecture);
     }
-    
+
     @Test
-    public void whenUpdateRecordNotFound_thenThrowException() {
+    void whenUpdateRecordNotFound_thenThrowException() {
         LectureDto lectureDto = LectureDtoModelRepository.getModel1();
         Lecture lecture = LectureModelRepository.getModel1();
-        
+
         doReturn(false).when(lectureRepository).existsById(lecture.getId());
 
         assertThatThrownBy(() -> lectureService.update(lectureDto))
-             .isInstanceOf(EntityNotFoundException.class)
-             .hasMessageContaining("Lecture not exist!");
+            .isInstanceOf(EntityNotFoundException.class)
+            .hasMessageContaining("Lecture not exist!");
     }
 }
