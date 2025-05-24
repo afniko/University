@@ -9,10 +9,6 @@ import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
-import java.util.List;
-
-import javax.persistence.EntityNotFoundException;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -20,6 +16,10 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.slf4j.Logger;
 import org.springframework.dao.DataIntegrityViolationException;
+
+import java.util.List;
+
+import javax.persistence.EntityNotFoundException;
 
 import ua.com.foxminded.task.dao.GroupRepository;
 import ua.com.foxminded.task.dao.exception.EntityAlreadyExistsException;
@@ -29,7 +29,7 @@ import ua.com.foxminded.task.domain.dto.GroupDto;
 import ua.com.foxminded.task.domain.repository.GroupModelRepository;
 import ua.com.foxminded.task.domain.repository.dto.GroupDtoModelRepository;
 
-public class GroupServiceImplTest {
+class GroupServiceImplTest {
 
     @Mock
     private Logger logger;
@@ -39,12 +39,12 @@ public class GroupServiceImplTest {
     private GroupServiceImpl groupService;
 
     @BeforeEach
-    public void initMocks() {
-        MockitoAnnotations.initMocks(this);
+    void initMocks() {
+        MockitoAnnotations.openMocks(this);
     }
 
     @Test
-    public void whenFindById_thenFindGroup() {
+    void whenFindById_thenFindGroup() {
         Group expectedGroup = GroupModelRepository.getModel1();
         doReturn(expectedGroup).when(groupRepository).getOne(1);
 
@@ -55,7 +55,7 @@ public class GroupServiceImplTest {
     }
 
     @Test
-    public void whenFindById_thenFindGroupAndConvertItToDto() {
+    void whenFindById_thenFindGroupAndConvertItToDto() {
         Group group = GroupModelRepository.getModel1();
         GroupDto groupDtoExpected = GroupDtoModelRepository.getModel1();
         doReturn(group).when(groupRepository).getOne(1);
@@ -67,7 +67,7 @@ public class GroupServiceImplTest {
     }
 
     @Test
-    public void whenFindByAll_thenFindGroupsAndConvertItToDto() {
+    void whenFindByAll_thenFindGroupsAndConvertItToDto() {
         List<Group> groups = GroupModelRepository.getModels1();
         List<GroupDto> groupDtosExpected = GroupDtoModelRepository.getModels1();
         doReturn(groups).when(groupRepository).findAll();
@@ -79,9 +79,9 @@ public class GroupServiceImplTest {
     }
 
     @Test
-    public void whenCreate_thenInvocCreateDaoClass() {
+    void whenCreate_thenInvocCreateDaoClass() {
         GroupDto groupDto = GroupDtoModelRepository.getModel1();
-        
+
         Group groupInput = GroupModelRepository.getModel1();
         Group groupExpected = GroupModelRepository.getModelWithId();
 
@@ -95,7 +95,7 @@ public class GroupServiceImplTest {
     }
 
     @Test
-    public void whenUpdate_thenInvocUpdateDaoClass() {
+    void whenUpdate_thenInvocUpdateDaoClass() {
         GroupDto groupDto = GroupDtoModelRepository.getModelWithId();
         Group group = new Group();
         group.setId(groupDto.getId());
@@ -111,60 +111,60 @@ public class GroupServiceImplTest {
         verify(groupRepository, times(1)).getOne(groupDto.getId());
         assertEquals(groupDto, groupDtoActually);
     }
-    
+
     @Test
-    public void whenFindByTitle_thenInvokeMethod() {
+    void whenFindByTitle_thenInvokeMethod() {
         Group expectedGroup = GroupModelRepository.getModelWithId();
         String expectedTitle = expectedGroup.getTitle();
         doReturn(expectedGroup).when(groupRepository).findByTitle(expectedTitle);
-        
+
         Group actuallyGroup = groupService.findByTitle(expectedTitle);
-        
+
         verify(groupRepository, times(1)).findByTitle(expectedTitle);
         assertEquals(expectedTitle, actuallyGroup.getTitle());
     }
-    
+
     @Test
-    public void whenCreateRecordEntityWithId_thenThrowException() {
+    void whenCreateRecordEntityWithId_thenThrowException() {
         GroupDto group = new GroupDto();
         group.setId(1);
 
         assertThatThrownBy(() -> groupService.create(group))
-             .isInstanceOf(EntityAlreadyExistsException.class)
-             .hasMessage("create() groupDto: %s", group);
+            .isInstanceOf(EntityAlreadyExistsException.class)
+            .hasMessage("create() groupDto: %s", group);
     }
-    
+
     @Test
-    public void whenCreateRecordWithNotValidEntity_thenThrowException() {
+    void whenCreateRecordWithNotValidEntity_thenThrowException() {
         GroupDto groupDto = GroupDtoModelRepository.getModel1();
         Group group = GroupModelRepository.getModel1();
         doThrow(DataIntegrityViolationException.class).when(groupRepository).saveAndFlush(group);
 
         assertThatThrownBy(() -> groupService.create(groupDto))
-             .isInstanceOf(EntityNotValidException.class)
-             .hasMessageContaining("create() group: " + group);
+            .isInstanceOf(EntityNotValidException.class)
+            .hasMessageContaining("create() group: " + group);
     }
-    
+
     @Test
-    public void whenUpdateRecordWithNotValidEntity_thenThrowException() {
+    void whenUpdateRecordWithNotValidEntity_thenThrowException() {
         GroupDto groupDto = GroupDtoModelRepository.getModel1();
         Group group = GroupModelRepository.getModel1();
         doReturn(true).when(groupRepository).existsById(group.getId());
         doThrow(DataIntegrityViolationException.class).when(groupRepository).saveAndFlush(group);
 
         assertThatThrownBy(() -> groupService.update(groupDto))
-             .isInstanceOf(EntityNotValidException.class)
-             .hasMessageContaining("update() group: " + group);
+            .isInstanceOf(EntityNotValidException.class)
+            .hasMessageContaining("update() group: " + group);
     }
-    
+
     @Test
-    public void whenUpdateRecordNotFound_thenThrowException() {
+    void whenUpdateRecordNotFound_thenThrowException() {
         GroupDto groupDto = GroupDtoModelRepository.getModel1();
         Group group = GroupModelRepository.getModel1();
         doReturn(false).when(groupRepository).existsById(group.getId());
 
         assertThatThrownBy(() -> groupService.update(groupDto))
-             .isInstanceOf(EntityNotFoundException.class)
-             .hasMessageContaining("Group not exist!");
+            .isInstanceOf(EntityNotFoundException.class)
+            .hasMessageContaining("Group not exist!");
     }
 }

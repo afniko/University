@@ -3,8 +3,8 @@ Customer relationship management for university. Accounting students, teachers a
 
 ## Usage
 
-### Approaches
-Project has two approaches. 
+### Approaches to deployment
+Project has two approaches to deployment.
 The first one located in 'master' branch. It combines tomcat and H2 DB as one part, and it starts (deploy) together. DB is H2-file type.
 The second one located in 'docker_postgres' branch. It approaches based on deployment two separate part for tomcat and postgres DB. DB is Postgres type.
 
@@ -59,7 +59,7 @@ mvn spring-boot:run
 ```
 For run project type following command by console
 ```
-java -jar task-university-java8-api-0.0.1-SNAPSHOT.jar
+java -jar task-university-java11-api-0.0.1-SNAPSHOT.jar
 ```
 Link to start on localhost in web browser:
 ```
@@ -87,6 +87,10 @@ After deployment will expose:
 tomcat port:8080
 postgres port:54321
 ```
+
+## System Requirements
+- Java 11 or higher
+- Maven 3.6.0 or higher
 
 ## History
 #### Task 8 - Decompose university
@@ -204,6 +208,13 @@ Branch: issue14
 ### Issue#20 Need to deploy by Docker.
 Added docker compose for build and deployment.
 Branch: issue20
+
+### Issue#21 Upgrade to Java 11 and update dependencies
+- Upgraded from Java 8 to Java 11
+- Updated Spring Boot from 2.2.1 to 2.7.18
+- Replaced Springfox with SpringDoc OpenAPI for API documentation
+- Updated all dependencies to secure versions
+- Updated documentation
 
 ###  Issue#23 Create separate Postgres DB. And deploy it in docker-compose.
 Added docker Postgres DB with parameters. Exclude H2 DB for deployment. Use H2 DB for tests.

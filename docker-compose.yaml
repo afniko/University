@@ -1,12 +1,12 @@
 version: '3.5'
 
 services:
-  univer_tomcat:
+  university:
     build:
       context: .
-      dockerfile: docker/tomcat/Dockerfile
-    image: univer_tomcat
-    container_name: univer_tomcat
+      dockerfile: docker/university/Dockerfile
+    image: university
+    container_name: university
     depends_on:
       - db
     ports:
@@ -15,7 +15,7 @@ services:
       test: "exit 0"
 
   db:
-    image: postgres:14
+    image: postgres:17
     container_name: univer_db
     ports:
       - 54321:5432

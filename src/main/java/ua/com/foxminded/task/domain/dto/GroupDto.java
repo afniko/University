@@ -4,32 +4,30 @@ import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
-import org.hibernate.validator.constraints.Length;
-
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import ua.com.foxminded.task.validation.annotation.PropertyValueUnique;
 
-@PropertyValueUnique(message = "Title is already exists!", 
-                     nameProperty = "title", 
-                     fieldError = "title")
-@ApiModel(description = "Object with a group information")
+@PropertyValueUnique(message = "Title is already exists!",
+    nameProperty = "title",
+    fieldError = "title")
+@Schema(description = "Object with a group information")
 public class GroupDto {
 
     @Min(value = 0, message = "Id must be more than zero!")
-    @ApiModelProperty(notes = "The database generated group id")
+    @Schema(description = "The database generated group id")
     private int id;
 
     @NotBlank(message = "Title can`t be blank!")
-    @Length(max = 20, message = "Maximum length is 20!")
-    @ApiModelProperty(notes = "The unique name of group. Max length is 20 character")
+    @Size(max = 20, message = "Maximum length is 20!")
+    @Schema(description = "The unique name of group. Max length is 20 character")
     private String title;
 
     @NotNull(message = "Year of entry can`t be blank or not numeric!")
     @Max(value = 2100, message = "Year of entry is not correct!")
     @Min(value = 2000, message = "Year of entry is not correct!")
-    @ApiModelProperty(notes = "The year of entry students in the group. Value between 2000-2100")
+    @Schema(description = "The year of entry students in the group. Value between 2000-2100")
     private Integer yearEntry;
 
     public void setId(int id) {
@@ -66,24 +64,27 @@ public class GroupDto {
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj)
+        if (this == obj) {
             return true;
-        if (obj == null)
+        }
+        if (obj == null) {
             return false;
-        if (getClass() != obj.getClass())
+        }
+        if (getClass() != obj.getClass()) {
             return false;
+        }
         GroupDto other = (GroupDto) obj;
-        if (id != other.id)
+        if (id != other.id) {
             return false;
+        }
         return true;
     }
 
     @Override
     public String toString() {
-        return "GroupDto [id=" + id 
-             + ", title=" + title 
-             + ", yearEntry=" + yearEntry 
-             + "]";
+        return "GroupDto [id=" + id
+            + ", title=" + title
+            + ", yearEntry=" + yearEntry
+            + "]";
     }
-
 }

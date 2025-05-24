@@ -2,19 +2,15 @@ package ua.com.foxminded.task.dao;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import java.util.List;
+import com.github.database.rider.core.api.dataset.DataSet;
+import com.github.database.rider.core.api.dataset.ExpectedDataSet;
+import com.github.database.rider.junit5.api.DBRider;
 
-import javax.sql.DataSource;
-
-import org.junit.Rule;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.github.database.rider.core.DBUnitRule;
-import com.github.database.rider.core.api.dataset.DataSet;
-import com.github.database.rider.core.api.dataset.ExpectedDataSet;
-import com.github.database.rider.junit5.api.DBRider;
+import java.util.List;
 
 import ua.com.foxminded.task.domain.Department;
 import ua.com.foxminded.task.domain.repository.DepartmentModelRepository;
@@ -24,11 +20,7 @@ import ua.com.foxminded.task.domain.repository.DepartmentModelRepository;
 public class DepartmentRepositoryIntegrationTest {
     @Autowired
     private DepartmentRepository departmentRepository;
-    @Autowired
-    private DataSource dataSource;
-    @Rule
-    public DBUnitRule dbUnitRule = DBUnitRule.instance(() -> dataSource.getConnection());
-    
+
     @Test
     @DataSet(cleanBefore = true, skipCleaningFor = "flyway_schema_history")
     public void whenRepositoryHasNotRecords_thenReturnEmptyList() {
@@ -37,9 +29,9 @@ public class DepartmentRepositoryIntegrationTest {
     }
 
     @Test
-    @DataSet(value = "department/departments.yml", 
-             cleanBefore = true, 
-             skipCleaningFor = "flyway_schema_history")
+    @DataSet(value = "department/departments.yml",
+        cleanBefore = true,
+        skipCleaningFor = "flyway_schema_history")
     @ExpectedDataSet(value = "department/expected-departments.yml")
     public void whenRepositoryHasRecords_thenReturnNonEmptyList() {
         List<Department> departments = departmentRepository.findAll();
@@ -47,21 +39,21 @@ public class DepartmentRepositoryIntegrationTest {
     }
 
     @Test
-    @DataSet(value = "department/departments.yml", 
-             cleanBefore = true, 
-             skipCleaningFor = "flyway_schema_history")
+    @DataSet(value = "department/departments.yml",
+        cleanBefore = true,
+        skipCleaningFor = "flyway_schema_history")
     public void whenPutAtTableDbObjects_thenGetThisObjectsFindById() {
         Department expectedDepartment = DepartmentModelRepository.getModel3();
         expectedDepartment.setFaculty(null);
-        int id = 3;
+        int id = 30;
         Department actuallyDepartment = departmentRepository.findById(id).get();
         assertThat(expectedDepartment).isEqualTo(actuallyDepartment);
     }
 
     @Test
-    @DataSet(value = "department/departments.yml", 
-             cleanBefore = true, 
-             skipCleaningFor = "flyway_schema_history")
+    @DataSet(value = "department/departments.yml",
+        cleanBefore = true,
+        skipCleaningFor = "flyway_schema_history")
     public void whenFindByTitle_thenDepartmentReturned() {
         String title = "department2";
         Department departmentActually = departmentRepository.findByTitle(title);
@@ -79,9 +71,9 @@ public class DepartmentRepositoryIntegrationTest {
     }
 
     @Test
-    @DataSet(value = "department/department.yml", 
-             cleanBefore = true, 
-             skipCleaningFor = "flyway_schema_history")
+    @DataSet(value = "department/department.yml",
+        cleanBefore = true,
+        skipCleaningFor = "flyway_schema_history")
     @ExpectedDataSet(value = "department/expected-department.yml")
     public void whenUpdateObject_thenExpectUpdatedRecord() {
         Department department = DepartmentModelRepository.getModel2();

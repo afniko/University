@@ -6,32 +6,32 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.2.1.RELEASE</version>
+        <version>2.7.18</version>
     </parent>
 
     <groupId>ua.com.foxminded</groupId>
-    <artifactId>task-university-java8-api</artifactId>
+    <artifactId>task-university-java11-api</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <java.version>1.8</java.version>
-        <org.h2database.version>1.4.200</org.h2database.version>
-        <org.postgresql.version>42.3.1</org.postgresql.version>
-        <mockito.version>2.25.1</mockito.version>
-        <commons.lang3.version>3.8.1</commons.lang3.version>
-        <org.flywaydb.flyway.core.version>5.2.4</org.flywaydb.flyway.core.version>
-        <hibernate.jpamodelgen.version>5.4.7.Final</hibernate.jpamodelgen.version>
-        <swagger.version>2.9.2</swagger.version>
-        <database.rider.version>1.9.1</database.rider.version>
+        <java.version>11</java.version>
+        <org.h2database.version>2.1.214</org.h2database.version>
+        <mockito.version>4.11.0</mockito.version>
+        <commons.lang3.version>3.12.0</commons.lang3.version>
+        <org.flywaydb.flyway.core.version>8.5.13</org.flywaydb.flyway.core.version>
+        <hibernate.jpamodelgen.version>5.6.15.Final</hibernate.jpamodelgen.version>
+        <springdoc.version>1.7.0</springdoc.version>
+        <database.rider.version>1.44.0</database.rider.version>
         <commons.beanutils.version>1.9.4</commons.beanutils.version>
 
-        <org.flywaydb.flyway.plugin.version>5.2.4</org.flywaydb.flyway.plugin.version>
-        <maven.checkstyle.plugin.version>3.1.0</maven.checkstyle.plugin.version>
+        <org.flywaydb.flyway.plugin.version>8.5.13</org.flywaydb.flyway.plugin.version>
+        <maven.checkstyle.plugin.version>3.3.0</maven.checkstyle.plugin.version>
         <maven.surefire.plugin.version>2.22.2</maven.surefire.plugin.version>
-        <properties.maven.plugin.version>1.0.0</properties.maven.plugin.version>
+        <properties.maven.plugin.version>1.1.0</properties.maven.plugin.version>
+        <postgresql.version>42.7.2</postgresql.version>
     </properties>
 
     <dependencies>
@@ -56,10 +56,8 @@
         </dependency>
 
         <dependency>
-            <groupId>org.postgresql</groupId>
-            <artifactId>postgresql</artifactId>
-            <version>${org.postgresql.version}</version>
-            <scope>provided</scope>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-validation</artifactId>
         </dependency>
 
         <dependency>
@@ -96,17 +94,17 @@
             <scope>provided</scope>
         </dependency>
 
-        <!-- for swagger api documentation -->
+        <!-- for OpenAPI documentation (replacing Springfox) -->
         <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-swagger2</artifactId>
-            <version>${swagger.version}</version>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-ui</artifactId>
+            <version>${springdoc.version}</version>
         </dependency>
 
         <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-swagger-ui</artifactId>
-            <version>${swagger.version}</version>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-data-rest</artifactId>
+            <version>${springdoc.version}</version>
         </dependency>
 
         <!-- for tests database connection -->
@@ -114,6 +112,7 @@
             <groupId>com.github.database-rider</groupId>
             <artifactId>rider-junit5</artifactId>
             <version>${database.rider.version}</version>
+            <classifier>jakarta</classifier>
             <scope>test</scope>
         </dependency>
 
@@ -122,6 +121,13 @@
             <groupId>commons-beanutils</groupId>
             <artifactId>commons-beanutils</artifactId>
             <version>${commons.beanutils.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>${postgresql.version}</version>
+            <scope>runtime</scope>
         </dependency>
 
     </dependencies>
@@ -139,7 +145,7 @@
                 <version>${maven.checkstyle.plugin.version}</version>
                 <configuration>
                     <configLocation>src/test/resources/checkstyle.xml</configLocation>
-                    <encoding>UTF-8</encoding>
+                    <inputEncoding>UTF-8</inputEncoding>
                     <consoleOutput>true</consoleOutput>
                     <failsOnError>true</failsOnError>
                     <includeTestSourceDirectory>true</includeTestSourceDirectory>

@@ -177,10 +177,10 @@ public class StudentControllerSystemTest {
                 .andExpect(status().isOk())
                 .andExpect(view().name(PATH_HTML_STUDENT_EDIT))
                 .andExpect(content().string(allOf(containsString("<div>" + EXPECTED_ERROR_MESSAGE + "</div>"))))
-                .andExpect(model().attributeHasFieldErrorCode("studentDto", "firstName", "Length"))
-                .andExpect(model().attributeHasFieldErrorCode("studentDto", "middleName", "Length"))
-                .andExpect(model().attributeHasFieldErrorCode("studentDto", "lastName", "Length"))
-                .andExpect(model().attributeHasFieldErrorCode("studentDto", "groupTitle", "Length"))
+                .andExpect(model().attributeHasFieldErrorCode("studentDto", "firstName", "Size"))
+                .andExpect(model().attributeHasFieldErrorCode("studentDto", "middleName", "Size"))
+                .andExpect(model().attributeHasFieldErrorCode("studentDto", "lastName", "Size"))
+                .andExpect(model().attributeHasFieldErrorCode("studentDto", "groupTitle", "Size"))
                 .andExpect(model().attributeHasFieldErrorCode("studentDto", "idFees", "Min"))
                 .andDo(print());
     }
@@ -204,5 +204,4 @@ public class StudentControllerSystemTest {
                 .andExpect(model().attributeHasFieldErrorCode("studentDto", "groupId", "MaxStudentsInGroupLimit"))
                 .andDo(print());
     }
-
 }

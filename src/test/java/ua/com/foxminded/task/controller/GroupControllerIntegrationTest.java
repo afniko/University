@@ -174,7 +174,7 @@ public class GroupControllerIntegrationTest {
                 .andExpect(view().name(PATH_HTML_GROUP_EDIT))
                 .andExpect(content().string(allOf(containsString("<div>" + EXPECTED_ERROR_MESSAGE + "</div>"))))
                 .andExpect(model().attributeHasFieldErrorCode("groupDto", "yearEntry", "Min"))
-                .andExpect(model().attributeHasFieldErrorCode("groupDto", "title", "Length"))
+                .andExpect(model().attributeHasFieldErrorCode("groupDto", "title", "Size"))
                 .andDo(print());
     }
 

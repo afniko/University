@@ -1,5 +1,5 @@
 package ua.com.foxminded.task.service.impl;
-import static java.util.Arrays.asList;
+
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.anyInt;
@@ -8,10 +8,7 @@ import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
-import java.time.LocalDate;
-import java.util.List;
-
-import javax.persistence.EntityNotFoundException;
+import static java.util.Arrays.asList;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -20,6 +17,11 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.slf4j.Logger;
 import org.springframework.dao.DataIntegrityViolationException;
+
+import java.time.LocalDate;
+import java.util.List;
+
+import javax.persistence.EntityNotFoundException;
 
 import ua.com.foxminded.task.dao.AuditoryRepository;
 import ua.com.foxminded.task.dao.GroupRepository;
@@ -46,7 +48,7 @@ import ua.com.foxminded.task.domain.repository.TimetableItemModelRepository;
 import ua.com.foxminded.task.domain.repository.dto.GroupDtoModelRepository;
 import ua.com.foxminded.task.domain.repository.dto.TimetableItemDtoModelRepository;
 
-public class TimetableItemServiceImplTest {
+class TimetableItemServiceImplTest {
 
     @Mock
     private TeacherRepository teacherRepository;
@@ -66,8 +68,8 @@ public class TimetableItemServiceImplTest {
     private TimetableItemServiceImpl timetableItemService;
 
     @BeforeEach
-    public void initMocks() {
-        MockitoAnnotations.initMocks(this);
+    void initMocks() {
+        MockitoAnnotations.openMocks(this);
     }
 
     @Test
@@ -96,10 +98,10 @@ public class TimetableItemServiceImplTest {
 
     @Test
     void whenCreate_thenInvocCreateDaoClass() {
-        TimetableItem timetableItem = getTimetableItem(); 
+        TimetableItem timetableItem = getTimetableItem();
         Group group1 = timetableItem.getGroups().get(0);
         Group group2 = timetableItem.getGroups().get(1);
-        
+
         TimetableItemDto timetableItemDto = getTimetableItemDto();
 
         doReturn(group1, group2).when(groupRepository).getOne(anyInt());
@@ -126,7 +128,7 @@ public class TimetableItemServiceImplTest {
         timetableItem.setId(1);
         Group group1 = timetableItem.getGroups().get(0);
         Group group2 = timetableItem.getGroups().get(1);
-        
+
         TimetableItemDto timetableItemDto = getTimetableItemDto();
         timetableItemDto.setId(1);
 
@@ -151,23 +153,23 @@ public class TimetableItemServiceImplTest {
         verify(timetableItemRepository, times(1)).saveAndFlush(timetableItem);
         assertEquals(timetableItemDto, timetableItemDtoActually);
     }
-    
+
     @Test
-    public void whenCreateRecordEntityWithId_thenThrowException() {
+    void whenCreateRecordEntityWithId_thenThrowException() {
         TimetableItemDto timetableItemDto = getTimetableItemDto();
         timetableItemDto.setId(1);
 
         assertThatThrownBy(() -> timetableItemService.create(timetableItemDto))
-             .isInstanceOf(EntityAlreadyExistsException.class)
-             .hasMessage("create() timetableItemDto: %s", timetableItemDto);
+            .isInstanceOf(EntityAlreadyExistsException.class)
+            .hasMessage("create() timetableItemDto: %s", timetableItemDto);
     }
-    
+
     @Test
-    public void whenCreateRecordWithNotValidEntity_thenThrowException() {
-        TimetableItem timetableItem = getTimetableItem(); 
+    void whenCreateRecordWithNotValidEntity_thenThrowException() {
+        TimetableItem timetableItem = getTimetableItem();
         Group group1 = timetableItem.getGroups().get(0);
         Group group2 = timetableItem.getGroups().get(1);
-        
+
         TimetableItemDto timetableItemDto = getTimetableItemDto();
 
         doReturn(group1, group2).when(groupRepository).getOne(anyInt());
@@ -179,17 +181,17 @@ public class TimetableItemServiceImplTest {
         doThrow(DataIntegrityViolationException.class).when(timetableItemRepository).saveAndFlush(timetableItem);
 
         assertThatThrownBy(() -> timetableItemService.create(timetableItemDto))
-             .isInstanceOf(EntityNotValidException.class)
-             .hasMessageContaining("create() timetableItem: " + timetableItem);
+            .isInstanceOf(EntityNotValidException.class)
+            .hasMessageContaining("create() timetableItem: " + timetableItem);
     }
-    
+
     @Test
-    public void whenUpdateRecordWithNotValidEntity_thenThrowException() {
+    void whenUpdateRecordWithNotValidEntity_thenThrowException() {
         TimetableItem timetableItem = getTimetableItem();
         timetableItem.setId(1);
         Group group1 = timetableItem.getGroups().get(0);
         Group group2 = timetableItem.getGroups().get(1);
-        
+
         TimetableItemDto timetableItemDto = getTimetableItemDto();
         timetableItemDto.setId(1);
 
@@ -201,21 +203,21 @@ public class TimetableItemServiceImplTest {
         doReturn(timetableItem.getLecture()).when(lectureRepository).getOne(1);
         doReturn(timetableItem.getTeacher()).when(teacherRepository).getOne(1);
         doThrow(DataIntegrityViolationException.class).when(timetableItemRepository).saveAndFlush(timetableItem);
-        
+
         assertThatThrownBy(() -> timetableItemService.update(timetableItemDto))
-             .isInstanceOf(EntityNotValidException.class)
-             .hasMessageContaining("update() timetableItem: " + timetableItem);
+            .isInstanceOf(EntityNotValidException.class)
+            .hasMessageContaining("update() timetableItem: " + timetableItem);
     }
-    
+
     @Test
-    public void whenUpdateRecordNotFound_thenThrowException() {
+    void whenUpdateRecordNotFound_thenThrowException() {
         TimetableItemDto timetableItemDto = TimetableItemDtoModelRepository.getModel1();
         TimetableItem timetableItem = TimetableItemModelRepository.getModel1();
         doReturn(false).when(timetableItemRepository).existsById(timetableItem.getId());
 
         assertThatThrownBy(() -> timetableItemService.update(timetableItemDto))
-             .isInstanceOf(EntityNotFoundException.class)
-             .hasMessageContaining("Timetable Item not exist!");
+            .isInstanceOf(EntityNotFoundException.class)
+            .hasMessageContaining("Timetable Item not exist!");
     }
 
     private TimetableItem getTimetableItem() {
