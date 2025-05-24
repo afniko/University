@@ -8,10 +8,6 @@ import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
-import java.util.List;
-
-import javax.persistence.EntityNotFoundException;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -19,6 +15,10 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.slf4j.Logger;
 import org.springframework.dao.DataIntegrityViolationException;
+
+import java.util.List;
+
+import javax.persistence.EntityNotFoundException;
 
 import ua.com.foxminded.task.dao.DepartmentRepository;
 import ua.com.foxminded.task.dao.FacultyRepository;
@@ -31,7 +31,7 @@ import ua.com.foxminded.task.domain.repository.DepartmentModelRepository;
 import ua.com.foxminded.task.domain.repository.FacultyModelRepository;
 import ua.com.foxminded.task.domain.repository.dto.DepartmentDtoModelRepository;
 
-public class DepartmentServiceImplTest {
+class DepartmentServiceImplTest {
 
     @Mock
     private Logger logger;
@@ -43,12 +43,12 @@ public class DepartmentServiceImplTest {
     private DepartmentServiceImpl departmentService;
 
     @BeforeEach
-    public void initMocks() {
-        MockitoAnnotations.initMocks(this);
+    void initMocks() {
+        MockitoAnnotations.openMocks(this);
     }
 
     @Test
-    public void whenFindById_thenFindEntity() {
+    void whenFindById_thenFindEntity() {
         Department expectedDepartment = DepartmentModelRepository.getModel1();
         doReturn(expectedDepartment).when(departmentRepository).getOne(1);
 
@@ -59,7 +59,7 @@ public class DepartmentServiceImplTest {
     }
 
     @Test
-    public void whenFindById_thenFindEntityAndConvertItToDto() {
+    void whenFindById_thenFindEntityAndConvertItToDto() {
         Department department = DepartmentModelRepository.getModel1();
         DepartmentDto departmentDtoExpected = DepartmentDtoModelRepository.getModel1();
         doReturn(department).when(departmentRepository).getOne(1);
@@ -71,7 +71,7 @@ public class DepartmentServiceImplTest {
     }
 
     @Test
-    public void whenFindByAll_thenFindEntitiesAndConvertItToDto() {
+    void whenFindByAll_thenFindEntitiesAndConvertItToDto() {
         List<Department> departments = DepartmentModelRepository.getModels();
         List<DepartmentDto> departmentDtosExpected = DepartmentDtoModelRepository.getModels();
         doReturn(departments).when(departmentRepository).findAll();
@@ -83,7 +83,7 @@ public class DepartmentServiceImplTest {
     }
 
     @Test
-    public void whenCreate_thenInvocCreateDaoClass() {
+    void whenCreate_thenInvocCreateDaoClass() {
         DepartmentDto departmentDto = DepartmentDtoModelRepository.getModel1();
         departmentDto.setFacultyId(1);
         Department departmentInput = DepartmentModelRepository.getModel1();
@@ -101,14 +101,14 @@ public class DepartmentServiceImplTest {
     }
 
     @Test
-    public void whenUpdate_thenInvocUpdateDaoClass() {
+    void whenUpdate_thenInvocUpdateDaoClass() {
         DepartmentDto departmentDto = DepartmentDtoModelRepository.getModel1();
         departmentDto.setId(1);
         Department department = DepartmentModelRepository.getModel1();
         department.setId(1);
         Faculty faculty = FacultyModelRepository.getModel1();
         faculty.setId(1);
-        
+
         doReturn(department).when(departmentRepository).saveAndFlush(department);
         doReturn(true).when(departmentRepository).existsById(departmentDto.getId());
         doReturn(department).when(departmentRepository).getOne(departmentDto.getId());
@@ -122,71 +122,71 @@ public class DepartmentServiceImplTest {
     }
 
     @Test
-    public void whenFindByAuditoryNumber_thenInvokeMethod() {
+    void whenFindByAuditoryNumber_thenInvokeMethod() {
         Department department = DepartmentModelRepository.getModel1();
         department.setId(1);
         String expectedTitle = department.getTitle();
         doReturn(department).when(departmentRepository).findByTitle(expectedTitle);
-        
+
         Department actuallyDepartment = departmentService.findByTitle(expectedTitle);
-        
+
         verify(departmentRepository, times(1)).findByTitle(expectedTitle);
         assertEquals(expectedTitle, actuallyDepartment.getTitle());
     }
-    
+
     @Test
-    public void whenCreateRecordEntityWithId_thenThrowException() {
+    void whenCreateRecordEntityWithId_thenThrowException() {
         DepartmentDto departmentDto = new DepartmentDto();
         departmentDto.setId(1);
 
         assertThatThrownBy(() -> departmentService.create(departmentDto))
-             .isInstanceOf(EntityAlreadyExistsException.class)
-             .hasMessage("create() departmentDto: %s", departmentDto);
+            .isInstanceOf(EntityAlreadyExistsException.class)
+            .hasMessage("create() departmentDto: %s", departmentDto);
     }
-    
+
     @Test
-    public void whenCreateRecordWithNotValidEntity_thenThrowException() {
+    void whenCreateRecordWithNotValidEntity_thenThrowException() {
         DepartmentDto departmentDto = DepartmentDtoModelRepository.getModel1();
         Department department = DepartmentModelRepository.getModel1();
         Faculty faculty = FacultyModelRepository.getModel1();
         faculty.setId(1);
-        
+
         doReturn(faculty).when(facultyRepository).getOne(departmentDto.getFacultyId());
         doThrow(DataIntegrityViolationException.class).when(departmentRepository).saveAndFlush(department);
 
         assertThatThrownBy(() -> departmentService.create(departmentDto))
-             .isInstanceOf(EntityNotValidException.class)
-             .hasMessageContaining("create() department: " + department);
+            .isInstanceOf(EntityNotValidException.class)
+            .hasMessageContaining("create() department: " + department);
     }
 
     @Test
-    public void whenUpdateRecordWithNotValidEntity_thenThrowException() {
+    void whenUpdateRecordWithNotValidEntity_thenThrowException() {
         DepartmentDto departmentDto = DepartmentDtoModelRepository.getModel1();
         Department department = DepartmentModelRepository.getModel1();
         Faculty faculty = FacultyModelRepository.getModel1();
         faculty.setId(1);
-        
+
         doReturn(faculty).when(facultyRepository).getOne(departmentDto.getFacultyId());
         doReturn(true).when(departmentRepository).existsById(department.getId());
         doThrow(DataIntegrityViolationException.class).when(departmentRepository).saveAndFlush(department);
 
         assertThatThrownBy(() -> departmentService.update(departmentDto))
-             .isInstanceOf(EntityNotValidException.class)
-             .hasMessageContaining("update() department: " + department);
+            .isInstanceOf(EntityNotValidException.class)
+            .hasMessageContaining("update() department: " + department);
     }
-    
+
     @Test
-    public void whenUpdateRecordNotFound_thenThrowException() {
+    void whenUpdateRecordNotFound_thenThrowException() {
         DepartmentDto departmentDto = DepartmentDtoModelRepository.getModel1();
         Department department = DepartmentModelRepository.getModel1();
         Faculty faculty = FacultyModelRepository.getModel1();
         faculty.setId(1);
-        
+
         doReturn(faculty).when(facultyRepository).getOne(departmentDto.getFacultyId());
         doReturn(false).when(departmentRepository).existsById(department.getId());
 
         assertThatThrownBy(() -> departmentService.update(departmentDto))
-             .isInstanceOf(EntityNotFoundException.class)
-             .hasMessageContaining("Department not exist!");
+            .isInstanceOf(EntityNotFoundException.class)
+            .hasMessageContaining("Department not exist!");
     }
 }

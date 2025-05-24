@@ -8,10 +8,6 @@ import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
-import java.util.List;
-
-import javax.persistence.EntityNotFoundException;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -19,6 +15,10 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.slf4j.Logger;
 import org.springframework.dao.DataIntegrityViolationException;
+
+import java.util.List;
+
+import javax.persistence.EntityNotFoundException;
 
 import ua.com.foxminded.task.dao.AuditoryRepository;
 import ua.com.foxminded.task.dao.AuditoryTypeRepository;
@@ -31,7 +31,7 @@ import ua.com.foxminded.task.domain.repository.AuditoryModelRepository;
 import ua.com.foxminded.task.domain.repository.AuditoryTypeModelRepository;
 import ua.com.foxminded.task.domain.repository.dto.AuditoryDtoModelRepository;
 
-public class AuditoryServiceImplTest {
+class AuditoryServiceImplTest {
 
     @Mock
     private Logger logger;
@@ -44,11 +44,11 @@ public class AuditoryServiceImplTest {
 
     @BeforeEach
     public void initMocks() {
-        MockitoAnnotations.initMocks(this);
+        MockitoAnnotations.openMocks(this);
     }
 
     @Test
-    public void whenFindById_thenFindEntity() {
+    void whenFindById_thenFindEntity() {
         Auditory expectedAuditory = AuditoryModelRepository.getModel1();
         doReturn(expectedAuditory).when(auditoryRepository).getOne(1);
 
@@ -59,7 +59,7 @@ public class AuditoryServiceImplTest {
     }
 
     @Test
-    public void whenFindById_thenFindEntityAndConvertItToDto() {
+    void whenFindById_thenFindEntityAndConvertItToDto() {
         Auditory auditory = AuditoryModelRepository.getModel1();
         AuditoryDto auditoryDtoExpected = AuditoryDtoModelRepository.getModel1();
         doReturn(auditory).when(auditoryRepository).getOne(1);
@@ -71,7 +71,7 @@ public class AuditoryServiceImplTest {
     }
 
     @Test
-    public void whenFindByAll_thenFindEntitiesAndConvertItToDto() {
+    void whenFindByAll_thenFindEntitiesAndConvertItToDto() {
         List<Auditory> auditories = AuditoryModelRepository.getModels();
         List<AuditoryDto> auditoryDtosExpected = AuditoryDtoModelRepository.getModels();
         doReturn(auditories).when(auditoryRepository).findAll();
@@ -83,7 +83,7 @@ public class AuditoryServiceImplTest {
     }
 
     @Test
-    public void whenCreate_thenInvocCreateDaoClass() {
+    void whenCreate_thenInvocCreateDaoClass() {
         AuditoryDto auditoryDto = AuditoryDtoModelRepository.getModel1();
         Auditory auditoryInput = AuditoryModelRepository.getModel1();
         Auditory auditoryExpected = AuditoryModelRepository.getModel1();
@@ -100,14 +100,14 @@ public class AuditoryServiceImplTest {
     }
 
     @Test
-    public void whenUpdate_thenInvocUpdateDaoClass() {
+    void whenUpdate_thenInvocUpdateDaoClass() {
         AuditoryDto auditoryDto = AuditoryDtoModelRepository.getModel1();
         auditoryDto.setId(1);
         Auditory auditory = AuditoryModelRepository.getModel1();
         auditory.setId(1);
         AuditoryType auditoryType = AuditoryTypeModelRepository.getModel1();
         auditoryType.setId(1);
-        
+
         doReturn(auditory).when(auditoryRepository).saveAndFlush(auditory);
         doReturn(true).when(auditoryRepository).existsById(auditoryDto.getId());
         doReturn(auditory).when(auditoryRepository).getOne(auditoryDto.getId());
@@ -121,71 +121,71 @@ public class AuditoryServiceImplTest {
     }
 
     @Test
-    public void whenFindByAuditoryNumber_thenInvokeMethod() {
+    void whenFindByAuditoryNumber_thenInvokeMethod() {
         Auditory auditory = AuditoryModelRepository.getModel1();
         auditory.setId(1);
         String expectedAuditoryNumber = auditory.getAuditoryNumber();
         doReturn(auditory).when(auditoryRepository).findByAuditoryNumber(expectedAuditoryNumber);
-        
+
         Auditory actuallyGroup = auditoryService.findByAuditoryNumber(expectedAuditoryNumber);
-        
+
         verify(auditoryRepository, times(1)).findByAuditoryNumber(expectedAuditoryNumber);
         assertEquals(expectedAuditoryNumber, actuallyGroup.getAuditoryNumber());
     }
-    
+
     @Test
-    public void whenCreateRecordEntityWithId_thenThrowException() {
+    void whenCreateRecordEntityWithId_thenThrowException() {
         AuditoryDto auditory = new AuditoryDto();
         auditory.setId(1);
 
         assertThatThrownBy(() -> auditoryService.create(auditory))
-             .isInstanceOf(EntityAlreadyExistsException.class)
-             .hasMessage("create() auditoryDto: %s", auditory);
+            .isInstanceOf(EntityAlreadyExistsException.class)
+            .hasMessage("create() auditoryDto: %s", auditory);
     }
-    
+
     @Test
-    public void whenCreateRecordWithNotValidEntity_thenThrowException() {
+    void whenCreateRecordWithNotValidEntity_thenThrowException() {
         AuditoryDto auditoryDto = AuditoryDtoModelRepository.getModel1();
         Auditory auditory = AuditoryModelRepository.getModel1();
         AuditoryType auditoryType = AuditoryTypeModelRepository.getModel1();
         auditoryType.setId(1);
-        
+
         doReturn(auditoryType).when(auditoryTypeRepository).getOne(auditoryDto.getAuditoryTypeId());
         doThrow(DataIntegrityViolationException.class).when(auditoryRepository).saveAndFlush(auditory);
 
         assertThatThrownBy(() -> auditoryService.create(auditoryDto))
-             .isInstanceOf(EntityNotValidException.class)
-             .hasMessageContaining("create() auditory: " + auditory);
+            .isInstanceOf(EntityNotValidException.class)
+            .hasMessageContaining("create() auditory: " + auditory);
     }
 
     @Test
-    public void whenUpdateRecordWithNotValidEntity_thenThrowException() {
+    void whenUpdateRecordWithNotValidEntity_thenThrowException() {
         AuditoryDto auditoryDto = AuditoryDtoModelRepository.getModel1();
         Auditory auditory = AuditoryModelRepository.getModel1();
         AuditoryType auditoryType = AuditoryTypeModelRepository.getModel1();
         auditoryType.setId(1);
-        
+
         doReturn(auditoryType).when(auditoryTypeRepository).getOne(auditoryDto.getAuditoryTypeId());
         doReturn(true).when(auditoryRepository).existsById(auditory.getId());
         doThrow(DataIntegrityViolationException.class).when(auditoryRepository).saveAndFlush(auditory);
 
         assertThatThrownBy(() -> auditoryService.update(auditoryDto))
-             .isInstanceOf(EntityNotValidException.class)
-             .hasMessageContaining("update() auditory: " + auditory);
+            .isInstanceOf(EntityNotValidException.class)
+            .hasMessageContaining("update() auditory: " + auditory);
     }
-    
+
     @Test
-    public void whenUpdateRecordNotFound_thenThrowException() {
+    void whenUpdateRecordNotFound_thenThrowException() {
         AuditoryDto auditoryDto = AuditoryDtoModelRepository.getModel1();
         Auditory auditory = AuditoryModelRepository.getModel1();
         AuditoryType auditoryType = AuditoryTypeModelRepository.getModel1();
         auditoryType.setId(1);
-        
+
         doReturn(auditoryType).when(auditoryTypeRepository).getOne(auditoryDto.getAuditoryTypeId());
         doReturn(false).when(auditoryRepository).existsById(auditory.getId());
 
         assertThatThrownBy(() -> auditoryService.update(auditoryDto))
-             .isInstanceOf(EntityNotFoundException.class)
-             .hasMessageContaining("Auditory not exist!");
+            .isInstanceOf(EntityNotFoundException.class)
+            .hasMessageContaining("Auditory not exist!");
     }
 }

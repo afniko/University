@@ -119,7 +119,7 @@ public class TeacherRestControllerSystemTest {
               + "\"birthday\":\"1966-06-25\","
               + "\"idFees\":211111111,"
               + "\"departmentTitle\":\"department1\","
-              + "\"departmentId\":1,"
+              + "\"departmentId\":10,"
               + "\"subjects\":[{\"id\":1,"
               + "\"title\":\"Programming\"}]}";
       this.mockMvc.perform(post("/api/teachers")
@@ -135,7 +135,7 @@ public class TeacherRestControllerSystemTest {
                 .andExpect(jsonPath("$.birthday", is("1966-06-25")))
                 .andExpect(jsonPath("$.idFees", is(211111111)))
                 .andExpect(jsonPath("$.departmentTitle", is("department1")))
-                .andExpect(jsonPath("$.departmentId", is(1)))
+                .andExpect(jsonPath("$.departmentId", is(10)))
                 .andExpect(jsonPath("$.subjects.[0].title", is("Programming")));
   }
  
@@ -212,5 +212,4 @@ public class TeacherRestControllerSystemTest {
                 .andExpect(jsonPath("$.errors", aMapWithSize(1)))
                 .andExpect(jsonPath("$.errors.idFees", is("Value is 9 number!")));
   }
-
 }

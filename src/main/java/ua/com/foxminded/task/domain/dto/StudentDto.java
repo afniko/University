@@ -1,59 +1,58 @@
 package ua.com.foxminded.task.domain.dto;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.time.LocalDate;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Past;
+import javax.validation.constraints.Size;
 
-import org.hibernate.validator.constraints.Length;
-import org.springframework.format.annotation.DateTimeFormat;
-
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import ua.com.foxminded.task.validation.annotation.MaxStudentsInGroupLimit;
 import ua.com.foxminded.task.validation.annotation.PropertyValueUnique;
 
 @MaxStudentsInGroupLimit
-@PropertyValueUnique(message = "Id fees is already exists!", 
-                     nameProperty = "idFees", 
-                     fieldError = "idFees")
-@ApiModel(description = "Object with a student and group information")
+@PropertyValueUnique(message = "Id fees is already exists!",
+    nameProperty = "idFees",
+    fieldError = "idFees")
+@Schema(description = "Object with a student and group information")
 public class StudentDto {
 
     @Min(value = 0, message = "Id must be more than zero!")
-    @ApiModelProperty(notes = "The database generated student id")
+    @Schema(description = "The database generated student id")
     private int id;
 
     @NotBlank(message = "First name can`t be blank!")
-    @Length(max = 20, message = "Maximum length of first name is 20!")
-    @ApiModelProperty(notes = "The student first name. Not blank. Max length is 20 character")
+    @Size(max = 20, message = "Maximum length of first name is 20!")
+    @Schema(description = "The student first name. Not blank. Max length is 20 character")
     private String firstName;
 
-    @Length(max = 20, message = "Maximum length of middle name is 20!")
-    @ApiModelProperty(notes = "The student middle name. Max length is 20 character")
+    @Size(max = 20, message = "Maximum length of middle name is 20!")
+    @Schema(description = "The student middle name. Max length is 20 character")
     private String middleName;
 
-    @Length(max = 20, message = "Maximum length of last name is 20!")
-    @ApiModelProperty(notes = "The student last name. Max length is 20 character")
+    @Size(max = 20, message = "Maximum length of last name is 20!")
+    @Schema(description = "The student last name. Max length is 20 character")
     private String lastName;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Past(message = "Birthday date must be in past!")
-    @ApiModelProperty(notes = "The student birthday date. Date must be in past")
+    @Schema(description = "The student birthday date. Date must be in past")
     private LocalDate birthday;
 
     @Min(value = 100000000, message = "Value is 9 number!")
     @Max(value = 999999999, message = "Value is 9 number!")
-    @ApiModelProperty(notes = "The student identification number in an fees authority. Value is 9 number")
+    @Schema(description = "The student identification number in an fees authority. Value is 9 number")
     private int idFees;
 
-    @Length(max = 20, message = "Maximum length of title group is 20!")
-    @ApiModelProperty(notes = "The students name of group. Max length is 20 character")
+    @Size(max = 20, message = "Maximum length of title group is 20!")
+    @Schema(description = "The students name of group. Max length is 20 character")
     private String groupTitle;
 
-    @ApiModelProperty(notes = "The unique number of students group")
+    @Schema(description = "The unique number of students group")
     private int groupId;
 
     public int getId() {
@@ -135,51 +134,63 @@ public class StudentDto {
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj)
+        if (this == obj) {
             return true;
-        if (obj == null)
+        }
+        if (obj == null) {
             return false;
-        if (getClass() != obj.getClass())
+        }
+        if (getClass() != obj.getClass()) {
             return false;
+        }
         StudentDto other = (StudentDto) obj;
         if (birthday == null) {
-            if (other.birthday != null)
+            if (other.birthday != null) {
                 return false;
-        } else if (!birthday.equals(other.birthday))
+            }
+        } else if (!birthday.equals(other.birthday)) {
             return false;
+        }
         if (firstName == null) {
-            if (other.firstName != null)
+            if (other.firstName != null) {
                 return false;
-        } else if (!firstName.equals(other.firstName))
+            }
+        } else if (!firstName.equals(other.firstName)) {
             return false;
-        if (idFees != other.idFees)
+        }
+        if (idFees != other.idFees) {
             return false;
-        if (groupId != other.groupId)
+        }
+        if (groupId != other.groupId) {
             return false;
+        }
         if (lastName == null) {
-            if (other.lastName != null)
+            if (other.lastName != null) {
                 return false;
-        } else if (!lastName.equals(other.lastName))
+            }
+        } else if (!lastName.equals(other.lastName)) {
             return false;
+        }
         if (middleName == null) {
-            if (other.middleName != null)
+            if (other.middleName != null) {
                 return false;
-        } else if (!middleName.equals(other.middleName))
+            }
+        } else if (!middleName.equals(other.middleName)) {
             return false;
+        }
         return true;
     }
 
     @Override
     public String toString() {
-        return "StudentDto [id=" + id 
-             + ", firstName=" + firstName 
-             + ", middleName=" + middleName 
-             + ", lastName=" + lastName 
-             + ", birthday=" + birthday 
-             + ", idFees=" + idFees 
-             + ", groupTitle=" + groupTitle 
-             + ", groupId=" + groupId 
-             + "]";
+        return "StudentDto [id=" + id
+            + ", firstName=" + firstName
+            + ", middleName=" + middleName
+            + ", lastName=" + lastName
+            + ", birthday=" + birthday
+            + ", idFees=" + idFees
+            + ", groupTitle=" + groupTitle
+            + ", groupId=" + groupId
+            + "]";
     }
-
 }

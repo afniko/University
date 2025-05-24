@@ -8,10 +8,6 @@ import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
-import java.util.List;
-
-import javax.persistence.EntityNotFoundException;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -19,6 +15,10 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.slf4j.Logger;
 import org.springframework.dao.DataIntegrityViolationException;
+
+import java.util.List;
+
+import javax.persistence.EntityNotFoundException;
 
 import ua.com.foxminded.task.dao.FacultyRepository;
 import ua.com.foxminded.task.dao.exception.EntityAlreadyExistsException;
@@ -28,7 +28,7 @@ import ua.com.foxminded.task.domain.dto.FacultyDto;
 import ua.com.foxminded.task.domain.repository.FacultyModelRepository;
 import ua.com.foxminded.task.domain.repository.dto.FacultyDtoModelRepository;
 
-public class FacultyServiceImplTest {
+class FacultyServiceImplTest {
 
     @Mock
     private Logger logger;
@@ -38,12 +38,12 @@ public class FacultyServiceImplTest {
     private FacultyServiceImpl facultyService;
 
     @BeforeEach
-    public void initMocks() {
-        MockitoAnnotations.initMocks(this);
+    void initMocks() {
+        MockitoAnnotations.openMocks(this);
     }
 
     @Test
-    public void whenFindById_thenFindEntity() {
+    void whenFindById_thenFindEntity() {
         Faculty expectedFaculty = FacultyModelRepository.getModel1();
         doReturn(expectedFaculty).when(facultyRepository).getOne(1);
 
@@ -54,7 +54,7 @@ public class FacultyServiceImplTest {
     }
 
     @Test
-    public void whenFindById_thenFindEntityAndConvertItToDto() {
+    void whenFindById_thenFindEntityAndConvertItToDto() {
         Faculty faculty = FacultyModelRepository.getModel1();
         FacultyDto facultyDtoExpected = FacultyDtoModelRepository.getModel1();
         doReturn(faculty).when(facultyRepository).getOne(1);
@@ -66,7 +66,7 @@ public class FacultyServiceImplTest {
     }
 
     @Test
-    public void whenFindByAll_thenFindEntitiesAndConvertItToDto() {
+    void whenFindByAll_thenFindEntitiesAndConvertItToDto() {
         List<Faculty> faculties = FacultyModelRepository.getModels();
         List<FacultyDto> facultyDtosExpected = FacultyDtoModelRepository.getModels();
         doReturn(faculties).when(facultyRepository).findAll();
@@ -78,7 +78,7 @@ public class FacultyServiceImplTest {
     }
 
     @Test
-    public void whenCreate_thenInvocCreateDaoClass() {
+    void whenCreate_thenInvocCreateDaoClass() {
         FacultyDto facultyDto = FacultyDtoModelRepository.getModel1();
         Faculty facultyInput = FacultyModelRepository.getModel1();
         Faculty facultyExpected = FacultyModelRepository.getModel1();
@@ -92,12 +92,12 @@ public class FacultyServiceImplTest {
     }
 
     @Test
-    public void whenUpdate_thenInvocUpdateDaoClass() {
+    void whenUpdate_thenInvocUpdateDaoClass() {
         FacultyDto facultyDto = FacultyDtoModelRepository.getModel1();
         facultyDto.setId(1);
         Faculty faculty = FacultyModelRepository.getModel1();
         faculty.setId(1);
-        
+
         doReturn(faculty).when(facultyRepository).saveAndFlush(faculty);
         doReturn(true).when(facultyRepository).existsById(facultyDto.getId());
         doReturn(faculty).when(facultyRepository).getOne(facultyDto.getId());
@@ -110,62 +110,62 @@ public class FacultyServiceImplTest {
     }
 
     @Test
-    public void whenFindByTitle_thenInvokeMethod() {
+    void whenFindByTitle_thenInvokeMethod() {
         Faculty faculty = FacultyModelRepository.getModel1();
         faculty.setId(1);
         String expectedTitle = faculty.getTitle();
         doReturn(faculty).when(facultyRepository).findByTitle(expectedTitle);
-        
+
         Faculty actuallyFaculty = facultyService.findByTitle(expectedTitle);
-        
+
         verify(facultyRepository, times(1)).findByTitle(expectedTitle);
         assertEquals(expectedTitle, actuallyFaculty.getTitle());
     }
-    
+
     @Test
-    public void whenCreateRecordEntityWithId_thenThrowException() {
+    void whenCreateRecordEntityWithId_thenThrowException() {
         FacultyDto facultyDto = new FacultyDto();
         facultyDto.setId(1);
 
         assertThatThrownBy(() -> facultyService.create(facultyDto))
-             .isInstanceOf(EntityAlreadyExistsException.class)
-             .hasMessage("create() facultyDto: %s", facultyDto);
+            .isInstanceOf(EntityAlreadyExistsException.class)
+            .hasMessage("create() facultyDto: %s", facultyDto);
     }
-    
+
     @Test
-    public void whenCreateRecordWithNotValidEntity_thenThrowException() {
+    void whenCreateRecordWithNotValidEntity_thenThrowException() {
         FacultyDto facultyDto = FacultyDtoModelRepository.getModel1();
         Faculty faculty = FacultyModelRepository.getModel1();
-        
+
         doThrow(DataIntegrityViolationException.class).when(facultyRepository).saveAndFlush(faculty);
 
         assertThatThrownBy(() -> facultyService.create(facultyDto))
-             .isInstanceOf(EntityNotValidException.class)
-             .hasMessageContaining("create() faculty: " + faculty);
+            .isInstanceOf(EntityNotValidException.class)
+            .hasMessageContaining("create() faculty: " + faculty);
     }
 
     @Test
-    public void whenUpdateRecordWithNotValidEntity_thenThrowException() {
+    void whenUpdateRecordWithNotValidEntity_thenThrowException() {
         FacultyDto facultyDto = FacultyDtoModelRepository.getModel1();
         Faculty faculty = FacultyModelRepository.getModel1();
-        
+
         doReturn(true).when(facultyRepository).existsById(faculty.getId());
         doThrow(DataIntegrityViolationException.class).when(facultyRepository).saveAndFlush(faculty);
 
         assertThatThrownBy(() -> facultyService.update(facultyDto))
-             .isInstanceOf(EntityNotValidException.class)
-             .hasMessageContaining("update() faculty: " + faculty);
+            .isInstanceOf(EntityNotValidException.class)
+            .hasMessageContaining("update() faculty: " + faculty);
     }
-    
+
     @Test
-    public void whenUpdateRecordNotFound_thenThrowException() {
+    void whenUpdateRecordNotFound_thenThrowException() {
         FacultyDto facultyDto = FacultyDtoModelRepository.getModel1();
         Faculty faculty = FacultyModelRepository.getModel1();
-        
+
         doReturn(false).when(facultyRepository).existsById(faculty.getId());
 
         assertThatThrownBy(() -> facultyService.update(facultyDto))
-             .isInstanceOf(EntityNotFoundException.class)
-             .hasMessageContaining("Faculty not exist!");
+            .isInstanceOf(EntityNotFoundException.class)
+            .hasMessageContaining("Faculty not exist!");
     }
 }

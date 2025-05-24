@@ -8,10 +8,6 @@ import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
-import java.util.List;
-
-import javax.persistence.EntityNotFoundException;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -19,6 +15,10 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.slf4j.Logger;
 import org.springframework.dao.DataIntegrityViolationException;
+
+import java.util.List;
+
+import javax.persistence.EntityNotFoundException;
 
 import ua.com.foxminded.task.dao.SubjectRepository;
 import ua.com.foxminded.task.dao.exception.EntityAlreadyExistsException;
@@ -28,7 +28,7 @@ import ua.com.foxminded.task.domain.dto.SubjectDto;
 import ua.com.foxminded.task.domain.repository.SubjectModelRepository;
 import ua.com.foxminded.task.domain.repository.dto.SubjectDtoModelRepository;
 
-public class SubjectServiceImplTest {
+class SubjectServiceImplTest {
 
     @Mock
     private Logger logger;
@@ -38,12 +38,12 @@ public class SubjectServiceImplTest {
     private SubjectServiceImpl subjectService;
 
     @BeforeEach
-    public void initMocks() {
-        MockitoAnnotations.initMocks(this);
+    void initMocks() {
+        MockitoAnnotations.openMocks(this);
     }
 
     @Test
-    public void whenFindById_thenFindEntity() {
+    void whenFindById_thenFindEntity() {
         Subject expectedSubject = SubjectModelRepository.getModel1();
         doReturn(expectedSubject).when(subjectRepository).getOne(1);
 
@@ -54,7 +54,7 @@ public class SubjectServiceImplTest {
     }
 
     @Test
-    public void whenFindById_thenFindEntityAndConvertItToDto() {
+    void whenFindById_thenFindEntityAndConvertItToDto() {
         Subject subject = SubjectModelRepository.getModel1();
         SubjectDto subjectDtoExpected = SubjectDtoModelRepository.getModel1();
         doReturn(subject).when(subjectRepository).getOne(1);
@@ -66,7 +66,7 @@ public class SubjectServiceImplTest {
     }
 
     @Test
-    public void whenFindByAll_thenFindEntitiesAndConvertItToDto() {
+    void whenFindByAll_thenFindEntitiesAndConvertItToDto() {
         List<Subject> subjects = SubjectModelRepository.getModels1();
         List<SubjectDto> subjectDtosExpected = SubjectDtoModelRepository.getModels1();
         doReturn(subjects).when(subjectRepository).findAll();
@@ -78,7 +78,7 @@ public class SubjectServiceImplTest {
     }
 
     @Test
-    public void whenCreate_thenInvocCreateDaoClass() {
+    void whenCreate_thenInvocCreateDaoClass() {
         SubjectDto subjectDto = SubjectDtoModelRepository.getModel1();
         Subject subjectInput = SubjectModelRepository.getModel1();
         Subject subjectExpected = SubjectModelRepository.getModel1();
@@ -92,12 +92,12 @@ public class SubjectServiceImplTest {
     }
 
     @Test
-    public void whenUpdate_thenInvocUpdateDaoClass() {
+    void whenUpdate_thenInvocUpdateDaoClass() {
         SubjectDto subjectDto = SubjectDtoModelRepository.getModel1();
         subjectDto.setId(1);
         Subject subject = SubjectModelRepository.getModel1();
         subject.setId(1);
-        
+
         doReturn(subject).when(subjectRepository).saveAndFlush(subject);
         doReturn(true).when(subjectRepository).existsById(subjectDto.getId());
         doReturn(subject).when(subjectRepository).getOne(subjectDto.getId());
@@ -110,62 +110,62 @@ public class SubjectServiceImplTest {
     }
 
     @Test
-    public void whenFindByTitle_thenInvokeMethod() {
+    void whenFindByTitle_thenInvokeMethod() {
         Subject subject = SubjectModelRepository.getModel1();
         subject.setId(1);
         String expectedTitle = subject.getTitle();
         doReturn(subject).when(subjectRepository).findByTitle(expectedTitle);
-        
+
         Subject actuallySubject = subjectService.findByTitle(expectedTitle);
-        
+
         verify(subjectRepository, times(1)).findByTitle(expectedTitle);
         assertEquals(expectedTitle, actuallySubject.getTitle());
     }
-    
+
     @Test
-    public void whenCreateRecordEntityWithId_thenThrowException() {
+    void whenCreateRecordEntityWithId_thenThrowException() {
         SubjectDto subjectDto = new SubjectDto();
         subjectDto.setId(1);
 
         assertThatThrownBy(() -> subjectService.create(subjectDto))
-             .isInstanceOf(EntityAlreadyExistsException.class)
-             .hasMessage("create() subjectDto: %s", subjectDto);
+            .isInstanceOf(EntityAlreadyExistsException.class)
+            .hasMessage("create() subjectDto: %s", subjectDto);
     }
-    
+
     @Test
-    public void whenCreateRecordWithNotValidEntity_thenThrowException() {
+    void whenCreateRecordWithNotValidEntity_thenThrowException() {
         SubjectDto subjectDto = SubjectDtoModelRepository.getModel1();
         Subject subject = SubjectModelRepository.getModel1();
-        
+
         doThrow(DataIntegrityViolationException.class).when(subjectRepository).saveAndFlush(subject);
 
         assertThatThrownBy(() -> subjectService.create(subjectDto))
-             .isInstanceOf(EntityNotValidException.class)
-             .hasMessageContaining("create() subject: " + subject);
+            .isInstanceOf(EntityNotValidException.class)
+            .hasMessageContaining("create() subject: " + subject);
     }
 
     @Test
-    public void whenUpdateRecordWithNotValidEntity_thenThrowException() {
+    void whenUpdateRecordWithNotValidEntity_thenThrowException() {
         SubjectDto subjectDto = SubjectDtoModelRepository.getModel1();
         Subject subject = SubjectModelRepository.getModel1();
-        
+
         doReturn(true).when(subjectRepository).existsById(subject.getId());
         doThrow(DataIntegrityViolationException.class).when(subjectRepository).saveAndFlush(subject);
 
         assertThatThrownBy(() -> subjectService.update(subjectDto))
-             .isInstanceOf(EntityNotValidException.class)
-             .hasMessageContaining("update() subject: " + subject);
+            .isInstanceOf(EntityNotValidException.class)
+            .hasMessageContaining("update() subject: " + subject);
     }
-    
+
     @Test
-    public void whenUpdateRecordNotFound_thenThrowException() {
+    void whenUpdateRecordNotFound_thenThrowException() {
         SubjectDto subjectDto = SubjectDtoModelRepository.getModel1();
         Subject subject = SubjectModelRepository.getModel1();
-        
+
         doReturn(false).when(subjectRepository).existsById(subject.getId());
 
         assertThatThrownBy(() -> subjectService.update(subjectDto))
-             .isInstanceOf(EntityNotFoundException.class)
-             .hasMessageContaining("Subject not exist!");
+            .isInstanceOf(EntityNotFoundException.class)
+            .hasMessageContaining("Subject not exist!");
     }
 }

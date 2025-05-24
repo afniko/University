@@ -1,41 +1,40 @@
 package ua.com.foxminded.task.domain.dto;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
 
 import javax.validation.constraints.Min;
 
-import org.springframework.format.annotation.DateTimeFormat;
+import io.swagger.v3.oas.annotations.media.Schema;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
-
-@ApiModel(description = "Object for finding period timetableItems")
+@Schema(description = "Object for finding period timetableItems")
 public class TimetableFiltersDto implements Serializable {
 
     private static final long serialVersionUID = 5672207011636676194L;
 
     @Min(value = 0, message = "Id must be more than zero!")
-    @ApiModelProperty(notes = "The teacher id of entity")
+    @Schema(description = "The teacher id of entity")
     private int selectedTeacher;
 
     @Min(value = 0, message = "Id must be more than zero!")
-    @ApiModelProperty(notes = "The student id of entity")
+    @Schema(description = "The student id of entity")
     private int selectedStudent;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @ApiModelProperty(notes = "The date of search period starting.")
+    @Schema(description = "The date of search period starting.")
     private LocalDate startDate;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @ApiModelProperty(notes = "The date of search period be finished.")
+    @Schema(description = "The date of search period be finished.")
     private LocalDate endDate;
-    
-    @ApiModelProperty(notes = "The all of teachers for selector")
+
+    @Schema(description = "The all of teachers for selector")
     private List<TeacherDto> availableTeachers;
-    
-    @ApiModelProperty(notes = "The all of students for selector")
+
+    @Schema(description = "The all of students for selector")
     private List<StudentDto> availableStudents;
 
 
@@ -100,37 +99,45 @@ public class TimetableFiltersDto implements Serializable {
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj)
+        if (this == obj) {
             return true;
-        if (obj == null)
+        }
+        if (obj == null) {
             return false;
-        if (getClass() != obj.getClass())
+        }
+        if (getClass() != obj.getClass()) {
             return false;
+        }
         TimetableFiltersDto other = (TimetableFiltersDto) obj;
         if (endDate == null) {
-            if (other.endDate != null)
+            if (other.endDate != null) {
                 return false;
-        } else if (!endDate.equals(other.endDate))
+            }
+        } else if (!endDate.equals(other.endDate)) {
             return false;
+        }
         if (startDate == null) {
-            if (other.startDate != null)
+            if (other.startDate != null) {
                 return false;
-        } else if (!startDate.equals(other.startDate))
+            }
+        } else if (!startDate.equals(other.startDate)) {
             return false;
-        if (selectedStudent != other.selectedStudent)
+        }
+        if (selectedStudent != other.selectedStudent) {
             return false;
-        if (selectedTeacher != other.selectedTeacher)
+        }
+        if (selectedTeacher != other.selectedTeacher) {
             return false;
+        }
         return true;
     }
 
     @Override
     public String toString() {
-        return "FiltersDto [teacherId=" + selectedTeacher 
-             + ", studentId=" + selectedStudent 
-             + ", startDate=" + startDate 
-             + ", endDate=" + endDate 
-             + "]";
+        return "FiltersDto [teacherId=" + selectedTeacher
+            + ", studentId=" + selectedStudent
+            + ", startDate=" + startDate
+            + ", endDate=" + endDate
+            + "]";
     }
-
 }
