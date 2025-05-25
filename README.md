@@ -87,6 +87,12 @@ After deployment will expose:
 tomcat port:8080
 postgres port:54321
 ```
+## System test
+For testing system by Bash script up docker version and start bash script.
+Script create POST and GET requests to the system.
+```
+./bash_integration_test.sh
+```
 
 ## System Requirements
 - Java 11 or higher
