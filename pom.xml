@@ -25,7 +25,7 @@
         <hibernate.jpamodelgen.version>5.6.15.Final</hibernate.jpamodelgen.version>
         <springdoc.version>1.7.0</springdoc.version>
         <database.rider.version>1.44.0</database.rider.version>
-        <commons.beanutils.version>1.9.4</commons.beanutils.version>
+        <commons.beanutils.version>1.11.0</commons.beanutils.version>
 
         <org.flywaydb.flyway.plugin.version>8.5.13</org.flywaydb.flyway.plugin.version>
         <maven.checkstyle.plugin.version>3.3.0</maven.checkstyle.plugin.version>
@@ -64,7 +64,7 @@
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
             <version>${org.h2database.version}</version>
-            <scope>test</scope>
+            <scope>provided</scope>
         </dependency>
 
         <dependency>
